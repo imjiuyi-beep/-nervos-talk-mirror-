@@ -5,8 +5,94 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Mon, 12 Oct 2026 08:26:15 +0000</lastBuildDate>
+      <lastBuildDate>Mon, 12 Oct 2026 15:41:20 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>POI: Proof of Identity, a platformer on CKB testnet that teaches .cell names by using them</title>
+          <dc:creator><![CDATA[LusoCryptoLabs]]></dc:creator>
+          <category>Applications &amp; Ecosystem</category>
+          <description><![CDATA[
+            <p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/f/f95a9db48bbf359633fadef371099b56d641eaea.jpeg" data-download-href="https://talk.nervos.org/uploads/default/f95a9db48bbf359633fadef371099b56d641eaea" title="cover"><img src="https://talk.nervos.org/uploads/default/optimized/2X/f/f95a9db48bbf359633fadef371099b56d641eaea_2_690x388.jpeg" alt="cover" data-base62-sha1="zzT275UNQTseV0UVkEdFL8gjr3s" width="690" height="388" srcset="https://talk.nervos.org/uploads/default/optimized/2X/f/f95a9db48bbf359633fadef371099b56d641eaea_2_690x388.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/f/f95a9db48bbf359633fadef371099b56d641eaea_2_1035x582.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/f/f95a9db48bbf359633fadef371099b56d641eaea_2_1380x776.jpeg 2x" data-dominant-color="231E13"></a></div><p></p>
+<p><em>A follow-up to the introduction on <a href="https://scryvehq.com/article/the-registry-says-you-do-not-exist-a-game-lets-you-prove-it-wrong-mv4hglz8" rel="noopener nofollow ugc">Scryve</a>, with the technical side: what each floor does on chain, how the game is built, how the town works, and how to join its first wave.</em></p>
+<p>Play: <a href="https://poi.cellula.id" rel="noopener nofollow ugc">poi.cellula.id</a> (CKB testnet, free, phone or computer)</p>
+<hr>
+<h2><a name="p-26595-what-it-is-in-one-paragraph-1" class="anchor" href="https://talk.nervos.org#p-26595-what-it-is-in-one-paragraph-1" aria-label="Heading link"></a>What it is, in one paragraph</h2>
+<p>POI is a short browser platformer built to teach identity on CKB to people who will never read documentation. The player wakes up as a number in the Registry’s tower and climbs to the top to win back a name. Along the way they get a wallet, receive testnet CKB, read a real <code>.cell</code> name, pay by name, verify signed words against the chain, meet post-quantum ownership, register a <code>.cell</code> name of their own with commit-reveal, and sign their first statement with it. Nothing is simulated: every one of those steps is a real testnet operation through <a href="https://github.com/ckb-devrel/ccc" rel="noopener nofollow ugc">CCC</a> and the Cells protocol behind <a href="https://testnet.cellula.id" rel="noopener nofollow ugc">cellula.id</a>.</p>
+<p>The design rule throughout is <em>show, don’t tell</em>: a concept is something the player does or watches happen in the world, and words only label what was just seen.</p>
+<h2><a name="p-26595-stack-2" class="anchor" href="https://talk.nervos.org#p-26595-stack-2" aria-label="Heading link"></a>Stack</h2>
+<ul>
+<li><strong>Client:</strong> Vite, TypeScript and Pixi.js 8. Every character, Clerk, room and prop is drawn in code with one hand-drawn ink style, so a hero is a rig of baked parts posed every frame (legs solved from where the feet should be, springs for squash, lean and bounce).</li>
+<li><strong>Rules:</strong> the game’s rules (<code>run.ts</code>) are deterministic and separate from drawing, so they are tested headless. Each floor is played by bots of different skill, and the clumsy one, which misses its jump timing by up to 0.16 s, has to reach the door. The test suite is 232 tests.</li>
+<li><strong>Server:</strong> Fastify. It relays the testnet faucet, keeps the board of names and the medals, runs the town’s hub, verifies signed statements on testnet and reads on-chain payments for the shop.</li>
+<li><strong>Chain:</strong> CCC for wallets, transactions and signatures; <code>cellula-sdk</code> (<code>CellsClient</code>, <code>verifyStatement</code>) for names.</li>
+</ul>
+<h2><a name="p-26595-what-each-floor-does-on-chain-3" class="anchor" href="https://talk.nervos.org#p-26595-what-each-floor-does-on-chain-3" aria-label="Heading link"></a>What each floor does on chain</h2>
+<h3><a name="p-26595-h-1-intake-4" class="anchor" href="https://talk.nervos.org#p-26595-h-1-intake-4" aria-label="Heading link"></a>1. Intake</h3>
+<p>No chain here. The server hands out an arrival number per device, and a short game booth makes the point the rest of the game builds on: in a wall of near-identical numbers your own is hard to find, and a name is not.</p>
+<h3><a name="p-26595-h-2-keys-5" class="anchor" href="https://talk.nervos.org#p-26595-h-2-keys-5" aria-label="Heading link"></a>2. Keys</h3>
+<p>The key machine opens CCC’s wallet list (JoyID passkey, MetaMask, OKX, UniSat, Khie and the rest), or offers a practice key that never touches the chain. The answer is shown as a door with the wallet’s address on its plate and a key beside it: the address is public, the key stays in the wallet. With a key, the floor’s locked cells open. Then the floor’s boss, Key Support, asks for the twelve words. Reading them to him ends the floor.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/9/9b327fe3afa97baa85566258cd34db0cdadfa70f.jpeg" data-download-href="https://talk.nervos.org/uploads/default/9b327fe3afa97baa85566258cd34db0cdadfa70f" title="key-support"><img src="https://talk.nervos.org/uploads/default/optimized/2X/9/9b327fe3afa97baa85566258cd34db0cdadfa70f_2_690x388.jpeg" alt="key-support" data-base62-sha1="m8WczlNWzJe5AqjgSivzULfMV8H" width="690" height="388" srcset="https://talk.nervos.org/uploads/default/optimized/2X/9/9b327fe3afa97baa85566258cd34db0cdadfa70f_2_690x388.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/9/9b327fe3afa97baa85566258cd34db0cdadfa70f_2_1035x582.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/9/9b327fe3afa97baa85566258cd34db0cdadfa70f_2_1380x776.jpeg 2x" data-dominant-color="363428"></a></div><p></p>
+<h3><a name="p-26595-h-3-the-fountain-6" class="anchor" href="https://talk.nervos.org#p-26595-h-3-the-fountain-6" aria-label="Heading link"></a>3. The fountain</h3>
+<p>“Fill my wallet” asks the testnet faucet for 10,000 CKB through the game’s server (the faucet’s CORS admits no browser). While the claim travels, the floor keeps playing, and the stairs door opens once the page reads the new balance on chain through CCC (polled every 4 s). Measured on the dev build: the faucet answers in about 1 s and the coins are readable on chain about 25 s later.</p>
+<h3><a name="p-26595-h-4-the-archive-7" class="anchor" href="https://talk.nervos.org#p-26595-h-4-the-archive-7" aria-label="Heading link"></a>4. The archive</h3>
+<p>The player reaches a desk where a real name is cut open: <code>maria.cell</code>, read live with <code>CellsClient.getAccount()</code> when the player arrives. Four bands show its owner, its manager, its records by kind, and its expiry, each with its value from the chain.</p>
+<p>Then pay by name, shown before anything is asked: a wallet is told <code>Pay to: maria.cell</code>, the name’s CKB record (<code>address.309</code>) answers with the address, and coins fly there in the scene. “Try it: send 100 CKB” makes it real: one output to that address, the wallet’s cells as inputs, the fee at 1,000 shannons per KB. Money only goes where the chain said just now; a copy kept in the page is never paid to.</p>
+<h3><a name="p-26595-h-5-the-post-room-8" class="anchor" href="https://talk.nervos.org#p-26595-h-5-the-post-room-8" aria-label="Heading link"></a>5. The post room</h3>
+<p>Letters arrive signed by <code>maria.cell</code>, in the <code>cells.statement.v1</code> format. “Check the seal” runs <code>verifyStatement</code> and shows what it looked at, one row at a time: who owns the name now, whether the seal fits these exact words, and whether the key on the seal is the owner’s. One of the two letters was changed after signing, so its seal cracks on the words, and following it leads to a trap.</p>
+<p>The floor’s boss, the Impostor, holds up notes in someone else’s name. Standing on the lamp in his room asks the chain about the note, and he stands exposed when it fails. Three rounds, three forgeries: words changed after signing, a key that is not the owner’s, and a look-alike name that is not registered. The game does not know which statements are real; every verdict comes from the chain.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/4/4bff6f64fcd1818bcc1f0a628b9270d0b7650cb7.jpeg" data-download-href="https://talk.nervos.org/uploads/default/4bff6f64fcd1818bcc1f0a628b9270d0b7650cb7" title="climb"><img src="https://talk.nervos.org/uploads/default/optimized/2X/4/4bff6f64fcd1818bcc1f0a628b9270d0b7650cb7_2_690x481.jpeg" alt="climb" data-base62-sha1="aQj4O2X269xfYdO1lmt37Pz6j2f" width="690" height="481" srcset="https://talk.nervos.org/uploads/default/optimized/2X/4/4bff6f64fcd1818bcc1f0a628b9270d0b7650cb7_2_690x481.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/4/4bff6f64fcd1818bcc1f0a628b9270d0b7650cb7_2_1035x721.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/4/4bff6f64fcd1818bcc1f0a628b9270d0b7650cb7_2_1380x962.jpeg 2x" data-dominant-color="353322"></a></div><p></p>
+<p><em>Left to right: the title; floor 4, <code>maria.cell</code> read with <code>getAccount()</code> and cut open; floor 5, a <code>cells.statement.v1</code> letter checked with <code>verifyStatement</code>.</em></p>
+<h3><a name="p-26595-h-6-the-machine-9" class="anchor" href="https://talk.nervos.org#p-26595-h-6-the-machine-9" aria-label="Heading link"></a>6. The Machine</h3>
+<p>A vault inspector reads <code>v3-first-name.cell</code> from testnet: a name owned by a SPHINCS+ lock (post-quantum) and managed by an ordinary key. The scene sets the two keys side by side, a heavy owner key kept offline and a light manager key for everyday edits, and sweeps the Machine’s beam across both: the light one cracks, the heavy one holds. Then the Machine itself fires a beam that cracks ordinary cells and stops at the first quantum vault.</p>
+<h3><a name="p-26595-h-7-the-file-10" class="anchor" href="https://talk.nervos.org#p-26595-h-7-the-file-10" aria-label="Heading link"></a>7. The file</h3>
+<p>The player registers a <code>.cell</code> name of their own, the protocol’s way:</p>
+<ol>
+<li><strong>Reserve.</strong> The wallet signs a commit that hides the name, with 100 CKB held until the reveal, so nobody watching can take it first.</li>
+<li><strong>Wait.</strong> The commit must be 60 s old by the chain’s median time, which trails real time, so the wait is about four minutes. The HUD counts it down from the chain’s own clock, and the floor keeps going: the Registry drops Clerks near the player until the name is ready, and the floor’s boss, the Registrar, fights in the meantime.</li>
+<li><strong>Register.</strong> At the records counter the wallet signs the reveal, publishing the player’s CKB address on the name as a record.</li>
+</ol>
+<p>Then the player signs <code>I am &lt;name&gt;.cell.</code> as a statement (no fee) and the game verifies it on chain, the same check as floor 5. A server-side purse sends each new name 100 testnet CKB by its name. On testnet a name needs five characters or more; a year of one is about 4,000 testnet CKB, which the fountain covers.</p>
+<h2><a name="p-26595-the-end-the-board-and-the-medals-11" class="anchor" href="https://talk.nervos.org#p-26595-the-end-the-board-and-the-medals-11" aria-label="Heading link"></a>The end, the board and the medals</h2>
+<p>The end screen shows the player’s ID card turning from NO RECORD FOUND to RECORD FOUND, and their points. “Put my name on the board” has the name’s owner sign the score as a statement; the server checks the signature and the name’s ownership on testnet before the entry goes on. There is an all-time board and a board for each week (Monday 00:00 UTC to the next).</p>
+<p>Eight medals are given by the server only, for what it can check: a signed climb, a climb under ten minutes, houses got through, the giant brought down together, a harvest brought in, a place among the first hundred names on the town’s list, a week in the top ten. Some unlock accessories that are earned and never sold.</p>
+<p>Medals can also be <strong>written on the name itself</strong>. The game seals the list with a secp256k1 key of its own (signing words like <code>Proof of Self medals of sofia.cell on the CKB testnet: climb (2026-10-06), ... Sealed 2026-10-09.</code>), and the name’s owner writes it as a <code>poi.medals</code> record. Anyone can verify it with CCC’s <code>verifyMessageCkbSecp256k1</code> against the game’s published key, and a record copied to another name or edited by hand does not verify. Since Cells keeps records in the witness, with only their hash in the cell’s data, writing one costs a network fee and occupies no capacity.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/1/1ee1ec98722d7bc251b91c808ef584ac1dc5fff9.jpeg" data-download-href="https://talk.nervos.org/uploads/default/1ee1ec98722d7bc251b91c808ef584ac1dc5fff9" title="end"><img src="https://talk.nervos.org/uploads/default/optimized/2X/1/1ee1ec98722d7bc251b91c808ef584ac1dc5fff9_2_690x481.jpeg" alt="end" data-base62-sha1="4pcmB4hbS1UKxPqJ7nm52joTZeV" width="690" height="481" srcset="https://talk.nervos.org/uploads/default/optimized/2X/1/1ee1ec98722d7bc251b91c808ef584ac1dc5fff9_2_690x481.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/1/1ee1ec98722d7bc251b91c808ef584ac1dc5fff9_2_1035x721.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/1/1ee1ec98722d7bc251b91c808ef584ac1dc5fff9_2_1380x962.jpeg 2x" data-dominant-color="2C2E1B"></a></div><p></p>
+<p><em>Left to right: floor 7’s booth (why reserving and registering are two steps); the end of the climb with the signed board; the medals screen reading the <code>poi.medals</code> record back. (Example names.)</em></p>
+<h2><a name="p-26595-the-town-12" class="anchor" href="https://talk.nervos.org#p-26595-the-town-12" aria-label="Heading link"></a>The town</h2>
+<p>The second chapter is a town of tiles seen from above, where everyone playing meets live. The climb runs on testnet and is free; the town opens to a name registered on mainnet.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/0/00160d31b0b7efb08edc86aa5ccbfbff324fcc25.jpeg" data-download-href="https://talk.nervos.org/uploads/default/00160d31b0b7efb08edc86aa5ccbfbff324fcc25" title="town"><img src="https://talk.nervos.org/uploads/default/optimized/2X/0/00160d31b0b7efb08edc86aa5ccbfbff324fcc25_2_690x388.jpeg" alt="town" data-base62-sha1="LfczjvEsb4awK8DSVcDXVz3Gl" width="690" height="388" srcset="https://talk.nervos.org/uploads/default/optimized/2X/0/00160d31b0b7efb08edc86aa5ccbfbff324fcc25_2_690x388.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/0/00160d31b0b7efb08edc86aa5ccbfbff324fcc25_2_1035x582.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/0/00160d31b0b7efb08edc86aa5ccbfbff324fcc25_2_1380x776.jpeg 2x" data-dominant-color="2D291E"></a></div><p></p>
+<p><em>The square with four players connected to the hub, and the giant Clerk the server sends when a room has two or more.</em></p>
+<ul>
+<li><strong>The door.</strong> A player registers a <code>.cell</code> name on mainnet at <a href="https://cellula.id" rel="noopener nofollow ugc">cellula.id</a> with their own wallet; the game never handles real CKB. On 2026-10-12 a year of a name of five characters or more cost 3,010 CKB, plus 240 CKB held in the name’s cell. At the town’s door the wallet signs, with that name, <code>I am sofia.cell. I climbed POI as sofi4.cell and join the first wave of its town.</code> (a <code>cells.statement.v1</code>, no fee), through a wallet list of its own pointed at mainnet. The server checks it with <code>verifyStatement</code> against a <code>CellsClient</code> on <code>ClientPublicMainnet</code>, read only, checks that the climb named is on the board, and gives the device a key (it keeps only the hash). The key opens the town’s page and the hub; a hub connection without one is not seen and hears nothing.</li>
+<li><strong>The hub</strong> is a WebSocket on the game’s server with rooms of 40. A client sends where it is up to eight times a second (only what changed); the hub broadcasts the room ten times a second, and other players are drawn 0.15 s behind and interpolated.</li>
+<li><strong>Names in the town</strong> are proved, not claimed: “Show my name” has the wallet sign <code>I am &lt;name&gt;.cell, in the city of names (&lt;nonce&gt;).</code> with a nonce bound to the connection, and the hub verifies it on testnet before your name replaces “visitor” over your head.</li>
+<li><strong>Houses of names.</strong> Every name on the town’s list gets a house. Its door leads to a floor generated from the name’s letters (nine segments chosen by the label, deterministic, so the same name is always the same floor, and every one is checked by the bots), in one of six rooms with its own boss and its own board of times, signed the same way as the climb’s.</li>
+<li><strong>Together.</strong> The giant Clerk and the harvest run on the server, so everyone in a room sees the same state: the giant has more hits in it than one player can land before it leaves.</li>
+<li><strong>The wardrobe.</strong> Colours are free. Accessories cost 200 testnet CKB, paid from the wallet to the game’s purse with the item in the output’s data (<code>poi:item:&lt;id&gt;</code>), and the server reads the payment on chain.</li>
+</ul>
+<h2><a name="p-26595-what-comes-next-13" class="anchor" href="https://talk.nervos.org#p-26595-what-comes-next-13" aria-label="Heading link"></a>What comes next</h2>
+<p>More of the game will live on chain, and more of the chain will show up in the game. On the list: the cellula wallet as a sign-in option, so a player’s whole climb can happen with the same account they use on cellula.id; quick pay over Fiber, a channel opened from the wallet sheet (20 to 1,000 CKB, through a hosted LSP), then a name paid through its <code>fiber.link</code> record, accessories for 20 CKB and tips of 0.1 CKB at the booths, with no transaction per payment; more heroes with powers; and more of the game’s moments written to the player’s name rather than kept by our server.</p>
+<h2><a name="p-26595-join-the-first-wave-14" class="anchor" href="https://talk.nervos.org#p-26595-join-the-first-wave-14" aria-label="Heading link"></a>Join the first wave</h2>
+<p>The town’s list is empty: no house has gone up yet. The first hundred real names on it are the first wave.</p>
+<ol>
+<li>Play the seven floors at <a href="https://poi.cellula.id" rel="noopener nofollow ugc">poi.cellula.id</a> and register the game’s name on floor 7 (testnet).</li>
+<li>Sign your climb onto the board at the end.</li>
+<li>Register your name on mainnet at <a href="https://cellula.id" rel="noopener nofollow ugc">cellula.id</a>.</li>
+<li>Sign at the town’s door with that name.</li>
+</ol>
+<p>Your house goes up in the town, and the first hundred get the founder medal (<em>One of the first 100 houses</em>) and the laurel wreath.</p>
+<p>Questions, bugs and ideas are welcome in this thread.</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/poi-proof-of-identity-a-platformer-on-ckb-testnet-that-teaches-cell-names-by-using-them/10967">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/poi-proof-of-identity-a-platformer-on-ckb-testnet-that-teaches-cell-names-by-using-them/10967</link>
+          <pubDate>Mon, 12 Oct 2026 15:41:20 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-10967</guid>
+          <source url="https://talk.nervos.org/t/poi-proof-of-identity-a-platformer-on-ckb-testnet-that-teaches-cell-names-by-using-them/10967.rss">POI: Proof of Identity, a platformer on CKB testnet that teaches .cell names by using them</source>
+        </item>
         <item>
           <title>[DIS] CrowdCell: From Testnet Demo to a Crowdfunding Product on CKB | CrowdCell：把 CKB 测试网上的免信任众筹做成产品</title>
           <dc:creator><![CDATA[Ayoub_Lesfer]]></dc:creator>
@@ -1924,13 +2010,13 @@ other CKB applications to add payment automation without building their own priv
           <source url="https://talk.nervos.org/t/introducing-ckautomata-payment-automation-and-nervos-dao-harvest-on-ckb/10813.rss">Introducing CKAutomata: Payment Automation and Nervos DAO Harvest on CKB</source>
         </item>
         <item>
-          <title>[DIS] Hardening Kirea Finance (Native RWA Lending on CKB) | Kirea Finance 加固：CKB 原生的现实世界资产（RWA）借贷</title>
+          <title>[DIS] Kirea Finance: Native RWA Lending Infrastructure for CKB |【DIS】Kirea Finance：面向 CKB 的原生 RWA 借贷基础设施</title>
           <dc:creator><![CDATA[SalmanDev]]></dc:creator>
           <category>CKB Community Fund DAO</category>
           <description><![CDATA[
             <h2><a name="p-26374-summary-1" class="anchor" href="https://talk.nervos.org#p-26374-summary-1" aria-label="Heading link"></a>Summary</h2>
-<p>Kirea Finance is a native Real-World Asset (RWA) pattern built on CKB, which represents real-world asset claims as unique, ownable on-chain assets that owners can hold, transfer, or use as collateral for loans. The full lifecycle, from asset issuance and KYC attestation through deposit, borrowing, repayment, and release, is already implemented on the CKB testnet, with no external bridges or custodians required.</p>
-<p>This proposal requests $7,250 to harden the existing testnet pattern for broader ecosystem use. The grant will fund generalizing the attestation and asset components, replacing mocked KYC with a live Sumsub API integration, and handling repayment edge cases. By focusing on a narrow, compliance-gated scope, this grant delivers reusable RWA infrastructure that any CKB project can leverage.</p>
+<p>Kirea Finance is open-source infrastructure for compliant, native real-world asset (RWA) claims on CKB: a unique-asset pattern, an issuer-revocable KYC attestation cell, and a fixed-term lending contract that uses both. The full flow is implemented and verified end to end on the CKB testnet, with no bridge or custodian required. By open-sourcing these reusable primitives for RWA collateral, issuer-controlled KYC, and fixed-term lending, this work expands the native DeFi capabilities available to CKB projects without relying on bridges or custodians.</p>
+<p>This proposal requests $7,250 to harden that infrastructure so other CKB projects can build on it: strengthening the lending contract’s security by enforcing loan rules on every collateral spend and verifying net disbursement and repayment, integrating a live KYC provider, and handling repayment edge cases.</p>
 <p><strong>Grant Amount Requested:</strong> $7,250<br>
 <strong>ETA to Completion:</strong> 10 weeks from approval<br>
 <strong>CKB Wallet:</strong> <code>ckb1qyqvaj4pmuw9vxurdlg8lx3sv7ywmcge33vsvrvu39</code><br>
@@ -1990,23 +2076,23 @@ other CKB applications to add payment automation without building their own priv
 <p><strong>Fixed-term loans instead of a dynamic CDP.</strong> A collateralized-debt-position model (like Stable++, an existing live protocol on CKB) requires live pricing and a liquidation engine, real financial-engineering surface area. Since the goal here is building the compliance-gated lending pattern, not building a second CDP protocol, loan terms are fixed at deposit time instead, which removes the need for a price oracle entirely.</p>
 <p><strong>A dedicated attestation Cell instead of reusing an existing identity primitive.</strong> CKB already has a general-purpose claim/identity system (did:ckb), but its claims are revocable only by the credential holder, not the issuer. That fits reputation use cases well but doesn’t fit compliance: a KYC credential needs to be revocable by the verifying party. This project uses a small, purpose-built attestation Cell instead, rather than retrofitting a primitive built for a different trust model.</p>
 <hr>
-<h2><a name="p-26374-fee-model-and-sustainability-9" class="anchor" href="https://talk.nervos.org#p-26374-fee-model-and-sustainability-9" aria-label="Heading link"></a>Fee Model and Sustainability</h2>
-<p>While out of scope for this testnet grant, the future mainnet platform will implement origination fee per loan to support ongoing maintenance and development. Additional revenue models include custom onboarding services for asset issuers and licensing the compliance-gated vault pattern to third-party CKB protocols.</p>
+<p>Fee Model and Sustainability</p>
+<p>The open-source contracts, scripts, and documentation funded by this grant remain free for any CKB project to use. Revenue comes from the production layer built on top of them: a small origination fee on each loan once the platform is live with real loans, and managed onboarding for asset issuers who want a supported integration. Additional revenue can come from paid integration and compliance support for CKB projects that adopt the attestation and unique-asset patterns. As adoption grows, these fees allow the platform to sustain itself without compromising the free, open-source core.</p>
 <hr>
-<h2><a name="p-26374-alignment-with-ckb-philosophy-10" class="anchor" href="https://talk.nervos.org#p-26374-alignment-with-ckb-philosophy-10" aria-label="Heading link"></a>Alignment with CKB philosophy</h2>
+<h2><a name="p-26374-alignment-with-ckb-philosophy-9" class="anchor" href="https://talk.nervos.org#p-26374-alignment-with-ckb-philosophy-9" aria-label="Heading link"></a>Alignment with CKB philosophy</h2>
 <p>CKB’s Cell model is well suited to representing a single non-fungible real-world claim with provable uniqueness and explicit ownership. This project uses the Cell model as designed rather than simulating account-based balances.</p>
 <p>The RWA application is therefore one use case for a more fundamental primitive: a unique, ownable, transferable on-chain representation of a real-world claim.</p>
 <hr>
-<h2><a name="p-26374-background-and-experience-11" class="anchor" href="https://talk.nervos.org#p-26374-background-and-experience-11" aria-label="Heading link"></a>Background and Experience</h2>
+<h2><a name="p-26374-background-and-experience-10" class="anchor" href="https://talk.nervos.org#p-26374-background-and-experience-10" aria-label="Heading link"></a>Background and Experience</h2>
 <p>Kirea Finance is built and maintained by Salmandev, I’m a full-stack blockchain developer. My public GitHub (<a href="http://github.com/salmansarwarr" class="inline-onebox" rel="noopener nofollow ugc">salmansarwarr (Salman Sarwar) · GitHub</a>) holds work across smart contracts and full-stack applications. I have previously completed a project funded under the Nervos Spark program: a “Stripe-Style” React Payment Library for Fiber Network.</p>
 <p>For this proposal, I designed and implemented all three core components of Kirea Finance: the Type-ID RWA asset cell, the issuer-revocable KYC attestation cell, and the fixed-term lending state machine. The contracts are written in Rust and compiled for CKB’s RISC-V VM, and the full lifecycle is deployed and verified on CKB testnet.</p>
 <hr>
-<h2><a name="p-26374-what-this-grant-adds-12" class="anchor" href="https://talk.nervos.org#p-26374-what-this-grant-adds-12" aria-label="Heading link"></a>What This Grant Adds</h2>
+<h2><a name="p-26374-what-this-grant-adds-11" class="anchor" href="https://talk.nervos.org#p-26374-what-this-grant-adds-11" aria-label="Heading link"></a>What This Grant Adds</h2>
 <p>| Milestone | Deliverable |</p>
 <p>|—|—|</p>
 <p>| **1. Security hardening, attestation and asset pattern** | Enforce the loan rules on every collateral spend, verify actual net disbursement and repayment, then generalize the attestation cell and asset representation. Details below. |</p>
-<p>| **2. Live Sumsub integration** | Replace mocked verification with a real KYC API integration: webhook/callback handling, mapping the verification result to the existing on-chain attestation write, sandbox-to-limited-production setup. |</p>
-<p>| **3. Repayment edge cases, application design &amp; testnet verification** | Explicit late-repayment/default handling on top of the existing repay/release flow (still no dynamic liquidation or price oracle); a UI for the lending flow and reference asset (collateral/loan status, lifecycle progress, reproducible testnet activity); expanded testnet verification tooling. |</p>
+<p>| **2.Reference KYC integration** |replace mocked verification with a real Sumsub integration that other CKB projects can reuse: webhook handling, mapping results to the on-chain attestation write, sandbox-to-limited-production setup. |</p>
+<p>| **3. Repayment edge cases, reference UI and verification tooling** | Explicit late-repayment/default handling on top of the existing repay/release flow; a UI for the lending flow and reference asset (collateral/loan status, lifecycle progress, reproducible testnet activity); expanded testnet verification tooling. |</p>
 <p>**Milestone 1 details**</p>
 <p>- Enforce the loan rules on every collateral spend: replace the issuer-key vault with a dedicated vault lock that pins the loan type script and only allows the collateral to be spent in a transaction that also consumes the matching loan cell, so the release checks always run.</p>
 <p>- Verify actual net disbursement and repayment: borrow and repay compare each party’s token balance across inputs and outputs, so only a real net transfer of at least the loan amount or repay amount passes, not recycled change.</p>
@@ -2014,7 +2100,7 @@ other CKB applications to add payment automation without building their own priv
 <p>- Then generalize the attestation cell and asset representation: configurable parameters, documented schema. This lays the groundwork for more asset types in a future phase.</p>
 <p>**Acceptance:** the negative tests pass in the test suite, and the updated contracts complete a full deposit-to-release run on testnet.</p>
 <hr>
-<h2><a name="p-26374-budget-13" class="anchor" href="https://talk.nervos.org#p-26374-budget-13" aria-label="Heading link"></a>Budget</h2>
+<h2><a name="p-26374-budget-12" class="anchor" href="https://talk.nervos.org#p-26374-budget-12" aria-label="Heading link"></a>Budget</h2>
 <p><strong>Total requested:</strong> $7,250 USD equivalent</p>
 <div class="md-table">
 <table>
@@ -2041,7 +2127,7 @@ other CKB applications to add payment automation without building their own priv
 </table>
 </div><p><strong>Disbursement:</strong> staged, 20% ($1,450) on approval, remaining 80% ($5,800) released against milestone completion.</p>
 <hr>
-<h2><a name="p-26374-out-of-scope-this-phase-14" class="anchor" href="https://talk.nervos.org#p-26374-out-of-scope-this-phase-14" aria-label="Heading link"></a>Out of Scope (this phase)</h2>
+<h2><a name="p-26374-out-of-scope-this-phase-13" class="anchor" href="https://talk.nervos.org#p-26374-out-of-scope-this-phase-13" aria-label="Heading link"></a>Out of Scope (this phase)</h2>
 <ul>
 <li>Real custody or legal backing of the underlying asset</li>
 <li>Dynamic collateral ratios, price oracles, or liquidation auctions</li>
@@ -2051,7 +2137,7 @@ other CKB applications to add payment automation without building their own priv
 <li>Legal/compliance licensing work</li>
 </ul>
 <hr>
-<h2><a name="p-26374-why-this-matters-for-nervos-15" class="anchor" href="https://talk.nervos.org#p-26374-why-this-matters-for-nervos-15" aria-label="Heading link"></a>Why This Matters for Nervos</h2>
+<h2><a name="p-26374-why-this-matters-for-nervos-14" class="anchor" href="https://talk.nervos.org#p-26374-why-this-matters-for-nervos-14" aria-label="Heading link"></a>Why This Matters for Nervos</h2>
 <p>Real-world borrowers need capital, and DeFi has capital looking for yield. Today there is no compliant, on-chain path connecting the two on CKB. Tokenizing real-world assets is increasingly seen as a major direction for the blockchain industry, CKB already has the infrastructure for DeFi applications, but the ecosystem has limited access to high-quality real-world assets and productive external liquidity. This pattern is a first step toward changing that.</p>
 <p>This grant turns a working demo into reusable infrastructure:</p>
 <ul>
@@ -2059,73 +2145,40 @@ other CKB applications to add payment automation without building their own priv
 <li><strong>For reviewers and users:</strong> explicit late-repayment and default handling, a UI, and reproducible testnet activity that anyone can verify.</li>
 <li><strong>For the ecosystem:</strong> a fully open-source reference showing a bridge-free, custodian-free RWA lending flow on the Cell model.</li>
 </ul>
-<h3><a name="p-26374-what-this-could-be-used-for-future-applications-not-deliverables-of-this-grant-16" class="anchor" href="https://talk.nervos.org#p-26374-what-this-could-be-used-for-future-applications-not-deliverables-of-this-grant-16" aria-label="Heading link"></a>What this could be used for (future applications, not deliverables of this grant)</h3>
+<h3><a name="p-26374-what-this-could-be-used-for-future-applications-not-deliverables-of-this-grant-15" class="anchor" href="https://talk.nervos.org#p-26374-what-this-could-be-used-for-future-applications-not-deliverables-of-this-grant-15" aria-label="Heading link"></a>What this could be used for (future applications, not deliverables of this grant)</h3>
 <ul>
 <li><strong>Invoice and receivables financing.</strong> A business borrows against a verified invoice instead of waiting 60–90 days for payment.</li>
 <li>**Cheaper credit for underserved borrowers.**Producers of physical goods (coffee, commodities, etc.) in places with no access to normal credit can post their real-world assets as collateral, get verified through an on-chain ID+KYC system, and borrow money from DeFi lenders around the world at reasonable rates, instead of going to loan sharks charging predatory interest.</li>
 <li><strong>Asset-backed short-term loans.</strong> Equipment, inventory, or commodity claims used as collateral for fixed-term loans with ability to onboard other types of assets in the future, such as Gold, Real estate, stocks etc.</li>
 <li><strong>Transferable RWA claims.</strong> A uniquely identified claim could potentially be transferred between parties on CKB, subject to the legal and contractual framework governing the underlying real-world asset.</li>
 </ul>
-<h3><a name="p-26374-why-on-chain-rwa-matters-what-this-pattern-enables-in-future-phases-17" class="anchor" href="https://talk.nervos.org#p-26374-why-on-chain-rwa-matters-what-this-pattern-enables-in-future-phases-17" aria-label="Heading link"></a>Why on-chain RWA matters (what this pattern enables in future phases)</h3>
+<h3><a name="p-26374-why-on-chain-rwa-matters-what-this-pattern-enables-in-future-phases-16" class="anchor" href="https://talk.nervos.org#p-26374-why-on-chain-rwa-matters-what-this-pattern-enables-in-future-phases-16" aria-label="Heading link"></a>Why on-chain RWA matters (what this pattern enables in future phases)</h3>
 <ul>
 <li><strong>For asset holders:</strong> a business or individual holding a real-world claim, such as an invoice, can unlock liquidity from it without selling it, while keeping ownership of the underlying claim.</li>
 <li><strong>For lenders and liquidity providers:</strong> loans backed by verified real-world claims could offer yield sourced from real economic activity, rather than only from crypto-native lending and trading. Yield levels would depend on loan terms and asset quality, and none are promised here.</li>
 <li><strong>For CKB:</strong> access to real-world assets and external liquidity that the ecosystem currently lacks, brought in through a transparent, on-chain lifecycle rather than a bridge or custodian.</li>
 </ul>
-<h3><a name="p-26374-comparison-to-traditionalinformal-lending-18" class="anchor" href="https://talk.nervos.org#p-26374-comparison-to-traditionalinformal-lending-18" aria-label="Heading link"></a>Comparison to traditional/informal lending</h3>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Traditional / informal</th>
-<th>Pattern proposed here</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Access</td>
-<td>Needs bank or local lender</td>
-<td>Any on-chain verified borrower</td>
-</tr>
-<tr>
-<td>Cost</td>
-<td>High rates and fees</td>
-<td>Fixed terms</td>
-</tr>
-<tr>
-<td>Transparency</td>
-<td>Opaque</td>
-<td>On-chain, verifiable</td>
-</tr>
-<tr>
-<td>Settlement</td>
-<td>Days to weeks</td>
-<td>Native on CKB</td>
-</tr>
-</tbody>
-</table>
-</div><hr>
-<h2><a name="p-26374-risk-mitigation-19" class="anchor" href="https://talk.nervos.org#p-26374-risk-mitigation-19" aria-label="Heading link"></a>Risk &amp; Mitigation</h2>
+<hr>
+<h2><a name="p-26374-risk-mitigation-17" class="anchor" href="https://talk.nervos.org#p-26374-risk-mitigation-17" aria-label="Heading link"></a>Risk &amp; Mitigation</h2>
 <ul>
 <li><strong>Execution risk (solo developer):</strong> mitigated by narrow scope and a complete, working demo on testnet before this proposal. I have a previous history of completing projects under the Nervos Spark program. Asset issuance, KYC attestation, deposit, borrow, repay, and release are all implemented and tested, which demonstrates the core pattern is technically sound.</li>
 <li><strong>KYC vendor dependency:</strong> Sumsub is a widely used, established provider; this grant’s integration work is limited to API/webhook integration, not building verification logic from scratch. While also allowing for any KYC to be used without changes to the core design.</li>
 <li><strong>Scope creep risk:</strong> explicitly bounded by the Out of Scope list above.</li>
 </ul>
 <hr>
-<h2><a name="p-26374-call-to-action-20" class="anchor" href="https://talk.nervos.org#p-26374-call-to-action-20" aria-label="Heading link"></a>Call to Action</h2>
-<p>The core pattern, a real-world claim, gated by KYC, used as loan collateral, is fully implemented and verified end to end on CKB testnet. This proposal funds hardening that working pattern into something a second builder, a second asset type, or a second team could pick up and extend. A future phase will take this into production: real custody, compliance, and mainnet deployment.</p>
+<h2><a name="p-26374-call-to-action-18" class="anchor" href="https://talk.nervos.org#p-26374-call-to-action-18" aria-label="Heading link"></a>Call to Action</h2>
+<p>The core pattern, a real-world claim, gated by KYC, used as loan collateral, is fully implemented and verified end to end on CKB testnet. This proposal funds hardening that working, open-source pattern so any builders, asset type or team can pick it up and extend it.</p>
 <p>I appreciate the community’s consideration and welcome any feedback on the architecture, scope, or budget.</p>
-            <p><small>8 posts - 4 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/dis-hardening-kirea-finance-native-rwa-lending-on-ckb-kirea-finance-ckb-rwa/10809">Read full topic</a></p>
+            <p><small>9 posts - 4 participants</small></p>
+            <p><a href="https://talk.nervos.org/t/dis-kirea-finance-native-rwa-lending-infrastructure-for-ckb-dis-kirea-finance-ckb-rwa/10809">Read full topic</a></p>
           ]]></description>
-          <link>https://talk.nervos.org/t/dis-hardening-kirea-finance-native-rwa-lending-on-ckb-kirea-finance-ckb-rwa/10809</link>
+          <link>https://talk.nervos.org/t/dis-kirea-finance-native-rwa-lending-infrastructure-for-ckb-dis-kirea-finance-ckb-rwa/10809</link>
           <pubDate>Tue, 06 Oct 2026 16:14:27 +0000</pubDate>
           <discourse:topicPinned>No</discourse:topicPinned>
           <discourse:topicClosed>No</discourse:topicClosed>
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-10809</guid>
-          <source url="https://talk.nervos.org/t/dis-hardening-kirea-finance-native-rwa-lending-on-ckb-kirea-finance-ckb-rwa/10809.rss">[DIS] Hardening Kirea Finance (Native RWA Lending on CKB) | Kirea Finance 加固：CKB 原生的现实世界资产（RWA）借贷</source>
+          <source url="https://talk.nervos.org/t/dis-kirea-finance-native-rwa-lending-infrastructure-for-ckb-dis-kirea-finance-ckb-rwa/10809.rss">[DIS] Kirea Finance: Native RWA Lending Infrastructure for CKB |【DIS】Kirea Finance：面向 CKB 的原生 RWA 借贷基础设施</source>
         </item>
         <item>
           <title>CKB Off Chain Aba: Event Overview</title>
@@ -5002,265 +5055,6 @@ given it’s open to any platform user.</p>
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-10743</guid>
           <source url="https://talk.nervos.org/t/obscell-web-wallet-ckb/10743.rss">Obscell Web Wallet —— CKB 隐私钱包的浏览器版（纯前端）</source>
-        </item>
-        <item>
-          <title>Nervape Email Wallet</title>
-          <dc:creator><![CDATA[faber_yang]]></dc:creator>
-          <category>Applications &amp; Ecosystem</category>
-          <description><![CDATA[
-            <h1><a name="p-26153-nervape-email-wallet-1" class="anchor" href="https://talk.nervos.org#p-26153-nervape-email-wallet-1" aria-label="Heading link"></a>Nervape Email Wallet</h1>
-<h2><a name="p-26153-h-1-2" class="anchor" href="https://talk.nervos.org#p-26153-h-1-2" aria-label="Heading link"></a>1. 项目名称</h2>
-<p><strong>Nervape Email Wallet：面向普通用户的 CKB 邮箱托管钱包</strong></p>
-<p>Nervape Email Wallet 是 Nervape 产品中的一项内置钱包功能。用户无需安装浏览器扩展、创建助记词或理解 CKB 地址和 Cell 模型，只需使用邮箱完成注册和登录，即可获得一个可用于 CKB、Spore 与 Nervape 数字资产的托管钱包。</p>
-<p>它不是一个独立于 Nervape 的通用登录系统，而是 Nervape 降低 Web2 用户进入 CKB 生态门槛的产品入口。</p>
-<hr>
-<h2><a name="p-26153-h-2-3" class="anchor" href="https://talk.nervos.org#p-26153-h-2-3" aria-label="Heading link"></a>2. 项目摘要</h2>
-<p>CKB 拥有独特的 Cell 模型、可编程密码学能力和以 Spore 为代表的数字对象协议，但普通用户首次进入生态时，仍然需要面对钱包安装、助记词备份、网络配置、资产准备和交易签名等步骤。</p>
-<p>Nervape Email Wallet 将这些复杂性收敛到 Nervape 产品内部：</p>
-<pre><code class="lang-auto">输入邮箱
-→ 完成邮箱验证
-→ 自动创建 CKB 钱包
-→ 领取或购买 Nervape Artifact
-→ 在 Nervape 内查看、使用和转移资产
-
-</code></pre>
-<p>用户感知到的是一个熟悉的互联网账户，底层实际拥有独立的 CKB 地址，并通过真实的 CKB 交易持有和操作链上资产。</p>
-<hr>
-<h2><a name="p-26153-h-3-4" class="anchor" href="https://talk.nervos.org#p-26153-h-3-4" aria-label="Heading link"></a>3. 背景</h2>
-<h3><a name="p-26153-h-31-ckb-5" class="anchor" href="https://talk.nervos.org#p-26153-h-31-ckb-5" aria-label="Heading link"></a>3.1 CKB 用户进入门槛</h3>
-<p>已经熟悉加密钱包的用户可以使用 JoyID、UTXO Global、OKX、UniSat、REI 等钱包进入 CKB 应用，但大量潜在用户并不具备以下知识：</p>
-<ul>
-<li>什么是助记词和私钥；</li>
-<li>如何安装并连接钱包；</li>
-<li>如何准备 CKB 作为网络容量和手续费；</li>
-<li>如何确认一笔 Cell 模型交易；</li>
-<li>如何识别 Spore、DOB 和普通代币资产；</li>
-<li>如何在设备丢失后恢复钱包。</li>
-</ul>
-<p>当用户只是希望领取一件 Nervape Artifact、参与一次活动或购买一件数字收藏品时，这些准备步骤会显著降低转化率。</p>
-<h3><a name="p-26153-h-32-nervape-6" class="anchor" href="https://talk.nervos.org#p-26153-h-32-nervape-6" aria-label="Heading link"></a>3.2 Nervape 的产品位置</h3>
-<p>Nervape 已经围绕 CKB、Bitcoin、Spore 和 DOB 构建数字对象体验。相比单纯的钱包产品，Nervape 更接近真实用户场景：</p>
-<ul>
-<li>用户因为内容、角色和 Artifact 进入产品；</li>
-<li>用户先理解数字对象的用途，再理解链上所有权；</li>
-<li>钱包是完成体验的基础能力，而不是产品本身；</li>
-<li>CKB 交易可以隐藏在领取、改名、组合、转移等自然操作中。</li>
-</ul>
-<p>因此，Nervape 适合承担 CKB 生态的用户入口角色。</p>
-<hr>
-<h2><a name="p-26153-h-4-7" class="anchor" href="https://talk.nervos.org#p-26153-h-4-7" aria-label="Heading link"></a>4. 产品目标</h2>
-<h3><a name="p-26153-h-41-8" class="anchor" href="https://talk.nervos.org#p-26153-h-41-8" aria-label="Heading link"></a>4.1 用户目标</h3>
-<ul>
-<li>使用邮箱即可创建 Nervape 账户和 CKB 钱包；</li>
-<li>不安装钱包也能领取、持有和使用 Nervape Artifact；</li>
-<li>在统一页面查看钱包地址、资产和交易记录；</li>
-<li>转移资产时获得清晰的对象、接收方和费用信息；</li>
-</ul>
-<h3><a name="p-26153-h-42-9" class="anchor" href="https://talk.nervos.org#p-26153-h-42-9" aria-label="Heading link"></a>4.2 产品目标</h3>
-<ul>
-<li>降低 Nervape 新用户首次链上操作的步骤和失败率；</li>
-<li>让邮箱用户和外部钱包用户进入相同的业务流程；</li>
-<li>保持资产真实上链，不建立脱离 CKB 的内部账本；</li>
-<li>形成可被 Nervape Web、iOS 及后续产品复用的钱包能力；</li>
-<li>为 CKB 和 Spore 生态带来可持续的真实用户与交易。</li>
-</ul>
-<hr>
-<h2><a name="p-26153-h-5-10" class="anchor" href="https://talk.nervos.org#p-26153-h-5-10" aria-label="Heading link"></a>5. 产品体验</h2>
-<h3><a name="p-26153-h-51-11" class="anchor" href="https://talk.nervos.org#p-26153-h-51-11" aria-label="Heading link"></a>5.1 首次使用</h3>
-<pre><code class="lang-auto">用户选择“使用邮箱继续”
-→ 输入邮箱
-→ 输入邮箱验证码
-→ 创建 Nervape 账户
-→ 系统创建对应的 CKB 托管钱包
-→ 用户进入 Nervape
-
-</code></pre>
-<p>钱包创建过程不要求用户设置助记词。产品应明确告知用户：该钱包由 Nervape 托管，可在钱包管理页面查看安全状态与迁移选项。</p>
-<h3><a name="p-26153-h-52-artifact-12" class="anchor" href="https://talk.nervos.org#p-26153-h-52-artifact-12" aria-label="Heading link"></a>5.2 领取 Artifact</h3>
-<pre><code class="lang-auto">用户打开 Artifact 页面
-→ 点击领取
-→ Nervape 展示领取内容
-→ 用户确认
-→ 服务端完成 CKB 交易签名与提交
-→ 页面展示链上确认状态
-→ Artifact 出现在用户资产中
-
-</code></pre>
-<h3><a name="p-26153-h-53-13" class="anchor" href="https://talk.nervos.org#p-26153-h-53-13" aria-label="Heading link"></a>5.3 转移资产</h3>
-<pre><code class="lang-auto">用户选择一个 Artifact
-→ 用户完成安全验证
-→ 输入接收地址
-→ Nervape 签名并广播 CKB 交易
-→ 用户查看交易状态
-
-</code></pre>
-<p>安全验证可以根据风险等级采用邮箱 OTP。</p>
-<hr>
-<h2><a name="p-26153-h-6-14" class="anchor" href="https://talk.nervos.org#p-26153-h-6-14" aria-label="Heading link"></a>6. 核心能力</h2>
-<h3><a name="p-26153-h-61-15" class="anchor" href="https://talk.nervos.org#p-26153-h-61-15" aria-label="Heading link"></a>6.1 邮箱身份</h3>
-<p>邮箱用于识别和验证 Nervape 用户，不直接参与 CKB 地址计算。系统内部使用稳定且不可变的 用户id 关联钱包，避免用户修改邮箱后产生新钱包。</p>
-<h3><a name="p-26153-h-62-ckb-16" class="anchor" href="https://talk.nervos.org#p-26153-h-62-ckb-16" aria-label="Heading link"></a>6.2 CKB 托管钱包</h3>
-<p>每个用户拥有独立的钱包记录和 CKB 地址。钱包负责：</p>
-<ul>
-<li>生成 CKB 密钥和地址；</li>
-<li>管理钱包状态；</li>
-<li>查询 CKB 容量及资产；</li>
-<li>签署标准 CKB 交易；</li>
-<li>支持 Spore、DOB 和 Nervape 业务交易；</li>
-<li>记录所有签名和广播行为。</li>
-</ul>
-<h3><a name="p-26153-h-63-17" class="anchor" href="https://talk.nervos.org#p-26153-h-63-17" aria-label="Heading link"></a>6.3 统一钱包接口</h3>
-<p>外部钱包和邮箱钱包实现相同的业务接口：</p>
-<pre><code class="lang-auto">External Wallet
-→ 用户在钱包中签名
-→ 返回已签名交易
-
-Email Wallet
-→ 用户在Nervape托管签名服务签名
-→ 返回已签名交易
-
-</code></pre>
-<p>业务模块只处理交易结果，不需要分别实现两套领取、转移和改名流程。</p>
-<hr>
-<h2><a name="p-26153-h-7-18" class="anchor" href="https://talk.nervos.org#p-26153-h-7-18" aria-label="Heading link"></a>7. 系统架构</h2>
-<pre><code class="lang-auto">                         Nervape Web
-                              |
-                    Frontend Wallet Module
-                              |
-              +---------------+---------------+
-              |                               |
-       CKB Node / Indexer             Backend Signing Service
-              |                               |
-      查询地址、Cell 和资产             验证用户与邮箱 OTP
-      构造、组装并广播交易              使用托管私钥完成签名
-              |                               |
-              +---------- 已签名交易 ----------+
-
-</code></pre>
-<p>钱包相关能力主要在前端实现。前端直接通过 CKB RPC、Indexer 和 CKB SDK 查询链上数据、构造交易、组装 Witness 并广播交易。</p>
-<p>Frontend Wallet Module 负责：</p>
-<ul>
-<li>获取当前邮箱钱包的 CKB 地址；</li>
-<li>通过 CKB Node 和 Indexer 查询 Cell、余额和资产；</li>
-<li>构造 Artifact 领取、改名和转移交易；</li>
-<li>计算费用并生成 CKB 签名消息；</li>
-<li>将待签名消息提交给后端签名服务；</li>
-<li>广播已签名交易并查询链上状态。</li>
-<li>Backend Signing Service</li>
-</ul>
-<p>后端只负责托管签名：</p>
-<ul>
-<li>验证用户登录状态和邮箱 OTP；</li>
-<li>校验签名请求所属的钱包；</li>
-<li>解密对应的托管私钥；</li>
-<li>生成 CKB 签名并返回前端；</li>
-<li>记录签名时间、用户、钱包和签名摘要。</li>
-</ul>
-<p>完整流程如下：</p>
-<pre><code class="lang-auto">前端查询 CKB Cell 和资产
-→ 用户完成邮箱注册/登录
-→ 前端构造交易消息
-→ 前端请求后端签名
-→ 后端返回 CKB 签名
-→ 前端广播交易
-→ 前端查询交易状态并更新页面
-
-</code></pre>
-<hr>
-<h2><a name="p-26153-h-8-ckb-19" class="anchor" href="https://talk.nervos.org#p-26153-h-8-ckb-19" aria-label="Heading link"></a>8. 对 CKB 生态的贡献</h2>
-<h3><a name="p-26153-h-81-ckb-20" class="anchor" href="https://talk.nervos.org#p-26153-h-81-ckb-20" aria-label="Heading link"></a>8.1 为 CKB 引入非加密原生用户</h3>
-<p>邮箱钱包把使用路径从“安装钱包并准备资产”缩短为“验证邮箱并开始体验”。用户可以因为 Nervape 角色、活动和内容进入 CKB，而不是必须先对区块链产生兴趣。</p>
-<h3><a name="p-26153-h-82-21" class="anchor" href="https://talk.nervos.org#p-26153-h-82-21" aria-label="Heading link"></a>8.2 增加真实链上用户与资产持有者</h3>
-<p>每个邮箱用户都对应真实的 CKB 地址，Artifact 领取和转移都由 CKB 交易完成。增长结果可以直接沉淀为：</p>
-<ul>
-<li>新增 CKB 地址；</li>
-<li>新增 Spore 持有者；</li>
-<li>新增 DOB 交互；</li>
-<li>新增链上交易；</li>
-<li>新增跨应用可使用的数字资产。</li>
-</ul>
-<h3><a name="p-26153-h-83-ckb-22" class="anchor" href="https://talk.nervos.org#p-26153-h-83-ckb-22" aria-label="Heading link"></a>8.3 展示 CKB 的用户体验能力</h3>
-<p>CKB 的可编程密码学和 Cell 模型不应只表现为开发者能力，也可以转化为普通用户可理解的产品体验。Nervape Email Wallet 展示了复杂链上结构可以被包装成领取、组合、改名和转移等自然操作。</p>
-<hr>
-<h2><a name="p-26153-h-9-23" class="anchor" href="https://talk.nervos.org#p-26153-h-9-23" aria-label="Heading link"></a>9. 产品边界</h2>
-<h3><a name="p-26153-h-91-24" class="anchor" href="https://talk.nervos.org#p-26153-h-91-24" aria-label="Heading link"></a>9.1 首期范围</h3>
-<p>首期聚焦 Nervape 自有产品中的 CKB 和 Artifact 场景：</p>
-<ul>
-<li>使用邮箱注册和登录 Nervape；</li>
-<li>自动为邮箱用户创建 CKB 托管钱包；</li>
-<li>在前端查询并展示 CKB 地址、余额、Artifact 和交易记录；</li>
-<li>支持 Artifact 领取、改名和转移；</li>
-<li>每次签名前通过邮箱 OTP 完成授权；</li>
-<li>在前端构造、组装、广播交易并查询链上状态；</li>
-<li>提供独立的钱包管理页面入口。</li>
-</ul>
-<h3><a name="p-26153-h-92-25" class="anchor" href="https://talk.nervos.org#p-26153-h-92-25" aria-label="Heading link"></a>9.2 前后端边界</h3>
-<p>前端负责：</p>
-<ul>
-<li>调用 CKB Node 和 Indexer 查询 Cell、余额及资产；</li>
-<li>构造 CKB 和 Artifact 交易；</li>
-<li>计算签名消息并提交签名请求；</li>
-<li>将签名写入 Witness；</li>
-<li>广播交易并查询确认状态。</li>
-</ul>
-<p>后端只负责托管签名：</p>
-<ul>
-<li>为邮箱用户生成并加密保存私钥；</li>
-<li>返回用户对应的 CKB 地址；</li>
-<li>验证登录状态、邮箱 OTP 和钱包归属；</li>
-<li>对前端提交的签名消息完成签名；</li>
-<li>返回签名并记录审计日志。</li>
-</ul>
-<p>后端不负责资产查询、Cell 收集、交易构造、Witness 组装、交易广播和交易状态查询，也不维护独立的资产账本。</p>
-<hr>
-<h2><a name="p-26153-h-10-26" class="anchor" href="https://talk.nervos.org#p-26153-h-10-26" aria-label="Heading link"></a>10. 实施阶段</h2>
-<h3><a name="p-26153-h-27" class="anchor" href="https://talk.nervos.org#p-26153-h-27" aria-label="Heading link"></a>阶段一：签名链路验证</h3>
-<ul>
-<li>建立邮箱用户、托管钱包和加密私钥的关联；</li>
-<li>完成私钥生成、加密存储和 CKB 地址生成；</li>
-<li>实现邮箱 OTP 验证和 CKB 签名接口；</li>
-<li>前端在测试网查询 Cell、构造交易并计算签名消息；</li>
-<li>后端返回签名；</li>
-<li>前端组装广播交易并查询结果；</li>
-<li>验证 OTP 失效、重复签名和签名失败等异常流程。</li>
-</ul>
-<h3><a name="p-26153-nervape-web-28" class="anchor" href="https://talk.nervos.org#p-26153-nervape-web-28" aria-label="Heading link"></a>阶段二：Nervape Web 产品闭环</h3>
-<ul>
-<li>完成邮箱登录和自动创建 CKB 钱包；</li>
-<li>在前端 Wallet Adapter 中接入 Email Wallet；</li>
-<li>在前端展示地址、余额、Artifact 和交易记录；</li>
-<li>支持 Artifact 领取、改名和转移；</li>
-<li>完成交易确认、OTP 授权、签名和广播交互；</li>
-<li>完成测试网端到端及回归测试。</li>
-</ul>
-<hr>
-<h2><a name="p-26153-h-11-29" class="anchor" href="https://talk.nervos.org#p-26153-h-11-29" aria-label="Heading link"></a>11. 成功指标</h2>
-<p>产品指标：</p>
-<ul>
-<li>邮箱注册到钱包创建成功率；</li>
-<li>首次 Artifact 领取完成率；</li>
-<li>首次链上操作平均耗时；</li>
-<li>签名失败率和交易失败率。</li>
-</ul>
-<p>CKB 生态指标：</p>
-<ul>
-<li>通过邮箱钱包新增的 CKB 地址数；</li>
-<li>新增 Spore/DOB 持有地址数；</li>
-<li>邮箱钱包产生的 CKB 交易数；</li>
-</ul>
-<hr>
-<h2><a name="p-26153-h-12-30" class="anchor" href="https://talk.nervos.org#p-26153-h-12-30" aria-label="Heading link"></a>12. 结论</h2>
-<p>Nervape Email Wallet 是 Nervape 面向普通用户提供的 CKB 入门能力。它用邮箱账户降低首次使用门槛，用真实 CKB 地址承载用户资产，其价值不只在于提升 Nervape 的注册和领取转化率，也在于为 CKB 生态验证一条可复制的增长路径。通过产品体验和原生 CKB 交易支持，Nervape 可以成为普通用户认识 CKB、获得第一件 CKB 数字资产并继续探索生态的重要入口。</p>
-            <p><small>3 posts - 2 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/nervape-email-wallet/10742">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/nervape-email-wallet/10742</link>
-          <pubDate>Wed, 23 Sep 2026 05:21:39 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-10742</guid>
-          <source url="https://talk.nervos.org/t/nervape-email-wallet/10742.rss">Nervape Email Wallet</source>
         </item>
   </channel>
 </rss>
