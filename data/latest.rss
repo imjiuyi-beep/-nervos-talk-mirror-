@@ -5,8 +5,331 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Sun, 11 Oct 2026 16:19:27 +0000</lastBuildDate>
+      <lastBuildDate>Mon, 12 Oct 2026 08:26:15 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>[DIS] CrowdCell: From Testnet Demo to a Crowdfunding Product on CKB | CrowdCell：把 CKB 测试网上的免信任众筹做成产品</title>
+          <dc:creator><![CDATA[Ayoub_Lesfer]]></dc:creator>
+          <category>CKB Community Fund DAO</category>
+          <description><![CDATA[
+            <p><em>This is a smaller, rescoped version of the <a href="https://talk.nervos.org/t/dis-crowdcell-mainnet-launch-of-trustless-all-or-nothing-crowdfunding-on-ckb/10609">first CrowdCell proposal</a>. The audit, the fee model and the mainnet launch are out of this one and will come back as a separate proposal later.</em></p>
+<p><em>Edited 2026-10-12. Added at no change to the ask: categories and search (M1), creator updates and a Chinese interface (M3), early finalization once the goal is met (M4). The additions are marked “added” in §8 and §9.</em></p>
+<h2><a name="p-26543-h-2-summary-1" class="anchor" href="https://talk.nervos.org#p-26543-h-2-summary-1" aria-label="Heading link"></a>2. Summary</h2>
+<p>CrowdCell is all-or-nothing crowdfunding on CKB where scripts, not a platform, decide where every pledge goes. It is live on testnet at <a href="https://crowdcell.vercel.app" rel="noopener nofollow ugc">https://crowdcell.vercel.app</a>.</p>
+<p>This proposal requests <strong>$5,000 USD</strong> (payable in CKB) to turn the testnet app into a product people can actually run a campaign on. It stays on testnet and asks for no audit money. It covers five things:</p>
+<ol>
+<li><strong>Trustless finalization, rebrand and landing page (already delivered).</strong> Since the first proposal, the campaign total moved on-chain so the outcome is verified by the script, the project became CrowdCell, and the site got a proper landing page. All of it is live and can be checked today.</li>
+<li><strong>Dashboards and discovery.</strong> “My campaigns” for creators and “My pledges” for backers, plus categories and search on the campaign list.</li>
+<li><strong>Creator identity.</strong> <code>.cell</code> names and Vellum reputation on campaign pages, so a backer sees who is asking for the money and not just a lock hash.</li>
+<li><strong>Creator tooling and first real campaigns.</strong> Creator updates on campaign pages, shareable campaign pages, a Chinese interface, a creator guide and mobile QA, with a goal of at least three campaigns run by people outside the project.</li>
+<li><strong>Keeper tip and early finalization.</strong> A small on-chain tip for whoever triggers release or refund, so settlement no longer depends on my bot. And a creator whose campaign has reached its goal can finalize it without waiting for the deadline.</li>
+</ol>
+<ul>
+<li><strong>Grant Amount Requested:</strong> $5,000 USD (payable in CKB)</li>
+<li><strong>ETA to Completion:</strong> about 3 months from approval</li>
+<li><strong>CKB Wallet or Funding Address:</strong> ckb1qrgqep8saj8agswr30pls73hra28ry8jlnlc3ejzh3dl2ju7xxpjxqgqqxdl32chss0tlfyexs6h74ny8cc3vl90dgpt6evj</li>
+</ul>
+<h2><a name="p-26543-h-3-project-introduction-2" class="anchor" href="https://talk.nervos.org#p-26543-h-3-project-introduction-2" aria-label="Heading link"></a>3. Project Introduction</h2>
+<p>A creator sets a funding goal in CKB and a deadline. Backers pledge. If the goal is met by the deadline, the funds go to the creator. If it isn’t, every backer is refunded. Nobody holds the money in between: each pledge sits in its own cell, and the lock script on that cell only allows those two exits.</p>
+<h3><a name="p-26543-what-problem-this-solves-3" class="anchor" href="https://talk.nervos.org#p-26543-what-problem-this-solves-3" aria-label="Heading link"></a>What problem this solves</h3>
+<p>Kickstarter-style platforms ask you to trust an operator to hold the funds, decide the outcome and pay out. There is no crowdfunding platform on CKB today, and the cell model fits the problem well: a campaign is a cell, a pledge is a cell, and the rules are the scripts guarding them.</p>
+<h3><a name="p-26543-who-this-is-for-4" class="anchor" href="https://talk.nervos.org#p-26543-who-this-is-for-4" aria-label="Heading link"></a>Who this is for</h3>
+<p>CKB builders first. CrowdCell is a launchpad for CKB projects: the people most likely to use it already have a wallet and CKB. Pledging from a Bitcoin wallet through RGB++ comes later, once the launchpad use case is proven.</p>
+<h3><a name="p-26543-what-changed-since-the-first-proposal-5" class="anchor" href="https://talk.nervos.org#p-26543-what-changed-since-the-first-proposal-5" aria-label="Heading link"></a>What changed since the first proposal</h3>
+<p>The first proposal asked for $15,000 to go to mainnet, with $7,000 of it reserved for an audit. It got 16 likes and no objections, and the feedback I got afterwards was clear: too big a step, too early. Make it a product on testnet first, keep the ask small, and come back for the audit and mainnet when there is usage to point at.</p>
+<p>So I kept building and cut the proposal down:</p>
+<ul>
+<li><strong>Out:</strong> the Scalebit audit, the 5% fee with its config cell and treasury, the mainnet deployment and the launch promo. Fees only matter once real money moves, and that code needs the audit anyway.</li>
+<li><strong>Already done, unfunded:</strong> the last on-chain trust gap is closed, the rebrand is live, the landing page is live.</li>
+<li><strong>In:</strong> the things that make it usable as a product, most of them asked for or offered by people in the community (see §8).</li>
+</ul>
+<h3><a name="p-26543-why-now-6" class="anchor" href="https://talk.nervos.org#p-26543-why-now-6" aria-label="Heading link"></a>Why now</h3>
+<ul>
+<li>The contracts are in their intended shape for testnet. What is missing is product surface, not mechanism.</li>
+<li>Two other CKB projects are plugging into CrowdCell: Cellula has opened a PR that shows <code>.cell</code> names (<a href="https://github.com/alesfer001/CrowdCell/pull/10" rel="noopener nofollow ugc">CrowdCell#10</a>), and Vellum has offered its reputation SDK. A third, CKB Service Runner, is at the design stage and has used CrowdCell’s settlement as an example of a keeper job. Doing these while they are also building is cheaper than doing them later.</li>
+<li>Someone outside the project has already created a campaign on the testnet app. Dashboards and a creator guide are what the next ones need.</li>
+</ul>
+<h2><a name="p-26543-h-4-team-roles-7" class="anchor" href="https://talk.nervos.org#p-26543-h-4-team-roles-7" aria-label="Heading link"></a>4. Team &amp; Roles</h2>
+<p><strong>LESFER Ayoub <span class="mention">@RickSoze</span></strong>, solo developer</p>
+<ul>
+<li>Role: everything. Contracts (Rust + ckb-std), transaction builder and indexer (TypeScript), frontend (Next.js + CCC), deployment and testing.</li>
+<li>Background: senior full-stack developer based in Bordeaux, France, with 6+ years shipping production systems. Currently enterprise SaaS at eMenuChoice, previously API and infrastructure work at BricoPrive. Prior smart contract experience on the Alephium DEX (Ralph, on Alephium’s stateful UTXO model), where I implemented core DEX functionality including a multi-pool swap router. Thinking in inputs and outputs carried over well to CKB; the cell model and ckb-std were learned on top of that. MSc in Computer Science, Université de Bordeaux.</li>
+<li>Time commitment: part-time next to a full-time job, about 4-5 hours a week, sustained for 30 weeks of public progress reports (see §13).</li>
+<li>GitHub: <a href="https://github.com/alesfer001" class="inline-onebox" rel="noopener nofollow ugc">alesfer001 (Ayoub Lesfer) · GitHub</a> · Telegram: <span class="mention">@RickSoze</span> · X: <a href="https://x.com/crowdcellckb" rel="noopener nofollow ugc">@crowdcellckb</a></li>
+</ul>
+<h2><a name="p-26543-h-5-current-status-8" class="anchor" href="https://talk.nervos.org#p-26543-h-5-current-status-8" aria-label="Heading link"></a>5. Current Status</h2>
+<p>Everything below is live on the CKB testnet and open-source.</p>
+<ul>
+<li><strong>Full campaign lifecycle on-chain:</strong> create, pledge, finalize, release or refund, with a receipt cell for every pledge.</li>
+<li><strong>Automatic settlement:</strong> a finalization bot finalizes campaigns after the deadline and releases or refunds every pledge. Anyone else can trigger the same transactions from the campaign page.</li>
+<li><strong>Verified outcome:</strong> the campaign cell carries the on-chain total, and the campaign script only accepts “Funded” or “Unsuccessful” if it matches total pledged versus goal.</li>
+<li><strong>Fail-safe:</strong> about 180 days after the deadline, any unsettled pledge can be sent back to its backer without the campaign cell.</li>
+<li><strong>Reviewed:</strong> Officeyutong (CKB core dev) reviewed the v1.1 contracts. All 6 findings were fixed and redeployed, and the whole exchange is public (see §13). He reviewed the v1.2 contracts again in October and found 5 more issues, which are open and listed in §6.5.</li>
+<li><strong>Product:</strong> CrowdCell brand, landing page with the trust model spelled out, the app at <code>/app</code>, JoyID and other CCC wallets.</li>
+<li><strong>On the site today:</strong> four labelled demo campaigns (two active, one funded and paid out, one unsuccessful and refunded, both settled by the bot with nobody touching them), plus one campaign created by someone outside the project.</li>
+</ul>
+<p>Links: <a href="https://crowdcell.vercel.app" rel="noopener nofollow ugc">live app</a> · <a href="https://github.com/alesfer001/CrowdCell" rel="noopener nofollow ugc">GitHub</a> · <a href="https://talk.nervos.org/t/introducing-ckb-kickstarter-decentralized-all-or-nothing-crowdfunding-on-nervos-ckb-testnet-mvp-live/10130">project thread</a></p>
+<h2><a name="p-26543-h-6-application-design-9" class="anchor" href="https://talk.nervos.org#p-26543-h-6-application-design-9" aria-label="Heading link"></a>6. Application Design</h2>
+<h3><a name="p-26543-h-61-functional-overview-10" class="anchor" href="https://talk.nervos.org#p-26543-h-61-functional-overview-10" aria-label="Heading link"></a>6.1 Functional Overview</h3>
+<ol>
+<li><strong>Create.</strong> A creator publishes a campaign cell with a goal and a deadline block. Neither can be changed afterwards.</li>
+<li><strong>Pledge.</strong> A backer locks CKB into a pledge cell. The campaign’s on-chain total goes up in the same transaction, and a receipt cell lands in the backer’s wallet.</li>
+<li><strong>Finalize.</strong> After the deadline, anyone can finalize the campaign. The script checks the status against the on-chain total.</li>
+<li><strong>Settle.</strong> Anyone can release each pledge to the creator (if funded) or refund it to its backer (if not). The pledge lock rejects any other destination.</li>
+</ol>
+<p><strong>On-chain:</strong> all of the above. <strong>Off-chain:</strong> an indexer that reads the chain and serves the frontend, and the bot, which only submits transactions anyone could submit.</p>
+<h3><a name="p-26543-h-62-architecture-design-11" class="anchor" href="https://talk.nervos.org#p-26543-h-62-architecture-design-11" aria-label="Heading link"></a>6.2 Architecture &amp; Design</h3>
+<p><strong>Contracts (Rust, ckb-std), five in total:</strong> campaign type, campaign lock, pledge type, pledge lock, receipt type. Campaigns reference them by code hash, so nobody can upgrade them under a live campaign.</p>
+<p><strong>Off-chain (TypeScript):</strong> transaction builder on the CCC SDK, indexer (Express + SQLite) with the finalization bot inside it, Next.js frontend with the CCC connector.</p>
+<p><strong>What this proposal adds:</strong></p>
+<ul>
+<li>Wallet-aware indexer endpoints and two dashboard pages.</li>
+<li>Categories and search on the campaign list. The category is part of the campaign’s metadata; search runs in the indexer.</li>
+<li>Creator updates: short posts on a campaign page, signed by the creator’s wallet and stored by the indexer. Off-chain, so they cost the creator nothing and add no risk to funds.</li>
+<li>A Chinese interface next to the English one.</li>
+<li>Name and reputation lookups on campaign pages: <code>.cell</code> names through Cellula, and reputation through the Vellum SDK, which reads claims by the creator’s lock. After a campaign is funded and paid out, CrowdCell issues a <code>crowdcell.campaign-funded.v1</code> claim to the creator from its own did:ckb.</li>
+<li>Two contract changes, shipped in one redeploy. The pledge lock lets the transaction that releases or refunds a pledge pay a small flat tip to whoever submitted it. The tip stays inside the 1 CKB fee allowance the lock already has, so the pledged amount is untouched. And the campaign script lets the creator finalize a campaign as “Funded” before the deadline once the on-chain total has reached the goal, with the pledge lock allowing release as soon as the campaign is finalized as “Funded”. Finalizing as “Unsuccessful”, and every refund, still has to wait for the deadline.</li>
+</ul>
+<h3><a name="p-26543-h-63-design-rationale-12" class="anchor" href="https://talk.nervos.org#p-26543-h-63-design-rationale-12" aria-label="Heading link"></a>6.3 Design Rationale</h3>
+<p><strong>Testnet first.</strong> The mechanism works. What nobody knows yet is whether builders want to run campaigns on it, and that can be found out on testnet for a fraction of the cost of an audit.</p>
+<p><strong>Identity through existing CKB projects, not a new system.</strong> A backer needs something to judge a creator by. <code>.cell</code> names and Vellum already exist, their authors offered to help, and both integrations are off-chain, so they add no risk to funds.</p>
+<p><strong>Reputation from real outcomes.</strong> A “campaign funded and paid out” claim is issued only after the payout transaction, with the campaign id, goal, total raised, backer count and payout transaction in the payload. It can be checked against the chain by anyone.</p>
+<p><strong>A tip instead of a trusted bot.</strong> Today release and refund are permissionless but only my bot has a reason to run them. A small tip gives independent operators a reason, and it is what a keeper network such as the planned CKB Service Runner would need to run CrowdCell as a job.</p>
+<h3><a name="p-26543-h-64-fee-model-and-sustainability-13" class="anchor" href="https://talk.nervos.org#p-26543-h-64-fee-model-and-sustainability-13" aria-label="Heading link"></a>6.4 Fee Model and Sustainability</h3>
+<p>Not in this proposal. The design from the first proposal is unchanged (a 5% fee paid by the creator, on successful campaigns only, enforced on-chain and sent to a multisig treasury) and it ships with the mainnet proposal, after an audit. On testnet there is nothing to charge.</p>
+<p>Running costs during this proposal are zero: the frontend and indexer are on free tiers, and the bot spends test CKB.</p>
+<h3><a name="p-26543-h-65-security-without-an-audit-14" class="anchor" href="https://talk.nervos.org#p-26543-h-65-security-without-an-audit-14" aria-label="Heading link"></a>6.5 Security Without an Audit</h3>
+<p>A fair question from the last round: how is this safe without an audit? Short answer: it is on testnet, with test CKB only, and it will not go to mainnet without one. Until then, this is what stands in for it:</p>
+<ul>
+<li><strong>External review.</strong> Officeyutong’s review of the v1.1 contracts found 2 high and 4 medium issues. All 6 are fixed, and the thread is public.</li>
+<li><strong>A second external review, still open.</strong> In October 2026 Officeyutong read the v1.2 contracts and found 5 issues. I checked each against the code and he is right on all of them. The two that matter most: a pledge’s deadline is not checked against its campaign’s, and a campaign that has expired but is not finalized yet can still take pledges. Together they would let someone push a failed campaign to “Funded” on testnet for the cost of fees. Four of the five are small checks. They ship first, before M1, each with a test that reproduces the attack, and they are not billed to this grant. The fifth (pledges after the deadline) needs a design change, because CKB has no “not after” time lock, and it is delivered with the contract change in M4.</li>
+<li><strong>Internal trust-boundary review</strong> before v1.2, which found 3 medium issues. All fixed in the current contracts.</li>
+<li><strong>A balance accounting test</strong> that follows every CKB through a campaign. It caught 4 fund-routing bugs before the September redeploy. They are closed, and the exploit attempts are kept in the repo as tests that must keep failing.</li>
+<li><strong>Small surface for funds to go wrong.</strong> A pledge has two exits, plus the fail-safe back to the backer. No admin key, no upgradable contracts.</li>
+<li><strong>The contract changes in M4</strong> (tip, pledge window, early finalization) get the same treatment: unit tests, exploit tests, the accounting test, and a request for review on the PR before it is deployed.</li>
+</ul>
+<p>An independent audit is the first line of the mainnet proposal.</p>
+<h2><a name="p-26543-h-7-key-benefits-for-ckb-15" class="anchor" href="https://talk.nervos.org#p-26543-h-7-key-benefits-for-ckb-15" aria-label="Heading link"></a>7. Key Benefits for CKB</h2>
+<ul>
+<li><strong>A crowdfunding platform on CKB.</strong> There isn’t one. A launchpad where CKB projects can raise from the community is useful to the ecosystem on its own.</li>
+<li><strong>A use case for other CKB projects.</strong> <code>.cell</code> names get shown where they matter, Vellum gets a partner issuing reputation from real outcomes, and keeper projects such as Service Runner get a paid job they could run.</li>
+<li><strong>Activity on-chain.</strong> Each campaign brings a creator and its backers, and each one produces creation, pledge, finalization and settlement transactions.</li>
+<li><strong>A reference for the cell model.</strong> Custom locks that route funds by outcome, permissionless finalization, an on-chain accumulator with contention retry. All open-source, with the review and fix history public.</li>
+<li><strong>A cheap test of demand.</strong> $5,000 on testnet tells the community whether the audit and mainnet are worth funding next.</li>
+</ul>
+<h2><a name="p-26543-h-8-detailed-deliverables-milestones-16" class="anchor" href="https://talk.nervos.org#p-26543-h-8-detailed-deliverables-milestones-16" aria-label="Heading link"></a>8. Detailed Deliverables &amp; Milestones</h2>
+<div class="md-table">
+<table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Deliverables</th>
+<th>ETA</th>
+<th>Budget</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>M0: Trustless finalization, rebrand, landing page (delivered)</strong></td>
+<td>On-chain total and script-verified outcome, trust-boundary and fund-routing fixes, testnet redeploy and end-to-end run with JoyID, CrowdCell rebrand, landing page. Live now, see §5.</td>
+<td>Done</td>
+<td>$1,500 (30%)</td>
+</tr>
+<tr>
+<td><strong>M1: Dashboards and discovery</strong></td>
+<td>Wallet-aware indexer endpoints. “My campaigns”: status, raised, backers, and the actions available. “My pledges”: status and outcome of each pledge, receipts, and deposits that can be reclaimed. <em>Added:</em> categories and search on the campaign list.</td>
+<td>Week 4</td>
+<td>$1,200 (24%)</td>
+</tr>
+<tr>
+<td><strong>M2: Creator identity</strong></td>
+<td><code>.cell</code> names for creators and backers, contributed by Cellula in <a href="https://github.com/alesfer001/CrowdCell/pull/10" rel="noopener nofollow ugc">CrowdCell#10</a> and extended to the dashboards. Vellum reputation shown on campaign pages and cards. <code>crowdcell.campaign-funded.v1</code> schema published and the claim issued after payout.</td>
+<td>Week 7</td>
+<td>$900 (18%)</td>
+</tr>
+<tr>
+<td><strong>M3: Creator tooling and first real campaigns</strong></td>
+<td>Campaign pages with link previews for sharing, a creator guide, and mobile QA. <em>Added:</em> creator updates on campaign pages, and a Chinese interface. Goal: at least 3 campaigns on testnet run by people outside the project, with the result reported in this thread.</td>
+<td>Week 9</td>
+<td>$600 (12%)</td>
+</tr>
+<tr>
+<td><strong>M4: Keeper tip, pledge window and early finalization</strong></td>
+<td>Tip on release and refund in the pledge lock, the fix for pledges after the deadline (§6.5), tests, testnet redeploy and end-to-end run, and a standalone keeper script anyone can run. <em>Added:</em> early finalization by the creator once the goal is met.</td>
+<td>Week 12</td>
+<td>$800 (16%)</td>
+</tr>
+</tbody>
+</table>
+</div><p>Total: $5,000 USD, paid in CKB at disbursement. The items marked “added” were added on 2026-10-12 and do not change the total or the dates. M0 is paid on approval since it is already delivered. Each later milestone is paid when it is live on testnet and reported in this thread.</p>
+<p>Where each item comes from:</p>
+<ul>
+<li>Dashboards have been on the roadmap since the MVP and were part of the first proposal.</li>
+<li>Categories, search, creator updates and early finalization come from the project’s own backlog. They and the Chinese interface were added on 2026-10-12.</li>
+<li><code>.cell</code> names were suggested by LusoCryptoLabs (Cellula), who also wrote the first version (<a href="https://github.com/alesfer001/CrowdCell/pull/10" rel="noopener nofollow ugc">CrowdCell#10</a>). The work left for this milestone is the review, names on the dashboards, and moving lookups to the indexer so visitors’ browsers don’t contact a third party.</li>
+<li>The Vellum schema was worked out with truthixify on the <a href="https://talk.nervos.org/t/10613/12">Vellum thread</a>.</li>
+<li>The keeper tip comes out of the <a href="https://talk.nervos.org/t/a-revenue-layer-for-ckb-nodes/10734/14">Service Runner thread</a>, where psawyerberlin used CrowdCell’s finalization bot as an example of a keeper job and we discussed what a reasonable tip would be. Service Runner itself has no code yet, so the tip is built to work with any keeper.</li>
+</ul>
+<p>The ETA is based on the pace of the last 30 weeks of public progress reports.</p>
+<h2><a name="p-26543-h-9-budget-breakdown-17" class="anchor" href="https://talk.nervos.org#p-26543-h-9-budget-breakdown-17" aria-label="Heading link"></a>9. Budget Breakdown</h2>
+<p>All of it is development time. There is no audit, no marketing spend and no hosting cost in this proposal.</p>
+<div class="md-table">
+<table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Line</th>
+<th>Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M0</td>
+<td>On-chain total, verified finalization, fixes, redeploy and end-to-end run</td>
+<td>$900</td>
+</tr>
+<tr>
+<td>M0</td>
+<td>CrowdCell rebrand and landing page</td>
+<td>$600</td>
+</tr>
+<tr>
+<td>M1</td>
+<td>Wallet-aware indexer endpoints</td>
+<td>$300</td>
+</tr>
+<tr>
+<td>M1</td>
+<td>Creator dashboard</td>
+<td>$450</td>
+</tr>
+<tr>
+<td>M1</td>
+<td>Backer dashboard</td>
+<td>$450</td>
+</tr>
+<tr>
+<td>M1</td>
+<td>Categories and search (added)</td>
+<td>included</td>
+</tr>
+<tr>
+<td>M2</td>
+<td><code>.cell</code> names: review of the Cellula PR, dashboards, indexer-side lookup</td>
+<td>$250</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>Vellum reputation display</td>
+<td>$250</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>Claim schema and issuance after payout</td>
+<td>$400</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>Shareable campaign pages</td>
+<td>$150</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>Creator guide</td>
+<td>$150</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>Mobile QA and fixes</td>
+<td>$150</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>Onboarding the first outside campaigns</td>
+<td>$150</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>Creator updates (added)</td>
+<td>included</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>Chinese interface (added)</td>
+<td>included</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>Pledge lock tip, pledge window fix and tests</td>
+<td>$450</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>Early finalization and tests (added)</td>
+<td>included</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>Testnet redeploy and end-to-end run</td>
+<td>$200</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>Standalone keeper script and docs</td>
+<td>$150</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Total</strong></td>
+<td><strong>$5,000</strong></td>
+</tr>
+</tbody>
+</table>
+</div><h2><a name="p-26543-h-10-out-of-scope-future-funding-needs-18" class="anchor" href="https://talk.nervos.org#p-26543-h-10-out-of-scope-future-funding-needs-18" aria-label="Heading link"></a>10. Out-of-Scope / Future Funding Needs</h2>
+<p>Not part of this proposal. These are planned for a follow-up proposal once there is testnet usage to show:</p>
+<ul>
+<li><strong>Independent security audit.</strong> Scalebit quoted $5,000 for the v1.1 contracts in June. A firm quote for the final contract set will be attached to that proposal.</li>
+<li><strong>Fee model and treasury.</strong> The 5% creator-side fee, its config cell and the multisig treasury.</li>
+<li><strong>Mainnet launch.</strong> Deployment, bot funding, launch announcement.</li>
+</ul>
+<p>Further out:</p>
+<ul>
+<li><strong>Pledging from a Bitcoin wallet through RGB++.</strong></li>
+<li><strong>Token, governance and DAO custody of the treasury.</strong></li>
+</ul>
+<h2><a name="p-26543-h-11-risk-mitigation-19" class="anchor" href="https://talk.nervos.org#p-26543-h-11-risk-mitigation-19" aria-label="Heading link"></a>11. Risk &amp; Mitigation</h2>
+<ul>
+<li><strong>Nobody outside the project runs a campaign.</strong> M3 depends on other people. One outside campaign already exists, and the creator guide and dashboards are there to lower the bar. If three don’t happen by week 9, I’ll report how many did and what held the others back. M3 is paid for the tooling, the guide and the onboarding work, not for the count.</li>
+<li><strong>Dependencies on Cellula and Vellum.</strong> Both are young projects. The integrations fall back cleanly: no name shows the short hash, and no reputation shows nothing. The keeper tip depends on no other project: it works with any keeper, including my own script, whether or not Service Runner ships.</li>
+<li><strong>Contract changes without an audit (M4).</strong> Testnet only, test CKB only, with the checks listed in §6.5. If review turns up a problem I can’t close in the tip or in early finalization, that change stays off and M4 isn’t claimed.</li>
+<li><strong>Time.</strong> I work on this part-time. The estimate comes from what I’ve actually shipped per week over 30 weeks, not from a plan. The items added on 2026-10-12 are small next to the milestones they sit in, and the dates are unchanged. If one of them slips, I’ll say so in the milestone report.</li>
+<li><strong>Free-tier hosting.</strong> The indexer runs on a free tier and is kept awake by a scheduled ping. Fine for testnet; paid hosting belongs to the mainnet proposal.</li>
+</ul>
+<h2><a name="p-26543-h-12-closing-call-to-action-20" class="anchor" href="https://talk.nervos.org#p-26543-h-12-closing-call-to-action-20" aria-label="Heading link"></a>12. Closing / Call to Action</h2>
+<p>The first proposal asked the community to fund a mainnet launch on trust. This one asks for a third of that, a good part of it for work that is already live, and the rest for the things that will show whether CrowdCell gets used.</p>
+<p>If you have a project you’d like to run a test campaign for, tell me in this thread and I’ll help you set it up. Questions and pushback are welcome too.</p>
+<p>Thanks for reading.</p>
+<h2><a name="p-26543-h-13-supporting-links-21" class="anchor" href="https://talk.nervos.org#p-26543-h-13-supporting-links-21" aria-label="Heading link"></a>13. Supporting Links</h2>
+<ul>
+<li><strong>Live app (testnet):</strong> <a href="https://crowdcell.vercel.app" rel="noopener nofollow ugc">https://crowdcell.vercel.app</a></li>
+<li><strong>GitHub:</strong> <a href="https://github.com/alesfer001/CrowdCell" class="inline-onebox" rel="noopener nofollow ugc">GitHub - alesfer001/CrowdCell · GitHub</a></li>
+<li><strong>Project thread on Nervos Talk:</strong> <a href="https://talk.nervos.org/t/introducing-ckb-kickstarter-decentralized-all-or-nothing-crowdfunding-on-nervos-ckb-testnet-mvp-live/10130" class="inline-onebox">Introducing CKB Kickstarter: Decentralized All-or-Nothing Crowdfunding on Nervos CKB (Testnet MVP Live)</a></li>
+<li><strong>First proposal:</strong> <a href="https://talk.nervos.org/t/dis-crowdcell-mainnet-launch-of-trustless-all-or-nothing-crowdfunding-on-ckb/10609" class="inline-onebox">[DIS] CrowdCell: Mainnet Launch of Trustless All-or-Nothing Crowdfunding on CKB</a></li>
+<li><strong>Weekly progress reports:</strong> <a href="https://github.com/RickSoze001/ckb-builder-progress-report" class="inline-onebox" rel="noopener nofollow ugc">GitHub - RickSoze001/ckb-builder-progress-report · GitHub</a></li>
+<li><strong>Officeyutong’s contract review:</strong> <a href="https://github.com/Nervos-Community-Catalyst/CKBuilder-projects/issues/6" class="inline-onebox" rel="noopener nofollow ugc">CKB Kickstarter — Decentralized Crowdfunding Platform on Nervos CKB · Issue #6 · Nervos-Community-Catalyst/CKBuilder-projects · GitHub</a></li>
+<li><strong>X:</strong> <a href="https://x.com/crowdcellckb" class="inline-onebox" rel="noopener nofollow ugc">CrowdCell (@crowdcellckb) / X</a></li>
+</ul>
+            <p><small>2 posts - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/dis-crowdcell-from-testnet-demo-to-a-crowdfunding-product-on-ckb-crowdcell-ckb/10937">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/dis-crowdcell-from-testnet-demo-to-a-crowdfunding-product-on-ckb-crowdcell-ckb/10937</link>
+          <pubDate>Mon, 12 Oct 2026 08:26:15 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-10937</guid>
+          <source url="https://talk.nervos.org/t/dis-crowdcell-from-testnet-demo-to-a-crowdfunding-product-on-ckb-crowdcell-ckb/10937.rss">[DIS] CrowdCell: From Testnet Demo to a Crowdfunding Product on CKB | CrowdCell：把 CKB 测试网上的免信任众筹做成产品</source>
+        </item>
         <item>
           <title>CellScript Roadmap: Expanding the Frontier of CKB-Native DeFi</title>
           <dc:creator><![CDATA[ArthurZhang]]></dc:creator>
@@ -1601,7 +1924,7 @@ other CKB applications to add payment automation without building their own priv
           <source url="https://talk.nervos.org/t/introducing-ckautomata-payment-automation-and-nervos-dao-harvest-on-ckb/10813.rss">Introducing CKAutomata: Payment Automation and Nervos DAO Harvest on CKB</source>
         </item>
         <item>
-          <title>[DIS] Hardening Kirea Finance (Native RWA Lending on CKB)</title>
+          <title>[DIS] Hardening Kirea Finance (Native RWA Lending on CKB) | Kirea Finance 加固：CKB 原生的现实世界资产（RWA）借贷</title>
           <dc:creator><![CDATA[SalmanDev]]></dc:creator>
           <category>CKB Community Fund DAO</category>
           <description><![CDATA[
@@ -1794,15 +2117,15 @@ other CKB applications to add payment automation without building their own priv
 <p>The core pattern, a real-world claim, gated by KYC, used as loan collateral, is fully implemented and verified end to end on CKB testnet. This proposal funds hardening that working pattern into something a second builder, a second asset type, or a second team could pick up and extend. A future phase will take this into production: real custody, compliance, and mainnet deployment.</p>
 <p>I appreciate the community’s consideration and welcome any feedback on the architecture, scope, or budget.</p>
             <p><small>8 posts - 4 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/dis-hardening-kirea-finance-native-rwa-lending-on-ckb/10809">Read full topic</a></p>
+            <p><a href="https://talk.nervos.org/t/dis-hardening-kirea-finance-native-rwa-lending-on-ckb-kirea-finance-ckb-rwa/10809">Read full topic</a></p>
           ]]></description>
-          <link>https://talk.nervos.org/t/dis-hardening-kirea-finance-native-rwa-lending-on-ckb/10809</link>
+          <link>https://talk.nervos.org/t/dis-hardening-kirea-finance-native-rwa-lending-on-ckb-kirea-finance-ckb-rwa/10809</link>
           <pubDate>Tue, 06 Oct 2026 16:14:27 +0000</pubDate>
           <discourse:topicPinned>No</discourse:topicPinned>
           <discourse:topicClosed>No</discourse:topicClosed>
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-10809</guid>
-          <source url="https://talk.nervos.org/t/dis-hardening-kirea-finance-native-rwa-lending-on-ckb/10809.rss">[DIS] Hardening Kirea Finance (Native RWA Lending on CKB)</source>
+          <source url="https://talk.nervos.org/t/dis-hardening-kirea-finance-native-rwa-lending-on-ckb-kirea-finance-ckb-rwa/10809.rss">[DIS] Hardening Kirea Finance (Native RWA Lending on CKB) | Kirea Finance 加固：CKB 原生的现实世界资产（RWA）借贷</source>
         </item>
         <item>
           <title>CKB Off Chain Aba: Event Overview</title>
@@ -4938,160 +5261,6 @@ Email Wallet
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-10742</guid>
           <source url="https://talk.nervos.org/t/nervape-email-wallet/10742.rss">Nervape Email Wallet</source>
-        </item>
-        <item>
-          <title>Twine: Buy and Sell CKB Without Depositing on an Exchange (Fiber P2P PoC)</title>
-          <dc:creator><![CDATA[ebubedev]]></dc:creator>
-          <category>Applications &amp; Ecosystem</category>
-          <description><![CDATA[
-            <p>I use Binance P2P a lot. I have also watched people get locked out of those accounts, with their coins sitting frozen until the exchange decides to give them back.</p>
-<p>That is a bad way to buy and sell CKB with local money. Right now, onboarding into CKB via fiat has four major problems:</p>
-<ol>
-<li><strong>Custodial risk and account freezes.</strong> To sell on centralized P2P desks, you must deposit your coins into the exchange hot wallet first. If the platform freezes your account, your funds are trapped.</li>
-<li><strong>The KYC barrier.</strong> Centralized fiat ramps require heavy identity checks and frequently reject users from emerging markets where P2P trading is needed most.</li>
-<li><strong>DEX limitations.</strong> On-chain DEXs (like UTXOSwap) excel at crypto-to-crypto swaps, but they cannot process off-chain bank transfers, payment apps, or local cash.</li>
-<li><strong>Underutilized Fiber capabilities.</strong> The Nervos Fiber Network has cryptographic primitive (HTLC hold invoices), but no KYC-free, non-custodial fiat desk exists on CKB to use it.</li>
-</ol>
-<h2><a name="p-26152-the-solution-twine-1" class="anchor" href="https://talk.nervos.org#p-26152-the-solution-twine-1" aria-label="Heading link"></a>The solution: Twine</h2>
-<p>Twine is a non-custodial peer-to-peer desk built to solve this. You post an offer in your local currency. Someone accepts it. Your CKB locks on Fiber in a conditional hold invoice until they pay you. You check the receipt, verify the money in your bank app, and click release. If they never pay, the coins return to you automatically when the lock expires.</p>
-<p>There is no Twine account. Twine coordinates the order and releases the lock only when the seller confirms the money arrived. Your CKB stays locked on Fiber the entire time. Twine never takes custody of your funds.</p>
-<h2><a name="p-26152-who-is-involved-2" class="anchor" href="https://talk.nervos.org#p-26152-who-is-involved-2" aria-label="Heading link"></a>Who is involved</h2>
-<p>Each phone talks to Twine to manage the order and chat, and communicates directly with its own Fiber node to move funds. Twine never holds your private keys or Fiber channels.</p>
-<pre data-code-wrap="mermaid"><code class="lang-mermaid">flowchart TB
-  SellerApp[Seller phone]
-  BuyerApp[Buyer phone]
-  Twine[Twine coordinator]
-  SellerNode[Seller Fiber node]
-  BuyerNode[Buyer Fiber node]
-  TwineNode[Twine Fiber node]
-  Fiber[Fiber Network]
-
-  SellerApp --&gt;|offer, chat, release| Twine
-  BuyerApp --&gt;|take, receipt, chat| Twine
-  SellerApp --&gt; SellerNode
-  BuyerApp --&gt; BuyerNode
-  Twine --&gt; TwineNode
-  SellerNode --- Fiber
-  BuyerNode --- Fiber
-  TwineNode --- Fiber
-</code></pre>
-<p>Fiat stays completely off-chain. Dollars, Naira, or Pesos move directly from buyer to seller via bank transfer, payment apps, or cash.</p>
-<p>The coordinator is whoever runs the Twine daemon. They can view the active order, the trade chat, and the uploaded payment receipt. If a trade goes into dispute, the coordinator acts as the arbiter who reviews the evidence and decides the outcome.</p>
-<p>The code is 100% open source. The mobile app lets you choose which coordinator daemon to connect to. If you do not trust the default coordinator, you can run the daemon yourself or use one hosted by your local community. Both traders use that same coordinator for the trade. The orders, encrypted messages, receipts, and release instructions live on the coordinator you chose.</p>
-<pre data-code-wrap="mermaid"><code class="lang-mermaid">flowchart LR
-  people[Both traders]
-  people --&gt; choice{Coordinator you both trust}
-  choice --&gt; twine[Default Twine Node]
-  choice --&gt; own[A node you or your community run]
-  twine --&gt; job[Coordinates order, chat, receipt, and release]
-  own --&gt; job
-</code></pre>
-<h2><a name="p-26152-how-a-trade-works-3" class="anchor" href="https://talk.nervos.org#p-26152-how-a-trade-works-3" aria-label="Heading link"></a>How a trade works</h2>
-<p>Twine initiates a hold invoice. The seller locks CKB into it by accepting the trade. The buyer pays outside the app and uploads a payment receipt. Clicking <strong>Release</strong> instructs the coordinator to reveal the preimage, settling the payment to the buyer on Fiber first, and closing the hold. If that payout cannot be routed, the hold remains unsettled and the seller’s coins are not given away.</p>
-<pre data-code-wrap="mermaid"><code class="lang-mermaid">sequenceDiagram
-  actor Seller
-  actor Buyer
-  participant Twine
-  participant Fiber
-
-  Seller-&gt;&gt;Twine: Post an offer
-  Buyer-&gt;&gt;Twine: Take the offer
-  Twine-&gt;&gt;Fiber: Create hold invoice
-  Seller-&gt;&gt;Fiber: Accept and lock CKB into HTLC
-  Buyer-&gt;&gt;Buyer: Pay fiat outside the app
-  Buyer-&gt;&gt;Twine: Upload receipt and mark paid
-  Seller-&gt;&gt;Twine: Release
-  Twine-&gt;&gt;Fiber: Settle HTLC to buyer
-  Twine-&gt;&gt;Fiber: Close hold
-</code></pre>
-<p>Here is that same trade running on testnet: 1 CKB for 1 USD across two phones.</p>
-<ol>
-<li>The buyer takes the offer. Nothing is locked yet, and either party can still cancel.</li>
-</ol>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/a/a8aa8a751ab407e0e95eada8837cda0fa8db9493.png" data-download-href="https://talk.nervos.org/uploads/default/a8aa8a751ab407e0e95eada8837cda0fa8db9493" title="Screenshot iPhone 18 Pro 22-09-2026 at 19.30.40"><img src="https://talk.nervos.org/uploads/default/optimized/2X/a/a8aa8a751ab407e0e95eada8837cda0fa8db9493_2_229x500.png" alt="Screenshot iPhone 18 Pro 22-09-2026 at 19.30.40" data-base62-sha1="o45B1kr6Rhaq2Hm10Fi3dQZE231" width="229" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/a/a8aa8a751ab407e0e95eada8837cda0fa8db9493_2_229x500.png, https://talk.nervos.org/uploads/default/optimized/2X/a/a8aa8a751ab407e0e95eada8837cda0fa8db9493_2_343x750.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/a/a8aa8a751ab407e0e95eada8837cda0fa8db9493_2_458x1000.png 2x" data-dominant-color="F6F0F8"></a></div><p></p>
-<ol start="2">
-<li>
-<p>The seller sees the incoming trade on their posted offer.<br>
-</p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/6/6f60c08833148f256a11bb144a2e3e0441b67b53.png" data-download-href="https://talk.nervos.org/uploads/default/6f60c08833148f256a11bb144a2e3e0441b67b53" title="Screenshot iPhone 17 Pro 22-09-2026 at 19.30.48"><img src="https://talk.nervos.org/uploads/default/optimized/2X/6/6f60c08833148f256a11bb144a2e3e0441b67b53_2_229x500.png" alt="Screenshot iPhone 17 Pro 22-09-2026 at 19.30.48" data-base62-sha1="fTihXbKJhIDwDEuxTGJv97chvMv" width="229" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/6/6f60c08833148f256a11bb144a2e3e0441b67b53_2_229x500.png, https://talk.nervos.org/uploads/default/optimized/2X/6/6f60c08833148f256a11bb144a2e3e0441b67b53_2_343x750.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/6/6f60c08833148f256a11bb144a2e3e0441b67b53_2_458x1000.png 2x" data-dominant-color="F2EBF7"></a></div><p></p>
-</li>
-<li>
-<p>Accepting locks the CKB on Fiber.</p>
-</li>
-</ol>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/1/12a37d0ae5aef6183800dfb5f1c487157b3d578b.png" data-download-href="https://talk.nervos.org/uploads/default/12a37d0ae5aef6183800dfb5f1c487157b3d578b" title="Screenshot iPhone 17 Pro 22-09-2026 at 19.30.58"><img src="https://talk.nervos.org/uploads/default/optimized/2X/1/12a37d0ae5aef6183800dfb5f1c487157b3d578b_2_229x500.png" alt="Screenshot iPhone 17 Pro 22-09-2026 at 19.30.58" data-base62-sha1="2ESRKaYCSatAZnO7nEPOfWCjFaP" width="229" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/1/12a37d0ae5aef6183800dfb5f1c487157b3d578b_2_229x500.png, https://talk.nervos.org/uploads/default/optimized/2X/1/12a37d0ae5aef6183800dfb5f1c487157b3d578b_2_343x750.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/1/12a37d0ae5aef6183800dfb5f1c487157b3d578b_2_458x1000.png 2x" data-dominant-color="F0E9F4"></a></div><p></p>
-<ol start="4">
-<li>The buyer pays off-chain, attaches a receipt, and taps <strong>I have paid</strong>. On the seller’s phone, the coins remain securely locked while this happens.</li>
-</ol>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/1/1f8262d35761e434cc1ccfb45d82f7eecc8ccab7.png" data-download-href="https://talk.nervos.org/uploads/default/1f8262d35761e434cc1ccfb45d82f7eecc8ccab7" title="Screenshot iPhone 17 Pro 22-09-2026 at 19.31.04"><img src="https://talk.nervos.org/uploads/default/optimized/2X/1/1f8262d35761e434cc1ccfb45d82f7eecc8ccab7_2_229x500.png" alt="Screenshot iPhone 17 Pro 22-09-2026 at 19.31.04" data-base62-sha1="4uK9rKxDv1CDUNdQXtzXk7qTonZ" width="229" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/1/1f8262d35761e434cc1ccfb45d82f7eecc8ccab7_2_229x500.png, https://talk.nervos.org/uploads/default/optimized/2X/1/1f8262d35761e434cc1ccfb45d82f7eecc8ccab7_2_343x750.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/1/1f8262d35761e434cc1ccfb45d82f7eecc8ccab7_2_458x1000.png 2x" data-dominant-color="F7F0F9"></a></div><br>
-<div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/0/03e267f532425ccb52b0cdc56cddd90665fb5e46.png" data-download-href="https://talk.nervos.org/uploads/default/03e267f532425ccb52b0cdc56cddd90665fb5e46" title="Screenshot iPhone 18 Pro 22-09-2026 at 19.31.48"><img src="https://talk.nervos.org/uploads/default/optimized/2X/0/03e267f532425ccb52b0cdc56cddd90665fb5e46_2_229x500.png" alt="Screenshot iPhone 18 Pro 22-09-2026 at 19.31.48" data-base62-sha1="ymvk25342SJfuaFFCLA7j4GPK6" width="229" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/0/03e267f532425ccb52b0cdc56cddd90665fb5e46_2_229x500.png, https://talk.nervos.org/uploads/default/optimized/2X/0/03e267f532425ccb52b0cdc56cddd90665fb5e46_2_343x750.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/0/03e267f532425ccb52b0cdc56cddd90665fb5e46_2_458x1000.png 2x" data-dominant-color="F0E9F5"></a></div><p></p>
-<ol start="5">
-<li>The seller verifies the funds in their bank or payment app, checks the receipt, and taps <strong>Release</strong>. The buyer receives the CKB, and the hold closes.</li>
-</ol>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/f/ffd673604e0bb3d4f352548159975c209f930f4f.png" data-download-href="https://talk.nervos.org/uploads/default/ffd673604e0bb3d4f352548159975c209f930f4f" title="Screenshot iPhone 17 Pro 22-09-2026 at 19.32.48"><img src="https://talk.nervos.org/uploads/default/optimized/2X/f/ffd673604e0bb3d4f352548159975c209f930f4f_2_229x500.png" alt="Screenshot iPhone 17 Pro 22-09-2026 at 19.32.48" data-base62-sha1="AvfdetW91nGFxHeik5cD6yVcNQ3" width="229" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/f/ffd673604e0bb3d4f352548159975c209f930f4f_2_229x500.png, https://talk.nervos.org/uploads/default/optimized/2X/f/ffd673604e0bb3d4f352548159975c209f930f4f_2_343x750.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/f/ffd673604e0bb3d4f352548159975c209f930f4f_2_458x1000.png 2x" data-dominant-color="F0E9F4"></a></div><p></p>
-<h2><a name="p-26152-what-happens-during-a-dispute-4" class="anchor" href="https://talk.nervos.org#p-26152-what-happens-during-a-dispute-4" aria-label="Heading link"></a>What happens during a dispute?</h2>
-<p>Once CKB is locked, either party can open a dispute and state a reason. The trade pauses immediately. The coins remain locked in the HTLC while the coordinator reviews the encrypted chat logs and the payment receipt uploaded by the buyer.</p>
-<ul>
-<li><strong>If the buyer paid:</strong> The coordinator reveals the preimage to settle the HTLC on Fiber. The buyer receives the CKB, and the hold closes.</li>
-<li><strong>If the buyer did not pay:</strong> The coordinator withholds the preimage and does not close the hold. Fiber automatically returns the locked CKB to the seller when the HTLC timelock expires. On this testnet lab, the lock duration is 16 hours (the minimum hold supported by the node). The coordinator cannot pull a locked payment back early.</li>
-</ul>
-<pre data-code-wrap="mermaid"><code class="lang-mermaid">sequenceDiagram
-  actor Seller
-  actor Buyer
-  participant Coordinator
-  participant Fiber
-
-  Note over Seller,Buyer: CKB is locked in Fiber HTLC
-  Seller-&gt;&gt;Coordinator: Open dispute and submit reason
-  Note over Buyer,Coordinator: Buyer can also trigger dispute
-  Coordinator-&gt;&gt;Coordinator: Review chat logs and receipt
-  alt Buyer paid
-    Coordinator-&gt;&gt;Fiber: Reveal preimage and settle to buyer
-    Fiber--&gt;&gt;Buyer: CKB arrives in buyer channel
-  else Buyer did not pay
-    Coordinator-&gt;&gt;Fiber: Withhold preimage and let HTLC expire
-    Fiber--&gt;&gt;Seller: Lock expires, CKB returns to seller
-  end
-</code></pre>
-<h2><a name="p-26152-edge-cases-and-failure-handling-5" class="anchor" href="https://talk.nervos.org#p-26152-edge-cases-and-failure-handling-5" aria-label="Heading link"></a>Edge cases and failure handling</h2>
-<p>A standard release pays the buyer. If the Fiber path payment fails to route to the buyer, the coins stay locked in the hold until the buyer retries or the HTLC timelock expires, returning the CKB to the seller.</p>
-<pre data-code-wrap="mermaid"><code class="lang-mermaid">flowchart TD
-  locked[CKB locked on Fiber HTLC]
-  locked --&gt; release[Seller releases]
-  locked --&gt; stuck[Fiber payout to buyer fails]
-  locked --&gt; dispute[Dispute opened]
-  locked --&gt; expire[HTLC timelock expires]
-  release --&gt; buyer[Buyer receives CKB]
-  stuck --&gt; retry[Buyer retries route]
-  retry --&gt; buyer
-  stuck --&gt; expire
-  dispute --&gt; paid{Coordinator reviews chat and receipt}
-  paid --&gt;|Buyer paid| buyer
-  paid --&gt;|Buyer did not pay| expire
-  expire --&gt; seller[CKB returns to seller]
-</code></pre>
-<hr>
-<p>This is currently a testnet proof-of-concept. The mobile app is built in Flutter, supported by a lightweight Rust coordinator daemon. Each phone interacts directly with its own Fiber node.</p>
-<ul>
-<li><strong>GitHub repository and lab setup:</strong> <a href="https://github.com/chukwuma619/twine-fiber-poc" rel="noopener nofollow ugc">github.com/chukwuma619/twine-fiber-poc</a></li>
-</ul>
-<p><strong>I want your honest, blunt feedback on anything.</strong><br>
-Whether it’s the UX, potential edge cases I missed, protocol architecture, or general thoughts on P2P trading, I’d love to hear it.<br>
-If you’re not sure where to start, here are a few things I’m especially curious about:</p>
-<ol>
-<li><strong>Would you use a non-custodial desk like this over centralized P2P desks?</strong></li>
-<li><strong>Which local payment methods matter most in your region?</strong></li>
-<li><strong>What would you need to see before you fully trust the Release flow?</strong></li>
-</ol>
-            <p><small>8 posts - 3 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/twine-buy-and-sell-ckb-without-depositing-on-an-exchange-fiber-p2p-poc/10741">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/twine-buy-and-sell-ckb-without-depositing-on-an-exchange-fiber-p2p-poc/10741</link>
-          <pubDate>Wed, 23 Sep 2026 04:49:23 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-10741</guid>
-          <source url="https://talk.nervos.org/t/twine-buy-and-sell-ckb-without-depositing-on-an-exchange-fiber-p2p-poc/10741.rss">Twine: Buy and Sell CKB Without Depositing on an Exchange (Fiber P2P PoC)</source>
         </item>
   </channel>
 </rss>
