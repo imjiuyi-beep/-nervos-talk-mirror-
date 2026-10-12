@@ -1,0 +1,30 @@
+name: Fetch Nervos Talk
+on:
+  schedule:
+    - cron: '0 */4 * * *'   # 每 4 小时自动抓一次
+  workflow_dispatch: {}     # 支持手动触发
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run fetch
+        run: |
+          chmod +x scripts/fetch.sh
+          bash scripts/fetch.sh
+
+      - name: Commit and push mirror
+        run: |
+          git config user.name "nervos-talk-mirror[bot]"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "mirror update $(date -u +%Y%m%d%H%M)"
+            git push
+          else
+            echo "no changes"
+          fi
