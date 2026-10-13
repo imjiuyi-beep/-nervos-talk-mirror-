@@ -1,0 +1,30 @@
+name: Fetch KaleidoSwap
+on:
+  workflow_dispatch:
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch page
+        run: |
+          mkdir -p data
+          curl -sL --compressed \
+            -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" \
+            -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" \
+            -H "Accept-Language: en-US,en;q=0.9" \
+            -H "Sec-Fetch-Mode: navigate" -H "Sec-Fetch-Site: none" -H "Sec-Fetch-Dest: document" \
+            -H "Upgrade-Insecure-Requests: 1" \
+            --max-time 90 \
+            https://kaleidoswap.com -o data/kaleido_snapshot.html
+          echo "size: $(wc -c < data/kaleido_snapshot.html)"
+          head -c 300 data/kaleido_snapshot.html
+      - name: Commit
+        run: |
+          git config user.name "actions-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/kaleido_snapshot.html
+          git commit -m "snapshot: kaleidoswap.com" || echo "no change"
+          git push
