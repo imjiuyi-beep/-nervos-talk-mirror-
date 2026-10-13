@@ -1,0 +1,276 @@
+Skip to main content
+Sign Up
+Log In
+​
+Topics
+More
+CATEGORIES
+Announcements & Meta
+Infrastructure
+Applications & Ecosystem
+Cryptoeconomics & Mechanism Design
+Miners Pub
+DAOs & Funding
+All categories
+TAGS
+lang-zh
+lang-en
+CKB
+dapp
+lang-es
+All tags
+​
+​
+
+The forum now supports rendering Mermaid diagrams directly in posts, and the Babel Reunited translation plugin has completed an important fix to the underlying rendering layer.
+
+This feature came from community suggestions and analysis: @ArthurZhang raised the need in Forum tooling suggestion: Mermaid diagram support for technical posts, identified the official component, and pinpointed its compatibility issue with the translation plugin; @phroi’s ongoing testing feedback helped us dig out the root cause of the rendering problem. Thanks to both of you.
+
+You can now draw diagrams like this:
+
+Just write a ```mermaid code block in your post and it will automatically render as a diagram after publishing. For example, a flowchart:
+
+​
+
+Write a mermaid block
+
+Post it
+
+Rendered as SVG
+
+Fullscreen on hover
+
+Other diagram types such as sequence diagrams are also supported:
+
+​
+Translator
+Forum
+Author
+Translator
+Forum
+Author
+Diagram source is protected
+Post with a diagram
+Translate the prose
+Translated text
+Same diagram, translated prose
+
+For syntax reference, see the Mermaid official documentation. You can see the rendered result in real time in the editor preview.
+
+A few notes:
+
+Hovering over a diagram shows a fullscreen button; syntax errors won’t break the page — they’ll just display an error message box.
+Also shipping with this release is a fix to the underlying rendering layer: post body content now goes through Discourse’s core rendering pipeline in full. Features that had stopped working in translation-enabled categories are restored — the copy/fullscreen buttons in the top-right corner of code blocks, click-to-enlarge for images, and so on — and they work in translated views as well. You can verify this by switching the language tab at the top of this post: diagrams render correctly in the translated version too.
+Text inside diagrams is intentionally left untranslated. This is a deliberate trade-off: diagram source code is structure-sensitive, and having a model translate labels can easily corrupt the diagram. Better to leave it untranslated than to translate it badly.
+
+Feel free to give it a try.
+
+All latest topics
+categories
+tags
+Categories
+Latest
+Top
+Topic list, column headers with buttons are sortable.
+Topic	
+Posters
+	Replies	Views	Activity
+
+Nervos Talk Governance Guidelines v0.1
+General
+lang-en
+Effective Date: August 13, 2025 Version: v0.1 中文版 Chapter 1: General Principles Article 1: Purpose Nervos Talk is the public discussion space for the Nervos community and one of the primary venues for Nervos builders… read more
+	
+	0	313	Aug 2025
+
+A Revenue Layer for CKB Nodes
+Applications & Ecosystem
+CKB
+CKB-VM
+	
+	23	415	35m
+
+[Brainstorm] Project Matchmaker — An Agent-Assisted Collaboration Network for the CKB Ecosystem
+Applications & Ecosystem
+	
+	1	11	1h
+
+Tranfr — Programmable Recovery for CKB
+Spark Program
+In-Progress
+	
+	17	502	3h
+
+Spark Program | NNCBN - Nervos Network Community Boot Nodes
+Spark Program
+In-Progress
+Node
+Spark-Program
+bootnode
+	
+	13	416	5h
+
+POI: Proof of Identity, a platformer on CKB testnet that teaches .cell names by using them
+Applications & Ecosystem
+	
+	1	32	5h
+
+Spark Program | CKB-VM Sail Validation Sprint：可复现的 RISC-V 语义差分工具、Lean 4 证明与 Rocq/Coq 兼容性 Spike
+Spark Program
+CKB-VM
+In-Progress
+	
+	25	633	11h
+
+It is 2026 and let’s run a blog with paywall built on top of fiber l402
+Applications & Ecosystem
+lang-en
+	
+	5	160	13h
+
+Noir-CKB update: what I decided after the direction check, what you can try today, and where this is going
+Infrastructure
+CKB
+zkp
+	
+	0	32	18h
+
+Tactus O1: First Based EVM Rollup on CKB
+Infrastructure
+	
+	1	68	18h
+
+[DIS] Rypto — CKB Content & Advocacy Campaign
+CKB Community Fund DAO
+	
+	7	452	1d
+
+[DIS] CrowdCell: From Testnet Demo to a Crowdfunding Product on CKB | CrowdCell：把 CKB 测试网上的免信任众筹做成产品
+CKB Community Fund DAO
+lang-en
+	
+	1	71	1d
+
+Introducing CKB Kickstarter: Decentralized All-or-Nothing Crowdfunding on Nervos CKB (Testnet MVP Live)
+Infrastructure
+CKB
+dapp
+lang-en
+	
+	15	510	1d
+
+分享一个 Tinder 版预测市场应用的想法
+Applications & Ecosystem
+lang-zh
+	
+	3	144	1d
+
+CellScript Roadmap: Expanding the Frontier of CKB-Native DeFi
+Infrastructure
+CKB
+CellScript
+DeFi
+	
+	0	108	2d
+
+Spark Program | CKB Wallet Behaviour Intelligence
+Spark Program
+In-Progress
+	
+	28	1.0k	2d
+
+Spark Program | LiquidLane: Fiber Receive Capacity Marketplace | RESUBMISSION
+Spark Program
+Rejection
+	
+	2	88	2d
+
+FiberSurvivors: a browser survivors-like for Fiber
+Applications & Ecosystem
+fiber
+game
+testnet
+	
+	0	51	3d
+
+Spark Program Proposal: Corven cloud-native IDE
+Spark Program
+CKB
+Grant
+Pending
+Spark-Program
+	
+	2	95	3d
+
+CKB Off Chain Aba: Event Overview
+General
+	
+	3	92	3d
+
+Spark Program | Spark Verify - Reproducible Acceptance Checks for CKB Projects
+Spark Program
+Pending
+	
+	13	282	3d
+
+Spark Program | zk-Lock for CKB
+Spark Program
+In-Progress
+	
+	19	660	3d
+
+[DIS] FiberLatch Access - Open-Source Access Control for Fiber Payments
+CKB Community Fund DAO
+CKB
+dapp
+testnet
+	
+	6	481	3d
+
+[DIS] Kirea Finance: Native RWA Lending Infrastructure for CKB |【DIS】Kirea Finance：面向 CKB 的原生 RWA 借贷基础设施
+CKB Community Fund DAO
+CKB
+DeFi
+defi挖矿
+lang-es
+lang-zh
+	
+	7	256	3d
+
+CKB Pulse: who is building on CKB, live
+Applications & Ecosystem
+CKB
+	
+	0	45	4d
+
+Pre-RFC Discussion: Activating the Nervos DAO Treasury
+Cryptoeconomics & Mechanism Design
+CKB
+lang-en
+	
+	21	984	4d
+
+FiberNuts After the Hackathon: What Could Cashu + Fiber Enable on CKB?
+Applications & Ecosystem
+CKB
+dapp
+testnet
+	
+	8	248	4d
+
+CKB Off-Chain Hanoi Event Overview
+General
+	
+	1	60	4d
+
+Twine: Buy and Sell CKB Without Depositing on an Exchange (Fiber P2P PoC)
+Applications & Ecosystem
+fiber
+	
+	7	239	4d
+
+Spark Program | CKB Revocable Timelock (CRT) — Timelock Encryption You Can Cancel
+Spark Program
+Closure
+	
+	5	204	4d
