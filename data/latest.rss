@@ -5,8 +5,48 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Mon, 12 Oct 2026 22:27:25 +0000</lastBuildDate>
+      <lastBuildDate>Tue, 13 Oct 2026 15:03:10 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>[Brainstorm] Project Matchmaker — An Agent-Assisted Collaboration Network for the CKB Ecosystem</title>
+          <dc:creator><![CDATA[ArthurZhang]]></dc:creator>
+          <category>Applications &amp; Ecosystem</category>
+          <description><![CDATA[
+            <p>During a brainstorming session with Matt, Shawn, Leigh, Yukun and a few others, I brought up an idea that I think could be worth exploring.</p>
+<p>We have quite a few promising projects and talented developers across the CKB ecosystem, but many of them are working in relative isolation. Sometimes two teams are solving closely related problems without knowing it. Other times, a project needs precisely the expertise that somebody elsewhere in the community already has.</p>
+<p><strong>What if we built a platform that continuously looks for these connections?</strong></p>
+<p>Let’s call it <strong>Project Matchmaker</strong> for now. This is just a brainstorming proposal, not an agreed roadmap.</p>
+<h3><a name="p-26630-the-product-1" class="anchor" href="https://talk.nervos.org#p-26630-the-product-1" aria-label="Heading link"></a>The product</h3>
+<p>Imagine a shared directory of developers, projects, repositories and ongoing research, with a few AI agents working behind the scenes.</p>
+<p>Developers could register their skills, interests, availability and preferred areas of contribution. Projects could describe what they’re building, their dependencies, outstanding problems and where they need help.</p>
+<p>The agents would then analyse potential synergies across the ecosystem and produce a daily or weekly collaboration report.</p>
+<p>For example:</p>
+<ul>
+<li>Project A has developed a reusable ZK verification component that Project B could integrate.</li>
+<li>Project C needs someone familiar with CKB transaction composition, while Developer D has recently been working on precisely that.</li>
+<li>Two teams are implementing similar infrastructure and might benefit from sharing a library rather than maintaining separate implementations.</li>
+<li>A newly announced project has architectural dependencies or research interests that overlap with three existing teams.</li>
+</ul>
+<p>When a new project makes its debut, the platform could automatically generate a short <strong>collaboration opportunity report</strong>, suggesting relevant developers, existing projects, reusable components and potential contributors.</p>
+<h3><a name="p-26630-possible-architecture-2" class="anchor" href="https://talk.nervos.org#p-26630-possible-architecture-2" aria-label="Heading link"></a>Possible architecture</h3>
+<p>I imagine a relatively straightforward system built around a continuously updated knowledge graph.</p>
+<p><strong>1. Discovery layer:</strong> Collect information from public GitHub repositories, issues, Nervos Talk discussions and voluntarily submitted developer/project profiles. Private community data would require explicit permission.</p>
+<p><strong>2. Knowledge graph:</strong> Represent developers, projects, skills, protocol components, dependencies and open problems as connected entities, with links back to supporting evidence.</p>
+<p><strong>3. Agent layer:</strong> Run specialised agents for project discovery, technical capability analysis, collaboration matching and opportunity reporting. Matching could combine semantic search with graph relationships, rather than relying entirely on an LLM’s judgement.</p>
+<p><strong>4. Product layer:</strong> A searchable community directory, project onboarding, personalised collaboration suggestions and a regular ecosystem synergy digest.</p>
+<p>Importantly, every recommendation should explain <em>why</em> two parties might benefit from working together, with links to actual code, issues or research. People should be able to correct recommendations, decline introductions and control their own availability.</p>
+<p><strong>this is purely a brainstorm</strong>. I’d love to hear whether people think this would actually be useful, what existing tools we could build upon, and whether anyone would be interested in experimenting with a prototype.</p>
+            <p><small>2 posts - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/brainstorm-project-matchmaker-an-agent-assisted-collaboration-network-for-the-ckb-ecosystem/10992">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/brainstorm-project-matchmaker-an-agent-assisted-collaboration-network-for-the-ckb-ecosystem/10992</link>
+          <pubDate>Tue, 13 Oct 2026 15:03:10 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-10992</guid>
+          <source url="https://talk.nervos.org/t/brainstorm-project-matchmaker-an-agent-assisted-collaboration-network-for-the-ckb-ecosystem/10992.rss">[Brainstorm] Project Matchmaker — An Agent-Assisted Collaboration Network for the CKB Ecosystem</source>
+        </item>
         <item>
           <title>Noir-CKB update: what I decided after the direction check, what you can try today, and where this is going</title>
           <dc:creator><![CDATA[xiaomao]]></dc:creator>
@@ -161,7 +201,7 @@ A private tally. The Cell holds a commitment to a hidden 64-bit number. Whoever 
 </ol>
 <p>Your house goes up in the town, and the first hundred get the founder medal (<em>One of the first 100 houses</em>) and the laurel wreath.</p>
 <p>Questions, bugs and ideas are welcome in this thread.</p>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/poi-proof-of-identity-a-platformer-on-ckb-testnet-that-teaches-cell-names-by-using-them/10967">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/poi-proof-of-identity-a-platformer-on-ckb-testnet-that-teaches-cell-names-by-using-them/10967</link>
@@ -2248,7 +2288,7 @@ other CKB applications to add payment automation without building their own priv
 <h2><a name="p-26374-call-to-action-18" class="anchor" href="https://talk.nervos.org#p-26374-call-to-action-18" aria-label="Heading link"></a>Call to Action</h2>
 <p>The core pattern, a real-world claim, gated by KYC, used as loan collateral, is fully implemented and verified end to end on CKB testnet. This proposal funds hardening that working, open-source pattern so any builders, asset type or team can pick it up and extend it.</p>
 <p>I appreciate the community’s consideration and welcome any feedback on the architecture, scope, or budget.</p>
-            <p><small>9 posts - 4 participants</small></p>
+            <p><small>8 posts - 4 participants</small></p>
             <p><a href="https://talk.nervos.org/t/dis-kirea-finance-native-rwa-lending-infrastructure-for-ckb-dis-kirea-finance-ckb-rwa/10809">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/dis-kirea-finance-native-rwa-lending-infrastructure-for-ckb-dis-kirea-finance-ckb-rwa/10809</link>
@@ -4902,159 +4942,6 @@ given it’s open to any platform user.</p>
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-10751</guid>
           <source url="https://talk.nervos.org/t/zedify-fiber-network-native-commerce-platform-for-emerging-market-merchants/10751.rss">Zedify — Fiber Network-native commerce platform for emerging-market merchants</source>
-        </item>
-        <item>
-          <title>Nervape Artist RGB++ DOB：基于 RGB++ 和 Bitcoin 的猴子链上认证与所有权方案</title>
-          <dc:creator><![CDATA[faber_yang]]></dc:creator>
-          <category>Applications &amp; Ecosystem</category>
-          <description><![CDATA[
-            <h1><a name="p-26155-nervape-artist-rgb-dob-rgb-bitcoin-1" class="anchor" href="https://talk.nervos.org#p-26155-nervape-artist-rgb-dob-rgb-bitcoin-1" aria-label="Heading link"></a>Nervape Artist RGB++ DOB：基于 RGB++ 和 Bitcoin 的猴子链上认证与所有权方案</h1>
-<h2><a name="p-26155-h-1-2" class="anchor" href="https://talk.nervos.org#p-26155-h-1-2" aria-label="Heading link"></a>1. 方案概述</h2>
-<p>Artist RGB++ DOB 利用 RGB++ 与 Bitcoin 技术，为每只艺术家猴子建立可验证的链上身份和链上所有权。芯片提供实体身份凭证，RGB++ 连接 DOB 数据与 Bitcoin UTXO，Bitcoin 网络记录 DOB 的发行、所有权和转移结果。</p>
-<p><strong>链上认证以“实体芯片 → 芯片地址 → Bitcoin UTXO → RGB++ DOB”为验证链路；在 BTC 主状态下，链上所有权以 Bitcoin 网络中当前有效的 DOB UTXO 及其锁定地址为准。</strong> CKB 作为 RGB++ 的数据与验证层，用于保存艺术家信息和 DOB 数据，并验证 Bitcoin UTXO 对应的资产状态。</p>
-<ul>
-<li>RGB++ 将 CKB 侧 DOB 数据与 Bitcoin UTXO 建立同构绑定；</li>
-<li>DOB 通过 Bitcoin 交易发行，Bitcoin UTXO 表达链上所有权；</li>
-<li>艺术家信息、DOB metadata、DNA 和渲染数据记录在 CKB 侧 DOB Cell 中；</li>
-<li>用户通过芯片验证完成认领，DOB mint 到猴子芯片生成的 Bitcoin 地址，Nervape 记录当前实体持有人；</li>
-<li>DOB 在 CKB 与 BTC 之间的迁移通过 RGB++ leap 完成。</li>
-</ul>
-<h2><a name="p-26155-h-2-3" class="anchor" href="https://talk.nervos.org#p-26155-h-2-3" aria-label="Heading link"></a>2. 涉及到的对象和关系</h2>
-<h3><a name="p-26155-h-21-ckb-artist-dob-cell-4" class="anchor" href="https://talk.nervos.org#p-26155-h-21-ckb-artist-dob-cell-4" aria-label="Heading link"></a>2.1 CKB Artist DOB Cell</h3>
-<p>CKB Artist DOB Cell 是艺术家 DOB 的数据载体，主要记录：</p>
-<ul>
-<li>Artist DOB 唯一标识；</li>
-<li>艺术家相关信息；</li>
-<li>RGB++ 绑定所需的状态信息。</li>
-</ul>
-<h3><a name="p-26155-h-22-btc-dob-utxo-5" class="anchor" href="https://talk.nervos.org#p-26155-h-22-btc-dob-utxo-5" aria-label="Heading link"></a>2.2 BTC DOB UTXO</h3>
-<p>BTC DOB UTXO 是 Artist RGB++ DOB 在 Bitcoin 网络上的所有权凭证，主要用于：</p>
-<ul>
-<li>表达 DOB 在 Bitcoin 网络上的所有权状态；</li>
-<li>接收 Bitcoin 网络上的 mint；</li>
-<li>参与 RGB++ leap。</li>
-</ul>
-<h3><a name="p-26155-h-23-6" class="anchor" href="https://talk.nervos.org#p-26155-h-23-6" aria-label="Heading link"></a>2.3 猴子芯片地址</h3>
-<p>每只艺术家猴子的芯片生成独立 BTC 地址。该地址用于接收RGB++ DOB 的UTXO，是实体身份与 Bitcoin 链上所有权之间的连接点。</p>
-<h3><a name="p-26155-h-24-nervape-7" class="anchor" href="https://talk.nervos.org#p-26155-h-24-nervape-7" aria-label="Heading link"></a>2.4 Nervape 实体持有人</h3>
-<p>Nervape 记录当前实体猴子的持有人，由用户完成芯片验证后建立或更新。该记录用于实体交付和产品服务，不替代 Bitcoin UTXO 表达的链上所有权。</p>
-<h3><a name="p-26155-h-25-8" class="anchor" href="https://talk.nervos.org#p-26155-h-25-8" aria-label="Heading link"></a>2.5 关系图</h3>
-<pre data-code-wrap="mermaid"><code class="lang-mermaid">flowchart TB
-  artist[艺术家 / 发行方] --&gt; artistData[艺术家信息]
-  artistData --&gt; dobCell[CKB Artist DOB Cell]
-  dobCell --&gt; dobType[DOB Type Script 验证]
-  dobCell &lt;--&gt; binding[RGB++ 同构绑定]
-
-  monkey[艺术家猴子实体] --&gt; chip[安全芯片]
-  chip --&gt; chipAddress[芯片 Bitcoin 地址]
-  chipAddress --&gt; dobUtxo[Bitcoin DOB UTXO]
-  binding &lt;--&gt; dobUtxo
-  dobUtxo --&gt; ownership[链上所有权]
-
-  chip --&gt; claim[芯片验证与认领]
-  claim --&gt; holder[Nervape 实体持有人]
-</code></pre>
-<hr>
-<h2><a name="p-26155-h-3-9" class="anchor" href="https://talk.nervos.org#p-26155-h-3-9" aria-label="Heading link"></a>3. 实现原理</h2>
-<h3><a name="p-26155-h-31-10" class="anchor" href="https://talk.nervos.org#p-26155-h-31-10" aria-label="Heading link"></a>3.1 艺术家猴子链上认证原理</h3>
-<p>每只艺术家猴子的芯片身份、芯片生成的 Bitcoin 地址、BTC DOB UTXO 和 CKB Artist DOB Cell 组成唯一认证链路。验证者通过芯片挑战响应确认实体芯片，再沿 RGB++ 绑定关系查询 DOB 数据和 Bitcoin UTXO 状态，从而验证猴子实体及其链上 DOB 的真实性。链上认证成立需要同时满足芯片验证有效、BTC DOB UTXO 未被消费、RGB++ 绑定有效，以及 CKB DOB 数据与芯片标识一致。</p>
-<h3><a name="p-26155-h-32-11" class="anchor" href="https://talk.nervos.org#p-26155-h-32-11" aria-label="Heading link"></a>3.2 链上所有权原理</h3>
-<p>当 Artist RGB++ DOB 位于 Bitcoin 网络时，其链上所有权由 UTXO 模型表达。当前未花费的 BTC DOB UTXO 是所有权凭证，其锁定地址是当前链上所有者。RGB++ 将每次 Bitcoin 所有权变化同步到 CKB DOB Cell 的绑定状态，使链上所有权与 DOB 数据保持一致。</p>
-<h3><a name="p-26155-h-33-bitcoin-12" class="anchor" href="https://talk.nervos.org#p-26155-h-33-bitcoin-12" aria-label="Heading link"></a>3.3 Bitcoin 网络作为主执行层</h3>
-<p>Artist RGB++ DOB 的资产操作以 Bitcoin UTXO 为基础。发行时创建绑定到芯片地址的 BTC DOB UTXO。CKB 不代替 Bitcoin 执行资产转移。CKB 侧保存 DOB 数据，并通过 RGB++ 规则验证和同步 Bitcoin 网络上的 UTXO 状态。</p>
-<h3><a name="p-26155-h-34-ckb-dob-13" class="anchor" href="https://talk.nervos.org#p-26155-h-34-ckb-dob-13" aria-label="Heading link"></a>3.4 CKB 侧记录 DOB 数据</h3>
-<p>发行方首先在 CKB 创建 Artist DOB Cell。DOB Type Script 约束 DOB 数据格式和状态变更规则，Cell data 保存艺术家信息、metadata、DNA 与渲染数据。</p>
-<h3><a name="p-26155-h-35-rgb-14" class="anchor" href="https://talk.nervos.org#p-26155-h-35-rgb-14" aria-label="Heading link"></a>3.5 RGB++ 建立同构绑定</h3>
-<p>RGB++ 协议将 CKB Artist DOB Cell 与 BTC UTXO 建立绑定。BTC UTXO 发生合法变更后，CKB 侧根据 RGB++ 规则验证对应的 BTC 交易，并将 DOB 状态同步到新的绑定关系。</p>
-<h3><a name="p-26155-h-36-bitcoin-15" class="anchor" href="https://talk.nervos.org#p-26155-h-36-bitcoin-15" aria-label="Heading link"></a>3.6 Bitcoin 网络发行</h3>
-<p>Artist RGB++ DOB 通过 Bitcoin 交易发行，所有者固定为猴子芯片生成的 Bitcoin 地址。</p>
-<pre><code class="lang-auto">准备 Artist DOB 数据
-→ 创建 CKB Artist DOB Cell
-→ 获取猴子芯片 Bitcoin 地址
-→ 构造 RGB++ mint 交易
-→ 在 Bitcoin 网络创建 DOB UTXO
-→ 将 DOB UTXO 绑定到芯片地址
-→ 等待 BTC 与 CKB 状态确认
-</code></pre>
-<p>发行完成后，DOB ID、CKB Cell、BTC UTXO 和芯片唯一标识需要形成可查询的映射关系。</p>
-<h3><a name="p-26155-h-37-16" class="anchor" href="https://talk.nervos.org#p-26155-h-37-16" aria-label="Heading link"></a>3.7 芯片认领</h3>
-<p>用户认领时不改变 BTC DOB UTXO，也不将 DOB 转入用户钱包。认领过程通过芯片签名或挑战响应验证实体在场，并在 Nervape 登记当前实体持有人。链上所有权仍由锁定到芯片地址的 BTC DOB UTXO 表达。认领记录至少包含 DOB ID、芯片唯一标识、用户 ID、验证时间和当前状态。</p>
-<h3><a name="p-26155-h-38-17" class="anchor" href="https://talk.nervos.org#p-26155-h-38-17" aria-label="Heading link"></a>3.8 实体持有人变更</h3>
-<p>实体猴子转手后，新持有人重新完成芯片验证。验证成功后，Nervape 更新实体持有人记录，RGB++ DOB 的链上所有权仍由芯片地址持有的 BTC DOB UTXO 表达，不触发 Bitcoin 链上交易。</p>
-<hr>
-<h2><a name="p-26155-h-4-18" class="anchor" href="https://talk.nervos.org#p-26155-h-4-18" aria-label="Heading link"></a>4. 跨链方案</h2>
-<h3><a name="p-26155-h-41-btc-ckb-19" class="anchor" href="https://talk.nervos.org#p-26155-h-41-btc-ckb-19" aria-label="Heading link"></a>4.1 BTC 到 CKB</h3>
-<p>BTC 到 CKB 使用 RGB++ leap特性，将 BTC UTXO 表达的 DOB 持有状态切换为 CKB DOB Cell 持有状态。</p>
-<pre><code class="lang-auto">选择 BTC DOB UTXO
-→ 指定目标 CKB 地址，即芯片CKB地址
-→ 构造 BTC -&gt; CKB leap 交易
-→ 完成 BTC 侧签名并广播
-→ 提交 CKB 侧 RGB++ 交易
-→ RGB++ 校验 BTC 交易状态
-→ DOB Cell 绑定到目标 CKB owner lock
-→ CKB 地址持有 Artist RGB++ DOB
-</code></pre>
-<h3><a name="p-26155-h-42-ckb-btc-20" class="anchor" href="https://talk.nervos.org#p-26155-h-42-ckb-btc-20" aria-label="Heading link"></a>4.2 CKB 到 BTC</h3>
-<p>CKB 到 BTC 使用 RGB++ leap特性，将 CKB 地址控制的 Artist DOB Cell 切换为目标 BTC UTXO 持有。</p>
-<pre><code class="lang-auto">选择 CKB Artist DOB Cell
-→ 指定目标 BTC 地址，即芯片的BTC地址
-→ 构造 CKB -&gt; BTC leap 交易
-→ 提交 CKB 交易
-→ 在 BTC 创建目标 DOB UTXO
-→ RGB++ 校验并建立新绑定
-→ BTC 地址持有 Artist RGB++ DOB UTXO
-</code></pre>
-<h3><a name="p-26155-h-43-21" class="anchor" href="https://talk.nervos.org#p-26155-h-43-21" aria-label="Heading link"></a>4.3 跨链图示</h3>
-<pre data-code-wrap="mermaid"><code class="lang-mermaid">flowchart TB
-  subgraph BTC[Bitcoin 网络]
-    direction TB
-    btcOwner[芯片 Bitcoin 地址]
-    btcUtxo[BTC DOB UTXO]
-    btcOwner --&gt; btcUtxo
-  end
-
-  subgraph RGBPP[RGB++ Leap]
-    direction TB
-    leapTx[构造跨链交易]
-    verify[校验交易与同步绑定]
-    leapTx --&gt; verify
-  end
-
-  subgraph CKB[CKB 网络]
-    direction TB
-    dobCell[CKB Artist DOB Cell]
-    ckbOwner[芯片 CKB 地址 / Owner Lock]
-    dobCell --&gt; ckbOwner
-  end
-
-  btcUtxo --&gt;|BTC → CKB| leapTx
-  verify --&gt;|生成 CKB 持有状态| dobCell
-
-  dobCell -.-&gt;|CKB → BTC| leapTx
-  verify -.-&gt;|生成 BTC UTXO| btcUtxo
-</code></pre>
-<hr>
-<h2><a name="p-26155-h-5-22" class="anchor" href="https://talk.nervos.org#p-26155-h-5-22" aria-label="Heading link"></a>5. 总结</h2>
-<p>Nervape Artist RGB++ DOB 利用 RGB++ 和 Bitcoin 技术，为艺术家猴子建立“实体身份、链上数据与链上所有权”一体化的认证关系。</p>
-<ul>
-<li>安全芯片为每只艺术家猴子提供唯一身份，并生成用于接收 RGB++ DOB 的 Bitcoin 地址；</li>
-<li>CKB Artist DOB Cell 记录艺术家信息和 DOB 数据；</li>
-<li>RGB++ 将 CKB DOB Cell 与 Bitcoin UTXO 建立绑定，使实体猴子、DOB 数据和链上资产能够相互验证；</li>
-<li>Bitcoin UTXO 作为链上所有权凭证，其锁定地址表示当前链上所有者；</li>
-<li>用户通过验证芯片完成认领，Nervape 记录当前实体持有人，认领过程不改变 Bitcoin UTXO 的所有权状态；</li>
-<li>RGB++ leap 支持 DOB 在 Bitcoin 与 CKB 之间迁移，并保持 DOB 数据与链上持有状态一致。</li>
-</ul>
-<p>该方案以 Bitcoin 网络承载 Artist RGB++ DOB 的发行和链上所有权，以 RGB++ 连接 Bitcoin UTXO 与 CKB DOB 数据，以安全芯片完成实体猴子的身份认证，从而形成可验证、可查询、可跨链的艺术家猴子链上认证体系。</p>
-            <p><small>1 post - 1 participant</small></p>
-            <p><a href="https://talk.nervos.org/t/nervape-artist-rgb-dob-rgb-bitcoin/10744">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/nervape-artist-rgb-dob-rgb-bitcoin/10744</link>
-          <pubDate>Wed, 23 Sep 2026 05:34:26 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-10744</guid>
-          <source url="https://talk.nervos.org/t/nervape-artist-rgb-dob-rgb-bitcoin/10744.rss">Nervape Artist RGB++ DOB：基于 RGB++ 和 Bitcoin 的猴子链上认证与所有权方案</source>
         </item>
   </channel>
 </rss>
