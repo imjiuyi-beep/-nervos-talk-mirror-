@@ -5,8 +5,87 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Mon, 12 Oct 2026 15:41:20 +0000</lastBuildDate>
+      <lastBuildDate>Mon, 12 Oct 2026 22:27:25 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>Noir-CKB update: what I decided after the direction check, what you can try today, and where this is going</title>
+          <dc:creator><![CDATA[xiaomao]]></dc:creator>
+          <category>Infrastructure</category>
+          <description><![CDATA[
+            <p>About a month ago I shared a <a href="https://talk.nervos.org/t/direction-check-should-noir-ckb-generate-ckb-type-scripts-from-noir-circuits/10703/3">direction check</a> here for noir-ckb, asking for feedback on what I was building. I got really thoughtful replies, mostly around two questions:</p>
+<p>Where should a proof live in a CKB transaction (Lock or Type?), and is Noir → Groth16 even the right backend, given its per-circuit trusted setup.</p>
+<p>This post is the follow-up: what I decided, what exists now that you can actually run (including on testnet), and the longer-term picture of where I want this to go. It’s a long one, sorry in advance <img src="https://talk.nervos.org/images/emoji/apple/sweat_smile.png?v=15" title=":sweat_smile:" class="emoji" alt=":sweat_smile:" loading="lazy" width="20" height="20"></p>
+<p><strong>Quick recap, if you’re new to this</strong></p>
+<p>noir-ckb lets you write a rule in Noir, prove it off-chain, and have a CKB script verify the proof. The sentence that has driven the whole project is:</p>
+<p>&gt; A proof that verifies is not the same as a proof that authorizes this Cell transition.</p>
+<p>A Groth16 proof can be mathematically perfect and still be about the wrong thing: the wrong Cell, the wrong state change, the wrong network. So the interesting work isn’t only verifying proofs on CKB-VM, it’s binding each proof to the exact transaction it’s attached to, so that a valid proof can’t be reused anywhere else.</p>
+<p><strong>Decision 1: where the proof lives</strong></p>
+<p>In my reply in that thread I ended up with four possible patterns:</p>
+<ol>
+<li>
+<p>Proof-only Lock for a stateless cell: having a valid proof is the permission to spend.</p>
+</li>
+<li>
+<p>Generic verifier Lock + binding Type: the Lock checks the proof, the Type checks the proof is about this exact transition. (My earlier Capsule prototype.)</p>
+</li>
+<li>
+<p>Normal ownership Lock + proof-verifying Type: a signature decides <strong>who</strong> can spend; the Type verifies the proof and binds it to the state change.</p>
+</li>
+<li>
+<p>Two proofs, one in the Lock and one in the Type, tied together by shared context.</p>
+</li>
+</ol>
+<p>Where they ended up:</p>
+<p><strong>Pattern 3 is now live on testnet</strong>, as a small owned counter. A normal secp256k1 Lock controls who may spend the Cell. The counter’s Type Script rebuilds the expected public statement from the actual transaction (network, the consumed Cell, old and new value, successor Lock and capacity) and only then verifies the Groth16 proof. A perfectly valid proof for a different Cell, a different change or a different network gets rejected. The local test suite throws 48 of those attacks at it in CKB-VM, plus three deliberately broken contracts that the tests have to catch.</p>
+<p>I’ll be honest about the counter, though: its proof is redundant. Every input is public, so the Type could just check `new = old + 1` itself in a few instructions instead of about 111 million cycles. It proves the plumbing and the binding work. It doesn’t show <strong>why</strong> you’d want zero knowledge.</p>
+<p><strong>So the next example is a stateful version of pattern 1</strong>:<br>
+A private tally. The Cell holds a commitment to a hidden 64-bit number. Whoever knows a secret key can add a hidden amount (including zero, so an update doesn’t even reveal whether anything was added). There’s no signature: the proof is the permission, and the logic lives in a Type so the state survives each update.</p>
+<p>That’s where binding stops being a nice-to-have and becomes the entire security model. With no signature, a proof copied out of the mempool is the only thing between an attacker and your tally, so it has to commit to one consumed Cell, one old and new commitment, one successor and one network. Then it’s useless anywhere else.</p>
+<p>What it won’t hide, to be upfront: updates to one Cell are still linkable to each other, and the number of updates, their timing and who paid the fee are public. Fully unlinkable updates would need a shielded pool, which is a different design.</p>
+<p>The design is written and accepted, not built yet. Before committing to it I checked the risky parts against the current backend: the hash library that works with my compiler version has a known bug for longer inputs, so every hash in the design takes three inputs or fewer, and a differential test (Noir’s own execution vs. the backend’s constraint system) agreed on all 19 cases I threw at it.</p>
+<p>Patterns 2 and 4 are parked for now. I’d rather build them when a real application needs them.</p>
+<p><strong>Decision 2: staying with Noir → Groth16 (for now)</strong></p>
+<p>It was suggested that I look at the optimized SP1 verifier for CKB-VM, because SP1’s PLONK setup is universal, so no per-circuit ceremony. I took that seriously: I reproduced its verification on CKB-VM (about 66M cycles for the upstream fixture) and a set of rejection cases. It works.</p>
+<p>The problem is one step earlier. SP1 proves programs compiled for its zkVM; it doesn’t take Noir circuits. Keeping Noir would mean building a Noir-to-SP1 bridge first (for example, running an ACIR interpreter inside SP1), which I couldn’t find and which would be a whole project on its own. Rewriting circuits in Rust would mean dropping the Noir workflow this project exists for.</p>
+<p>So I’m staying with Noir → Groth16 and paying the setup cost properly, with a ceremony (more below). That’s a scoping decision, not a verdict that SP1 is worse. If a Noir path to SP1 appears, the binding layer is the part I’d expect to carry over.</p>
+<p><strong>What you can try today</strong></p>
+<p>Everything is in one guide: <a href="https://github.com/wamimi/noir-ckb-verifier/blob/main/docs/try-the-counter.md" class="inline-onebox" rel="noopener nofollow ugc">noir-ckb-verifier/docs/try-the-counter.md at main · wamimi/noir-ckb-verifier · GitHub</a></p>
+<p><strong>Part 1, locally, no wallet, no money.</strong> One command compiles the circuit, generates a fresh proof, starts a throwaway CKB chain on your computer, and sends real signed transactions that deploy the contract, create a counter and update it with the proof. It runs on Apple Silicon Macs and Ubuntu 24.04 (x86_64 and ARM64), natively or in a container. (Intel Macs and Windows aren’t supported yet.)</p>
+<p><strong>Part 2, your own counter on testnet.</strong> You don’t deploy anything: the contract and verification key are already on testnet and the proving files are published, so it costs about <strong>262 testnet CKB</strong> from the faucet (200 stay locked in your counter, because this demo contract has no withdraw). Before you sign anything, the tool checks that the published files are exactly what’s deployed, that the code on testnet matches them byte for byte, and that your own machine compiles the circuit to the same thing. Then you review, sign and send each transaction yourself with your own `ckb-cli` account. The proof is generated on your machine.</p>
+<p>I went through it from a brand new account:</p>
+<p>- created at 0: [0x0b6efcd7…888798c](<a href="https://testnet.explorer.nervos.org/transaction/0x0b6efcd70f111afd1c885557c84f7b93ef4ee8401dd9fe258b9fb677c888798c" rel="noopener nofollow ugc">https://testnet.explorer.nervos.org/transaction/0x0b6efcd70f111afd1c885557c84f7b93ef4ee8401dd9fe258b9fb677c888798c</a>)</p>
+<p>- updated 0 → 1 with a proof made on my laptop: [0xe6589170…0089126f](<a href="https://testnet.explorer.nervos.org/transaction/0xe6589170381a02a249c37be8ab279e6229e2feb8f177f3d572bc63f30089126f" rel="noopener nofollow ugc">https://testnet.explorer.nervos.org/transaction/0xe6589170381a02a249c37be8ab279e6229e2feb8f177f3d572bc63f30089126f</a>)</p>
+<p>Doing it as a “stranger” found a couple of rough edges that I fixed straight away. I’m sure you’ll find more, and I’d love to hear about them.</p>
+<p><strong>The trust part, plainly</strong></p>
+<p>The counter’s keys came from a <strong>single-party development setup</strong>, made by me. In principle that means I could forge counter proofs. For the counter it’s tolerable, because every update also needs your signature, so nobody can change <strong>your</strong> counter without your key.</p>
+<p>For the private tally it’s not tolerable, since the proof is the only authority. So before the tally goes to testnet I’ll run a small public <strong>setup ceremony</strong>. It’s a relay where each person downloads the latest file, runs one `snarkjs` command on their laptop (around ten minutes), and posts the hash it prints. If even <strong>one</strong> contributor throws away their randomness, nobody can forge proofs. A future CKB block hash gets mixed in at the end so nobody can steer the result, and anyone can verify the whole transcript afterwards.</p>
+<p><strong>I’m looking for around five contributors(or more)</strong> If you’d like to be one, reply here or DM me and I’ll send instructions once the circuit is frozen. (It’s for a testnet developer preview, not an audited production ceremony.)</p>
+<p><strong>## Where I want this to go</strong></p>
+<p>This is the part I’m most excited about. The developer experience I’m working toward:</p>
+<p>&gt; You start a project, bring a supported Noir circuit, declare how its public values map to your Cells, and the tool builds the artifacts, the Type Script and an adversarial test suite for you. You test it locally, deploy to testnet, and connect it to your frontend, where your users generate proofs in their own browser and authorize updates with their own wallet.</p>
+<p>Almost none of that exists yet beyond the counter, so here is how I’m thinking about getting there, step by step:</p>
+<p><strong>1. A real developer toolkit, natively.</strong> Turn today’s reference workflow into an installable CLI that works outside this repository, with clear diagnostics and an explicit list of what’s supported. Then support a project within one well-defined pattern (one owner-controlled Cell transitioning to one successor): a config file for how your public values map to Cell state, early and clear errors when a circuit uses something the backend doesn’t support, and artifact manifests so you can always tell which circuit, key, contract and toolchain belong together. A second small example should build from its own folder without touching toolkit code; that’s the real test of reuse.</p>
+<p><strong>2. Proving in the browser, with a wallet.</strong> This is where it gets fun, and also where I want to be careful. NoirJS can execute a circuit in the browser and produce a witness, but my route also needs the witness converted to the backend’s layout and a Groth16 proof from snarkjs. Barretenberg’s browser prover (UltraHonk) is a different proof system, so it can’t just be plugged into the existing CKB verifier. So the first milestone is narrow: a proof generated in a browser for the fixed counter must pass the existing on-chain verifier, and altered statements must still be rejected. Phone performance has to be measured as well. If that works, the acceptance app is a little visitor-owned counter: connect a wallet, create your counter, click increment, prove in the browser, sign, see it confirmed.</p>
+<p><strong>3. Applications that push the toolkit.</strong> Battleship is the one I keep coming back to (and it’s why pattern 3 matters: the player’s Lock authorizes the move, the Type proves the hit/miss answer is consistent with the committed board). But a proof of one move doesn’t make a fair game by itself: turns, timeouts, repeated shots and endings all need their own design. So it’ll be its own project once the architecture holds up.</p>
+<p><strong>4. Grow from real demand.</strong> More circuit operations, structured inputs, other wallet locks, multi-Cell patterns: added when an actual application needs them, each with its own compatibility statement and attack tests. Production readiness (a real setup strategy, independent review, upgrade policy) is a separate undertaking from a testnet release, and I won’t blur the two.</p>
+<p><strong>## What would help most</strong></p>
+<p><strong>Try it</strong> and tell me where you got stuck and on which OS: <a href="https://github.com/wamimi/noir-ckb-verifier/issues/new/choose" class="inline-onebox" rel="noopener nofollow ugc">Sign in to GitHub · GitHub</a> (never share wallet folders or passwords, just the error and the manifest file).</p>
+<p><strong>If you’re building on CKB:</strong> what would you want to prove inside a transaction? Which public values would have to match your Cells? Which of the four patterns fits?</p>
+<p><strong>Ceremony:</strong> reply if you’d like to contribute.</p>
+<p><strong>Browser proving:</strong> if you’ve tried NoirJS, snarkjs or wallet signing in a CKB frontend, I’d really like to hear what hurt.</p>
+<p>Honestly, this has become one of my favourite things to work on. Each week I understand CKB a little better, and every time something breaks on someone else’s machine, the project gets more real. Thank you to everyone who replied to the direction check: it changed what I built. I’m excited to see where this goes, and I’d love for some of you to come along <img src="https://talk.nervos.org/images/emoji/apple/folded_hands.png?v=15" title=":folded_hands:" class="emoji" alt=":folded_hands:" loading="lazy" width="20" height="20"><br>
+</p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/f/fe7b4c9418f6e22eda0812f74fef05b38095f84c.jpeg" data-download-href="https://talk.nervos.org/uploads/default/fe7b4c9418f6e22eda0812f74fef05b38095f84c" title="e3f656aca5a434fd2b31daedb53d5763"><img src="https://talk.nervos.org/uploads/default/optimized/2X/f/fe7b4c9418f6e22eda0812f74fef05b38095f84c_2_330x500.jpeg" alt="e3f656aca5a434fd2b31daedb53d5763" data-base62-sha1="AjfrzjN9yeDzlpyvV82R71n9xLu" width="330" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/f/fe7b4c9418f6e22eda0812f74fef05b38095f84c_2_330x500.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/f/fe7b4c9418f6e22eda0812f74fef05b38095f84c_2_495x750.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/f/fe7b4c9418f6e22eda0812f74fef05b38095f84c_2_660x1000.jpeg 2x" data-dominant-color="A8937A"></a></div><p></p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/noir-ckb-update-what-i-decided-after-the-direction-check-what-you-can-try-today-and-where-this-is-going/10968">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/noir-ckb-update-what-i-decided-after-the-direction-check-what-you-can-try-today-and-where-this-is-going/10968</link>
+          <pubDate>Mon, 12 Oct 2026 22:27:25 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-10968</guid>
+          <source url="https://talk.nervos.org/t/noir-ckb-update-what-i-decided-after-the-direction-check-what-you-can-try-today-and-where-this-is-going/10968.rss">Noir-CKB update: what I decided after the direction check, what you can try today, and where this is going</source>
+        </item>
         <item>
           <title>POI: Proof of Identity, a platformer on CKB testnet that teaches .cell names by using them</title>
           <dc:creator><![CDATA[LusoCryptoLabs]]></dc:creator>
@@ -968,7 +1047,7 @@
 </aside>
 
 <p><em>Tactus</em> is a musical term for a shared beat. I like the analogy for what this project is trying to achieve: independent participants, one canonical history, and no privileged L2 conductor.</p>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 1 participant</small></p>
             <p><a href="https://talk.nervos.org/t/tactus-o1-first-based-evm-rollup-on-ckb/10861">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/tactus-o1-first-based-evm-rollup-on-ckb/10861</link>
@@ -4976,85 +5055,6 @@ given it’s open to any platform user.</p>
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-10744</guid>
           <source url="https://talk.nervos.org/t/nervape-artist-rgb-dob-rgb-bitcoin/10744.rss">Nervape Artist RGB++ DOB：基于 RGB++ 和 Bitcoin 的猴子链上认证与所有权方案</source>
-        </item>
-        <item>
-          <title>Obscell Web Wallet —— CKB 隐私钱包的浏览器版（纯前端）</title>
-          <dc:creator><![CDATA[tianlitao]]></dc:creator>
-          <category>Applications &amp; Ecosystem</category>
-          <description><![CDATA[
-            <p>之前见 <a class="mention" href="https://talk.nervos.org/u/quake">@quake</a> 发过 <a href="https://talk.nervos.org/t/obscell-wallet-a-privacy-preserving-tui-wallet-for-ckb/9947">obscell-wallet</a>—— 一个跑在终端里的 CKB 隐私钱包（隐身地址 + 机密交易）。那版要下载二进制、装 Rust 工具链，对只想 “点开看看” 的人来说门槛有点高。于是我把同一个协议重写成了浏览器版：<strong>Obscell Web Wallet</strong>。纯前端，打开网页就能用，链上数据和 TUI 版完全互通。</p>
-<p>在线体验：<a href="https://obscell-web.pages.dev" rel="noopener nofollow ugc">https://obscell-web.pages.dev</a></p>
-<h2><a name="p-26154-h-1" class="anchor" href="https://talk.nervos.org#p-26154-h-1" aria-label="Heading link"></a>背景与致谢</h2>
-<p>先感谢 <a class="mention" href="https://talk.nervos.org/u/quake">@quake</a>（TUI 版 obscell-wallet 的作者）和  <a class="mention" href="https://talk.nervos.org/u/rea-don-lycn">@Rea-Don-Lycn</a>（obscell 合约原作者）。web 版不发明新协议：stealth 地址的 ECDH、CT 的 Pedersen 承诺、Bulletproofs 范围证明，全部沿用原版设计，协议参数逐位对齐。所以两个钱包读的是同一份链上数据 ——TUI 版收到的钱，web 版能扫到；web 版发的 CT 交易，TUI 版也能解开。</p>
-<h2><a name="p-26154-h-2" class="anchor" href="https://talk.nervos.org#p-26154-h-2" aria-label="Heading link"></a>它是什么</h2>
-<p>一个完全跑在浏览器里的 CKB 隐私钱包：</p>
-<ul>
-<li>
-<p><strong>隐身地址</strong>：收款地址可以反复使用，但每次收款链上都会出现一个不同的一次性地址；付款方用你的 view_pub 做一次 ECDH 派生，链上观察者无法把这个地址和你的收款记录关联起来</p>
-</li>
-<li>
-<p><strong>机密代币（CT）</strong>：金额用 Pedersen 承诺隐藏，链上只看到 <code>C = v·G + r·H</code>，看不到数值</p>
-</li>
-<li>
-<p><strong>Bulletproofs 范围证明</strong>：保证金额非负且在有效范围内，同时不泄露数值</p>
-</li>
-<li>
-<p><strong>代币发行与铸造</strong>：支持创建带供应上限的隐私代币（创世 + 增发）</p>
-</li>
-<li>
-<p><strong>HD 钱包</strong>：BIP39 / BIP32 派生，多账户，助记词可导出恢复</p>
-</li>
-<li>
-<p><strong>无后端、无索引器</strong>：浏览器直连公共 CKB 节点，扫描、解密、签名全部在本机完成</p>
-</li>
-<li>
-<p><strong>密钥不出浏览器</strong>：seed 用 Argon2id 加密后落 IndexedDB，空闲自动锁定</p>
-</li>
-<li>
-<p><strong>中英双语界面</strong></p>
-</li>
-</ul>
-<h2><a name="p-26154-h-3" class="anchor" href="https://talk.nervos.org#p-26154-h-3" aria-label="Heading link"></a>实现上几个值得说的点</h2>
-<p><strong>Bulletproofs 证明生成用 WASM，且与合约同源。</strong> <code>ct-token-type</code> 合约强制要求每笔 CT 转账携带范围证明，而证明的 transcript（标签、生成元、位数）必须和合约逐字节一致，任何一处对不上都只会表现为 “合约拒收”，而且只有真发一笔才知道。所以我没有手写 JS 复刻，而是直接把与合约同一份的 zkcrypto bulletproofs 5.0.1 编成 wasm 加载。ABI 里还带参数版本号（32 位 / 64 容量），加载时当场校验 —— 免得浏览器缓存里挂着一份旧 wasm，等到发交易那一刻才收到一个含义模糊的 <code>InvalidRangeProof</code>。</p>
-<p><strong>没有索引器，靠增量扫描。</strong> 浏览器直连 RPC 拉 block range，本地逐个 cell 做 ECDH 判定 —— 只有持有 view_key 的人才能匹配成功，所以这一步天然只能在用户自己的浏览器里做。扫描带游标和 24 块重组保护带，每 60 秒自动补一次新增区块；页面切到后台或正在输入时跳过，回到前台立刻补。没有索引器意味着没有第三方知道你扫了哪些块。</p>
-<p><strong>发送前的 “披露面板”。</strong> 隐私钱包和普通钱包最本质的区别，是发送前要清楚 “这一笔会让链上观察者知道什么”。确认页会明确列出：这笔交易的 inputs 有没有混花 “别人转来的” 和 “自己的找零”、有没有把多笔不同来源的收款混在一起花（一次性地址的不可关联性会被自己抹掉）、收款方是不是可关联的普通 CKB 地址、找零有没有回到新的隐身地址。来源判定只信本地记录，判不出来就标 <code>unknown</code>，不猜。</p>
-<h2><a name="p-26154-h-4" class="anchor" href="https://talk.nervos.org#p-26154-h-4" aria-label="Heading link"></a>现状与已知边界</h2>
-<ul>
-<li>
-<p><strong>目前只在 testnet 可用。</strong> 实测 testnet 上四个合约全部在位（stealth-lock /ct-info-type/ct-token-type /ckb-auth），mainnet 上 0/4—— 主网还没部署这套合约，所以隐私功能暂时上不了主网。普通 CKB 转账在主网是没问题的，但 stealth 和 CT 要等合约先部署。</p>
-</li>
-<li>
-<p>不是 Chrome 扩展。评估过可行性（现有产物塞进 MV3 就能跑），样式也按 “可直接迁移到扩展” 的约束来写，但第一版先做网页。</p>
-</li>
-<li>
-<p>仍然是早期版本，欢迎试用、报 bug、提意见。</p>
-</li>
-</ul>
-<h2><a name="p-26154-h-5" class="anchor" href="https://talk.nervos.org#p-26154-h-5" aria-label="Heading link"></a>链接</h2>
-<ul>
-<li>
-<p>Web 钱包（在线体验）：<a href="https://obscell-web.pages.dev" rel="noopener nofollow ugc">https://obscell-web.pages.dev</a></p>
-</li>
-<li>
-<p>仓库：<a href="https://github.com/tianlitao/obscell-web" rel="noopener nofollow ugc">https://github.com/tianlitao/obscell-web</a></p>
-</li>
-<li>
-<p>原版 TUI 钱包：<a href="https://github.com/quake/obscell-wallet" rel="noopener nofollow ugc">https://github.com/quake/obscell-wallet</a></p>
-</li>
-<li>
-<p>智能合约（从 Rea-Don-Lycn/obscell 分叉）：<a href="https://github.com/quake/obscell" rel="noopener nofollow ugc">https://github.com/quake/obscell</a></p>
-</li>
-</ul>
-            <p><small>1 post - 1 participant</small></p>
-            <p><a href="https://talk.nervos.org/t/obscell-web-wallet-ckb/10743">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/obscell-web-wallet-ckb/10743</link>
-          <pubDate>Wed, 23 Sep 2026 05:28:20 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-10743</guid>
-          <source url="https://talk.nervos.org/t/obscell-web-wallet-ckb/10743.rss">Obscell Web Wallet —— CKB 隐私钱包的浏览器版（纯前端）</source>
         </item>
   </channel>
 </rss>
