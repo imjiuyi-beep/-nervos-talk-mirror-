@@ -17,16 +17,14 @@ jobs:
       - name: Run Grok
         shell: bash
         run: |
+          pwd
+          echo '--- diagnostic ---'
+          ls -la scripts/ 2>&1 | head
+          echo '--- key file check ---'
+          if [ -f scripts/gxai_key.txt ]; then echo "FILE EXISTS size=$(wc -c < scripts/gxai_key.txt)"; head -c 10 scripts/gxai_key.txt; echo; else echo "FILE MISSING"; fi
+          echo '--- git log ---'
+          git log --oneline -3 2>&1
           mkdir -p data
           export GXAI_KEY="$(cat scripts/gxai_key.txt 2>/dev/null || true)"
           if [ -n "$GXAI_KEY" ]; then echo "using key: ${GXAI_KEY:0:8}..."; else echo "NO KEY FOUND"; fi
-          python3 scripts/grok_query.py "${{ inputs.query }}" > data/grok_last.txt 2>&1
-          echo '--- result ---'
-          cat data/grok_last.txt || true
-      - name: Commit
-        run: |
-          git config user.name "relay-bot"
-          git config user.email "bot@users.noreply.github.com"
-          git add data/ scripts/gxai_key.txt || true
-          git commit -m "grok query run" || echo "nothing to commit"
-          git push
+          python3 scripts/grok_query.py "${{ inputs.query }}" 2>&1 | tee data/grok_last.txt
