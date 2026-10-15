@@ -1,0 +1,5 @@
+TwitterGadget has provided service to Twitter users for over a decade, however, with the recent changes to Twitter's API access and newly associated fees, it unfortunatley no longer makes economic sense for us to continue with the service.
+
+TwitterGadget started out as a "pet project" built for fun just to play around with the Twitter API, but quickly gained traction for those looking for an alternative means for accessing their Twitter account. It was a fun ride while it lasted!
+
+Cheers from team TwitterGadget and thanks for your patronage.
