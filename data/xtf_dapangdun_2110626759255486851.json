@@ -1,0 +1,50 @@
+{
+  "url": "https://x.com/dapangdun/status/2110626759255486851",
+  "username": "dapangdun",
+  "tweet_id": "2110626759255486851",
+  "tweet": {
+    "text": "https://x.com/i/article/2110534747898499072",
+    "author": "DaPangDun",
+    "screen_name": "dapangdun",
+    "likes": 17,
+    "retweets": 2,
+    "bookmarks": 1,
+    "views": 905,
+    "replies_count": 1,
+    "created_at": "Thu Oct 15 07:00:07 +0000 2026",
+    "is_note_tweet": false,
+    "lang": null,
+    "article": {
+      "title": "“原生” USDC 登陆比特币：Alpen 想做什么 ",
+      "preview_text": "9 月 24 日，Circle 宣布 USDC 和 CCTP 将通过 @AlpenLabs 进入比特币生态。Circle 的原话是：这是「首个由 Circle 支持的比特币锚定链」。\n原帖：x.com/AlpenLabs/status\nCircle：x.com/circle/status",
+      "created_at": "2026-10-15T07:00:07.000Z",
+      "full_text": "9 月 24 日，Circle 宣布 USDC 和 CCTP 将通过 @AlpenLabs 进入比特币生态。Circle 的原话是：这是「首个由 Circle 支持的比特币锚定链」。\n\n原帖：x.com/AlpenLabs/status\nCircle：x.com/circle/status\n\n这条消息热度很高，但「USDC 上比特币」具体是什么意思，需要仔细看。\n\n一、「原生」两个字\n\n比特币生态里不是没有 稳定币，但以前基本都是桥过来的包装币：在别的链上锁住 USDC/USDT，再铸出一个凭证。凭证能不能兑回来，取决于那座桥。\n\n这次不一样：\n\n✅ 由 Circle 的受监管实体直接发行。 有人问是不是 xReserve 方案，官方回复是「native」（x.com/AlpenLabs/status）。\n✅ 接入 CCTP。 USDC 可以在 Alpen 和其他支持 CCTP 的链之间「销毁—铸造」式转移，不经过第三方桥，也不会出现多个版本的 USDC 互不相通。\n✅ 主网上线即开放。 USDC 和 CCTP 会和 Alpen 主网一起上线。\n\n对 BTC 持有者来说，最直接的用途是：不卖币、不把 BTC 搬去以太坊，用 BTC 作抵押借出 USDC。 今天要做这样的事情，一般得把 BTC 换成 WBTC 或 cbBTC 去以太坊，或者交给中心化平台。\n\n举个具体场景：你有 1 枚 BTC，不想卖，但需要一笔美元周转。在 Alpen 上，流程大概是把 BTC 通过桥存进来，放进借贷协议作抵押，借出 USDC，再通过 CCTP 把 USDC 转到 Base 或以太坊上使用，甚至直接换成法币。整个过程中，BTC 一直在比特币锚定的系统里，USDC 一直是 Circle 认可的那一种。\n\nCCTP 的意义常被低估。官方提到的用途包括跨链兑换、支付、资金库调仓（x.com/AlpenLabs/status）。对机构来说，这意味着 Alpen 不是一个孤立的侧链：在 Alpen 上借出来的美元，可以无损地流到它们已经在用的链上。\n\n📍 为什么 Circle 会选它？ 我的推测是两点：一是 Alpen 是 兼容EVM 链，Circle 的合约和 CCTP 可以直接部署，工程成本低；二是 Alpen 主打「借贷」，而 BTC 抵押借美元正好是 USDC 最想进入的增量市场。\n\n二、同样是「比特币上的稳定币」：原生铸造 vs 锁仓铸造\n\n最近比特币上有两个稳定币故事：Alpen 的 USDC，和 Utexo 在 RGB 上的 USDT。都说自己原生，还在X上发生过争论，但从铸造方式看，其实是两条不同的路。\n\n📍 Alpen 的 USDC：原生铸造。\n由 Circle 受监管实体直接在 Alpen 上发行，跨链走 CCTP：一边销毁，另一边由 Circle 重新铸造，中间没有锁仓。\n\n📍 Utexo 的 USDT：锁仓铸造。\n按 Utexo 官方文档，USDT0 先锁进 Arbitrum 上的 Utexo 桥合约，再由一个运行在 AWS Nitro Enclave 里的单一签名者在 RGB 上铸出 USDT；赎回时销毁 RGB 上的 USDT，由 M-of-N 签名者联邦解锁 Arbitrum 上的 USDT0（docs.utexo.com/product-suite/mint-api-reference）。铸币方是 Utexo，Tether 提供授权，并非 Tether 自己在 RGB 上直接发行。\n\n这套「锁定—铸造」机制，和 Circle 的 xReserve 是同一类思路（developers.circle.com/xreserve）。区别是 xReserve 的储备合约和见证由 Circle 自己负责，而 Utexo 的桥合约和签名者都由 Utexo 运营，需要信任的环节反而更多。\n\n逐项对比：\n\n✅ 发行方：Alpen USDC 由 Circle 直接发行；RGB USDT 由 Utexo 在 Tether 授权下铸造。\n✅ 铸造方式：前者是原生铸造，销毁—铸造跨链；后者是锁仓铸造，储备锁在 Arbitrum。\n✅ 信任对象：前者只需信任 Circle；后者要信任 Tether、Utexo 的 TEE 签名者，以及赎回签名者联邦。\n✅ 跨链：前者走 CCTP，和其他链上的 USDC 是同一种资产；后者要经过 Arbitrum 和 LayerZero（USDT0）中转。\n\n📍 我的结论：严格按铸造方式算，Alpen 的 USDC 才是原生的；Utexo 的 USDT 在 RGB 这一侧是比特币上的资产，但储备锁在别的链上，本质是一张有抵押的凭证，算不上原生。 营销里的「no bridges」需要打个问号。\n\n当然，这不是说 RGB 上的USDT路线没有价值。RGB 协议的优势在隐私和客户端验证，转账本身不依赖任何排序器，原则上稳定币因为合规要求反而会削弱RGB协议的这些特性。当然，只是谈「原生」时，需要把「资产在哪条链上流转」和「美元由谁、怎么铸出来」分开看。\n\n三、硬币的另一面：可冻结\n\n⚠️ 原生 USDC 带来的是真实的美元流动性，同时也带来 Circle 的冻结权。一个地址被冻结，上面的 USDC 就动不了。\n\n这和「抗审查的比特币金融」的叙事之间存在矛盾。Alpen 的应对是同时推 BTD（Bitcoin Dollar）：用 Liquity V2 代码部署、只接受 BTC 作抵押的超额抵押稳定币，部署后代码不可更改（www.alpen.org/blog/bitcoin-dollar）。官方回复说 BTD 也会在主网上线时可用（x.com/AlpenLabs/status）。\n\nBTD 的机制沿用 Liquity：用户存入 BTC，按自己设定的利率借出 BTD，抵押率不足时被清算；没有治理，没有管理员，也就没有人能改规则或冻结账户。代价是规模通常远小于 USDC，流动性和使用场景都有限。\n\n📍 我的理解：USDC 负责「合规、大额、跨链」，BTD 负责「中立、抗审查」。两条腿走路，用户自己选。\n\n还有一个容易被忽略的细节：在借贷协议里，如果某个借款人的地址被冻结，他就没法用 USDC 还款，抵押的 BTC 可能面临清算。这种极端情况概率不高，但对看重「不可没收」的比特币用户来说，是需要提前想清楚的风险。BTD 的价值恰恰在这里：它由 BTC 超额抵押、规则写死，没有人能单方面冻结。\n\n四、技术原理解析\n\n![](https://pbs.twimg.com/media/HUol6Osa0AASp0M.jpg)\n\n📍 执行层 Alpen。 一条 EVM 兼容链，基于 Reth，gas 用 BTC 支付，约 5 秒出块。USDC、借贷协议都部署在这里。\n\n📍 编排层 Strata。 验证 Alpen 提交的 ZK 证明（SP1），约每 10 小时往比特币上写一次检查点。Testnet III 起两层解耦，以后别的 Rollup 也能接入、共用同一座桥。\n\n📍 Glock 桥。 这是整个项目最核心的部分。BTC 进出靠一组运营方，配合基于混淆电路的挑战博弈。官方说法是只要 N 个运营方里有 1 个诚实在线，资金就安全，取款也不会卡死。相比 BitVM2，链上数据少 430 倍以上（www.alpen.org/blog/glock-is-here）。\n\n![](https://pbs.twimg.com/media/HUomAfXbsAAJKu9.jpg)\n\n本质上，USDC 借贷的抵押品是桥进来的 BTC。桥是否可靠，决定了这个故事能不能成立。\n\n这也是 Alpen 研究投入最大的地方。9 月他们又发了一篇论文，把链下需要的数据从 48 GB 压到 2 MB 以内（x.com/AlpenLabs/status）。链上省钱、链下省空间，目的都是让更多运营方跑得起这座桥。运营方越多，「至少一个诚实」这个假设就越可靠。\n\n五、现在的问题\n\n![](https://pbs.twimg.com/media/HUomE92asAArpbD.jpg)\n\n⚠️ 还没有主网：只在 Signet 测试网上运行，没有公布日期。\n⚠️ 排序器中心化：共识是 Proof of Authority，存在审查和宕机风险。\n⚠️ 1-of-N 不等于无信任：运营方是许可制；存款需要全部运营方签名；取款要等约 1.4 周挑战期，靠运营方先垫资。\n⚠️ 固定面额（测试网是 2 BTC 一份），小额用户要靠兑换服务进出。\n⚠️ 密码学很新，Glock 是 2025 年的研究，还没见到公开审计。\n⚠️ 对手已经上线：Citrea 主网 2026 年 1 月就上线了（www.blog.citrea.xyz/citrea-mainnet-is-live），桥的信任模型同样是 1-of-N。\n\n六、落地情况和前景\n\n![](https://pbs.twimg.com/media/HUomK94bcAACt58.jpg)\n\n✅ 融资：累计披露约 1,910 万美元，最近一轮是 2025 年 1 月 850 万美元，由 DBA 和 Cyber Fund 领投。\n✅ 测试网：Testnet III 在 7 月 28 日上线，10月14日已完成主网启动前最后一次主要的测试网更新，主网临近上线。\n✅ 桥运营方：Stakely、Chainflow 已加入，P2P.org 将加入。\n✅ 稳定币：Circle（USDC + CCTP）、Liquity（BTD）。\n\n📍 我怎么看：「拿 BTC 借美元」是真实需求。Circle 的背书，让 Alpen 在一众比特币 L2 里有了清晰的差异化：Citrea 先上线，但 Alpen 手里有原生 USDC。\n\n📍 但要分清两件事：USDC 解决的是「借到什么」，桥解决的是「抵押品安不安全」。前者有 Circle 兜底，后者要等主网、审计和真实资金去验证。\n\n📍 还有一个时间问题：Circle 的合作要等 Alpen 主网才兑现，而主网只说了「soon」。如果拖得太久，「首个 Circle 支持的比特币锚定链」这个标签的热度会慢慢消退，先上线的对手也可能拿到类似的合作。\n\n我上线后会重点看三点：桥的存款上限和审计报告、上线三个月的 BTC 存入量，以及 USDC 实际借出的规模。\n\n总结一下：Alpen 讲的故事，是让比特币持有者第一次能在「比特币锚定的链上」直接拿到 Circle 发行的美元。故事本身很有吸引力，但它建立在一座还没上主网的新桥之上。我会继续跟踪，等主网参数和审计出来后再更新判断。\n\n原生 USDC 和不可冻结的 BTD 摆在一起，你借款时会选哪一个？\n\n#Bitcoin #USDC #Alpen #BTCFi #Circle #USDT #RGB",
+      "word_count": 428,
+      "char_count": 4504,
+      "images": [
+        {
+          "type": "cover",
+          "url": "https://pbs.twimg.com/media/HUogaPIa0AAHwIj.jpg"
+        },
+        {
+          "type": "image",
+          "url": "https://pbs.twimg.com/media/HUol6Osa0AASp0M.jpg"
+        },
+        {
+          "type": "image",
+          "url": "https://pbs.twimg.com/media/HUomAfXbsAAJKu9.jpg"
+        },
+        {
+          "type": "image",
+          "url": "https://pbs.twimg.com/media/HUomE92asAArpbD.jpg"
+        },
+        {
+          "type": "image",
+          "url": "https://pbs.twimg.com/media/HUomK94bcAACt58.jpg"
+        }
+      ],
+      "image_count": 5
+    },
+    "is_article": true
+  }
+}
