@@ -1,0 +1,8 @@
+{
+  "username": "wugudehaoru",
+  "error": "all backends failed for fetch_user_info",
+  "error_code": "all_backends_failed",
+  "error_causes": {
+    "nitter": "No Nitter instance reachable. Set XTF_NITTER to your instance(s), e.g. XTF_NITTER=http://127.0.0.1:8788. Tried: {'http://127.0.0.1:8788': 'upstream_down: network error — http://127.0.0.1:8788/wugudehaoru: [Errno 111] Connection refused'}"
+  }
+}
