@@ -1,0 +1,22 @@
+name: Grok Query (xai)
+on:
+  workflow_dispatch:
+    inputs:
+      query:
+        description: 'query e.g. @Safeheron'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  grok:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Grok
+        shell: bash
+        run: |
+          set +e
+          echo "KEY_EXISTS=$(test -f scripts/gxai_key.txt && echo yes || echo no)"
+          python3 scripts/grok_query.py "${{ inputs.query }}"
