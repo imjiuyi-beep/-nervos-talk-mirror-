@@ -1,0 +1,28 @@
+{
+  "url": "https://x.com/BarackObama/status/266031293945503744",
+  "username": "BarackObama",
+  "tweet_id": "266031293945503744",
+  "tweet": {
+    "text": "Four more years. http://t.co/bAJE6Vom",
+    "author": "Barack Obama",
+    "screen_name": "BarackObama",
+    "likes": 455639,
+    "retweets": 684966,
+    "bookmarks": 549,
+    "views": null,
+    "replies_count": 46822,
+    "created_at": "Wed Nov 07 04:16:18 +0000 2012",
+    "is_note_tweet": false,
+    "lang": "en",
+    "media": {
+      "images": [
+        {
+          "url": "https://pbs.twimg.com/media/A7EiDWcCYAAZT1D.jpg?name=orig",
+          "width": 800,
+          "height": 532
+        }
+      ]
+    },
+    "is_article": false
+  }
+}
