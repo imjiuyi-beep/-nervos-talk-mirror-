@@ -1,0 +1,34 @@
+name: Fetch Tweet (xtf)
+on:
+  workflow_dispatch:
+    inputs:
+      args:
+        description: 'xtf args (space separated), e.g. --url https://x.com/u/status/1'
+        required: true
+      name:
+        description: 'result file name'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run xtf
+        run: |
+          mkdir -p data
+          python3 scripts/fetch_tweet.py ${{ inputs.args }} --pretty > data/xtf_${{ inputs.name }}.json 2> data/xtf_${{ inputs.name }}.err || true
+          echo '--- json ---'
+          head -c 2000 data/xtf_${{ inputs.name }}.json || true
+          echo '--- err ---'
+          cat data/xtf_${{ inputs.name }}.err || true
+      - name: Commit
+        run: |
+          git config user.name "relay-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/ || true
+          git commit -m "xtf: ${{ inputs.name }}" || echo "nothing to commit"
+          git push
