@@ -1,0 +1,197 @@
+Skip to last reply
+Skip to top
+Skip to main content
+Sign Up
+Log In
+​
+Topics
+More
+CATEGORIES
+Announcements & Meta
+Infrastructure
+Applications & Ecosystem
+Cryptoeconomics & Mechanism Design
+Miners Pub
+DAOs & Funding
+All categories
+TAGS
+lang-zh
+lang-en
+CKB
+dapp
+lang-es
+All tags
+​
+​
+
+The forum now supports rendering Mermaid diagrams directly in posts, and the Babel Reunited translation plugin has completed an important fix to the underlying rendering layer.
+
+This feature came from community suggestions and analysis: @ArthurZhang raised the need in Forum tooling suggestion: Mermaid diagram support for technical posts, identified the official component, and pinpointed its compatibility issue with the translation plugin; @phroi’s ongoing testing feedback helped us dig out the root cause of the rendering problem. Thanks to both of you.
+
+You can now draw diagrams like this:
+
+Just write a ```mermaid code block in your post and it will automatically render as a diagram after publishing. For example, a flowchart:
+
+​
+
+Write a mermaid block
+
+Post it
+
+Rendered as SVG
+
+Fullscreen on hover
+
+Other diagram types such as sequence diagrams are also supported:
+
+​
+Translator
+Forum
+Author
+Translator
+Forum
+Author
+Diagram source is protected
+Post with a diagram
+Translate the prose
+Translated text
+Same diagram, translated prose
+
+For syntax reference, see the Mermaid official documentation. You can see the rendered result in real time in the editor preview.
+
+A few notes:
+
+Hovering over a diagram shows a fullscreen button; syntax errors won’t break the page — they’ll just display an error message box.
+Also shipping with this release is a fix to the underlying rendering layer: post body content now goes through Discourse’s core rendering pipeline in full. Features that had stopped working in translation-enabled categories are restored — the copy/fullscreen buttons in the top-right corner of code blocks, click-to-enlarge for images, and so on — and they work in translated views as well. You can verify this by switching the language tab at the top of this post: diagrams render correctly in the translated version too.
+Text inside diagrams is intentionally left untranslated. This is a deliberate trade-off: diagram source code is structure-sensitive, and having a model translate labels can easily corrupt the diagram. Better to leave it untranslated than to translate it badly.
+
+Feel free to give it a try.
+
+CKBA Membership Process
+General
+CKBA
+Membership
+lang-en
+547
+views
+60
+likes
+5
+links
+Jun 3
+1 / 11
+Jun 4
+15d ago
+post by CKBAMembership on Jun 3
+CKBAMembership
+Jun 3
+Original · English
+简体中文
+Español
+
+image
+1920×813 341 KB
+
+This thread is the central place for updates and questions on CKBA membership. The @CKBAMembership account will post here for:
+
+Application cycle open/close announcements
+General Assembly voting outcomes
+General process clarifications
+
+Currently, Contributing Member applications are being reviewed in preparation for the upcoming General Assembly cycle. General Member registration is being finalized and will open soon at https://www.ckba.build/. We will announce the opening here once it is ready.
+
+Questions are welcome in this thread.
+
+Contributing Member application form: CKBA – Contributing Member Application
+
+
+image
+3784×880 268 KB
+
+
+
+6
+1 Reply
+​
+​
+A New Chapter for CKB: Introducing the Common Knowledge Base Association
+Questions about CKBA
+Who Governs CKB?
+CKB Ecosystem Biweekly Update
+547
+views
+60
+likes
+5
+links
+post by CKBAMembership on Jun 3
+CKBAMembership
+Jun 3
+Original · English
+简体中文
+Español
+
+Current Contributing Member cycle: applications close June 8, 2026 (AOE)
+
+The current Contributing Member application cycle will close on June 8, 2026 (AOE). Applications received after this date will be reviewed in the next cycle.
+
+
+
+4
+1 Reply
+​
+​
+CKB Ecosystem Biweekly Update
+post by woodbury.bit on Jun 4
+post by CKBAMembership on Jun 4
+post by CKBAMembership on Jun 9
+19 days later
+post by CKBAMembership on Jun 28
+2 months later
+post by CKBAMembership on Aug 29
+post by CKBAMembership on Sep 1
+post by CKBAMembership on Sep 8
+post by CKBAMembership on Sep 16
+15 days later
+post by CKBAMembership on Oct 1
+Reply
+
+
+New & Unread Topics
+Topic list, column headers with buttons are sortable.
+Topic	Replies	Views	Activity
+
+DAO V1.1 Reference Auditor: An Independent Assessment
+General
+lang-en
+	3	128	Apr 23
+
+NDAO-0002 Count accumulated DAO compensation in voting power
+General
+lang-en
+	7	133	Nov 2025
+
+一点关于资助项目打款的思考：言行一致的实践
+General
+lang-zh
+	4	161	Dec 2025
+
+什么样的项目适合申请dao? What kind of projects are suitable for DAO?
+General
+DAO
+lang-zh
+	5	186	Jan 7
+
+关于 roadmap、责任边界与增发必要性的几个直接问题
+General
+lang-zh
+	5	179	Apr 20
+
+DAO Structures and the future of Ai agents (aspirational piece)
+General
+lang-en
+	5	164	May 15
+Want to read more? Browse other topics in 
+General
+ or view latest topics.
+Powered by Discourse
