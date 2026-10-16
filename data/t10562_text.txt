@@ -1,0 +1,766 @@
+Skip to where you left off (post 2)
+Skip to last reply
+Skip to top
+Skip to main content
+Spark Program | CKB-VM Sail Validation Sprint：可复现的 RISC-V 语义差分工具、Lean 4 证明与 Rocq/Coq 兼容性 Spike
+DAOs & Funding
+Spark Program
+CKB-VM
+In-Progress
+Log In
+​
+Topics
+More
+CATEGORIES
+Announcements & Meta
+Infrastructure
+Applications & Ecosystem
+Cryptoeconomics & Mechanism Design
+Miners Pub
+DAOs & Funding
+All categories
+TAGS
+lang-zh
+lang-en
+CKB
+dapp
+lang-es
+All tags
+​
+​
+
+The forum now supports rendering Mermaid diagrams directly in posts, and the Babel Reunited translation plugin has completed an important fix to the underlying rendering layer.
+
+This feature came from community suggestions and analysis: @ArthurZhang raised the need in Forum tooling suggestion: Mermaid diagram support for technical posts, identified the official component, and pinpointed its compatibility issue with the translation plugin; @phroi’s ongoing testing feedback helped us dig out the root cause of the rendering problem. Thanks to both of you.
+
+You can now draw diagrams like this:
+
+Just write a ```mermaid code block in your post and it will automatically render as a diagram after publishing. For example, a flowchart:
+
+​
+
+Write a mermaid block
+
+Post it
+
+Rendered as SVG
+
+Fullscreen on hover
+
+Other diagram types such as sequence diagrams are also supported:
+
+​
+Translator
+Forum
+Author
+Translator
+Forum
+Author
+Diagram source is protected
+Post with a diagram
+Translate the prose
+Translated text
+Same diagram, translated prose
+
+For syntax reference, see the Mermaid official documentation. You can see the rendered result in real time in the editor preview.
+
+A few notes:
+
+Hovering over a diagram shows a fullscreen button; syntax errors won’t break the page — they’ll just display an error message box.
+Also shipping with this release is a fix to the underlying rendering layer: post body content now goes through Discourse’s core rendering pipeline in full. Features that had stopped working in translation-enabled categories are restored — the copy/fullscreen buttons in the top-right corner of code blocks, click-to-enlarge for images, and so on — and they work in translated views as well. You can verify this by switching the language tab at the top of this post: diagrams render correctly in the translated version too.
+Text inside diagrams is intentionally left untranslated. This is a deliberate trade-off: diagram source code is structure-sensitive, and having a model translate labels can easily corrupt the diagram. Better to leave it untranslated than to translate it badly.
+
+Feel free to give it a try.
+
+Spark Program | CKB-VM Sail Validation Sprint：可复现的 RISC-V 语义差分工具、Lean 4 证明与 Rocq/Coq 兼容性 Spike
+DAOs & Funding
+Spark Program
+CKB-VM
+In-Progress
+Jul 31
+2 / 26
+Aug 12
+3d ago
+post by TinyuengKwan on Jul 31
+TinyuengKwan
+2
+Jul 31
+Original · 简体中文
+English
+Español
+重新申请说明
+
+这是对上一份 CKB-VM Sail Formal Verification 申请 的重新申请。
+
+上一版申请希望在 8 周内同时完成大范围差分测试和 10 条以上 Coq 指令等价证明。这个目标研究价值很高，但交付面过宽，也没有把“如何复现”“证明边界”“后续维护”和“开发者如何实际使用”写清楚。更重要的是，我没有及时回复预审意见，帖子最终因两个月没有互动而关闭。这是我的责任。
+
+本次申请不再把“完整形式化验证 CKB-VM”包装成一个短期 Spark 项目，而是申请完成一个范围明确、可由维护者独立验收的 6 周 MVP：
+
+交付一个能在本地和 CI 中运行的 CKB-VM 与 Sail RISC-V 严格差分验证工具；
+对固定版本、固定 ISA 和固定语料给出可重放的结果与失败证据；
+以 Lean 4 为主证明后端，完成一条直接连接 CKB-VM 生产 Rust 语义与 Sail 生成语义的机器检查证明；
+保留原 Issue 的 Coq 路线，完成 Rust → Rocq 与 Sail Coq backend → Rocq 的同后端兼容性 spike；
+明确写出它证明了什么、没有证明什么。
+
+本项目的主要 Spark 交付物是开发者可使用的验证工具。更大范围的形式化验证、汇编实现验证及完整 ISA 覆盖属于后续工作，不纳入本轮资助的成功标准。
+
+1. Project Name and Summary
+
+项目名称： CKB-VM Sail Validation Sprint
+
+概述：
+
+在 6 周内交付一个面向 CKB-VM 维护者的 RISC-V 语义回归工具，以官方 Sail RISC-V 模型为参考，在相同初始状态下严格比较 CKB-VM Rust 解释器与 Sail 的提交事件；同时以 Lean 4 为主后端，完成一条生产代码关联的 Rust → Lean 与 Sail → Lean 指令语义等价证明，并报告 Rocq/Coq 同后端路线的可行性。
+
+本轮精确范围
+CKB-VM：固定到公开仓库的一个明确 commit，目标为 VERSION2 Rust 解释器。
+Sail：Sail compiler 0.20.2，固定 sail-riscv commit。
+ISA 配置：rv64imcb_zca_zba_zbb_zbc_zbs。
+差分测试强制覆盖：ADD、ADDI、BEQ。
+差分测试扩展目标：MUL。
+Lean 4 证明强制覆盖：ADD 一条指令。
+Rocq/Coq 强制交付：双侧生成与导入的 go/no-go 结果、最小复现和兼容性报告；若 GO，则继续完成同一 ADD 定理作为扩展成果。
+强制语料：至少 10 个可公开重放的正常与边界案例。
+强制负向测试：至少 5 类故意注入的状态差异必须被工具识别。
+2. Team / Individual Introduction
+
+申请人： Tinyueng Kwan
+GitHub： TinyuengKwan
+
+我此前在 PLCT Lab 的 Sail & ACT 方向参与过 Sail 相关实践，并开发过 sail-lsp。这使我能够同时处理 Sail 模型、Rust 工程、证明后端与开发工具之间的接口问题。
+
+本项目由我独立负责开发、测试、文档、每周进度更新和最终演示。所有资助范围内的代码、配置、证明、测试语料与报告都将在公开仓库中提交。
+
+3. Problem Description
+3.1 为什么会想到这个 idea
+
+这个项目最直接的来源是 CKB-VM 仓库 2021 年提出的 Formally Verify CKB-VM via Sail · Issue #190。
+
+该 Issue 提出了一条很有吸引力的路线：Sail 的 RISC-V 规范可以生成 Coq 定义，因此可以尝试证明 CKB-VM 的高性能 x86 汇编实现符合 RISC-V 规范；未来也能将类似方法用于 AArch64。Issue 同时指出，当时的 Rust 解释器不能直接套用这条汇编验证路线。
+
+这正是我想继续探索的缺口：
+
+CKB-VM 是共识关键组件，指令语义偏差可能造成不同实现之间的执行分歧；
+现有单元测试和 RISC-V 测试能证明某些输入得到预期结果，但不容易定位两个执行引擎在哪一次提交、哪一个寄存器或哪一个内存写入开始分叉；
+Sail 提供了独立、可执行、可生成证明定义的 RISC-V 语义，但它不会自动理解 CKB-VM 的版本、加载方式和执行状态；
+如果另写一份“CKB-VM Coq 模型”再与 Sail 比较，这份手写模型本身可能与生产 Rust 代码漂移，得到的证明不能自动转移到真实实现。
+
+因此，本项目不试图一步完成 Issue #190 中的全部愿景，而是先建立两座可验证的桥：
+
+运行时桥： CKB-VM Rust 解释器与 Sail 在同一输入上的严格提交事件差分；
+证明桥： 从生产路径使用的纯 Rust 指令语义生成 Lean 4 定义，并与 Sail 生成的 Lean 4 定义证明一条指令等价；同时保留 Rocq/Coq 同后端兼容路线。
+
+这两座桥也为未来验证 x86/AArch64 汇编快速路径提供可复用的参考状态和测试基础设施。
+
+3.2 现有方案为什么不够
+现有手段	能解决的问题	尚未解决的问题
+CKB-VM 单元测试	检查已知输入输出和回归	缺少独立规范 oracle
+RISC-V 测试套件	检查测试程序是否通过	很难定位第一次语义分叉及其字段
+Sail RISC-V 模拟器	执行规范语义	缺少 CKB-VM 版本、加载与事件适配
+手写 Coq/Rocq 模型	可编写定理	容易与生产 Rust 实现漂移
+只比较最终寄存器	实现简单	可能漏掉中间错误、额外执行、内存副作用或异常差异
+3.3 谁会使用它
+
+主要用户是：
+
+审查 CKB-VM 指令实现变更的维护者；
+修改解码器、解释器或优化路径的贡献者；
+调查 RISC-V 语义差异的研究者；
+以后希望把同一套参考事件接到 ASM/JIT 后端的开发者。
+
+预期工作流是：修改 CKB-VM 后，在本地或 PR CI 中运行一个命令；如果发生差异，获得可重放的输入、双方事件和首个不一致字段，而不是只有一个笼统的测试失败。
+
+4. Solution
+4.1 运行时差分：严格比较完整提交事件
+
+项目使用类似 RVFI 的统一 CommitEvent，比较：
+
+提交顺序；
+指令字；
+执行前后 PC；
+GPR 写入寄存器与写入值；
+内存访问地址、读写 mask 和数据；
+trap / halt 状态；
+双方是否以相同方式结束。
+
+比较规则是严格的：
+
+不只比较双方 trace 的共同前缀；
+Sail 没有产生事件时必须失败；
+解析错误、子进程错误和步数上限必须失败；
+一方多执行或少执行一个事件必须失败；
+不允许把“不支持”静默当作“相等”。
+
+Sail 侧使用 RVFI-DII 接口接收明确的初始机器状态和单步指令，避免直接运行 ELF 时启动代码、平台设备或 ECALL 差异污染核心指令语义比较。
+
+4.2 证明 Spike：Lean 4 主后端，不再证明手写 CKB-VM 模型
+
+上一版的关键问题是把手写的 CKB-VM Coq 模型当成证明对象。本次改为：
+
+CKB-VM 生产执行路径
+        │
+        ▼
+生产路径实际调用的纯 Rust ADD 语义
+        │ Rust 翻译
+        ▼
+Lean 4 中的 CKB-VM ADD 定义
+        │
+        ├── 等价定理
+        │
+        ▼
+Sail RISC-V ── Sail 生成 ──> Lean 4 中的 Sail ADD 定义
+
+
+强制验收条件如下：
+
+被翻译的纯 Rust 函数必须由固定版本的 CKB-VM 生产解释路径实际调用；
+若上游 PR 尚未合并，必须提供可应用到固定 commit 的 patch、调用关系说明和回归测试；
+定理必须直接引用两侧生成的定义，不能用第三份手写语义替代；
+Lean 4 的 ADD 定理不得包含未说明的 sorry、axiom 或等价占位；
+编译必须由 Lean 4 kernel 重新检查。
+
+主项目已经把 Lean 4 设为首选后端：Aeneas/Charon 对 Rust functionalization 的 Lean 路线更成熟，而 sail-riscv 也维护 Sail → Lean 的生成目标。因此，本轮以 Rust → Aeneas → Lean 4 和 Sail → Lean 4 作为必须完成的证明路径。
+
+原 Issue #190 的 Coq 思路仍然重要，所以同时保留 Rust → Aeneas/Rocq-of-Rust → Rocq 与 Sail Coq backend → Rocq 的兼容性 spike。该路线必须给出双侧生成、导入和状态桥接的 GO/NO-GO 证据；若 GO，则继续完成同一 ADD 定理作为扩展成果。若 NO-GO，则公开最小复现和阻塞点，但不能将其表述为完成了 Rocq 证明，也不能因此退回手写第三份 CKB-VM 模型。
+
+4.3 本次相对旧申请的主要改进
+上一次申请	本次申请
+8 周同时追求大范围差分和 10+ 条证明	6 周完成工具型 MVP，证明固定为 ADD 一条
+手写 CKB-VM Coq 模型	翻译生产路径实际调用的纯 Rust 语义
+主要比较 PC/寄存器，结束条件不够明确	比较完整事件、长度与终止状态
+假设 Sail 直接运行 ELF 即可得到需要的 trace	明确以 RVFI-DII 关闭相同初态的单步闭环
+缺少验证指南与可复现实验	独立 VERIFICATION.md、固定命令、预期输出、CI artifact
+工具链与 ISA 容易漂移	记录 Rust MSRV 并固定 CI 执行版本；pin Sail、Lean 4、Aeneas/Charon、Rocq、ckb-vm、sail-riscv 和配置哈希
+旧范围包含 A 扩展	与当前 CKB-VM 对齐，明确 A 不在支持范围
+容易被理解为“完整 CKB-VM 已被证明”	固定发布声明，区分有限测试与全称定理
+以研究产出为主	以维护者可运行的 CLI/CI 工具为主
+4.4 当前已完成的基础工作
+
+以下是申请前已经完成、不会被写成未来成果的基础：
+
+CKB-VM 已更新到公开仓库 develop 的 commit 1ffba3977da9dcdef8092e9ab1fd2516b27ec939；
+CKB-VM Cargo package 为 0.24.0，项目直接使用本地固定 submodule；
+Rust MSRV 为 1.95，当前 foundation 已在 Rust 1.97.1 上复核通过；
+Sail compiler 已升级到 0.20.2；
+sail-riscv 固定为 0.13.1、commit 27224ccb2290f022e46213c05b3e72e8a9ea635e；
+Sail simulator 已构建成功；
+Sail 运行与证明生成共用配置 rv64imcb_zca_zba_zbb_zbc_zbs；
+配置 SHA-256 为 41a0facde4f83210f6c0857c67ba38edc5221f0926d75ab4213a33465d85e024；
+已有 CKB runner、Sail trace parser、严格事件数据结构和比较器；
+固定配置下的 Sail → Lean 4 与 Sail → Rocq 模型生成入口均已实际验证成功；生成物位于忽略目录，但这不等于完成导入、kernel 检查或等价证明；
+当前 21 个 Rust 单元测试通过，其中 CKB runner 6 个、core 13 个、Sail runner 2 个；
+make check、make test、make verify-env、make proof-gen BACKEND=lean 和 make proof-gen BACKEND=rocq 均已运行通过；make check 包含 locked workspace check、格式检查和 -D warnings Clippy；
+VERIFICATION.md、支持矩阵、语义缺口文档及当前 foundation 环境检查已经存在。
+
+当前基础仍有三个明确缺口，因此不能声称差分闭环或形式化证明已经完成：
+
+Sail 的 RVFI-DII 客户端/导出器尚未接通；
+CKB runner 的 foundation 默认 flag 仍包含不在本轮范围内的 MOP；进入差分闭环前必须收窄到双方共同 ISA 子集，或提供明确且可测试的配置映射；
+纯 Rust 语义尚未连接到生产执行路径；Rust 侧 Lean/Rocq 定义、双方导入、状态桥接、Lean 4 定理和 Rocq/Coq GO/NO-GO 报告也尚未完成。
+
+这三个缺口正是本轮工作的核心。
+
+5. Detailed Technical Implementation Plan
+5.1 依赖与可复现环境
+
+仓库将固定并公开：
+
+Rust MSRV，以及 CI/发布使用的精确 Rust toolchain；
+CKB-VM submodule commit；
+Sail compiler 版本；
+sail-riscv submodule commit；
+Lean 4、Aeneas/Charon，以及 Rocq/OPAM spike 的固定版本；
+ISA JSON 配置及 SHA-256；
+容器镜像或等价的一键环境脚本。
+
+CI 与本地验证必须调用同一组脚本。升级依赖必须通过独立 PR，并重新运行差分、负向测试和证明检查。
+
+5.2 Sail RVFI-DII 适配
+
+实现 DII client，以显式状态向 Sail 发送测试：
+
+XLEN=64；
+初始 PC；
+初始通用寄存器；
+待执行指令；
+必要的最小内存状态。
+
+随后将 Sail 返回的 RVFI 数据转换为项目统一事件。转换器必须保留原始包或规范化 JSON，以便失败后独立重放。
+
+5.3 CKB-VM 适配
+
+CKB-VM runner 使用固定版本的 Rust 解释器和 VERSION2。对于本轮 ALU/分支范围，捕获执行前后 PC、寄存器写入、trap 与终止状态。
+
+本轮不以 load/store 为强制范围，因此不会用一个不完整的内存观察器来暗示已覆盖内存语义。内存指令只有在读写地址、mask 与数据均能可靠获取后，才能加入支持矩阵。
+
+5.4 语料与负向测试
+
+至少 10 个公开案例覆盖：
+
+零值；
+最大无符号值；
+符号边界；
+溢出回绕；
+rd = rs1 / rd = rs2；
+写入 x0；
+BEQ taken / not-taken；
+正负分支偏移；
+至少一个由固定随机种子产生的案例。
+
+负向测试至少故意注入以下 5 类差异：
+
+PC 差异；
+写入寄存器编号差异；
+写入值差异；
+trap 状态差异；
+trace 长度或终止状态差异。
+
+所有注入都必须使验证命令返回非零退出码，并生成指出首个差异字段的报告。
+
+5.5 Lean 4 主证明与 Rocq/Coq 兼容性 Spike
+
+证明路径分成四个可审计阶段：
+
+从 CKB-VM 生产路径抽取或重构一个副作用受控的 ADD 纯 Rust 语义；
+用 Charon/Aeneas 从纯 Rust 语义生成 Lean 4 定义；
+由 Sail 0.20.2 从同一 ISA 配置生成 Lean 4 定义；
+在明确的状态关系和 XLEN=64 前提下证明双方 ADD 的寄存器结果、PC 推进和 x0 行为一致。
+
+同一纯 Rust 内核和 Sail 配置还会进入 Rocq/Coq spike。该 spike 的验收重点是生成物能否无手工修改地导入同一 Rocq 工程，以及状态桥接需要哪些假设；它与必须完成的 Lean 4 定理分别报告。
+
+翻译过程中需要的 wrapper、映射和状态关系都必须进入可信计算基说明。人工编写的 glue 可以存在，但不能重新实现一遍 ADD 后把它冒充为生产 Rust 语义。
+
+5.6 报告与失败分类
+
+每次验证输出机器可读 JSON 和简短文本摘要，至少包含：
+
+工具和依赖版本；
+两个上游 commit；
+配置哈希；
+测试 ID 与随机种子；
+初始状态；
+双方事件；
+首个不一致字段；
+原始 Sail 包或其 artifact 路径；
+最终分类状态。
+
+发现差异并不自动等于 CKB-VM bug。差异将被分为：
+
+CKB-VM 实现缺陷候选；
+Sail/CKB 配置或版本语义差异；
+适配器缺陷；
+超出支持范围；
+尚未分类。
+
+只要工具准确发现、保存并重放差异，“发现 mismatch”可以是有价值的项目结果；静默忽略差异、错误返回 PASS 或无法重放才是验收失败。
+
+6. Expected Deliverables / Acceptance Criteria
+6.1 交付物
+可构建的 Rust CLI 与源码；
+CKB-VM、Sail RVFI-DII 双端 runner；
+严格 CommitEvent 比较器；
+10 个以上公开、可重放的强制语料；
+5 类以上负向 mutation tests；
+一条生产 Rust ADD 与 Sail ADD 的 Lean 4 等价定理；
+Rust/Sail 双侧 Rocq/Coq 生成与导入的 GO/NO-GO 报告及最小复现；
+VERIFICATION.md 独立验收指南；
+固定依赖、配置哈希和可复现环境；
+CI workflow、日志与下载 artifact；
+支持矩阵、可信计算基、语义差距与最终报告；
+一个带版本号的公开 release；
+面向维护者的简短演示。
+6.2 独立 How to Verify
+
+项目会提供以下统一入口；这些是本轮将交付的验收接口，并非对当前仓库已经存在的虚假宣称：
+
+git clone --recursive https://github.com/TinyuengKwan/ckb-vm-sail-verify
+cd ckb-vm-sail-verify
+
+make verify-env
+make verify-smoke
+make verify-negative
+make proof-check BACKEND=lean
+make proof-spike BACKEND=rocq
+make audit-release
+
+
+预期结果：
+
+make verify-env 构建 Sail simulator、物化配置并检查 Rust 要求、固定版本、submodule commit 与配置哈希；进入证明阶段后还必须扩展到 Lean、Aeneas/Charon 与 Rocq/OPAM；
+make verify-smoke 对强制语料完成双端执行，正常基线为至少 10/10 PASS；
+make verify-negative 对至少 5 类 mutation 输出 5/5 DETECTED；
+make proof-check BACKEND=lean 从两侧生成定义并由 Lean 4 kernel 检查 ADD 等价定理；
+make proof-spike BACKEND=rocq 重现双侧 Rocq 生成/导入结果，并明确输出 GO 或 NO-GO；
+make audit-release 检查 artifact、哈希、支持范围声明与证明占位符策略；
+任一 runner 失败、空 trace、事件数不同或字段不同都不能返回 PASS。
+
+最终发布时，验收人可以只依据 VERIFICATION.md 在干净 Linux 环境或容器内完成验证，不需要联系作者获得隐藏步骤。
+
+6.3 证明占位符标准
+Lean 4 ADD 定理和关键连接层：0 个未说明的 sorry、axiom；
+若 Rocq spike 产生扩展定理：0 个未说明的 Admitted、admit、Axiom；
+上游生成代码如果使用公理或抽象接口，必须列入明确的 allowlist，解释来源与影响；
+CI 对项目证明目录执行占位符审计；
+“生成了 Lean/Rocq 文件”不等于“完成了证明”，只有对应 kernel 检查通过才计入已证明覆盖。
+6.4 证据位置
+
+最终证据将同时出现在：
+
+Git tag / release：计划命名为 spark-v1；
+CI workflow 日志；
+CI 下载 artifacts；
+artifacts/replay/ 中的最小重放输入；
+reports/final/ 中的版本、覆盖、失败和证明报告。
+6.5 明确的保证边界
+
+每个 README、release 和最终报告都会包含等价于以下内容的声明：
+
+本版本只验证固定 CKB-VM commit 上 VERSION2 Rust 解释器、固定 Sail/ISA 配置以及支持矩阵中列出的指令。运行时差分结果只覆盖公开语料中的有限输入；Lean 4 定理只覆盖 ADD 及定理列出的全部前提；Rocq/Coq spike 只报告该后端路线的可行性，除非另有 kernel 检查通过的定理。它不证明完整 CKB-VM、ASM/JIT 后端、VERSION0/1、MOP、ECALL/syscall、周期计费、并发/原子语义、全部内存模型或整条 CKB 链的安全性。
+
+其中：
+
+差分测试给出的是有限案例证据；
+ADD 定理给出的是在明确前提下对该指令的全称证明；
+两者不能互相替代，也不能扩展解读为全 ISA 证明。
+7. Funding Request and Usage
+
+申请金额：1,000 USD 等值 CKB。
+
+建议按里程碑理解工作量：
+
+范围	金额	占比
+可复现环境、DII 差分闭环	$300	30%
+CLI/CI、语料、mutation 与报告	$400	40%
+生产 Rust 连接、Lean 4 证明、Rocq/Coq spike、文档与演示	$300	30%
+
+资金主要用于 6 周内的工程实现、证明开发、CI/可复现环境、文档和社区沟通。现有基础代码不重复计入交付成果。
+
+8. Estimated Completion Timeline
+
+项目周期为 6 周。
+
+Week 1：冻结范围与可复现环境
+在干净环境和 CI 中复现申请前已经完成的 foundation，而不是重新申报已有源码与文档；
+固定 CI/发布使用的 Rust 版本，并固定首次进入执行门禁的 Lean 4、Aeneas/Charon、Rocq/OPAM；
+扩展现有 make verify-env，使证明工具链版本漂移也会明确失败；
+将 CKB runner 收窄到与 rv64imcb_zca_zba_zbb_zbc_zbs 对应的共同 ISA 子集，并增加 MOP 不进入本轮语料的配置测试；
+建立 PR CI，使当前 21 个测试、严格 Clippy、配置哈希检查及 Sail 两个证明后端的再生成可以独立复现；
+发布 Week 1 的 clean-room 日志和固定版本清单。
+
+验收： 干净环境可通过 make check、make test、make verify-env，并可重现 Sail → Lean/Rocq 生成；CI 与本地使用同一入口，固定依赖或配置漂移会失败。
+
+Week 2：关闭 RVFI-DII 差分闭环
+实现 Sail DII client；
+规范化 Sail 提交事件；
+用相同初态执行 ADD、ADDI、BEQ；
+严格检查事件长度和结束状态。
+
+验收： 三条指令各至少一个案例可端到端执行并生成 JSON 报告。
+
+Week 3：形成可用 CLI 与回归语料
+完成至少 10 个强制案例；
+完成 5 类 mutation tests；
+增加最小重放命令和首差异报告；
+接入 PR CI。
+
+验收： 正常语料全部通过，所有 mutation 均被识别，artifact 可下载重放。
+
+Week 4：双侧 Lean 4 生成与 Rocq/Coq Go/No-Go
+从生产路径提取/连接纯 Rust ADD；
+通过 Aeneas/Charon 生成 Rust 侧 Lean 4 定义；
+重新生成并导入申请前已验证可生成的 Sail 侧 Lean 4 定义，确认生成物与固定配置哈希一致；
+生成 Rust 侧 Rocq 定义，并与申请前已验证可生成的 Sail Rocq 输出执行双侧导入和状态桥接 spike；
+记录 Rocq 路线的 GO/NO-GO、最小复现和可信假设；
+文档化状态关系和可信计算基。
+
+验收： Rust 侧生成与 Lean 双侧导入无需手工编辑生成文件，Sail 侧再生成结果可重现；Rocq spike 可由同一命令重现双侧生成/导入并产生明确结论。
+
+Week 5：完成 ADD 等价定理
+证明寄存器结果、PC 推进与 x0 行为；
+增加占位符审计；
+提交 CKB-VM 上游 PR，或发布固定 commit 可应用的 patch；
+增加生产路径确实调用被证明函数的回归证据。
+
+验收： Lean 4 kernel 从干净构建检查通过；关键证明中无未说明占位符。Rocq 只有在 kernel 检查通过时才计入额外证明覆盖。
+
+Week 6：独立复现、发布与交接
+按 VERIFICATION.md 做 clean-room 验证；
+修复复现问题；
+发布 spark-v1、最终报告和演示；
+整理维护与升级流程；
+回复社区验收反馈。
+
+验收： 第三方无需私下指导即可执行全部验收命令。
+
+每周至少发布一次可核查进度，包含 commit、实际执行结果、未解决问题和下一周目标。评论区问题原则上在 7 天内回复。
+
+9. Relevance to CKB Ecosystem
+
+本项目与 CKB 生态的关系是直接的：
+
+CKB-VM 是合约执行的关键组件；
+为解释器变更增加独立的 Sail 规范 oracle，可以降低语义回归风险；
+结构化首差异报告比单纯 pass/fail 更适合维护和审查；
+可重放 artifact 能帮助上游开发者复现问题；
+生产 Rust 与规范之间的一条真实证明路径，可以验证“Rust → 证明后端”方法是否值得继续扩展；
+同一事件协议以后可连接 ASM/JIT 后端，为 Issue #190 中更完整的汇编实现验证打基础。
+
+对 Spark Program 而言，本轮不是请求资助一个没有短期验收点的大型研究计划，而是交付一个 6 周可运行、可检查、可供维护者接入 CI 的验证 MVP。
+
+10. Technical Risks, Trust Boundary and Maintenance
+10.1 主要风险
+风险	处理方式
+Sail 与 CKB-VM 平台假设不同	使用 DII 控制初态，并把差距写入支持矩阵
+trace 适配器自身有 bug	保存原始数据、做 parser 单测和 mutation tests
+Aeneas/Charon 或 Rocq 路线不支持某些 Rust 特性	将被证明语义限制为小型纯函数；Lean 主线必须完成，Rocq spike 的 NO-GO 必须附最小复现且不能冒充证明
+生产连接被后续重构绕开	增加调用关系回归检查，并在依赖升级时重跑
+依赖升级导致结果漂移	固定 CI Rust 版本并 pin 其余证明/模型依赖；升级只能通过带完整验证的 PR
+用户误解为完整形式化验证	README、release、报告重复固定保证边界
+上游 PR 未及时合并	验收使用固定 commit patch，不把合并状态作为唯一证据
+10.2 可信计算基
+
+结果依赖于以下组件，需要在最终报告中明确列出：
+
+Rust 编译器、Charon/Aeneas 及 Rust → Lean/Rocq 翻译工具；
+Sail compiler；
+Lean 4 kernel，以及 Rocq spike 使用的 Rocq kernel；
+sail-riscv 规范；
+CKB-VM 生产调用连接；
+DII/RVFI 与 CKB 事件适配器；
+固定配置与 wrapper。
+
+本项目不会把这些组件全部描述成“已被证明”。减少和公开可信计算基本身就是交付的一部分。
+
+10.3 不在本轮范围内
+x86_64/AArch64 汇编或 JIT 后端；
+CKB-VM VERSION0、VERSION1；
+MOP；
+A 原子扩展和并发内存模型；
+load/store 的完整内存证明；
+ECALL、syscall、主机接口；
+周期计费；
+W^X、加载器和完整 ELF 平台行为；
+全部 RISC-V 指令；
+整条 CKB 链的安全证明。
+
+特别说明：当前 CKB-VM 0.24.0 已不再公开原先的 ISA_A decoder，本轮不会为了保持旧申请的数字而虚构 A 扩展覆盖。
+
+10.4 维护承诺
+
+项目验收后提供至少 3 个月的维护窗口：
+
+保持固定版本的 CI 可运行；
+每周或定时运行完整 smoke、mutation 和 proof check；
+对影响复现的严重问题提供修复；
+上游 CKB-VM 或 sail-riscv 更新通过独立升级 PR 验证；
+发布 pinned dependencies、脚本、文档和最小重放数据，确保作者离开后仍可接手。
+
+维护窗口不意味着自动声称支持所有新版。每个新版本只有在支持矩阵和 CI 证据更新后才进入保证范围。
+
+11. Transparency Commitments and Responses to Previous Comments
+11.1 公开与沟通承诺
+所有资助范围内的代码和文档公开；
+每周发布带 commit 和测试证据的进度；
+如出现 mismatch，公开可重放信息；涉及尚未披露的安全问题时先遵守负责任披露流程；
+不以示例输出冒充真实运行结果；
+未完成的功能明确标记为 unsupported / pending；
+评论原则上 7 天内回复；
+如果时间线变化，主动说明原因和缩减范围，不再让申请因失联关闭。
+11.2 对旧帖评论的逐项回应
+
+关于论坛已经提供 AI 翻译，不要求中英双语：
+
+感谢 zz_tovarishch 的提醒。本次申请只提交中文正文，避免重复内容；需要其他语言的读者可以使用论坛翻译功能。
+
+关于项目有长期技术价值：
+
+感谢 ArthurZhang 对基础设施方向的认可。本次把长期愿景拆成维护者可以立即使用的 CLI/CI 工具，以及一条范围很小但真实连接生产代码的证明。后续扩展需要以本轮可复现结果为基础，而不是预先承诺。
+
+关于项目可能超出 Spark 的小型、快速原型范围：
+
+接受 xingtianchunyan 和 Spark Program Q2 2026 总结 的判断。上一版确实更接近长期研究计划。本次改为 6 周 Validation Sprint，主要交付是开发者可运行的差分工具，不再把全量形式化验证放进 Spark MVP。
+
+关于缺少独立 How to Verify：
+
+本次把 VERIFICATION.md、一键环境、固定版本、差分命令、负向测试、证明检查、预期输出和 evidence 位置列为强制交付。最终验收不依赖作者口头指导。
+
+关于通过/失败标准不明确：
+
+本次固定 CKB-VM commit、VERSION2、ISA 配置、三条强制差分指令、一条强制证明指令、至少 10 个语料和 5 类 mutation。空事件、异常结束、只匹配共同前缀和未说明证明占位都不能通过。
+
+关于发现 mismatch 是否算失败：
+
+准确发现、保存、最小化并重放 mismatch 是工具的正常产出，不自动等同于项目失败或 CKB-VM bug。错误返回 PASS、吞掉 mismatch 或无法提供证据才是验收失败。每个 mismatch 都要给出分类状态。
+
+关于 blast radius 和公众可能误解为“完整等价/全链安全”：
+
+本申请已经把保证边界写成固定发布声明，并区分有限输入差分证据与 ADD 的全称定理。ASM/JIT、MOP、A、syscall、周期、完整内存和全链安全全部明确排除。
+
+关于后续维护：
+
+验收后承诺至少 3 个月维护；固定版本 CI 定时执行；依赖升级走独立 PR；仓库保留所有 pins、脚本、报告和最小重放数据，降低单人项目的交接风险。
+
+关于供应链、信任和审计：
+
+记录 Rust MSRV、固定 CI/发布 Rust 版本，并固定 Sail、Lean 4、Aeneas/Charon、Rocq、ckb-vm、sail-riscv、OPAM 依赖和配置哈希；发布可复现命令与 CI artifact；公开可信计算基；禁止用手写第三模型替代生产 Rust 定义。
+
+关于项目完成后是否真的实用：
+
+回应 Ckroamer 的问题：本轮的主产品不是一篇只有作者能运行的研究报告，而是可放入 CKB-VM PR CI 的命令行工具。维护者可以得到版本信息、首个差异字段、JSON 报告和最小重放输入。具体支持范围很小，但工作流必须完整可用。
+
+关于上次长时间未互动：
+
+我接受关闭决定。本次以每周公开进度、7 天内回复评论和明确的 6 周里程碑作为沟通承诺。如果无法继续，会主动说明，而不是保持沉默。
+
+Final Success Definition
+
+本项目在且仅在以下条件全部满足时，才应被视为完成：
+
+第三方能在干净环境按文档构建；
+ADD、ADDI、BEQ 的至少 10 个案例完成严格双端比较；
+至少 5 类人为差异全部被检测；
+任何空 trace、长度差异、字段差异或 runner 错误都不会产生假 PASS；
+ADD 的生产 Rust 定义和 Sail 生成定义在 Lean 4 中形成可由 kernel 检查的等价定理；
+Rocq/Coq 同后端 spike 提供可重现的双侧生成、导入和 GO/NO-GO 证据；
+关键证明没有未说明的占位符；
+release 提供版本、哈希、报告、重放 artifact、覆盖范围与非目标；
+CLI/CI 工作流和 3 个月维护安排已经公开。
+
+如果只生成了代码骨架、只有手写模型证明、只有共同前缀比较、或者无法由第三方复现，则不应通过验收。
+
+
+
+6
+​
+​
+CKB Ecosystem Biweekly Update
+649
+views
+41
+likes
+5
+links
+read
+8 min
+11 days later
+post by zz_tovarishch on Aug 12
+zz_tovarishch 
+Aug 12
+Original · 简体中文
+English
+Español
+
+Hi @TinyuengKwan 委员会经过讨论，决定批准 CKB-VM Sail Validation Sprint 项目立项。委员会认可本项目构建 CKB-VM 与 Sail RISC-V 语义差分工具 及 Lean 4 形式化证明 的潜力，这将提升 CKB 虚拟机核心语义的安全性与稳健性。
+
+按照当前 CKB 价格 0.00083 美元换算，本期资助金额为 1,204,820 CKB。请在此回复提供你的 CKB 接收地址、联系邮箱 以及 Discord 账号，以便安排后续拨款与日常沟通。同时，我们会通过Discord 邀请你参加后续的 Ecosystem Monthly Call，与其他社区生态项目的开发者交流。
+
+Hongzhou
+On Behalf of Spark Committee
+cc @Hanssen @yixiu.ckbfans.bit @xingtianchunyan
+
+
+
+2
+2 Replies
+​
+​
+post by TinyuengKwan on Aug 13
+TinyuengKwan
+Aug 13
+Original · 简体中文
+English
+Español
+
+好的。我的ckb接收地址、联系邮箱以及Discord账号如下：
+
+ckb1qrgqep8saj8agswr30pls73hra28ry8jlnlc3ejzh3dl2ju7xxpjxqgqqyx3jlm37fje3arkmxj94768v5t3xh3n7ufdufj0
+kwantinyueng@gmail.com
+kwantinyueng
+
+BTW 我想确认一下这个项目可以按照我的预定计划开始实施，还是先另有安排？
+
+
+
+2 Replies
+​
+​
+post by zz_tovarishch on Aug 13
+zz_tovarishch 
+Aug 13
+Original · English
+简体中文
+Español
+
+Please go ahead and start according to your scheduled plan. We’ll wire the initial funding as soon as possible.
+
+
+
+1
+​
+​
+post by zz_tovarishch on Aug 13
+zz_tovarishch 
+TinyuengKwan
+Aug 13
+Original · 简体中文
+English
+Español
+
+初始支付 20% 1,204,920 CKB
+
+https://explorer.nervos.org/en/transaction/0x81f929ea78fac0c6a25c17efd568abd63b2d603fdb99fdefe7125cae7ae245e3
+
+
+
+​
+​
+post by TinyuengKwan on Aug 15
+TinyuengKwan
+Aug 15
+Original · 简体中文
+English
+Español
+
+你好，我的CKB钱包是JoyID，今天我在使用JoyID时候遇到了一些问题，可以帮我联系一下JoyID的开发人员吗？
+
+
+1
+594×587 14.9 KB
+
+2
+416×460 17.3 KB
+
+
+3
+654×467 15.7 KB
+
+我选择了正确的通行密钥登录JoyID
+输入完PIN后，又弹出了“通过PasssKey登录”的UI
+但这时我没有任何PassKey可以选择了
+
+在遇到这些之前，我点击了Chrome中的“撤销此设备对通行密钥的访问权限”，但这个按钮预期不会对登录JoyID产生影响?
+
+
+现在我无法访问我的JoyID钱包了，也无法访问上面200USD等值的CKB了，希望您能帮我联系一下JoyID的开发人员看一看这个问题能否恢复。
+
+
+
+2 Replies
+​
+​
+post by zz_tovarishch on Aug 15
+post by TinyuengKwan on Aug 15
+post by TinyuengKwan on Aug 16
+post by mfuuzy on Aug 16
+post by TinyuengKwan on Aug 17
+post by mfuuzy on Aug 17
+post by TinyuengKwan on Aug 18
+post by TinyuengKwan on Aug 18
+8 days later
+post by xingtianchunyan on Aug 26
+post by TinyuengKwan on Aug 27
+post by TinyuengKwan on Aug 27
+post by xingtianchunyan on Aug 27
+post by TinyuengKwan on Sep 2
+post by xingtianchunyan on Sep 9
+Load more posts below
