@@ -1,0 +1,257 @@
+Skip to main content
+Sign Up
+Log In
+​
+Topics
+More
+CATEGORIES
+Announcements & Meta
+Infrastructure
+Applications & Ecosystem
+Cryptoeconomics & Mechanism Design
+Miners Pub
+DAOs & Funding
+All categories
+TAGS
+lang-zh
+lang-en
+CKB
+dapp
+lang-es
+All tags
+​
+​
+
+The forum now supports rendering Mermaid diagrams directly in posts, and the Babel Reunited translation plugin has completed an important fix to the underlying rendering layer.
+
+This feature came from community suggestions and analysis: @ArthurZhang raised the need in Forum tooling suggestion: Mermaid diagram support for technical posts, identified the official component, and pinpointed its compatibility issue with the translation plugin; @phroi’s ongoing testing feedback helped us dig out the root cause of the rendering problem. Thanks to both of you.
+
+You can now draw diagrams like this:
+
+Just write a ```mermaid code block in your post and it will automatically render as a diagram after publishing. For example, a flowchart:
+
+​
+
+Write a mermaid block
+
+Post it
+
+Rendered as SVG
+
+Fullscreen on hover
+
+Other diagram types such as sequence diagrams are also supported:
+
+​
+Translator
+Forum
+Author
+Translator
+Forum
+Author
+Diagram source is protected
+Post with a diagram
+Translate the prose
+Translated text
+Same diagram, translated prose
+
+For syntax reference, see the Mermaid official documentation. You can see the rendered result in real time in the editor preview.
+
+A few notes:
+
+Hovering over a diagram shows a fullscreen button; syntax errors won’t break the page — they’ll just display an error message box.
+Also shipping with this release is a fix to the underlying rendering layer: post body content now goes through Discourse’s core rendering pipeline in full. Features that had stopped working in translation-enabled categories are restored — the copy/fullscreen buttons in the top-right corner of code blocks, click-to-enlarge for images, and so on — and they work in translated views as well. You can verify this by switching the language tab at the top of this post: diagrams render correctly in the translated version too.
+Text inside diagrams is intentionally left untranslated. This is a deliberate trade-off: diagram source code is structure-sensitive, and having a model translate labels can easily corrupt the diagram. Better to leave it untranslated than to translate it badly.
+
+Feel free to give it a try.
+
+Deep Dive Into CKB-VM Instruction Decoder and Instruction Cache
+Infrastructure
+CKB-VM
+Aug 7
+1 / 1
+Aug 7
+Aug 7
+post by mohanson on Aug 7
+mohanson
+1
+Aug 7
+Original · English
+简体中文
+Español
+
+If you have read the previous CKB articles, you probably already have a rough picture of the VM main loop: fetch, decode, execute, charge cycles, then move to the next instruction.
+
+In the earlier posts, we mainly focused on execution and cycle accounting. But as you can see, another stage is just as important: instruction fetch and decode.
+
+When people first read VM code, they usually focus on execution logic: how add is computed, how lw reads memory, and how ecall enters syscalls. But for a VM that must run a large number of on-chain scripts, execution logic is not the only cost. Before execution, the CPU still needs to translate raw bits in memory into internal instructions. If this step is poorly designed, it can significantly drag down overall system performance.
+
+This article explains how the CKB-VM instruction decoder works.
+
+Overall Architecture
+
+In CKB-VM’s execution pipeline, the decoder sits at a very fundamental position. Whether in Rust interpreter mode or ASM mode, bytes in memory must first be translated into an internal representation before actual execution can proceed.
+
+In the source code, this stage is implemented in src/decoder.rs. Conceptually, its job can be split into three layers:
+
+Read raw instruction bits from memory.
+Parse those bits into a unified Instruction.
+Cache results when appropriate to avoid decoding the same instruction repeatedly.
+RISC-V Encoding Format
+
+RISC-V is not only 32-bit fixed-width instructions. It also has compressed instructions (RVC), which are 16-bit encodings. That means a decoder cannot simply read 4 bytes every time and interpret them directly as one instruction.
+
+CKB-VM uses a clever approach: first read 2 bytes from memory, then check the lowest two bits.
+
+... XX XX 11 -> 32-bit instruction
+... XX XX 00 -> 16-bit compressed instruction
+... XX XX 01 -> 16-bit compressed instruction
+... XX XX 10 -> 16-bit compressed instruction
+
+
+The reason is straightforward. According to the RISC-V spec, the lowest two bits of a 32-bit instruction are always 11, while RVC instructions do not use 11 there. So after reading 16 bits, the decoder can decide whether the instruction is 16-bit or 32-bit. If it is 32-bit, it then reads the next 2 bytes and concatenates them.
+
+The correctness of this approach is obvious, but it comes with a trade-off: you may read memory twice. For a 32-bit instruction, you first read 2 bytes, then read the next 2 bytes, totaling 4 bytes but triggering two memory accesses and permission checks. As we will see later, CKB-VM includes a small optimization to reduce this repeated access.
+
+decode_bits: Fast Path and Conservative Path
+
+The function decode_bits is the lowest-level function in the decoder. It does exactly one thing: fetch raw instruction bits from memory.
+
+It includes a practical optimization: if the current PC is not near a page boundary, it takes a direct 32-bit load path; if PC is close to the end of a page, it falls back to 16-bit loads to avoid out-of-bounds access. We can call the first one the fast path, and the second one the conservative path. On the fast path, after loading 32 bits, it checks the lowest two bits once; if the instruction is actually 16-bit, it discards the upper 16 bits and keeps only the lower 16 bits. This means that as long as PC is not near page end, both 16-bit and 32-bit instructions require only one memory check and one memory access, which is why this is the fast path.
+
+A 32-bit instruction may cross pages. At page boundaries, directly reading 4 bytes may trigger extra checks or touch a memory boundary. So a more conservative path is needed.
+
+decode_raw: The Real Decode Entry Point
+
+The higher-level entry point is decode_raw.
+
+It first checks whether the address is out of bounds, then looks up a small instruction cache. If the cache hits, it directly returns the previously decoded internal instruction. If not, it calls decode_bits and then tries each InstructionFactory in sequence.
+
+In the source code, this process roughly looks like this:
+
+Two details are worth noting.
+
+CKB-VM does not cache instruction bytes. It caches already decoded internal instructions. So on a cache hit, it can skip parsing entirely.
+The cache is keyed by PC, not by instruction bit pattern. That is reasonable. The same machine code bytes at different addresses are still different instruction instances. For a VM, address is part of semantics.
+Instruction Cache
+
+CKB-VM’s instruction cache size is 4096, essentially a small hash table. But instead of using pc % 4096 directly as the key, it uses a more carefully mixed index:
+
+((pc & 0xFF) | (pc >> 12 << 8)) as usize % INSTRUCTION_CACHE_SIZE
+
+
+This means: take the low 8 bits of PC, then take part of higher bits, and combine them into a cache index.
+
+Why not use only low bits?
+
+Because low bits tend to cover only local code regions. Many programs repeatedly jump among a few nearby addresses over short periods. If the key only uses low bits, those addresses may collide into the same slot too often, causing unnecessary conflicts.
+
+Why still keep low bits then?
+
+Because low bits are excellent for distinguishing nearby instructions. If you only use high bits, many close-by instructions map together and you lose locality.
+
+So this key is fundamentally a compromise: preserve locality for nearby code while reducing conflicts with far-away jump targets. This is a typical engineering optimization style: not mathematically perfect, but practically effective.
+
+This scheme is designed to balance local and remote code behavior, and the constants 12 and 8 are empirically chosen.
+
+InstructionFactory: Composing Multiple ISA Modules
+
+Inside the decoder, instruction recognition is not implemented as one giant hardcoded if-else chain. Instead, it uses a set of InstructionFactory modules. In DefaultDecoder::new, ISA modules are registered in order:
+
+rvc::factory handles compressed instructions.
+i::factory handles base integer instructions.
+m::factory handles multiply/divide extensions.
+If B extension is enabled, b::factory is also registered.
+
+This means the decoder itself does not hardcode every detail of every instruction. It behaves more like an assembler of parsing stages: first obtain raw bits, then hand them to each module for matching. This layered design has two advantages:
+
+Clear structure. Adding a new ISA extension only requires adding a new factory, instead of stuffing all logic into a giant function.
+Better compatibility. Different CKB-VM versions can switch behavior via the version parameter, so older scripts keep expected semantics.
+decode_mop: A Second Optimization Layer in the Decoder
+
+If ISA_MOP is enabled, decode() does not use plain decode_raw; it uses decode_mop. This is a different optimization category from caching. Caching avoids re-decoding the same instruction. MOP (macro-op fusion) merges several adjacent instructions into one internal pseudo-instruction.
+
+Combinations such as div + rem, mulh + mul, and lui + jalr may be folded into higher-level internal instructions during decoding. The reason is simple: some instruction combinations are naturally handled together by hardware, so splitting them into separate execution steps is unnecessary.
+
+So from a layering perspective, CKB-VM’s decoder is not only a bytecode recognizer; it also performs part of instruction rewriting.
+
+Summary
+
+CKB-VM’s instruction decoder does more than translate machine code into internal instructions. It handles three things at once:
+
+Distinguish 16-bit and 32-bit encodings with minimal overhead.
+Reduce repeated decoding via a small cache.
+Provide an entry point for higher-level optimizations such as MOP.
+
+This is one reason CKB-VM is worth writing about: its implementation is not just feature stacking. Responsibilities are clearly separated by layer, so each micro-optimization can actually land on the hot execution path.
+
+Series of articles
+Deep Dive into CKB-VM Snapshot V1: Architecture and Design Principles
+Deep Dive into CKB-VM Snapshot V2: Evolution
+Deep Dive into CKB-VM Memory Model: Design of W^X
+Deep Dive into CKB-VM Assembly Executor
+Deep Dive Into CKB-VM Macro-ops Fusion
+Deep Dive Into CKB-VM B Extension
+Deep Dive Into CKB-VM CFI Extension
+Deep Dive Into CKB-VM Spawn Syscall
+Deep Dive Into CKB-VM Cycles
+Deep Dive Into CKB-VM Instruction Decoder and Instruction Cache
+
+
+7
+​
+​
+TeamCKB Dev Log (Updated: Sep 16, 2026)
+CKB Ecosystem Biweekly Update
+72
+views
+3
+links
+read
+4 min
+Reply
+
+
+New & Unread Topics
+Topic list, column headers with buttons are sortable.
+Topic	Replies	Views	Activity
+
+Fiber Desktop — run Fiber (FNN) on your laptop without the “public node” headache
+Infrastructure
+fiber
+lang-en
+testnet
+	12	397	Jun 12
+
+Deposit-Paired Voting
+Infrastructure
+lang-en
+	10	175	May 22
+
+CKB Explorer Lite Preview Release
+Infrastructure
+lang-en
+	1	102	Jun 2
+
+Compilation errors encountered when upgrading Rust on-chain script to ckb-std v1.1
+Infrastructure
+CKB
+lang-en
+	0	74	Jun 15
+
+[Fiber] Opticrum 开发实录：补齐 Fiber 网络中缺失的一环
+Infrastructure
+lang-zh
+	0	114	Jul 7
+
+Fiber Test Lab — local, reproducible failure scenarios for Fiber payments
+Infrastructure
+CKB
+CKB-VM
+lang-en
+testnet
+	0	44	23d
+Want to read more? Browse other topics in 
+Infrastructure
+ or view latest topics.
+Powered by Discourse
