@@ -1,0 +1,34 @@
+{
+  "url": "https://x.com/798_eth/status/2110954918479810564",
+  "username": "798_eth",
+  "tweet_id": "2110954918479810564",
+  "tweet": {
+    "text": "https://x.com/i/article/2110951489669918720",
+    "author": "798.eth 🍌🌍☮️ ｜链上新资产原语",
+    "screen_name": "798_eth",
+    "likes": 7,
+    "retweets": 1,
+    "bookmarks": 2,
+    "views": 1104,
+    "replies_count": 1,
+    "created_at": "Fri Oct 16 04:44:06 +0000 2026",
+    "is_note_tweet": false,
+    "lang": null,
+    "article": {
+      "title": "LayerTree：把百万人的比特币装进一个 UTXO",
+      "preview_text": "Lightning Labs 联合创始人 Olaoluwa Osuntokun 最近发布了一套新的比特币扩容设计，名字叫 LayerTree。\n它提出了一个相当激进的设想：让成千上万甚至数百万用户共享同一个比特币",
+      "created_at": "2026-10-16T04:44:06.000Z",
+      "full_text": "Lightning Labs 联合创始人 Olaoluwa Osuntokun 最近发布了一套新的比特币扩容设计，名字叫 LayerTree。\n\n它提出了一个相当激进的设想：让成千上万甚至数百万用户共享同一个比特币 UTXO，同时让每位用户保留独立的资金所有权和单方面退出能力。\n\n这听起来有些矛盾。\n\n一百万个人分别持有比特币，通常意味着链上需要一百万个 UTXO。如果把钱集中到交易所，确实可以只保留少量 UTXO，内部转账也能瞬间完成，但用户只能相信交易所的数据库。\n\nLayerTree 尝试在两者之间找到一个新位置。\n\n链上只保存一个 UTXO。每个人拥有多少比特币，记录在一棵链下的 Merkle Sum Tree 中。运营方负责维持日常服务，但不能随意修改用户余额，也不能阻止已有用户把自己的钱取回链上。\n\n一棵树如何代表所有人的余额\n\n在 LayerTree 中，每位用户拥有一个叶节点。\n\n叶节点里记录了用户余额、所有者公钥、退出公钥、租期以及状态序号。相邻叶节点不断向上合并，每个父节点记录两个子节点的余额总和与哈希，最后形成一个唯一的树根。\n\n假设树里有四个人：\n\nAlice 有 5 BTC，Bob 有 3 BTC，Carol 和 David 各有 1 BTC。\n\n链上的共享 UTXO 一共持有 10 BTC。树根则承诺了四个人分别拥有多少余额，以及所有余额加起来正好是 10 BTC。\n\n任何人修改一个叶节点，树根都会改变。有人试图凭空增加余额，根节点的金额校验就会失败。\n\n比特币链上不用保存整棵树，只需要保存这个根，以及与树中总余额对应的 UTXO。\n\n这相当于把大量用户的产权记录压缩成了一个密码学承诺。\n\n用户如何单独退出\n\nAlice 想退出时，不需要获得运营方批准，也不需要其他用户在线。\n\n她只需要提交自己的叶节点、从叶节点通往树根的 Merkle 证明，以及自己的签名。\n\n比特币脚本会验证 Alice 确实位于这棵树中，确认她拥有对应余额，然后在一笔交易中完成两件事：\n\n第一，把 Alice 的余额支付到她指定的退出地址。\n\n第二，删除 Alice 的叶节点，并把剩余资金放进承诺新树根的 UTXO。\n\n无论树里有一百人还是一百万人，Alice 都只需要广播一笔退出交易。\n\nLayerTree 所说的 O(1) 退出，指的是退出所需的交易数量始终为一笔。Merkle 证明的体积依然会随着成员数量增加，大约按照 O(log N) 增长。\n\n这种设计把正常状态下的大量用户压缩进一个 UTXO，同时保留了异常状态下的链上逃生通道。\n\nLayerTree 里的两种转账方式\n\n如果用户每次转账都修改树根，所有交易仍然要依次上链，扩容效果会非常有限。\n\n因此，LayerTree 把日常支付放在链下完成，主要提供两种方式：channel leaf 和 voucher。\n\nChannel leaf：把 Lightning 通道放进叶节点\n\n一个叶节点可以代表用户与运营方之间的 Lightning 通道。\n\n通道的资金输出暂时没有作为单独 UTXO 出现在链上，它被包含在整棵 LayerTree 的共享输出中。用户之间付款时，通过运营方转发普通的 Lightning HTLC。\n\n支付过程中，LayerTree 的树根不变，也不会产生链上交易。\n\n因此，channel leaf 的支付速度可以接近普通 Lightning，通常在几秒内完成。运营方在这里承担路由节点的角色，LayerTree 则负责压缩通道所需的链上 UTXO。\n\n它很像一座大型 Lightning 枢纽，只在链上占用一个输出。\n\nVoucher：可以拿到链上兑现的数字支票\n\nLayerTree 更有创造力的部分是 voucher。\n\nVoucher 可以理解为一张由用户签发、由比特币脚本提供最终执行能力的数字支票。\n\n假设 Alice 的叶节点中有 100,000 sats，她要向 Bob 支付 10,000 sats。\n\nAlice 不需要立即修改整棵树。她只需要签署一条消息，写明这张 voucher 属于哪棵 LayerTree、资金来自哪个叶节点、Bob 将获得什么样的新叶节点、支付金额是多少，以及 Alice 叶节点当前的状态序号。\n\nAlice 把签名后的 voucher 发给 Bob，链下支付便完成了。\n\n这个过程只涉及签名和网络传输，速度可以接近交易所内部转账。\n\n关键区别在于，Bob 拿到的不只是运营方数据库里的一条余额记录。他拿到了一条可以交给比特币脚本执行的支付指令。\n\n如果 Alice 或运营方停止合作，Bob 可以自行把 voucher 提交到链上。LayerTree 合约会从 Alice 的叶节点扣除相应金额，同时为 Bob 创建一个新的叶节点。\n\n整个过程叫做 CLAIM。\n\nAlice 无需再次签字，运营方也无法阻止 Bob 兑现。\n\n一张 voucher 为什么只能使用一次\n\n每个 LayerTree 叶节点都有一个状态序号，称为 seq。\n\n假设 Alice 当前的 seq 是 7，她签出的 voucher 会明确绑定 seq 7。\n\n当一张 voucher 被兑现后，Alice 的余额会下降，seq 也会从 7 增加到 8。所有绑定 seq 7 的旧 voucher 随之失效。\n\n这可以防止同一张支票被重复兑现。\n\n如果 Alice 经常向 Bob 付款，她也不需要每次都创建一张相互独立的 voucher。\n\n第一次支付 10,000 sats，Alice 可以签一张累计金额为 10,000 sats 的 voucher。第二次再支付 20,000 sats，她可以重新签署一张累计金额为 30,000 sats 的 voucher。\n\nBob 只需要保存最新的一张。\n\n成百上千笔小额支付可以被压缩成一张代表最终累计余额的凭证。只要双方继续合作，就完全没有必要把每笔付款写入比特币区块。\n\nVoucher 无法消除信用风险\n\nVoucher 拥有真实签名，也有链上兑现路径，但它在被兑现之前依然带有发行人的信用风险。\n\n假设 Alice 的叶节点只有 100,000 sats。\n\n她可以向 Bob 签发一张 80,000 sats 的 voucher，同时向 Carol 签发另一张 80,000 sats 的 voucher。\n\n两张 voucher 上的签名都是真的，但 Alice 的余额无法同时覆盖它们。\n\n比特币脚本可以阻止超额资金被兑现，却无法阻止 Alice 在链下签出超过余额的多张凭证。最终谁能拿到钱，可能取决于谁先完成兑现。\n\nAlice 也可能通过其他合法操作更新自己的叶节点，使 seq 增加。旧状态上的 voucher 随后会失效。\n\n因此，一张尚未结算的 voucher 很像传统支票：\n\n签名可以证明它由谁签发，持有人可以尝试兑现，账户余额却可能不足，多张支票也可能争夺同一笔余额。\n\n收款人需要关注付款人的可用余额、当前 seq、未结算凭证、叶节点租期，以及付款人的信用状况。面对陌生人或大额付款，收款人可能选择立即兑现。长期合作方之间的小额高频支付，则可以继续在链下累计。\n\nLayerTree 官网也明确表示，收款人在 voucher 兑现或通过其他方式结算以前，应当把它视为 credit。\n\n这种信用风险是 voucher 获得高效率所付出的代价。\n\n为什么还要设计 voucher\n\n既然存在信用风险，为什么不全部使用 Lightning 通道？\n\n因为 voucher 的结构更简单，也更灵活。\n\n它不需要付款双方提前建立独立通道，可以由任何叶节点所有者直接签发，可以多次累计更新，还可以作为 LayerTree 与 Lightning 之间的结算凭证。\n\nLayerTree 设计了一种 credit leaf，用来接收来自 Lightning 的付款。\n\n运营方收到一笔 Lightning 付款后，可以使用自己提供资金的叶节点，向收款人签发一张新的累计 voucher。收款人可以继续持有，也可以在必要时自行上链兑现。\n\n基础流程存在一个短暂的信任窗口：运营方已经收到 Lightning 付款，但尚未向收款人签发 voucher。论文还设计了 pending pair，通过哈希锁、预签 voucher 和结算窗口，让收款人先获得可执行凭证，再释放 Lightning 支付的 preimage。\n\n在这种结构中，voucher 成为了 Lightning 支付与共享 UTXO 余额之间的桥梁。\n\n它尤其适合高频小额支付、工资流、内容付费、长期服务结算，以及运营方定期批量清算的场景。日常状态只需要交换签名，链上兑现被保留为争议处理和最终结算工具。\n\nLayerTree 依赖哪些比特币升级\n\nLayerTree 目前还不能在比特币主网上运行。\n\n它需要 covenant，也就是让一个 UTXO 对未来的花费方式施加约束。例如，脚本必须确保用户退出后，剩余资金重新进入承诺新树根的输出，不能被任意地址拿走。\n\n项目设计了四种操作码组合。\n\nFULL 版本依赖 BIP 441、BIP 440、OP_TX、BIP 348，以及一组椭圆曲线操作码。\n\nBIP 441 恢复部分早期被禁用的脚本能力，并支持更灵活的数据与数值处理。BIP 440 为这些可变成本操作提供计算预算。\n\nMID 版本依赖 BIP 347 的 OP_CAT、OP_TX、BIP 348 的 OP_CHECKSIGFROMSTACK，以及 BIP 449 的 OP_TWEAKADD。\n\nOP_CAT 用来拼接脚本中的数据。OP_TX 让脚本读取和约束当前交易。OP_TWEAKADD 用来计算承诺新状态的 Taproot 公钥。\n\n其中，BIP 348 对 voucher 尤其重要。它允许比特币脚本验证一段任意数据上的签名。没有这项能力，脚本很难验证 Alice 在链下签发的那张数字支票。\n\nMIN 版本只依赖 OP_CAT 和 OP_TWEAKADD，但只能实现退出和 SPLIT，无法支持 voucher 与 channel leaf。它更像一项证明 LayerTree 最低能力边界的实验。\n\nCCV 版本依赖 BIP 443 的 OP_CHECKCONTRACTVERIFY、OP_TX，以及为 voucher 准备的 BIP 348。\n\nBIP 443 可以让 UTXO 携带动态状态承诺，并约束新输出必须继承更新后的状态。它与 LayerTree 这种链上状态机非常契合，也是四种方案中退出体积最小的一档。\n\n不过，这些 BIP 都还没有在比特币主网上激活。\n\n“百万人共享一个 UTXO”还有一个额外前提\n\nLayerTree 宣传中性能最漂亮的版本，还依赖一个叫做 OP_MERKLESUMUPDATE 的专用操作码。\n\n它可以验证 Merkle Sum 证明，并直接计算替换一个叶节点后的新树根。\n\n有了它，一棵包含 65,536 名成员的 LayerTree，单人退出大约需要 540 vB。成员数量每增加一倍，退出交易只增加约 10 vB。\n\n但 OP_MERKLESUMUPDATE 目前只是项目仓库中的设计和模拟实现，尚未成为正式 BIP，也没有进入比特币升级流程。\n\n如果只使用已经存在的操作码提案，65,536 人规模下的退出成本约为 908 至 1,473 vB。\n\n所以“一棵树承载数百万人”在密码学结构上成立，它的高效实现仍然依赖比当前 BIP 更进一步的比特币脚本能力。\n\n它能否解决大规模挤兑\n\nLayerTree 可以大幅压缩正常状态下的链上占用，却无法增加比特币区块本身的容量。\n\n同一棵树的所有状态更新都要花费并重新创建同一个共享 UTXO，因此单独退出需要排队执行。\n\n根据项目自己的测算，如果 65,536 名用户从同一棵树中分别退出，大约需要 2,622 个区块，接近 18 天。\n\n实际部署需要把用户分散到很多棵较小的树中，同时使用批量加入、批量结算和批量退出。\n\n这也说明 LayerTree 的设计目标：让绝大多数正常活动留在链下，把有限的链上空间留给最终结算和异常处理。\n\nLayerTree 的意义\n\nLayerTree 仍然有一个明确的运营方。\n\n运营方负责接纳用户、维护服务、路由支付和组织批量更新。它可以拒绝新用户，也可以停止提供实时服务。单棵 LayerTree 因此并非完全去中心化。\n\n它更适合被称为非托管共享 UTXO 系统。\n\n运营方掌握服务入口，用户掌握资金退出权。运营方可能关门，也可能拒绝服务，但按照协议设计，它不能随意拿走用户叶节点中的余额。\n\nLayerTree 最值得关注的部分，是它在普通 UTXO、Lightning 通道和托管数据库之外，展示了另一种资金形态：\n\n一张可以瞬间流转、持续累计、最终交给比特币脚本强制兑现的数字支票。\n\n它没有消除信用风险，也没有突破区块空间的上限。\n\n它把信用限制在链下支付阶段，同时给收款人保留了一条无需许可的链上执行路径。\n\n这是一种相当有创造力的比特币扩容思路。",
+      "word_count": 448,
+      "char_count": 5459,
+      "images": [
+        {
+          "type": "cover",
+          "url": "https://pbs.twimg.com/media/HUubUcfbUAAATYW.jpg"
+        }
+      ],
+      "image_count": 1
+    },
+    "is_article": true
+  }
+}
