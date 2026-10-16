@@ -1,50 +1,204 @@
+Skip to last reply
+Skip to top
+Skip to main content
 Sign Up
 Log In
-Oops! That page doesn’t exist or is private.
-Take me home
-Try searching instead?
-Search
-Popular topics
-[DIS] RIVET: Decentralized GitHub Backup, Timestamping and Restore on CKB
-CKB Community Fund DAO
-[Brainstorm] Project Matchmaker — An Agent-Assisted Collaboration Network for the CKB Ecosystem
-Applications & Ecosystem
-[DIS] Kaze X CKB Unitour Continuation Proposal
-CKB Community Fund DAO
-[DIS] Kirea Finance: Native RWA Lending Infrastructure for CKB |【DIS】Kirea Finance：面向 CKB 的原生 RWA 借贷基础设施
-CKB Community Fund DAO
-[DIS] CrowdCell: From Testnet Demo to a Crowdfunding Product on CKB | CrowdCell：把 CKB 测试网上的免信任众筹做成产品
-CKB Community Fund DAO
-A Revenue Layer for CKB Nodes
-Applications & Ecosystem
-Khie，「契」。
-Applications & Ecosystem
-CellScript Roadmap: Expanding the Frontier of CKB-Native DeFi
+​
+Topics
+More
+CATEGORIES
+Announcements & Meta
 Infrastructure
-RIVET: CKB-native GitHub backup using IPFS, RGB++, and CCC
-Infrastructure
-CKB Off-Chain Hanoi Event Overview
+Applications & Ecosystem
+Cryptoeconomics & Mechanism Design
+Miners Pub
+DAOs & Funding
+All categories
+TAGS
+lang-zh
+lang-en
+CKB
+dapp
+lang-es
+All tags
+​
+​
+
+The forum now supports rendering Mermaid diagrams directly in posts, and the Babel Reunited translation plugin has completed an important fix to the underlying rendering layer.
+
+This feature came from community suggestions and analysis: @ArthurZhang raised the need in Forum tooling suggestion: Mermaid diagram support for technical posts, identified the official component, and pinpointed its compatibility issue with the translation plugin; @phroi’s ongoing testing feedback helped us dig out the root cause of the rendering problem. Thanks to both of you.
+
+You can now draw diagrams like this:
+
+Just write a ```mermaid code block in your post and it will automatically render as a diagram after publishing. For example, a flowchart:
+
+​
+
+Write a mermaid block
+
+Post it
+
+Rendered as SVG
+
+Fullscreen on hover
+
+Other diagram types such as sequence diagrams are also supported:
+
+​
+Translator
+Forum
+Author
+Translator
+Forum
+Author
+Diagram source is protected
+Post with a diagram
+Translate the prose
+Translated text
+Same diagram, translated prose
+
+For syntax reference, see the Mermaid official documentation. You can see the rendered result in real time in the editor preview.
+
+A few notes:
+
+Hovering over a diagram shows a fullscreen button; syntax errors won’t break the page — they’ll just display an error message box.
+Also shipping with this release is a fix to the underlying rendering layer: post body content now goes through Discourse’s core rendering pipeline in full. Features that had stopped working in translation-enabled categories are restored — the copy/fullscreen buttons in the top-right corner of code blocks, click-to-enlarge for images, and so on — and they work in translated views as well. You can verify this by switching the language tab at the top of this post: diagrams render correctly in the translated version too.
+Text inside diagrams is intentionally left untranslated. This is a deliberate trade-off: diagram source code is structure-sensitive, and having a model translate labels can easily corrupt the diagram. Better to leave it untranslated than to translate it badly.
+
+Feel free to give it a try.
+
+CKBA Membership Process
 General
-More…
-Recent topics
-Spark Program | RGB++ Resume — Recover Interrupted RGB++ Transfers
-Spark Program
-[Spark Program] SeedsSpark Program | Seedsong: On-Chain Generative Music with Spore DOB and light-client-wasmong 种子唱片：基于 Spore DOB 与 light-client-wasm 的链上生成音乐
-Spark Program
-Spark Program | Fiber Mystery Shopper: independent paid-use tests of live Fiber services
-Spark Program
-[Brainstorm] Project Matchmaker — An Agent-Assisted Collaboration Network for the CKB Ecosystem
-Applications & Ecosystem
-Noir-CKB update: what I decided after the direction check, what you can try today, and where this is going
-Infrastructure
-POI: Proof of Identity, a platformer on CKB testnet that teaches .cell names by using them
-Applications & Ecosystem
-[DIS] CrowdCell: From Testnet Demo to a Crowdfunding Product on CKB | CrowdCell：把 CKB 测试网上的免信任众筹做成产品
-CKB Community Fund DAO
-CellScript Roadmap: Expanding the Frontier of CKB-Native DeFi
-Infrastructure
-FiberSurvivors: a browser survivors-like for Fiber
-Applications & Ecosystem
-CKB Pulse: who is building on CKB, live
-Applications & Ecosystem
-More…
+CKBA
+Membership
+lang-en
+548
+views
+60
+likes
+5
+links
+Jun 3
+1 / 11
+Jun 4
+15d ago
+post by CKBAMembership on Jun 3
+CKBAMembership
+Jun 3
+Original · English
+简体中文
+Español
+
+image
+1920×813 341 KB
+
+This thread is the central place for updates and questions on CKBA membership. The @CKBAMembership account will post here for:
+
+Application cycle open/close announcements
+General Assembly voting outcomes
+General process clarifications
+
+Currently, Contributing Member applications are being reviewed in preparation for the upcoming General Assembly cycle. General Member registration is being finalized and will open soon at https://www.ckba.build/. We will announce the opening here once it is ready.
+
+Questions are welcome in this thread.
+
+Contributing Member application form: CKBA – Contributing Member Application
+
+
+image
+3784×880 268 KB
+
+
+
+6
+1 Reply
+​
+​
+A New Chapter for CKB: Introducing the Common Knowledge Base Association
+Questions about CKBA
+Who Governs CKB?
+CKB Ecosystem Biweekly Update
+548
+views
+60
+likes
+5
+links
+post by CKBAMembership on Jun 3
+CKBAMembership
+Jun 3
+Original · English
+简体中文
+Español
+
+Current Contributing Member cycle: applications close June 8, 2026 (AOE)
+
+The current Contributing Member application cycle will close on June 8, 2026 (AOE). Applications received after this date will be reviewed in the next cycle.
+
+
+
+4
+1 Reply
+​
+​
+CKB Ecosystem Biweekly Update
+post by woodbury.bit on Jun 4
+post by CKBAMembership on Jun 4
+post by CKBAMembership on Jun 9
+19 days later
+post by CKBAMembership on Jun 28
+2 months later
+post by CKBAMembership on Aug 29
+post by CKBAMembership on Sep 1
+post by CKBAMembership on Sep 8
+post by CKBAMembership on Sep 16
+15 days later
+post by CKBAMembership on Oct 1
+Reply
+
+
+New & Unread Topics
+Topic list, column headers with buttons are sortable.
+Topic	Replies	Views	Activity
+
+CKB works ! The real question is : Who will need it?
+General
+CKB
+lang-en
+	7	237	Dec 2025
+
+Governance Efficiency in the Dao– Pathways to Nervos Becoming a Dao SuperPower
+General
+governance
+lang-en
+	3	171	Jan 6
+
+Suggestion to the Nervos Team
+General
+lang-en
+	13	273	Mar 3
+
+The App5Labs CKB Explorer announcement and basic Public Relations skills
+General
+CKB
+lang-en
+	5	136	Apr 7
+
+Powerful Asset Complementing CKB and BTC/AI Generated Idea
+General
+CKB
+CKB-VM
+Nervos-项目动态
+dapp
+lang-en
+testnet
+	10	362	Jun 8
+
+DAO V1.1 Reference Auditor: An Independent Assessment
+General
+lang-en
+	3	128	Apr 23
+Want to read more? Browse other topics in 
+General
+ or view latest topics.
+Powered by Discourse
