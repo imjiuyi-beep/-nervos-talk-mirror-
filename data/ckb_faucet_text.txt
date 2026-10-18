@@ -1,0 +1,115 @@
+Nervos Pudge Faucet
+
+Every address can claim a maximum of 300,000 CKB per calendar month.
+
+Send CKB to
+Claim
+Faucet's current balance is 1,357,598,492.39 CKB.
+Claims
+0xcbb6c47f664230146679c97a367f26651496a3d106207bd22c708e73a1ac9623
+2026/10/17 20:10:10
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...wg2cen8extgq8s5puft8vf40px3f599cytcyd8
+100000.0 CKB
+Processed
+0.00000464 CKB
+0x1f0b30c042248b0c0f26ca0e9a584519ddb9c52483d5032da02ae6b7bf2fcdee
+2026/10/17 14:10:44
+ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306...d9ecu36ffzgmnjy97lyzfljgz44pwgvyddw2n
+100000.0 CKB
+Processed
+0.00000466 CKB
+0x5c79008a7583c167b8e53eba68e64bcb78b8debd4a330ef0574b50dd53ae084d
+2026/10/17 13:20:30
+ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306...mqc32wlhgmq34stqu9zzuetdnfxwx7crk7p9f
+100000.0 CKB
+Processed
+0.00000466 CKB
+0xa7f475718d1410cc080ed8c4d59c03ecf854763f17226528fa824d3536c17d38
+2026/10/17 11:03:36
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...vnv5gemee6gychgg560xf8nvarae6x6cj9gh3n
+100000.0 CKB
+Processed
+0.00000464 CKB
+0x953ed42c75531a96bef2051d0967573460227ec51021efc4f2f8b42af1c0e3a1
+2026/10/17 10:37:02
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...p5c5tp0prm2azy5rq29srvrcpzpqvu5s560al0
+100000.0 CKB
+Processed
+0.00000464 CKB
+0x953ed42c75531a96bef2051d0967573460227ec51021efc4f2f8b42af1c0e3a1
+2026/10/17 10:36:58
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...p5c5tp0prm2azy5rq29srvrcpzpqvu5s560al0
+10000.0 CKB
+Processed
+0.00000464 CKB
+0x5f5efc2161fe83c12f2d5266497ff57e162945efd1a4b84b1af2314d1ed081ad
+2026/10/17 07:00:01
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...0a83pk6n6ajtpcx7d0u77jaqplsrar3gxgez6h
+300000.0 CKB
+Processed
+0.00000464 CKB
+0x586a88a4f16fa46a4697f1b6ad61a2620777c9884ff31f6dfe21dcb4ae592061
+2026/10/17 05:00:01
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...nwr4y2gvn7lk34uz3uh0jzyhjvdtm2pgpkjzdw
+300000.0 CKB
+Processed
+0.00000464 CKB
+0xbe1bb42e177b9c6bf1ff3027762384d957d429e9a8ae15e99f3cae8cca83422f
+2026/10/16 16:42:51
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...84r3ru8mev38fyedcna7alf4gvwvwcdq0uhhxc
+10000.0 CKB
+Processed
+0.00000464 CKB
+0xbe1bb42e177b9c6bf1ff3027762384d957d429e9a8ae15e99f3cae8cca83422f
+2026/10/16 16:42:50
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...84r3ru8mev38fyedcna7alf4gvwvwcdq0uhhxc
+10000.0 CKB
+Processed
+0.00000464 CKB
+0xbe1bb42e177b9c6bf1ff3027762384d957d429e9a8ae15e99f3cae8cca83422f
+2026/10/16 16:42:49
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...84r3ru8mev38fyedcna7alf4gvwvwcdq0uhhxc
+10000.0 CKB
+Processed
+0.00000464 CKB
+0xbe1bb42e177b9c6bf1ff3027762384d957d429e9a8ae15e99f3cae8cca83422f
+2026/10/16 16:42:47
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...84r3ru8mev38fyedcna7alf4gvwvwcdq0uhhxc
+10000.0 CKB
+Processed
+0.00000464 CKB
+0xbe1bb42e177b9c6bf1ff3027762384d957d429e9a8ae15e99f3cae8cca83422f
+2026/10/16 16:42:46
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...84r3ru8mev38fyedcna7alf4gvwvwcdq0uhhxc
+10000.0 CKB
+Processed
+0.00000464 CKB
+0xbe1bb42e177b9c6bf1ff3027762384d957d429e9a8ae15e99f3cae8cca83422f
+2026/10/16 16:42:45
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...84r3ru8mev38fyedcna7alf4gvwvwcdq0uhhxc
+10000.0 CKB
+Processed
+0.00000464 CKB
+0xbe1bb42e177b9c6bf1ff3027762384d957d429e9a8ae15e99f3cae8cca83422f
+2026/10/16 16:42:44
+ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt...84r3ru8mev38fyedcna7alf4gvwvwcdq0uhhxc
+10000.0 CKB
+Processed
+0.00000464 CKB
+Foundation
+About Us
+Developer
+Docs
+Github
+Whitepaper
+CKB Explorer
+Submit Token Info
+Discord
+Twitter
+Blog
+Telegram
+Reddit
+Youtube
+Forum
+
+Copyright © 2026 Nervos Foundation. All Rights Reserved.
