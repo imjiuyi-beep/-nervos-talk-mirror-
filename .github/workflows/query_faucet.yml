@@ -1,0 +1,15 @@
+name: Query CKB Faucet Status
+on:
+  workflow_dispatch:
+    inputs:
+      address:
+        description: CKB testnet address to query
+        required: true
+
+jobs:
+  query:
+    runs-on: ubuntu-latest
+    steps:
+      - name: GET claim_events status
+        run: |
+          curl -s "https://faucet-api.nervos.org/claim_events/${{ github.event.inputs.address }}"
