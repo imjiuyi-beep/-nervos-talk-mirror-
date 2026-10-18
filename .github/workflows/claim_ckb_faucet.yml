@@ -1,0 +1,21 @@
+name: Claim CKB Faucet
+on:
+  workflow_dispatch:
+    inputs:
+      address:
+        description: CKB testnet address to claim
+        required: true
+      amount:
+        description: amount in CKB (max 300000/month per addr)
+        required: true
+        default: "100000"
+
+jobs:
+  claim:
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST claim_events
+        run: |
+          curl -s -X POST https://faucet-api.nervos.org/claim_events \
+            -H "Content-Type: application/json" \
+            -d "{\"claim_event\":{\"address_hash\":\"${{ github.event.inputs.address }}\",\"amount\":\"${{ github.event.inputs.amount }}\"}}"
