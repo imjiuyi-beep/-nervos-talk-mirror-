@@ -1,0 +1,232 @@
+Skip to last reply
+Skip to top
+Skip to main content
+Sign Up
+Log In
+​
+Topics
+More
+CATEGORIES
+Announcements & Meta
+Infrastructure
+Applications & Ecosystem
+Cryptoeconomics & Mechanism Design
+Miners Pub
+DAOs & Funding
+All categories
+TAGS
+lang-zh
+lang-en
+CKB
+dapp
+lang-es
+All tags
+​
+​
+
+The forum now supports rendering Mermaid diagrams directly in posts, and the Babel Reunited translation plugin has completed an important fix to the underlying rendering layer.
+
+This feature came from community suggestions and analysis: @ArthurZhang raised the need in Forum tooling suggestion: Mermaid diagram support for technical posts, identified the official component, and pinpointed its compatibility issue with the translation plugin; @phroi’s ongoing testing feedback helped us dig out the root cause of the rendering problem. Thanks to both of you.
+
+You can now draw diagrams like this:
+
+Just write a ```mermaid code block in your post and it will automatically render as a diagram after publishing. For example, a flowchart:
+
+​
+
+Write a mermaid block
+
+Post it
+
+Rendered as SVG
+
+Fullscreen on hover
+
+Other diagram types such as sequence diagrams are also supported:
+
+​
+Translator
+Forum
+Author
+Translator
+Forum
+Author
+Diagram source is protected
+Post with a diagram
+Translate the prose
+Translated text
+Same diagram, translated prose
+
+For syntax reference, see the Mermaid official documentation. You can see the rendered result in real time in the editor preview.
+
+A few notes:
+
+Hovering over a diagram shows a fullscreen button; syntax errors won’t break the page — they’ll just display an error message box.
+Also shipping with this release is a fix to the underlying rendering layer: post body content now goes through Discourse’s core rendering pipeline in full. Features that had stopped working in translation-enabled categories are restored — the copy/fullscreen buttons in the top-right corner of code blocks, click-to-enlarge for images, and so on — and they work in translated views as well. You can verify this by switching the language tab at the top of this post: diagrams render correctly in the translated version too.
+Text inside diagrams is intentionally left untranslated. This is a deliberate trade-off: diagram source code is structure-sensitive, and having a model translate labels can easily corrupt the diagram. Better to leave it untranslated than to translate it badly.
+
+Feel free to give it a try.
+
+QuotaCell: Let your team spend without handing over the treasury
+Infrastructure
+CKB
+CKB-VM
+lang-en
+Oct 16
+1 / 3
+Oct 16
+13h ago
+post by Ticoworld 3 days ago
+Ticoworld
+3d
+Original · English
+简体中文
+Español
+
+Imagine you’re running a project with a small team.
+
+There are expenses to handle, suppliers to pay, and people who need to get things done.
+
+You can’t be available to approve every single payment. But you also don’t want to give everyone unrestricted access to the treasury.
+
+So how do you let people spend independently while keeping control of the funds?
+
+That’s the problem I’ve been working on with QuotaCell.
+
+Here’s how it works
+
+Say your project treasury holds 200 tokens.
+
+You want Alice and Ben to handle payments, but you’ve only approved 100 tokens for them to spend altogether.
+
+Alice has a personal limit of 70 tokens, and Ben has a limit of 50. Each can only pay their approved recipient.
+
+The important thing is that they’re both spending from the same 100-token allowance.
+
+If Alice spends 60, Ben can spend another 40, not 50.
+
+Once that 100 is exhausted, neither of them can make another payment under that allowance, even though the treasury still has funds.
+
+Adding more tokens to the treasury doesn’t reset it. Neither does receiving a payment back. The owner has to explicitly renew the spending authority.
+
+And Alice and Ben can make their permitted payments without needing the owner to approve every transaction.
+
+Why CKB?
+
+What interested me wasn’t just displaying a budget or tracking how much each person had spent.
+
+It was making those restrictions enforceable even when someone isn’t using our application.
+
+With QuotaCell, the shared allowance is part of a native CKB policy protecting the funds.
+
+That means someone can have a valid signing key, construct a transaction using another tool, and still have that transaction rejected if it breaks the spending rules.
+
+The limits don’t depend on QuotaCell’s server agreeing to enforce them.
+
+The owner also retains authority to revoke permissions and recover the protected funds through the policy’s supported recovery rules.
+
+I think that’s an interesting foundation for building applications where people need freedom to act, but not unlimited authority.
+
+There’s more we can build around this
+
+Team spending is where QuotaCell started, but we’ve also been investigating how the same approach could support other applications.
+
+Autonomous agents are one particularly interesting direction.
+
+Imagine two agents handling different operational tasks. One pays an approved data provider, while another pays for a separate service. They have their own keys and restrictions, but share one overall spending allowance.
+
+We’ve already investigated this architecture against existing CKB agent and wallet infrastructure. The current policy can accommodate two software-controlled signers without changing its core spending rules. The next step is connecting those agents through independent transaction builders and testing the complete flow.
+
+There are other possibilities too.
+
+A project could give several contributors controlled spending authority from a sponsored budget. A team could manage delegated operational expenses without issuing unrestricted treasury keys.
+
+We’ve also examined shared access to AI services and other limited resources, including how existing gateways and access-receipt infrastructure could help. That needs a different enforcement approach because spending tokens and consuming an off-chain service aren’t the same thing.
+
+What connects these applications is the idea of sharing limited authority without surrendering control of the entire resource.
+
+What we’ve built
+
+QuotaCell already has a compiled native CKB spending policy that we’ve tested through local CKB verification.
+
+We’ve run 89 verification cases, with all 89 producing their expected results: 33 accepted transactions and 56 rejected transactions.
+
+The cases cover permitted payments, shared allowance exhaustion, attempts to bypass restrictions, invalid policy changes, owner administration, and recovery behavior.
+
+The current implementation supports a specific synthetic xUDT profile with two delegates and fixed recipient rules. It’s not yet deployed to a public network or independently audited.
+
+We’re now moving from that native foundation toward the transaction-building, signing, recovery, and application experience needed to make QuotaCell practical. Supporting the assets and payment workflows teams actually use is an important part of that work.
+
+Where we’re going
+
+I want QuotaCell to become something a project owner can actually use to manage delegated spending, while making the underlying policy useful to other CKB applications too.
+
+We’ve already learned quite a bit from examining existing wallets, agent infrastructure, native CKB scripts, and access-control systems. There’s useful work to build on, and there are also areas where new infrastructure could make a difference.
+
+I’m sharing QuotaCell here because I think the underlying idea has room to grow beyond the original team-spending use case.
+
+If you’re building wallets, working with agents, managing project funds, or experimenting with shared resources on CKB, I’d love to hear the situations where this kind of control could be useful, along with approaches or limitations we should consider.
+
+I’ll keep sharing meaningful progress as QuotaCell develops, and I hope some of the ideas and technical discussions here can help shape what we build next.
+
+
+
+1
+​
+​
+64
+views
+post by Ayoub_Lesfer 14 hours ago
+post by Ticoworld 13 hours ago
+Reply
+
+
+New & Unread Topics
+Topic list, column headers with buttons are sortable.
+Topic	Replies	Views	Activity
+
+Orbital: Making CKB Smart Contract Development Easier
+Infrastructure
+CKB
+CKB-VM
+lang-en
+	0	51	Jun 15
+
+Vellum, extended: from identity to reputation on did:ckb
+Infrastructure
+CKB
+NFT
+dapp
+lang-en
+	1	112	Jun 22
+
+Morph Channel：一种 CKB Cell 模型下的通道 / 工厂讨论方向
+Infrastructure
+lang-zh
+	4	278	Jun 10
+
+Scryve: From CKB-Native to Multi-Chain - A Platform Update
+Infrastructure
+CKB
+NFT
+dapp
+lang-en
+partnership
+	5	326	Feb 11
+
+Building CKB PoP: a reusable participation primitive on CKB
+Infrastructure
+CKB
+NFT
+dapp
+lang-en
+	5	214	May 2
+
+Introducing `cobuild-otx-contracts`: A Reference Implementation for CoBuild OTX Contracts
+Infrastructure
+lang-en
+	1	114	Jun 22
+Want to read more? Browse other topics in 
+Infrastructure
+ or view latest topics.
+Powered by Discourse
