@@ -81,196 +81,202 @@ General
 lang-en
 Effective Date: August 13, 2025 Version: v0.1 中文版 Chapter 1: General Principles Article 1: Purpose Nervos Talk is the public discussion space for the Nervos community and one of the primary venues for Nervos builders… read more
 	
-	0	313	Aug 2025
+	0	339	Aug 2025
 
-A Revenue Layer for CKB Nodes
+[DIS] Twine — Non-Custodial P2P for Nervos CKB on Nostr and Fiber
+CKB Community Fund DAO
+CKB
+fiber
+	
+	14	165	8m
+
+Spark Program | CKB Escrow Security Test Kit
+Spark Program
+Pending
+Spark-Program
+	
+	4	133	26m
+
+CKB Pulse today: a new look, lessons from real fixes, and CKB inside your tools
 Applications & Ecosystem
+	
+	1	26	1h
+
+RFC draft: Lock Proof, proving control of a CKB lock
+Infrastructure
+	
+	1	53	2h
+
+[DIS] KeyMe — CKB’s PSBT: Open Air-Gapped Signing and the First DIY Hardware
+CKB Community Fund DAO
+	
+	5	92	3h
+
+Spark Program | Lifeboat: see what an address owns on CKB, and get it out when the app is gone
+Spark Program
 CKB
 CKB-VM
+Grant
+Spark-Program
+appchain
+dapp
+lang-en
 	
-	23	415	35m
+	4	59	4h
 
-[Brainstorm] Project Matchmaker — An Agent-Assisted Collaboration Network for the CKB Ecosystem
-Applications & Ecosystem
+[DIS] Cellula on Fiber: a wallet, a checkout and an AI agent on a public mainnet LSP
+CKB Community Fund DAO
+CKB
+Grant
+Nervos-项目动态
+dapp
+fiber
+lang-en
+lang-zh
 	
-	1	11	1h
+	24	556	8h
+
+C-KZG-4844 on CKB-VM & Blob tree
+General
+CKB-VM
+	
+	0	24	10h
 
 Tranfr — Programmable Recovery for CKB
 Spark Program
 In-Progress
 	
-	17	502	3h
+	35	895	11h
 
-Spark Program | NNCBN - Nervos Network Community Boot Nodes
-Spark Program
-In-Progress
-Node
-Spark-Program
-bootnode
-	
-	13	416	5h
-
-POI: Proof of Identity, a platformer on CKB testnet that teaches .cell names by using them
-Applications & Ecosystem
-	
-	1	32	5h
-
-Spark Program | CKB-VM Sail Validation Sprint：可复现的 RISC-V 语义差分工具、Lean 4 证明与 Rocq/Coq 兼容性 Spike
-Spark Program
-CKB-VM
-In-Progress
-	
-	25	633	11h
-
-It is 2026 and let’s run a blog with paywall built on top of fiber l402
-Applications & Ecosystem
-lang-en
-	
-	5	160	13h
-
-Noir-CKB update: what I decided after the direction check, what you can try today, and where this is going
-Infrastructure
-CKB
-zkp
-	
-	0	32	18h
-
-Tactus O1: First Based EVM Rollup on CKB
-Infrastructure
-	
-	1	68	18h
-
-[DIS] Rypto — CKB Content & Advocacy Campaign
+[DIS] Vellum: Reputation Extension on did:ckb
 CKB Community Fund DAO
 	
-	7	452	1d
+	23	910	11h
 
-[DIS] CrowdCell: From Testnet Demo to a Crowdfunding Product on CKB | CrowdCell：把 CKB 测试网上的免信任众筹做成产品
-CKB Community Fund DAO
-lang-en
-	
-	1	71	1d
-
-Introducing CKB Kickstarter: Decentralized All-or-Nothing Crowdfunding on Nervos CKB (Testnet MVP Live)
-Infrastructure
-CKB
-dapp
-lang-en
-	
-	15	510	1d
-
-分享一个 Tinder 版预测市场应用的想法
-Applications & Ecosystem
-lang-zh
-	
-	3	144	1d
-
-CellScript Roadmap: Expanding the Frontier of CKB-Native DeFi
-Infrastructure
-CKB
-CellScript
-DeFi
-	
-	0	108	2d
-
-Spark Program | CKB Wallet Behaviour Intelligence
+Spark Program | CapKey: Spend-Capped Sub-Key Covenants for Browser dApps and AI Agents
 Spark Program
-In-Progress
 	
-	28	1.0k	2d
+	0	18	12h
 
-Spark Program | LiquidLane: Fiber Receive Capacity Marketplace | RESUBMISSION
+Spark Program | CKB Script Bench: How Well Do AI Models Write CKB Scripts?
+Spark Program
+CKB
+	
+	0	18	12h
+
+[DIS] CKB Integration for Rosen Bridge
+CKB Community Fund DAO
+	
+	149	4.7k	14h
+
+DAO提案公平性疑问？
+CKB Community Fund DAO
+	
+	7	71	16h
+
+Spark Program | CellGuard × CrowdCell — Real Transaction Policy Integration Pilot
 Spark Program
 Rejection
 	
-	2	88	2d
-
-FiberSurvivors: a browser survivors-like for Fiber
-Applications & Ecosystem
-fiber
-game
-testnet
-	
-	0	51	3d
+	5	125	18h
 
 Spark Program Proposal: Corven cloud-native IDE
 Spark Program
 CKB
 Grant
+In-Progress
+Spark-Program
+	
+	22	464	19h
+
+Community Fund DAO voting in numbers
+CKB Community Fund DAO
+	
+	5	83	22h
+
+Spark Program | ServiceSeal: Prepaid Utility Passes on CKB
+Spark Program
+CKB
 Pending
 Spark-Program
 	
-	2	95	3d
+	2	94	22h
 
-CKB Off Chain Aba: Event Overview
-General
+mBabel Cloud：无需部署，实时生成中英字幕，让双语会议沟通更轻松
+Applications & Ecosystem
 	
-	3	92	3d
+	1	63	23h
 
-Spark Program | Spark Verify - Reproducible Acceptance Checks for CKB Projects
+Spark Program | CKB script regression fixtures: reproducible tests for review findings
+Spark Program
+Spark-Program
+	
+	0	21	1d
+
+CKB Mixer(混币器)——Tornado Cash on CKb
+Applications & Ecosystem
+dapp
+testnet
+	
+	0	32	1d
+
+[DIS] CKB Productathon: Ship on CKB (Kisumu, Kenya)
+CKB Community Fund DAO
+CKB
+CKB-VM
+Grant
+	
+	0	64	1d
+
+CellScript - A DSL for Cell-Based Contracts
+Infrastructure
+CKB-VM
+CellScript
+DSL
+lang-en
+	
+	33	1.4k	1d
+
+Spark Program | ShareCut: referral payouts for small shops over Fiber (testnet)
 Spark Program
 Pending
 	
-	13	282	3d
+	5	82	1d
 
-Spark Program | zk-Lock for CKB
+Ckbup: one installer for CKB command-line tools (early progress, feedback welcome)
+Infrastructure
+CKB
+Infrastructure
+dev-tool
+fiber
+rust
+	
+	2	81	1d
+
+Spark Program | CKB ClearSign: verify before you sign
 Spark Program
-In-Progress
-	
-	19	660	3d
-
-[DIS] FiberLatch Access - Open-Source Access Control for Fiber Payments
-CKB Community Fund DAO
 CKB
-dapp
-testnet
-	
-	6	481	3d
-
-[DIS] Kirea Finance: Native RWA Lending Infrastructure for CKB |【DIS】Kirea Finance：面向 CKB 的原生 RWA 借贷基础设施
-CKB Community Fund DAO
-CKB
-DeFi
-defi挖矿
-lang-es
-lang-zh
-	
-	7	256	3d
-
-CKB Pulse: who is building on CKB, live
-Applications & Ecosystem
-CKB
-	
-	0	45	4d
-
-Pre-RFC Discussion: Activating the Nervos DAO Treasury
-Cryptoeconomics & Mechanism Design
-CKB
+Spark-Program
 lang-en
 	
-	21	984	4d
+	0	33	1d
 
-FiberNuts After the Hackathon: What Could Cashu + Fiber Enable on CKB?
-Applications & Ecosystem
-CKB
-dapp
-testnet
-	
-	8	248	4d
-
-CKB Off-Chain Hanoi Event Overview
-General
-	
-	1	60	4d
-
-Twine: Buy and Sell CKB Without Depositing on an Exchange (Fiber P2P PoC)
-Applications & Ecosystem
-fiber
-	
-	7	239	4d
-
-Spark Program | CKB Revocable Timelock (CRT) — Timelock Encryption You Can Cancel
+Spark Program | Forecast Arena - A Pilot for Honest AI Benchmarks on CKB
 Spark Program
-Closure
+Rejection
+Spark-Program
 	
-	5	204	4d
+	2	68	1d
+
+Spark Program | Will On-Chain: Tamper-Evident, Private Digital Wills on CKB
+Spark Program
+CKB
+CKB-VM
+	
+	0	25	1d
+
+Spark Program | ckb-adversary: generic attacks on real CKB transactions, before you deploy
+Spark Program
+Pending
+	
+	2	110	2d
