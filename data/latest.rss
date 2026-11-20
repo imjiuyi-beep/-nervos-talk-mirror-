@@ -5,8 +5,587 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Fri, 20 Nov 2026 00:55:32 +0000</lastBuildDate>
+      <lastBuildDate>Fri, 20 Nov 2026 18:53:24 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>Unlinked for CKB: Tor-Routed RPC and Browser Privacy Extension</title>
+          <dc:creator><![CDATA[Owais]]></dc:creator>
+          <category>Spark Program</category>
+          <description><![CDATA[
+            <p><strong>Funding requested:</strong> $1,000<br>
+<strong>Project duration:</strong> 6 weeks<br>
+<strong>Category:</strong> Developer Tools / Privacy<br>
+<strong>Target ecosystem:</strong> Nervos CKB<br>
+<strong>License:</strong> Open source</p>
+<p><strong>Applicant: Owais (GitHub: owaisdotcom) · Full Stack Software Engineer</strong></p>
+<p><strong>1. Project Overview</strong></p>
+<p>Unlinked for CKB is an open-source browser extension prototype designed to improve privacy when interacting with Nervos CKB decentralized applications.</p>
+<p>It adapts the anon-rpc architecture and browser-based Tor client (tor-js, based on Arti compiled to WebAssembly) to the CKB ecosystem. The goal is to let users route supported CKB RPC requests through Tor directly from their browser, without requiring them to install or operate a separate native Tor daemon.</p>
+<p>The extension will investigate running the privacy worker in a sandboxed browser environment and integrating it with CKB RPC endpoints to provide Tor-routed blockchain access.</p>
+<p>The prototype will implement two complementary features:</p>
+<ol>
+<li><strong>Tor-Routed CKB RPC:</strong> A browser-compatible transport that routes supported CKB RPC requests through the Tor network, reducing the ability of RPC endpoints to associate requests with a user’s direct IP address.</li>
+<li><strong>Wallet Privacy Inspector:</strong> A browser-based inspection tool that detects CKB addresses and recognizable wallet-related information in outgoing requests and shows users which external domains receive that information.</li>
+</ol>
+<p>The project will focus on building a functional prototype rather than a production-ready privacy service. It will adapt existing technologies, develop the CKB-specific integration, test both features in real browser environments, and publish the resulting software with documentation and demonstrations.</p>
+<p>The goal is to give CKB developers and users an early, usable example of browser-level privacy tooling, while providing a foundation for further development in the Nervos ecosystem.</p>
+<p><strong>2. Problem Statement</strong></p>
+<p>When users interact with CKB dApps, information can be exposed through both network connections and application-generated browser requests.</p>
+<p><strong>Network-level exposure</strong></p>
+<p>When a browser communicates directly with a CKB RPC provider, that provider can observe the connecting IP address. Changing RPC providers does not necessarily prevent this exposure.</p>
+<p>Tor offers a way to route network connections through multiple relays, making it harder for the destination endpoint to associate requests with the user’s direct IP address. However, browser networking restrictions make a browser-native implementation challenging.</p>
+<p><strong>Wallet information disclosure</strong></p>
+<p>A dApp may transmit CKB addresses or other recognizable wallet information to external services through browser requests. These services can include analytics providers, application APIs and other third-party endpoints.</p>
+<p>Users generally have little visibility into which domains receive this information.</p>
+<p>Unlinked aims to address these two problems through a browser extension that provides experimental private RPC access and local inspection of outgoing wallet-related information.</p>
+<p><strong>3. Why Nervos CKB?</strong></p>
+<p>CKB’s Cell model and Lock Script architecture provide recognizable structures that can be used when inspecting wallet-related information.</p>
+<p>CKB addresses encode information about locking scripts and their arguments. This gives the privacy inspector a practical starting point for detecting CKB-related identifiers in outgoing requests.</p>
+<p>The prototype will investigate how to recognize these structures without accessing private keys or uploading users’ browsing data.</p>
+<p>CKB also has an ecosystem of wallets, dApps and RPC-based applications that provides a relevant environment for developing and testing browser privacy tooling.</p>
+<p>The project complements existing CKB infrastructure. A Light Client can independently verify blockchain data, while Tor addresses network-level IP exposure. These are different capabilities, and the prototype focuses on exploring the latter alongside wallet information inspection.</p>
+<p><strong>4. Proposed Prototype</strong></p>
+<p>Unlinked for CKB will consist of a browser extension with two main experimental features.</p>
+<p><strong>4.1 Tor-Routed CKB RPC</strong></p>
+<p>The first feature will prototype browser-compatible access to CKB RPC endpoints through Tor.</p>
+<p>The intended request path is:</p>
+<p><strong>Browser extension → Tor-compatible transport → Tor network → CKB RPC endpoint</strong></p>
+<p>The prototype will investigate existing browser-compatible Tor technologies, including Arti-based WebAssembly approaches where practical.</p>
+<p>Initial development will focus on:</p>
+<ul>
+<li>Establishing a browser-compatible Tor transport.</li>
+<li>Connecting to a configurable CKB RPC endpoint.</li>
+<li>Routing a defined set of CKB JSON-RPC requests through Tor.</li>
+<li>Displaying connection and routing status in the extension.</li>
+<li>Handling connection failures without silently falling back to a direct connection.</li>
+</ul>
+<p>The objective is to demonstrate that a browser extension can make supported CKB RPC requests without exposing the user’s direct IP address to the destination endpoint.</p>
+<p>The initial prototype will use existing Tor technologies rather than attempt to implement the Tor protocol from scratch.</p>
+<p>If an external gateway or relay is required, its role and operational dependencies will be documented.</p>
+<p><strong>4.2 Wallet Privacy Inspector</strong></p>
+<p>The second feature will prototype local inspection of outgoing browser requests to identify CKB wallet-related information.</p>
+<p>The initial version will inspect Fetch and XMLHttpRequest traffic.</p>
+<p>It will attempt to detect:</p>
+<ul>
+<li>CKB addresses.</li>
+<li>Recognizable Lock Script arguments.</li>
+<li>Other identifiable CKB wallet-related values.</li>
+<li>External domains receiving detected information.</li>
+</ul>
+<p>The extension will display findings in a per-site privacy report.</p>
+<p>For example, when a dApp sends a user’s CKB address to an external analytics endpoint, the extension will identify the destination domain and show the detected information.</p>
+<p>The inspector will operate locally in the browser. It will not upload inspected request contents to a central service.</p>
+<p>The initial prototype will focus on Fetch and XMLHttpRequest. WebSocket and other traffic types may be explored later, but will not be required for the first version.</p>
+<p><strong>5. Prototype Architecture</strong></p>
+<p><strong>Browser extension</strong></p>
+<p>The main interface will provide connection controls, privacy inspection and per-site reports.</p>
+<p><strong>Tor transport</strong></p>
+<p>A browser-compatible Tor transport will be integrated for supported CKB RPC requests. The implementation will evaluate available WebAssembly and browser networking approaches.</p>
+<p><strong>CKB RPC integration</strong></p>
+<p>The extension will connect to a configurable CKB RPC endpoint and support a defined subset of JSON-RPC methods.</p>
+<p><strong>Request inspection</strong></p>
+<p>The inspector will analyze observable Fetch and XMLHttpRequest requests for recognizable CKB wallet information and associate findings with destination domains.</p>
+<p><strong>Local privacy reporting</strong></p>
+<p>Inspection results will be presented locally, without sending browsing or wallet information to a central analytics service.</p>
+<p><strong>6. Development Deliverables</strong></p>
+<p>The project will produce:</p>
+<ol>
+<li><strong>Browser extension prototype:</strong> An installable, open-source extension containing the initial privacy features.</li>
+<li><strong>Tor-Routed RPC prototype:</strong> A working browser-based experiment for routing supported CKB RPC requests through Tor, subject to transport feasibility.</li>
+<li><strong>Wallet Privacy Inspector:</strong> A working prototype that detects CKB addresses and recognizable wallet information in outgoing requests.</li>
+<li><strong>Per-site privacy report:</strong> An interface displaying detected wallet information and destination domains.</li>
+<li><strong>CKB dApp test environment:</strong> A controlled test dApp demonstrating wallet information disclosure and inspection.</li>
+<li><strong>Existing dApp compatibility tests:</strong> Tests against at least two existing CKB applications, documenting supported behavior and observed results.</li>
+<li><strong>Source code and documentation:</strong> Public repository, setup instructions, technical notes and a demonstration video.</li>
+</ol>
+<p><strong>7. Six-Week Development Plan</strong></p>
+<p><strong>Week 1 — Extension Foundation and Tor Setup</strong></p>
+<ul>
+<li>Set up the browser extension project.</li>
+<li>Investigate browser-compatible Tor transport options.</li>
+<li>Evaluate Arti-based WebAssembly approaches.</li>
+<li>Configure a CKB RPC test environment.</li>
+<li>Define the initial RPC methods to support.</li>
+</ul>
+<p><strong>Milestone:</strong> Extension foundation and initial Tor transport experiment.</p>
+<p><strong>Week 2 — Tor-Routed RPC Prototype</strong></p>
+<ul>
+<li>Implement the initial browser-compatible transport.</li>
+<li>Attempt to connect to a CKB RPC endpoint through Tor.</li>
+<li>Add connection status and error handling.</li>
+<li>Test routing behavior and prevent silent direct-connection fallback.</li>
+</ul>
+<p><strong>Milestone:</strong> Initial Tor-routed CKB RPC prototype, or documented technical limitations and an alternative implementation approach.</p>
+<p><strong>Week 3 — Wallet Privacy Inspector</strong></p>
+<ul>
+<li>Implement Fetch and XMLHttpRequest inspection.</li>
+<li>Add CKB address detection.</li>
+<li>Investigate recognizable Lock Script argument detection.</li>
+<li>Identify destination domains.</li>
+<li>Build the initial privacy report interface.</li>
+</ul>
+<p><strong>Milestone:</strong> Functional wallet information inspection prototype.</p>
+<p><strong>Week 4 — CKB dApp Integration and Testing</strong></p>
+<ul>
+<li>Build a controlled CKB test dApp.</li>
+<li>Test the inspector against controlled wallet-information disclosures.</li>
+<li>Integrate at least two existing CKB dApps into the testing process.</li>
+<li>Record observed requests and findings.</li>
+<li>Improve detection and reporting.</li>
+</ul>
+<p><strong>Milestone:</strong> Working inspection demonstration and initial compatibility results.</p>
+<p><strong>Week 5 — Prototype Integration</strong></p>
+<ul>
+<li>Integrate the working components into the browser extension.</li>
+<li>Test supported CKB RPC requests.</li>
+<li>Verify Tor routing behavior where implemented.</li>
+<li>Improve the extension interface.</li>
+<li>Address compatibility and performance issues.</li>
+</ul>
+<p><strong>Milestone:</strong> Integrated Unlinked for CKB prototype.</p>
+<p><strong>Week 6 — Final Testing and Release</strong></p>
+<ul>
+<li>Complete functional tests.</li>
+<li>Fix remaining issues.</li>
+<li>Publish the source code.</li>
+<li>Write setup and developer documentation.</li>
+<li>Publish the CKB dApp testing results.</li>
+<li>Record a demonstration video.</li>
+</ul>
+<p><strong>Milestone:</strong> Public prototype release.</p>
+<p><strong>8. Success Metrics and Verification</strong></p>
+<p>The project will be evaluated through working software and reproducible demonstrations.</p>
+<p><strong>Tor-Routed RPC</strong></p>
+<ul>
+<li>Demonstrate a supported CKB RPC request routed through Tor in a real browser, if technically feasible.</li>
+<li>Verify that the destination endpoint observes the Tor exit IP rather than the user’s direct IP.</li>
+<li>Display routing status in the extension.</li>
+<li>Demonstrate that the extension does not silently fall back to a direct connection.</li>
+</ul>
+<p><strong>Wallet Privacy Inspector</strong></p>
+<ul>
+<li>Detect CKB addresses in controlled outgoing requests.</li>
+<li>Identify destination domains.</li>
+<li>Display detected information in a per-site report.</li>
+<li>Demonstrate local inspection without uploading request contents.</li>
+</ul>
+<p><strong>CKB Application Testing</strong></p>
+<ul>
+<li>Test at least two existing CKB dApps.</li>
+<li>Document observed wallet-information disclosures and negative findings.</li>
+<li>Publish reproducible test cases.</li>
+</ul>
+<p><strong>Open-Source Release</strong></p>
+<ul>
+<li>Publish the extension source code.</li>
+<li>Provide installation and setup instructions.</li>
+<li>Publish a demonstration and technical documentation.</li>
+</ul>
+<p>The project will clearly distinguish implemented functionality from experimental or unsupported features.</p>
+<p><strong>9. Risks and Mitigations</strong></p>
+<p><strong>Browser-compatible Tor transport</strong></p>
+<p>Browser networking restrictions may make direct Tor integration difficult.</p>
+<p><em>Mitigation:</em> Use existing browser-compatible Tor technologies, limit the initial implementation to supported RPC requests and document transport limitations.</p>
+<p><strong>Incomplete request inspection</strong></p>
+<p>Some wallet information may be encoded or transmitted through unsupported traffic types.</p>
+<p><em>Mitigation:</em> Focus the initial prototype on observable Fetch and XMLHttpRequest requests and document unsupported mechanisms.</p>
+<p><strong>False positives and missed disclosures</strong></p>
+<p>Not every detected string necessarily represents a privacy leak, and transformed data may not be recognizable.</p>
+<p><em>Mitigation:</em> Validate detections against controlled test cases and distinguish confirmed findings from potential disclosures.</p>
+<p><strong>10. Funding Request</strong></p>
+<p><strong>Total requested: $1,000</strong></p>
+<p>The funding will support six weeks of prototype development, integration and testing.</p>
+<p>The budget covers:</p>
+<ul>
+<li>Browser extension development.</li>
+<li>Tor transport integration and experimentation.</li>
+<li>CKB RPC integration.</li>
+<li>Wallet Privacy Inspector development.</li>
+<li>User interface and reporting.</li>
+<li>CKB dApp testing.</li>
+<li>Documentation, open-source publication and demonstration.</li>
+</ul>
+<p>The resulting software and technical documentation will be publicly available to the Nervos ecosystem.</p>
+<p><strong>11. Expected Ecosystem Impact</strong></p>
+<p>Unlinked for CKB will introduce an experimental browser privacy tool for the Nervos ecosystem.</p>
+<p>For users, it aims to provide greater visibility into wallet-related information transmitted by dApps and demonstrate an alternative way to access supported CKB RPC endpoints.</p>
+<p>For developers, it will provide a practical example of browser-based wallet information inspection and a test environment for evaluating application privacy.</p>
+<p>For the wider ecosystem, it will contribute:</p>
+<ul>
+<li>An open-source browser extension prototype.</li>
+<li>Experimental Tor integration for CKB RPC access.</li>
+<li>A reusable wallet privacy inspection component.</li>
+<li>Testing results from existing CKB applications.</li>
+<li>Documentation that can support further development of CKB privacy tooling.</li>
+</ul>
+<p><strong>12. Final Outcome</strong></p>
+<p>The final outcome will be an open-source Unlinked for CKB browser extension prototype demonstrating two complementary privacy features: experimental Tor-routed access to supported CKB RPC endpoints and local inspection of wallet-related information transmitted by dApps.</p>
+<p>The project prioritizes functional software, reproducible demonstrations and practical developer deliverables.</p>
+<p>The six-week grant will fund the development and testing needed to turn these ideas into a working prototype and establish a foundation for future improvements to extension browser privacy in the Nervos ecosystem.</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/unlinked-for-ckb-tor-routed-rpc-and-browser-privacy-extension/11297">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/unlinked-for-ckb-tor-routed-rpc-and-browser-privacy-extension/11297</link>
+          <pubDate>Fri, 20 Nov 2026 18:53:24 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11297</guid>
+          <source url="https://talk.nervos.org/t/unlinked-for-ckb-tor-routed-rpc-and-browser-privacy-extension/11297.rss">Unlinked for CKB: Tor-Routed RPC and Browser Privacy Extension</source>
+        </item>
+        <item>
+          <title>Spark Program | MoniMkt: CKB Lending Validation Toolkit and Product Field Test</title>
+          <dc:creator><![CDATA[NOrththebear]]></dc:creator>
+          <category>Spark Program</category>
+          <description><![CDATA[
+            <h2><a name="p-27637-h-1-project-overview-1" class="anchor" href="https://talk.nervos.org#p-27637-h-1-project-overview-1" aria-label="Heading link"></a>1. Project Overview</h2>
+<p><strong>Project name:</strong> MoniMkt</p>
+<p><strong>One-line summary:</strong> A reusable CKB lending validation toolkit, field-tested with real users against the MoniMkt testnet product.</p>
+<p><strong>Positioning:</strong> The primary deliverable is a standalone, reusable validation toolkit for cell-based lending markets on CKB. MoniMkt is the first reference fixture and field test, not the product being funded. This directly follows the committee’s suggestion to focus on a testing suite or validation tool without broader market operations.</p>
+<p>MoniMkt is the CKB equivalent of what Compound built for Ethereum: a pooled lending market where users supply, borrow, repay, and withdraw against collateral. The difference is that MoniMkt uses CKB cells directly. Market state, positions, vaults, and the oracle are cells, and the rules are enforced by CKB scripts.</p>
+<p>The market and frontend already work on testnet. What is missing is a reusable way to validate lending behavior across CKB lending products, and real product evidence from users who are not the builder. This proposal delivers both, with the toolkit as the core and MoniMkt as the first field test.</p>
+<h2><a name="p-27637-h-2-committee-alignment-2" class="anchor" href="https://talk.nervos.org#p-27637-h-2-committee-alignment-2" aria-label="Heading link"></a>2. Committee Alignment</h2>
+<p>This proposal is structured around the committee’s feedback:</p>
+<ul>
+<li>The core deliverable is a <strong>standalone validation toolkit</strong>, not a market operations package.</li>
+<li>MoniMkt is one <strong>reference fixture</strong> and field test, not the product being funded.</li>
+<li>The work is <strong>testing and validation only</strong>.</li>
+<li>There is <strong>no security hardening</strong>, no oracle operations, no mainnet work, no custody work, and no ongoing hosted beta.</li>
+<li>The entire scope is one toolkit plus one bounded field test.</li>
+</ul>
+<p>The product field test exists to prove the toolkit is useful in practice, not to turn Spark into an operations funder.</p>
+<h2><a name="p-27637-h-3-team-profile-3" class="anchor" href="https://talk.nervos.org#p-27637-h-3-team-profile-3" aria-label="Heading link"></a>3. Team Profile</h2>
+<p><strong>Applicant / core developer:</strong> North Bear, full-stack and Rust, protocol and smart-contract development.</p>
+<ul>
+<li>GitHub: <a href="https://github.com/NOrththebear/MoniMkt" class="inline-onebox" rel="noopener nofollow ugc">GitHub - NOrththebear/MoniMkt · GitHub</a></li>
+<li>Email: <a href="mailto:capc55005@gmail.com">capc55005@gmail.com</a></li>
+<li>Discord: northbears</li>
+</ul>
+<p>I built the MoniMkt contracts, testnet deployment, frontend, and oracle keeper. I also built Bees Network, a CKB observation-layer MVP deployed on Pudge testnet, including its cell-based registry, epoch accounting, and desktop client.</p>
+<h2><a name="p-27637-h-4-product-background-4" class="anchor" href="https://talk.nervos.org#p-27637-h-4-product-background-4" aria-label="Heading link"></a>4. Product Background</h2>
+<p>CKB has strong custody and settlement primitives, but most users still meet CKB applications through wallets, forms, and transaction prompts that assume technical knowledge. A working contract is not the same as a usable product.</p>
+<p>MoniMkt currently supports:</p>
+<ul>
+<li>CKB wallet connection and account initialization.</li>
+<li>Live reads of market and position cells.</li>
+<li>RUSD supply and withdraw.</li>
+<li>CKB collateral supply and withdraw.</li>
+<li>RUSD borrow and repay.</li>
+<li>Transaction lifecycle feedback.</li>
+<li>Dashboard and activity views.</li>
+<li>A multi-source CKB/USD oracle.</li>
+</ul>
+<p>The product has been exercised end to end on testnet. What we do not have is:</p>
+<ul>
+<li>A reusable validation harness that other CKB lending teams can use.</li>
+<li>Evidence from users who are not the builder.</li>
+<li>A clear answer to which product surfaces help or block real users.</li>
+</ul>
+<h2><a name="p-27637-h-5-what-we-are-building-5" class="anchor" href="https://talk.nervos.org#p-27637-h-5-what-we-are-building-5" aria-label="Heading link"></a>5. What We Are Building</h2>
+<h3><a name="p-27637-a-core-deliverable-ckb-lending-validation-toolkit-6" class="anchor" href="https://talk.nervos.org#p-27637-a-core-deliverable-ckb-lending-validation-toolkit-6" aria-label="Heading link"></a>A. Core deliverable: CKB lending validation toolkit</h3>
+<p>A standalone, open-source toolkit for validating cell-based lending markets.</p>
+<p><strong>CLI and scenario format</strong></p>
+<ul>
+<li>A command-line runner that executes a lending scenario file.</li>
+<li>A small scenario format for actors, actions, expected results, and failure cases.</li>
+<li>Deterministic fixtures for market state, RUSD cells, CKB vaults, accounts, positions, and oracle cells.</li>
+<li>One-command clean run against a local devnet or <code>ckb-testtool</code>.</li>
+</ul>
+<p><strong>Adapters</strong></p>
+<ul>
+<li><code>ckb-testtool</code> adapter for script-level and transaction-level validation.</li>
+<li>Local devnet adapter for end-to-end flows with real wallets and RPC.</li>
+<li>A fixture builder that can target a new CKB lending market without rewriting the runner.</li>
+</ul>
+<p><strong>Scenario coverage</strong></p>
+<ul>
+<li>Supply and withdraw base asset.</li>
+<li>Supply and withdraw collateral.</li>
+<li>Borrow and repay.</li>
+<li>Interest accrual and index updates.</li>
+<li>Liquidation, absorb, and discounted collateral purchase.</li>
+<li>Pause and approval behavior where supported.</li>
+<li>Stale oracle, insufficient collateral, wrong witness, malformed cell data, wrong action, and capacity failures.</li>
+<li>Token conservation and vault capacity checks.</li>
+</ul>
+<p><strong>Assertions and reports</strong></p>
+<ul>
+<li>Assertions on output cells, cell data, lock and type errors, token deltas, vault deltas, nonce changes, and transaction outcomes.</li>
+<li>Deterministic pass or fail results.</li>
+<li>JSON and HTML reports with scenario names, expected outcomes, actual outcomes, and transaction hashes.</li>
+<li>CI templates so a project can run the suite on every push.</li>
+</ul>
+<p><strong>Documentation</strong></p>
+<ul>
+<li>A short integration guide for another CKB lending project.</li>
+<li>A scenario authoring guide.</li>
+<li>A “verify in five minutes” guide.</li>
+<li>The MoniMkt fixture as a worked example.</li>
+</ul>
+<h3><a name="p-27637-b-monimkt-field-test-7" class="anchor" href="https://talk.nervos.org#p-27637-b-monimkt-field-test-7" aria-label="Heading link"></a>B. MoniMkt field test</h3>
+<p>MoniMkt is the first reference fixture and the first real product test.</p>
+<ul>
+<li>A fixed four-week validation round with 15 to 20 external CKB users.</li>
+<li>Structured tasks covering connection, initialization, supply, borrow, repay, withdraw, and recovery from expected failures.</li>
+<li>Wallet coverage across the CCC-supported wallets used by the product.</li>
+<li>Short surveys, observed task completion, and follow-up interviews.</li>
+<li>A weekly issue review during the test.</li>
+</ul>
+<p>This is not a hosted beta operation. It is a bounded field test that produces evidence for the toolkit and for the product.</p>
+<h3><a name="p-27637-c-product-surface-work-needed-for-a-fair-test-8" class="anchor" href="https://talk.nervos.org#p-27637-c-product-surface-work-needed-for-a-fair-test-8" aria-label="Heading link"></a>C. Product surface work needed for a fair test</h3>
+<p>The current frontend works, but it is still a builder’s interface. Before asking users to test the product, it needs a focused product surface pass:</p>
+<ul>
+<li>A single frontend state model for wallet, account, market data, position, and transaction status.</li>
+<li>A consistent transaction lifecycle: preparing, confirm in wallet, confirming, confirmed, rejected, and retry guidance.</li>
+<li>Clearer wallet onboarding and recovery for JoyID, OKX Wallet, UTXO Global, and Khie.</li>
+<li>Simpler supply, withdraw, borrow, and repay forms with validation and plain-language errors.</li>
+<li>A dashboard that leads with the user’s position and next action.</li>
+<li>Mobile layout, typography, and accessibility improvements.</li>
+</ul>
+<p>This is not a feature expansion. It is the minimum product surface required to run a fair test and to demonstrate the toolkit against a real product.</p>
+<h3><a name="p-27637-d-product-fixes-and-report-9" class="anchor" href="https://talk.nervos.org#p-27637-d-product-fixes-and-report-9" aria-label="Heading link"></a>D. Product fixes and report</h3>
+<ul>
+<li>Fix the highest-severity usability issues found during the field test.</li>
+<li>Re-test the fixed flows with a subset of users.</li>
+<li>Publish a prioritized product roadmap based on evidence.</li>
+<li>Publish the toolkit’s scenario coverage, reports, and integration guide.</li>
+</ul>
+<p><strong>No contract changes.</strong> The MoniMkt market scripts and state model remain unchanged.</p>
+<h2><a name="p-27637-h-6-what-this-proposal-does-not-fund-10" class="anchor" href="https://talk.nervos.org#p-27637-h-6-what-this-proposal-does-not-fund-10" aria-label="Heading link"></a>6. What This Proposal Does Not Fund</h2>
+<p>This is not a request for Spark to fund:</p>
+<ul>
+<li>Smart contract development.</li>
+<li>Security hardening or an external audit.</li>
+<li>Oracle operations or keeper maintenance.</li>
+<li>Mainnet deployment or custody work.</li>
+<li>Hosted beta operations or ongoing support.</li>
+<li>Tester incentives.</li>
+<li>A token, a reward pool, or liquidity incentives.</li>
+</ul>
+<p>The existing testnet infrastructure is sufficient. The grant covers the toolkit, the field test, and the minimum product surface needed for that test.</p>
+<h2><a name="p-27637-h-7-execution-plan-6-weeks-11" class="anchor" href="https://talk.nervos.org#p-27637-h-7-execution-plan-6-weeks-11" aria-label="Heading link"></a>7. Execution Plan: 6 Weeks</h2>
+<p>Start on acceptance. The four-week field test begins after a two-week build phase.</p>
+<p><strong>Week 1: Toolkit foundation</strong></p>
+<p>Define the scenario format, CLI, fixtures, and assertion model. Build the <code>ckb-testtool</code> adapter and the first MoniMkt scenarios. Define the product test plan and hypotheses.</p>
+<p>Milestone: a clean local run of the first scenario set.</p>
+<p><strong>Week 2: Toolkit coverage and beta build</strong></p>
+<p>Add devnet adapter, failure scenarios, JSON and HTML reports, CI template, and integration docs. Finish the product surface pass, onboarding, transaction states, and beta build. Prepare the test scripts and wallet matrix.</p>
+<p>Milestone: public beta build and a documented toolkit that runs the MoniMkt fixture.</p>
+<p><strong>Weeks 3 to 6: Four-week field test</strong></p>
+<p>Run 15 to 20 testers through the structured tasks. Track task completion, wallet-specific issues, transaction outcomes, time to first supply, and qualitative feedback. Triage weekly, fix the highest-severity product issues, and re-test the fixes. Use the field test to refine the toolkit’s scenarios and reports.</p>
+<p>Milestone: all testers have attempted the core flows; toolkit and product findings are recorded and prioritized.</p>
+<p><strong>Week 6 close-out</strong></p>
+<p>Publish the validation report, toolkit documentation, scenario pack, before-and-after product notes, a demo video, and the completion report.</p>
+<p>Milestone: public toolkit release and product validation report.</p>
+<h2><a name="p-27637-h-8-required-funding-and-breakdown-12" class="anchor" href="https://talk.nervos.org#p-27637-h-8-required-funding-and-breakdown-12" aria-label="Heading link"></a>8. Required Funding and Breakdown</h2>
+<p><strong>Requested: USD 1,500, payable in CKB.</strong></p>
+<p><strong>Why $1,500:</strong> This is one validation project with two coupled outputs. The reusable toolkit is the primary deliverable, and the four-week field test proves it against a real CKB lending product. A $1,000 budget would underfund either the toolkit or the field test.</p>
+<div class="md-table">
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th style="text-align:right">Amount</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Validation toolkit</td>
+<td style="text-align:right">$600</td>
+<td>CLI, scenario format, fixtures, <code>ckb-testtool</code> and devnet adapters, assertions, reports, CI, docs</td>
+</tr>
+<tr>
+<td>Product surface for the field test</td>
+<td style="text-align:right">$450</td>
+<td>State model, transaction lifecycle, onboarding, forms, dashboard, mobile, accessibility</td>
+</tr>
+<tr>
+<td>Field test design and facilitation</td>
+<td style="text-align:right">$300</td>
+<td>Test plan, task scripts, 15 to 20 testers, scheduling, interviews, weekly triage</td>
+</tr>
+<tr>
+<td>Report, demo, and completion package</td>
+<td style="text-align:right">$150</td>
+<td>Analysis, public report, demo video, docs</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td style="text-align:right"><strong>$1,500</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div><h2><a name="p-27637-h-9-deliverables-and-how-to-verify-13" class="anchor" href="https://talk.nervos.org#p-27637-h-9-deliverables-and-how-to-verify-13" aria-label="Heading link"></a>9. Deliverables and How to Verify</h2>
+<p><strong>Deliverables</strong></p>
+<ol>
+<li>Open-source CKB lending validation toolkit with CLI, scenario format, fixtures, adapters, assertions, and reports.</li>
+<li>A documented scenario pack with positive and negative lending cases.</li>
+<li>MoniMkt reference fixture and a five-minute integration guide.</li>
+<li>CI template and example report.</li>
+<li>Public beta build with the new product surface and transaction states.</li>
+<li>Product validation report with 15 to 20 testers, wallet coverage, task completion, transaction results, and verbatim feedback.</li>
+<li>Prioritized product roadmap.</li>
+<li>Demo video and completion report.</li>
+</ol>
+<p><strong>How to verify without code review</strong></p>
+<ul>
+<li>Run the toolkit’s published command against the MoniMkt fixture and inspect the pass/fail report.</li>
+<li>Open the example JSON and HTML reports and confirm expected versus actual outcomes.</li>
+<li>Read the scenario authoring and integration guides.</li>
+<li>Open the public beta URL, connect a CKB wallet, and complete the core lending flow.</li>
+<li>Compare the before-and-after product screenshots and notes.</li>
+<li>Read the product validation report and check the measured results.</li>
+<li>Open the provided testnet explorer links for the flows exercised during validation.</li>
+<li>Watch the demo video.</li>
+</ul>
+<h2><a name="p-27637-h-10-success-metrics-14" class="anchor" href="https://talk.nervos.org#p-27637-h-10-success-metrics-14" aria-label="Heading link"></a>10. Success Metrics</h2>
+<p><strong>Toolkit metrics</strong></p>
+<div class="md-table">
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Documented scenarios</td>
+<td>At least 15</td>
+</tr>
+<tr>
+<td>Positive and negative cases</td>
+<td>At least 8 positive, 7 negative</td>
+</tr>
+<tr>
+<td>One-command clean run</td>
+<td>Works on a clean checkout</td>
+</tr>
+<tr>
+<td>Deterministic reports</td>
+<td>Same result on repeated runs</td>
+</tr>
+<tr>
+<td>External integration guide</td>
+<td>One other CKB lending project can follow it without author help</td>
+</tr>
+<tr>
+<td>CI template</td>
+<td>Passes on a sample repository</td>
+</tr>
+</tbody>
+</table>
+</div><p><strong>Product field-test metrics</strong></p>
+<div class="md-table">
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>External testers</td>
+<td>15 to 20</td>
+</tr>
+<tr>
+<td>Testers completing one full cycle</td>
+<td>At least 12</td>
+</tr>
+<tr>
+<td>Wallet connection success</td>
+<td>At least 90% per tested wallet</td>
+</tr>
+<tr>
+<td>Transaction success excluding deliberate failure tests</td>
+<td>At least 95%</td>
+</tr>
+<tr>
+<td>Median time to first supply</td>
+<td>Under 5 minutes</td>
+</tr>
+<tr>
+<td>Testers who can explain the next action from the dashboard</td>
+<td>At least 80%</td>
+</tr>
+<tr>
+<td>Structured feedback responses</td>
+<td>At least 12</td>
+</tr>
+<tr>
+<td>Critical usability blockers after fixes</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div><p>The report will publish actual results, including misses and unresolved issues.</p>
+<h2><a name="p-27637-h-11-current-state-vs-funded-work-15" class="anchor" href="https://talk.nervos.org#p-27637-h-11-current-state-vs-funded-work-15" aria-label="Heading link"></a>11. Current State vs Funded Work</h2>
+<p><strong>Already built and live on testnet</strong></p>
+<ul>
+<li>MoniMkt market with RUSD base asset and CKB collateral.</li>
+<li>13 RISC-V scripts deployed with Type ID.</li>
+<li>Working supply, withdraw, borrow, repay, collateral, absorb, and discounted collateral flows.</li>
+<li>Static CKB frontend with CCC wallet connection and direct cell reads.</li>
+<li>Multi-source CKB/USD oracle keeper.</li>
+<li>112 automated tests across contracts and integration scenarios.</li>
+</ul>
+<p><strong>Funded by this grant</strong></p>
+<ul>
+<li>Reusable validation toolkit and scenario pack.</li>
+<li>MoniMkt field test with 15 to 20 users.</li>
+<li>Product surface and frontend state work required for the test.</li>
+<li>Product fixes, re-test, and a prioritized roadmap.</li>
+<li>Public report, demo, and completion package.</li>
+</ul>
+<p><strong>Not claimed:</strong> this grant does not improve the protocol security model, oracle operations, mainnet readiness, or custody guarantees. Those remain separate work.</p>
+<h2><a name="p-27637-h-12-risks-and-limits-16" class="anchor" href="https://talk.nervos.org#p-27637-h-12-risks-and-limits-16" aria-label="Heading link"></a>12. Risks and Limits</h2>
+<ul>
+<li><strong>Toolkit scope.</strong> The toolkit must stay focused on lending scenarios and avoid becoming a general-purpose chain indexer or simulator.</li>
+<li><strong>Fixture assumptions.</strong> MoniMkt is the first fixture. The integration guide will state what another lending project must adapt.</li>
+<li><strong>Product surface only.</strong> This grant will not fix contract-level or oracle-level risks.</li>
+<li><strong>Wallet variance.</strong> CCC-supported wallets can behave differently. The field test records issues per wallet.</li>
+<li><strong>Small sample.</strong> 15 to 20 testers provide directional product evidence, not statistical proof.</li>
+<li><strong>Testnet conditions.</strong> Testnet CKB has no real value, and testers may need guidance on collateral amounts at current CKB prices.</li>
+<li><strong>No ongoing operations.</strong> The field test is a four-week window inside a six-week project, not a permanent hosted service.</li>
+</ul>
+<h2><a name="p-27637-h-13-ckb-alignment-17" class="anchor" href="https://talk.nervos.org#p-27637-h-13-ckb-alignment-17" aria-label="Heading link"></a>13. CKB Alignment</h2>
+<p>MoniMkt is a native CKB product. The frontend reads live cells directly, uses CKB wallet signatures, and displays transaction outcomes from the cell model. It does not depend on an off-chain ledger or an account-based contract.</p>
+<p>The validation toolkit is CKB-native as well. It exercises cell transitions, type and lock scripts, token conservation, vault capacity, and transaction-level failure behavior. It gives CKB lending teams a reusable way to validate their own markets rather than rebuilding test infrastructure from scratch.</p>
+<h2><a name="p-27637-h-14-closing-18" class="anchor" href="https://talk.nervos.org#p-27637-h-14-closing-18" aria-label="Heading link"></a>14. Closing</h2>
+<p>The committee asked for a standalone testing suite or validation tool. This proposal makes that the core deliverable and uses MoniMkt as the first real fixture and field test.</p>
+<p>The output is a reusable CKB lending validation toolkit, a documented scenario pack, a public product validation report, and a clear next-step roadmap. It does not fund market operations, security hardening, oracle maintenance, mainnet work, or an indefinite beta.</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/spark-program-monimkt-ckb-lending-validation-toolkit-and-product-field-test/11277">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/spark-program-monimkt-ckb-lending-validation-toolkit-and-product-field-test/11277</link>
+          <pubDate>Fri, 20 Nov 2026 14:33:52 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11277</guid>
+          <source url="https://talk.nervos.org/t/spark-program-monimkt-ckb-lending-validation-toolkit-and-product-field-test/11277.rss">Spark Program | MoniMkt: CKB Lending Validation Toolkit and Product Field Test</source>
+        </item>
+        <item>
+          <title>How can we change username?</title>
+          <dc:creator><![CDATA[Tung_Pham]]></dc:creator>
+          <category>General</category>
+          <description><![CDATA[
+            <p>Hi everyone,</p>
+<p>First post! How can we change username here?</p>
+            <p><small>3 posts - 2 participants</small></p>
+            <p><a href="https://talk.nervos.org/t/how-can-we-change-username/11276">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/how-can-we-change-username/11276</link>
+          <pubDate>Fri, 20 Nov 2026 13:07:55 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11276</guid>
+          <source url="https://talk.nervos.org/t/how-can-we-change-username/11276.rss">How can we change username?</source>
+        </item>
         <item>
           <title>C-KZG-4844 on CKB-VM &amp; Blob tree</title>
           <dc:creator><![CDATA[xjd]]></dc:creator>
@@ -913,7 +1492,7 @@ On every pull request <a href="https://talk.nervos.org/t/ckb-pulse-today-a-new-l
 <p><a href="https://talk.nervos.org/t/ckb-pulse-today-a-new-look-lessons-from-real-fixes-and-ckb-inside-your-tools/11268/1">Click to view the poll.</a></p>
 <p>Source: <a href="https://github.com/LusoCryptoLabs/ckb-pulse" class="inline-onebox" rel="noopener nofollow ugc">GitHub - LusoCryptoLabs/ckb-pulse: Live GitHub activity of the CKB ecosystem, drawn in 3D · GitHub</a></p>
 <p>Corrections are welcome.</p>
-            <p><small>3 posts - 2 participants</small></p>
+            <p><small>5 posts - 3 participants</small></p>
             <p><a href="https://talk.nervos.org/t/ckb-pulse-today-a-new-look-lessons-from-real-fixes-and-ckb-inside-your-tools/11268">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/ckb-pulse-today-a-new-look-lessons-from-real-fixes-and-ckb-inside-your-tools/11268</link>
@@ -1553,7 +2132,7 @@ Owners may not engage (then published as independent work, disclosed); fixtures 
           <category>CKB Community Fund DAO</category>
           <description><![CDATA[
             <p>假设，我有50个账户，其中一些账户买了一些金额的ckb，锁定后具备投票资格，那么是否可以发起一个提案，用其中一些账户点赞，再投票，然后盗取DAO资金？，如果50个账户是我的50个朋友呢？或者其他可能性。，那么是不是DAO可以被以这样的方式随意推动提案成功并盗取资金？</p>
-            <p><small>8 posts - 5 participants</small></p>
+            <p><small>12 posts - 7 participants</small></p>
             <p><a href="https://talk.nervos.org/t/dao/11261">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/dao/11261</link>
@@ -1839,7 +2418,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 <h2><a name="p-27569-reference-implementation-and-test-vectors-16" class="anchor" href="https://talk.nervos.org#p-27569-reference-implementation-and-test-vectors-16" aria-label="Heading link"></a>Reference implementation and test vectors</h2>
 <p><code>ckb-ward</code> (<a href="https://github.com/LusoCryptoLabs/ckb-ward" class="inline-onebox" rel="noopener nofollow ugc">GitHub - LusoCryptoLabs/ckb-ward: Ward: lock proof for CKB. Prove control of any CKB lock with a proof transaction that can never land on chain. · GitHub</a>, npm <code>ckb-ward</code>) implements the message, the transaction, the verifier, and three runners: one built from the node’s own script crates, one on ckb-debugger, and one on ckb-vm-js in a browser. It carries 17 signed proofs, each replayed by its tests with the expected exit codes for the proof and for controls: secp256k1 (testnet and mainnet), JoyID main key (testnet and mainnet, signed in the JoyID app), JoyID sub key, a 2-of-3 multisig, anyone-can-pay, Omnilock in Dogecoin, Ethereum and Bitcoin modes, PW-lock (testnet and mainnet), the Nostr lock, the quantum-resistant lock with an SLH-DSA key (testnet and mainnet), and a smart-account lock in two configurations. The full byte-exact vectors are in its <code>docs/SPEC.md</code>.</p>
 <p>CCC’s signer JSON-RPC rebuilds the input cell as described above, so a wallet connected through it can sign a proof for any of its locks. The change (ckb-devrel/ccc#641) is merged into CCC’s development branch and not yet in a release.</p>
-            <p><small>3 posts - 2 participants</small></p>
+            <p><small>5 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/rfc-draft-lock-proof-proving-control-of-a-ckb-lock/11260">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/rfc-draft-lock-proof-proving-control-of-a-ckb-lock/11260</link>
@@ -1927,7 +2506,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
             <p>If you have used a Bitcoin hardware wallet, the flow is familiar.</p>
 <p>A watch-only app builds a transaction. It hands it to a small device as a QR code or a file. The device shows the amount and the destination. You approve. The signed transaction goes back to the app, which broadcasts it. The machine that holds the key never talks to the internet.</p>
 <p>Bitcoin calls that container a <strong>PSBT</strong> (Partially Signed Bitcoin Transaction). The devices have names you may know: Coldcard, SeedSigner, Specter DIY. They do not share one design. They share one rule: the key lives on a device that cannot reach the network, and the device shows you what you are signing.</p>
-<p>CKB has the same need and no open equivalent. CKB transactions are not Bitcoin transactions. They carry cells, lock and type scripts, DAO state, xUDT amounts and multisig. A Bitcoin device cannot read them. In 2020, a grant added a Ledger app for CKB; it is a closed device. There is still no open, radio-less CKB signer that a community can inspect, build and improve.</p>
+<p>CKB has a software offline workflow in Neuron, but no open, radio-less hardware equivalent. CKB transactions are not Bitcoin transactions. They carry cells, lock and type scripts, DAO state, xUDT amounts and multisig. A Bitcoin device cannot read them. In 2020, a grant added a Ledger app for CKB; it is a closed device. There is still no open, radio-less CKB signer that a community can inspect, build and improve.</p>
 <p>KeyMe is the CKB version. PSCT is the container, CKB’s equivalent of PSBT. KeyMe is the signer, a small, radio-less device that reads the PSCT, checks every byte, shows the transaction, and signs only after you approve. The first hardware is built on a Pico 2: a small board with a screen, a QR scanner, no radio, and no operating system. It is not a clone of a Bitcoin device; it is the shape that fits CKB.</p>
 <h2><a name="p-27563-the-one-minute-version-1" class="anchor" href="https://talk.nervos.org#p-27563-the-one-minute-version-1" aria-label="Heading link"></a><strong>The one-minute version</strong></h2>
 <p>PSCT — a Partially Signed CKB Transaction — is a file with three parts: the transaction, a proof for every coin it spends, and the block headers the scripts need. The device checks that each proof hashes to the coin it claims, decodes the previous output, checks the script against its registry, and shows the amount, destination, fee and change. It signs only after you confirm. It never trusts the coordinator’s summary, an address label, or a script it does not know.</p>
@@ -1943,7 +2522,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 <p>One party works on an open transaction, changes it, and hands it to the next participant. For example, the indexer collects input cells for a user; the dApp creates the unsigned transaction based on the inputs; and the hardware wallet finally signs the transaction.</p>
 </blockquote>
 <p>The discussion cites Bitcoin’s PSBT as prior work. The project produced an alpha demo and an RFC; the RFC was closed without merging, and the project closed in 2024. No open hardware signer shipped.</p>
-<p>The 2021 draft planned the offline signer. The 2022 project planned the partial transaction format. Both named the hardware wallet. Neither shipped an open device. KeyMe picks up the signing half: PSCT v0 is the signed container, and the Pico 2, the current Pico, is the device.</p>
+<p>The 2021 draft planned the offline signer. The 2022 project planned the partial transaction format. Both named the hardware wallet. Neither shipped an open device. Neuron already supports an offline signing workflow, including offline multisig, but it keeps the key on an offline general-purpose computer. KeyMe is the hardware half: PSCT v0 is the signed container, and the Pico 2, the current Pico, is the device. v1 stays focused on the hardware and the PSCT container; v2 will explore potential pathways with Neuron.</p>
 <p>KeyMe keeps the 2021 goal and changes what building it taught us: canonical CBOR instead of a molecule envelope; hash-bound proofs instead of full input transactions; per-script-group signatures; a registry that refuses unknown scripts; finalize-or-throw. We did not carry the draft’s Lua signing path. A signer that executes arbitrary scripts is not a signer we can verify. The 2021 draft is the ancestor; PSCT v0 is the working version.</p>
 <p><strong>Grant requested:</strong> $9,500, in five payments of $1,900. <strong>ETA:</strong> 3.5 months from approval. <strong>What you get:</strong> three assembled units (two for independent testers), open firmware, open hardware, and documentation.</p>
 <h2><a name="p-27563-what-is-already-built-3" class="anchor" href="https://talk.nervos.org#p-27563-what-is-already-built-3" aria-label="Heading link"></a><strong>What is already built</strong></h2>
@@ -1999,8 +2578,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 </ul>
 <h2><a name="p-27563-how-it-works-5" class="anchor" href="https://talk.nervos.org#p-27563-how-it-works-5" aria-label="Heading link"></a><strong>How it works</strong></h2>
 <p>The coordinator proposes; the device verifies.</p>
-
- <a href="https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258/1">(click for more details)</a>
+<p><a href="https://raw.githubusercontent.com/WuodOdhis/keyme/main/docs/assets/psct-flow.png?v=3" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/6/64a1328b16b970d3cefe0d01ee367b6d4149451d.png" alt="PSCT signing flow" data-base62-sha1="emd6SvYncn2876sSuC8LUmqXyoZ" width="524" height="500"></a></p>
 <p>The device trusts only three things: the canonical PSCT bytes, proofs that hash to the inputs they claim, and its own account and script registry. If a lock or type is unknown, it refuses. If the CBOR is non-canonical, it refuses. If the proof, network or header is wrong, it refuses. There is no “proceed anyway” button.</p>
 <p>The device has no operating system, no shell and no network stack. The firmware is the only code. The RP2350 boots from signed flash; the seed is BIP39, encrypted at rest with a PIN and the ATECC608B key, and decrypted only while signing. USB is power-only while signing; QR is the data path. v0.1 has no third-party audit and no lab-grade physical security; that is a v0.2 conversation.</p>
 <h2><a name="p-27563-demo-6" class="anchor" href="https://talk.nervos.org#p-27563-demo-6" aria-label="Heading link"></a><strong>Demo</strong></h2>
@@ -2008,13 +2586,10 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 <p><a href="https://wuododhis.github.io/keyme/demo/ckb-airgap-demo.html" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/4/4903492c5d7fb52f4b1eefae217883b56b18a199.png" alt="Open the interactive demo" data-base62-sha1="apTTvb7GiiGgRlRVMpFcFPWhOfT" width="690" height="436"></a></p>
 <p><em>Click the still to open the interactive demo.</em></p>
 <p><strong>Normal flow</strong></p>
-<p><a href="https://camo.githubusercontent.com/3b3507450c0a55ecb3067ccd883e99baa1f46310784bc5ab0cb765f9d9bebebe/68747470733a2f2f77756f646f646869732e6769746875622e696f2f6b65796d652f64656d6f2f636b622d6169726761702d64656d6f2e676966" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/2/2b7fe14347a4630920d60989081a9cf7b3dbd2c6.gif" alt="PSCT air-gap flow" data-base62-sha1="6cOvMTYDtFAlrjQSvMIXrgliwhE" width="690" height="437"></a></p>
 <p><strong>Tamper: a swapped change output is refused</strong></p>
-<p><a href="https://camo.githubusercontent.com/222d0bf52c6b1974e38e70be7bf569e451a3169248ebbb79724f249c529a4678/68747470733a2f2f77756f646f646869732e6769746875622e696f2f6b65796d652f64656d6f2f636b622d6169726761702d64656d6f2d74616d7065722e676966" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/3/3372a52972f76d98a5bfe91b60ca0f9e08b1d7ac.gif" alt="Tamper refusal" data-base62-sha1="7l7YA3QNBLCDmphdQCXuuOzmm2o" width="690" height="437"></a></p>
 <h2><a name="p-27563-hardware-7" class="anchor" href="https://talk.nervos.org#p-27563-hardware-7" aria-label="Heading link"></a><strong>Hardware</strong></h2>
 <p>The units are off-the-shelf modules on a carrier board. No custom injection mold, no custom silicon.</p>
-
- <a href="https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258/1">(click for more details)</a>
+<p><a href="https://raw.githubusercontent.com/WuodOdhis/keyme/main/docs/assets/keyme-hardware.png?v=3" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/c/c2775a0efff7405163b7de57899720e32432cd79.png" alt="KeyMe hardware block" data-base62-sha1="rKkl2gT07GjxxBQyNxiBph4i9sZ" width="690" height="246"></a></p>
 <p>Why these parts:</p>
 <ul>
 <li><strong>Pico 2 (RP2350):</strong> no radio, 520KB RAM, 150MHz, Rust, secure boot, $6. No OS, instant boot, and it is in stock.</li>
@@ -2304,8 +2879,9 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 <li>Open Transaction project issue (closed 2024): <a href="https://github.com/nervosnetwork/ckb/issues/3608" rel="noopener nofollow ugc">nervosnetwork/ckb#3608</a></li>
 <li>2021 draft: <a href="https://talk.nervos.org/t/rfc-draft-ckb-offline-transaction-signing-scheme/5794" class="inline-onebox">RFC Draft: CKB Offline Transaction Signing Scheme</a></li>
 <li>2020 Ledger grant: <a href="https://talk.nervos.org/t/4349" class="inline-onebox">Obsidian Systems - Ledger Nano S/X Application for Nervos</a></li>
+<li>Neuron: <a href="https://github.com/nervosnetwork/neuron" class="inline-onebox" rel="noopener nofollow ugc">GitHub - nervosnetwork/neuron: Neuron: Nervos CKB Wallet · GitHub</a></li>
 <li>Repository: <code>https://github.com/WuodOdhis/keyme</code></li>
-<li>Prior work: <a href="https://github.com/WuodOdhis/keyme/blob/main/docs/08-prior-work.md" class="inline-onebox" rel="noopener nofollow ugc">keyme/docs/08-prior-work.md at main · WuodOdhis/keyme · GitHub</a></li>
+<li>Prior work: <a href="https://github.com/WuodOdhis/keyme/blob/main/docs/08-prior-work.md" rel="noopener nofollow ugc">https://github.com/WuodOdhis/keyme/blob/main/docs/08-prior-work.md</a></li>
 <li>PSCT spec: <code>https://github.com/WuodOdhis/keyme/blob/main/spec/psct-v0.md</code></li>
 <li>Stage 2 record: <code>https://github.com/WuodOdhis/keyme/blob/main/docs/04-stage2.md</code></li>
 <li>Threat model: <code>https://github.com/WuodOdhis/keyme/blob/main/docs/05-threat-model.md</code></li>
@@ -3963,7 +4539,7 @@ npm run verify:care
         <item>
           <title>Spark Program | EasyO: Non-Custodial Pay-to-QR Bridge on CKB</title>
           <dc:creator><![CDATA[Owais]]></dc:creator>
-          <category>Applications &amp; Ecosystem</category>
+          <category>Spark Program</category>
           <description><![CDATA[
             <p>Team / Individual Profile</p>
 <ul>
@@ -5476,7 +6052,7 @@ Exact tie: refund outcome
 <li><strong>Web Repository:</strong> <a href="https://github.com/chukwuma619/twine-web" rel="noopener nofollow ugc">github.com/chukwuma619/twine-web</a></li>
 <li><strong>Cellula (testnet):</strong> <a href="https://wallet.testnet.cellula.id" rel="noopener nofollow ugc">wallet.testnet.cellula.id</a></li>
 </ul>
-            <p><small>15 posts - 5 participants</small></p>
+            <p><small>19 posts - 6 participants</small></p>
             <p><a href="https://talk.nervos.org/t/dis-twine-non-custodial-p2p-for-nervos-ckb-on-nostr-and-fiber/11228">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/dis-twine-non-custodial-p2p-for-nervos-ckb-on-nostr-and-fiber/11228</link>
@@ -5766,660 +6342,6 @@ Please plan to close and settle these V1 channels soon, as they will no longer b
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-11220</guid>
           <source url="https://talk.nervos.org/t/fiber-lsp-running-channels-on-the-server-signing-in-the-wallet/11220.rss">Fiber LSP: Running Channels on the Server, Signing in the Wallet</source>
-        </item>
-        <item>
-          <title>Spark Program | ShareCut: referral payouts for small shops over Fiber (testnet)</title>
-          <dc:creator><![CDATA[abdul]]></dc:creator>
-          <category>Spark Program</category>
-          <description><![CDATA[
-            <h2><a name="p-27424-h-1-project-overview-1" class="anchor" href="https://talk.nervos.org#p-27424-h-1-project-overview-1" aria-label="Heading link"></a>1. Project Overview</h2>
-<ul>
-<li><strong>Project name:</strong> ShareCut</li>
-<li><strong>One-sentence summary:</strong> promoters get a personal QR code for a shop; when a customer they referred buys, the shop’s Fiber node pays the promoter’s cut automatically, at most once per sale, and both payments appear on a public receipts page.</li>
-<li><strong>Project type:</strong> a public web MVP anyone can try from a browser, a payout service, a failure lab, and a 14-day field pilot in 3 Lagos shops (testnet)</li>
-<li><strong>Funding requested:</strong> $713, paid in CKB ($600 for technical milestones, $113 direct costs; see section 7)</li>
-<li><strong>Duration:</strong> 7 weeks</li>
-</ul>
-<p><strong>Revision (v2):</strong> following the committee’s feedback:</p>
-<ol>
-<li>The pilot now has pre-registered hypotheses with pass/fail thresholds and a decision rule (section 4).</li>
-<li>The budget no longer uses an hourly rate: technical work is priced per milestone, and the direct costs of the pilot are listed separately (section 7).</li>
-<li>A public web MVP that anyone can join from a browser now goes live in week 2, before the field pilot.</li>
-</ol>
-<p>ShareCut is a production-side Fiber app: it gives shops a reason to create payments (one sale, one payout) instead of adding another way to pay.</p>
-<h2><a name="p-27424-h-2-team-profile-2" class="anchor" href="https://talk.nervos.org#p-27424-h-2-team-profile-2" aria-label="Heading link"></a>2. Team Profile</h2>
-<p>Abdul (solo), software engineer, Lagos, Nigeria. Student at the University of Lagos.</p>
-<ul>
-<li>About 5 years of experience. Senior Software Engineer at Go Digital Africa, where I led SNBS and co-led Linkly.</li>
-<li>LLM evaluation work at Celsius; Paystack payment integrations; designed a Stellar/Soroban USDC escrow dApp for a bounty.</li>
-<li>I write Rust and TypeScript.</li>
-<li>New to CKB and Fiber. Anything that breaks on FNN gets written up and filed upstream, not patched in private.</li>
-</ul>
-<p>GitHub: <code>github.com/Olagold-hackxx</code> · Repo: <code>github.com/Olagold-hackxx/sharecut</code> · LinkedIn: <code>www.linkedin.com/in/abdulqoyyum-aileru-017b75253</code> · Discord: olagoldhackxx · Email: <code>aileruenterprise@gmail.com</code></p>
-<h2><a name="p-27424-h-3-project-background-3" class="anchor" href="https://talk.nervos.org#p-27424-h-3-project-background-3" aria-label="Heading link"></a>3. Project Background</h2>
-<p><strong>Why I want to build this.</strong> Most of what I’ve built so far has been payments: Paystack integrations at work, and an escrow app on Stellar. The problem I keep running into, though, isn’t paying. It’s getting customers. Small businesses around me in Lagos live on word of mouth, and the people who bring in customers usually get nothing, or a “thank you, I’ll sort you out later” that never comes. I want to see whether paying them automatically, per sale, changes anything. Fiber is a good place to try it because tiny, frequent payments are its whole point.</p>
-<p><strong>The everyday problem.</strong> The shops I have in mind are the ordinary ones near campus and in the markets: provisions, food, printing, phone accessories. Their marketing is mostly WhatsApp statuses and people telling their friends. Rewarding the people who bring customers is done three ways today, and each one leaks:</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>How it’s done today</th>
-<th>What goes wrong</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Cash or a transfer “when I see you”</td>
-<td>Forgotten, uneven, no record of who sent whom</td>
-</tr>
-<tr>
-<td>A discount for the customer</td>
-<td>The promoter gets nothing, so they stop sending people</td>
-</tr>
-<tr>
-<td>Nothing at all</td>
-<td>The owner can’t tell which promoters actually bring sales</td>
-</tr>
-</tbody>
-</table>
-</div><p>I haven’t measured this yet. Before the pilot I’ll talk to the 3 pilot owners and post what they said in the first weekly update, including anything that contradicts this table.</p>
-<p><strong>Existing work, and what this reuses.</strong></p>
-<ul>
-<li><strong>FNN</strong> (<code>github.com/nervosnetwork/fiber</code>), latest release pinned at kickoff, unpatched.</li>
-<li><strong>The official browser WASM / fiber-js node</strong> for promoters, not a custom one.</li>
-<li><strong>FiberFlow</strong> (<code>github.com/Ticoworld/fiberflow</code>) for checkout invoices and events. I haven’t tested it yet. Week 1 decides between FiberFlow’s events and polling <code>get_invoice</code> directly, and the decision is written in <code>FIBER_NOTES.md</code>.</li>
-<li><strong>Fiber Link’s hosted-node pattern</strong> as the fallback for promoters who can’t keep a browser node online.</li>
-</ul>
-<p><strong>What’s new:</strong> attribution of each sale to a promoter, an exactly-once payout service, a payout queue for promoters who are offline, and a public receipts page that links every payout to the sale that caused it. I found no existing referral-payout tool for Fiber; if one exists, I’ll build on it instead.</p>
-<p><strong>Why Fiber, and when it isn’t needed.</strong> In Nigeria, OPay and Moniepoint already make transfers cheap and instant, so cost isn’t the argument. Fiber lets a shop pay many small amounts automatically, tied to each sale, to promoters who only need a Fiber node, not bank details. If owners are happy tracking referrals in a notebook and paying by transfer, ShareCut isn’t needed. H4 below tests exactly that.</p>
-<h2><a name="p-27424-h-4-solution-4" class="anchor" href="https://talk.nervos.org#p-27424-h-4-solution-4" aria-label="Heading link"></a>4. Solution</h2>
-<p><strong>Public web MVP (anyone, anywhere, from week 2):</strong></p>
-<ol>
-<li>Open the demo link posted on this thread. The demo shop page starts.</li>
-<li>Open the promoter page in a second browser or phone. It starts the official browser Fiber node and creates your promoter QR.</li>
-<li>Get testnet CKB from the faucet and pay a test sale through your promoter link.</li>
-<li>Watch your promoter cut arrive on the promoter page, and see the sale and payout side by side on the public receipts page.</li>
-<li>Close the promoter tab, make another sale, and reopen it: the queued payout arrives.</li>
-</ol>
-<p><strong>Field pilot (3 shops near UNILAG, 14 days, weeks 5–6):</strong></p>
-<ol>
-<li>Each shop gets a counter QR, and 3–4 promoters each get a personal QR card (10 promoters in total).</li>
-<li>Customers pay the shop the normal way (cash or transfer), because they can’t pay with test CKB.</li>
-<li>When a referred customer buys, the shop scans the promoter’s QR on a phone and enters the amount. The shop’s node pays a testnet Fiber invoice that mirrors the sale, and the payout service pays the promoter’s 5% cut.</li>
-<li>Owners and promoters see every sale and payout on the receipts page.</li>
-</ol>
-<p><strong>Pre-registered hypotheses.</strong> Posted on this thread before week 1. Anyone may add a failure scenario, and I commit to running what is added.</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Hypothesis</th>
-<th>Pass if</th>
-<th>If it fails, the report publishes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>H1</td>
-<td>Payouts are exactly-once</td>
-<td>0 double payouts and 0 missed payouts across 6 failure scenarios × 3 runs, and across the whole pilot</td>
-<td>Which scenario broke it, how many payouts were affected, and the fix</td>
-</tr>
-<tr>
-<td>H2</td>
-<td>Offline promoters still get paid</td>
-<td>≥ 90% of queued payouts delivered within 24 h of the promoter’s node coming back online</td>
-<td>Delivery times, and whether the hosted-node fallback was needed</td>
-</tr>
-<tr>
-<td>H3</td>
-<td>It fits a real counter</td>
-<td>Median time to log a referred sale &lt; 30 s; ≥ 2 of 3 shops still logging in week 2</td>
-<td>Times, drop-off point, and what owners said</td>
-</tr>
-<tr>
-<td>H4</td>
-<td>Recorded, automatic payouts get promoters referring</td>
-<td>≥ 20 referred sales in 14 days and ≥ 6 of 10 promoters with at least 1 sale</td>
-<td>Real counts. If promoters don’t refer, the report says a notebook and a transfer are enough</td>
-</tr>
-</tbody>
-</table>
-</div><p><strong>Decision rule:</strong> if H1–H4 pass, I’ll keep building and look at mainnet once a stable-value route exists. If H4 fails, I’ll report it as a negative result and stop.</p>
-<p><strong>What this pilot does not claim.</strong> Pilot payments are testnet CKB mirroring real cash sales, and the project pays the mobile data. The pilot measures reliability, attribution and fit with a real shop’s routine. It makes no claim about demand for real-money payouts.</p>
-<h2><a name="p-27424-h-5-technical-architecture-5" class="anchor" href="https://talk.nervos.org#p-27424-h-5-technical-architecture-5" aria-label="Heading link"></a>5. Technical Architecture</h2>
-<p><strong>Shop node (VPS):</strong> FNN native node, release pinned at kickoff. Browser nodes connect to it over WebSocket.</p>
-<p><strong>Payout service (Rust):</strong></p>
-<ol>
-<li>A sale creates an invoice with <code>new_invoice</code>. The service stores <code>payment_hash → promoter_id, amount</code> before the invoice is shown.</li>
-<li>The service watches the invoice (FiberFlow events, or polling <code>get_invoice</code> until the status is <code>Paid</code>).</li>
-<li>On <code>Paid</code>, it writes a payout record keyed by the sale’s <code>payment_hash</code> with status <code>pending</code>. A unique key on that hash means a second event for the same sale can’t create a second payout.</li>
-<li>It sends the cut with <code>send_payment</code> (<code>keysend: true</code>, <code>target_pubkey</code> = the promoter’s node), putting the sale’s <code>payment_hash</code> in <code>custom_records</code> so each payout carries a reference to its sale.</li>
-<li>It checks the result with <code>get_payment</code> and marks the record <code>sent</code> or <code>failed</code>. Failed or offline payouts stay queued and are retried with backoff. Before any retry, the service checks <code>list_payments</code> so a payout that actually went through is never sent twice.</li>
-</ol>
-<p><strong>Promoter page:</strong> runs the official WASM / fiber-js node. On first visit it calls <code>connect_peer</code> to the shop node, and the shop node opens a channel to the promoter with <code>open_channel</code> (<code>public: false</code>, <code>one_way: true</code>), funded with testnet CKB, since the channel only ever pays the promoter. If a promoter’s browser can’t stay reachable, the fallback is a hosted node account (custodial), and the report counts how many promoters needed it.</p>
-<p><strong>Shop counter page:</strong> a mobile web page to scan a promoter QR, enter the sale amount and pay the mirrored invoice from the shop’s node.</p>
-<p><strong>Receipts page:</strong> lists every sale and payout with payment hashes, timings and status. Promoter and device IDs are hashed. Logs are append-only JSON and published at the end.</p>
-<p><strong>Failure lab (week 3), 6 scenarios × 3 runs:</strong></p>
-<ol>
-<li>The same <code>Paid</code> event delivered twice</li>
-<li>The payout service crashes between writing the record and sending</li>
-<li>The shop’s node restarts mid-payout</li>
-<li>The promoter’s tab is closed when a payout is due</li>
-<li>The promoter’s channel runs out of balance</li>
-<li>The sale invoice expires before it’s paid</li>
-</ol>
-<p><strong>Hard parts, which are the point of the test:</strong> promoters’ browser nodes go offline when phones lock or tabs close; Lagos 4G drops; and an exactly-once guarantee has to survive crashes, not just the happy path.</p>
-<p><strong>Out of scope:</strong> mainnet, real money, stablecoins, fiat cash-out, multi-shop accounts, any business or go-to-market work.</p>
-<h2><a name="p-27424-h-6-weekly-execution-plan-7-weeks-about-10-hours-a-week-6" class="anchor" href="https://talk.nervos.org#p-27424-h-6-weekly-execution-plan-7-weeks-about-10-hours-a-week-6" aria-label="Heading link"></a>6. Weekly Execution Plan (7 weeks, about 10 hours a week)</h2>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Week</th>
-<th>Focus</th>
-<th>Concrete output</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>FNN on the VPS; test FiberFlow events vs polling <code>get_invoice</code>; test keysend with <code>custom_records</code> to a browser node</td>
-<td>First testnet payment hashes; decisions written in <code>FIBER_NOTES.md</code></td>
-</tr>
-<tr>
-<td>2</td>
-<td>Public web MVP: demo shop, promoter page, receipts page</td>
-<td>Demo link posted on this thread; anyone can try it; tag v0.1; hypotheses and scenarios posted</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Payout service hardening and failure lab</td>
-<td>Scenario table with payment hashes and outcomes for all 18 runs</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Shop counter page; print QR materials; onboard 3 shops and 10 promoters</td>
-<td>Owners and promoters confirm on this thread before week 5; printer receipt posted</td>
-</tr>
-<tr>
-<td>5–6</td>
-<td>14-day field pilot; public MVP stays open</td>
-<td>Daily log export; mid-pilot numbers in the weekly update</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Interviews, report, reproducibility</td>
-<td>Report with H1–H4 results; logs published; closing post on this thread</td>
-</tr>
-</tbody>
-</table>
-</div><p>If fewer than 3 shops or 10 promoters confirm, the report states the real numbers as a result.</p>
-<h2><a name="p-27424-h-7-funding-requirements-713-in-ckb-7" class="anchor" href="https://talk.nervos.org#p-27424-h-7-funding-requirements-713-in-ckb-7" aria-label="Heading link"></a>7. Funding Requirements: $713 in CKB</h2>
-<p>Technical work is priced as a fixed amount per milestone, not an hourly rate. The direct costs of running and verifying the pilot are listed separately. If the committee prefers direct costs only, the milestone lines come out and the $113 in direct costs stands.</p>
-<p><strong>Technical milestones ($600)</strong></p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Weeks</th>
-<th>Work</th>
-<th>USD</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1 to 2</td>
-<td>Public web MVP: demo shop, promoter page with the browser Fiber node, receipts page; tag v0.1</td>
-<td>300</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Exactly-once payout service and payout queue; failure lab, 6 scenarios × 3 runs, published</td>
-<td>200</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Shop counter page and pilot setup</td>
-<td>100</td>
-</tr>
-</tbody>
-</table>
-</div><p><strong>Direct costs ($113)</strong></p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Item</th>
-<th>Basis</th>
-<th>USD</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>VPS for the FNN node, payout service and receipts page</td>
-<td>DigitalOcean Basic, 2 GB, $12/month × 3 months (build, pilot, and 30 days of demo after the report)</td>
-<td>36</td>
-</tr>
-<tr>
-<td>Pilot materials</td>
-<td>3 counter QR stands, 30 promoter QR cards, 3 A4 posters (estimate; printer’s receipt published)</td>
-<td>25</td>
-</tr>
-<tr>
-<td>Mobile data during the pilot</td>
-<td>3 owners + 10 promoters × about $2 for 14 days (estimate; receipts published)</td>
-<td>26</td>
-</tr>
-<tr>
-<td>Feedback interviews</td>
-<td>Airtime thank-you for each of the 13 participants who completes the end-of-pilot interview, about $2 each (estimate)</td>
-<td>26</td>
-</tr>
-<tr>
-<td>Testnet transaction and channel fees</td>
-<td>Testnet CKB comes free from the faucet, so there’s nothing to sponsor</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-</div><p><strong>Total: $713</strong> ($600 technical milestones + $113 direct costs)</p>
-<p>20% at launch ($142.60). The remaining 80% ($570.40) on completion against the deliverables in section 8. Fund usage is disclosed at completion against these tables, and any unspent direct-cost money goes back.</p>
-<h2><a name="p-27424-h-8-deliverables-and-verification-8" class="anchor" href="https://talk.nervos.org#p-27424-h-8-deliverables-and-verification-8" aria-label="Heading link"></a>8. Deliverables and Verification</h2>
-<p>None of these checks need a code review.</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Deliverable</th>
-<th>How to verify</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Public web MVP</td>
-<td>Open the demo link from this thread, get testnet CKB from the faucet, pay a test sale through your own promoter link, and watch your cut arrive</td>
-</tr>
-<tr>
-<td>Offline payout</td>
-<td>Close your promoter tab, make a sale, reopen it: the queued payout arrives and shows on the receipts page</td>
-</tr>
-<tr>
-<td>Receipts page</td>
-<td>Every sale listed next to its payout, with payment hashes and timings</td>
-</tr>
-<tr>
-<td>Failure lab</td>
-<td>The scenario table lists all 18 runs with payment hashes; anyone can re-run a scenario from the README</td>
-</tr>
-<tr>
-<td>Field pilot (H1–H4)</td>
-<td>Published logs rebuild every number in the report</td>
-</tr>
-<tr>
-<td>Independent participants</td>
-<td>Owners’ and promoters’ confirmation replies on this thread, dated before week 5</td>
-</tr>
-<tr>
-<td>FNN notes</td>
-<td><code>FIBER_NOTES.md</code> lists each bug or gap found, each linked to an upstream issue</td>
-</tr>
-</tbody>
-</table>
-</div><h2><a name="p-27424-h-9-current-state-vs-funded-scope-9" class="anchor" href="https://talk.nervos.org#p-27424-h-9-current-state-vs-funded-scope-9" aria-label="Heading link"></a>9. Current State vs. Funded Scope</h2>
-<p><strong>Already exists (not funded):</strong> the public repo with a README and MIT licence.</p>
-<p><strong>Funded by this grant:</strong> the public web MVP, payout service, failure lab and shop counter page (the section 7 milestones), plus the server and pilot costs for the 14-day field pilot.</p>
-<p><strong>Explicitly out of scope:</strong> mainnet, real-money payouts or a stablecoin, fiat cash-out, business or go-to-market work.</p>
-<h2><a name="p-27424-h-10-ckb-ecosystem-alignment-10" class="anchor" href="https://talk.nervos.org#p-27424-h-10-ckb-ecosystem-alignment-10" aria-label="Heading link"></a>10. CKB Ecosystem Alignment</h2>
-<ul>
-<li><strong>Production-side Fiber app:</strong> every referred sale creates a payment and a payout. It isn’t another checkout or payment entry point.</li>
-<li><strong>Anyone can verify it:</strong> the public web MVP works from any browser, and the receipts page shows every payment.</li>
-<li><strong>Reuses before building:</strong> FNN unpatched, the official WASM / fiber-js node, FiberFlow if its events fit, and Fiber Link’s hosted-node pattern as the fallback.</li>
-<li><strong>Evidence for open questions:</strong> browser nodes that go offline and must still receive payments, under real conditions.</li>
-<li><strong>Honest limit:</strong> testnet only. With USDI’s operator ceasing operations there is no public mainnet stable-value route. The report records what a mainnet version would need, without claiming it.</li>
-</ul>
-<p>How it differs from nearby projects:</p>
-<ul>
-<li><strong>Dular</strong> covers mobile payments and cashing out to fiat. ShareCut doesn’t touch fiat.</li>
-<li><strong>Fiber Link</strong> is tipping between users. ShareCut payouts are tied to a specific sale and set by the shop.</li>
-</ul>
-<h2><a name="p-27424-risks-and-mitigations-11" class="anchor" href="https://talk.nervos.org#p-27424-risks-and-mitigations-11" aria-label="Heading link"></a>Risks and Mitigations</h2>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Risk</th>
-<th>Mitigation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Fewer than 3 shops or 10 promoters join</td>
-<td>Recruit 4 shops and 12 promoters before week 5; if still short, report the real count</td>
-</tr>
-<tr>
-<td>A pilot shop drops out</td>
-<td>A named backup shop confirms on this thread before week 5</td>
-</tr>
-<tr>
-<td>Promoters’ browser nodes are rarely online</td>
-<td>That is H2 data; the hosted-node fallback is ready, and the report counts who needed it</td>
-</tr>
-<tr>
-<td>Owners find logging at the counter too slow</td>
-<td>That is H3 data; the counter page is a single scan plus an amount</td>
-</tr>
-<tr>
-<td>FNN or WASM bug blocks the flow</td>
-<td>Pin the release, file the issue upstream, document the workaround in <code>FIBER_NOTES.md</code></td>
-</tr>
-<tr>
-<td>Participants confuse test CKB with real money</td>
-<td>Every page and QR card says “testnet, no real money”; payouts in naira stay whatever the shop already does</td>
-</tr>
-</tbody>
-</table>
-</div>
-            <p><small>6 posts - 3 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/spark-program-sharecut-referral-payouts-for-small-shops-over-fiber-testnet/11218">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/spark-program-sharecut-referral-payouts-for-small-shops-over-fiber-testnet/11218</link>
-          <pubDate>Sun, 15 Nov 2026 09:19:31 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11218</guid>
-          <source url="https://talk.nervos.org/t/spark-program-sharecut-referral-payouts-for-small-shops-over-fiber-testnet/11218.rss">Spark Program | ShareCut: referral payouts for small shops over Fiber (testnet)</source>
-        </item>
-        <item>
-          <title>A second post-quantum lock for CKB? ML-DSA beside SPHINCS+, checked and measured</title>
-          <dc:creator><![CDATA[LusoCryptoLabs]]></dc:creator>
-          <category>Applications &amp; Ecosystem</category>
-          <description><![CDATA[
-            <p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/e/e2c98edc98e0e4e952c73d7516da7fac53a87f93.png" data-download-href="https://talk.nervos.org/uploads/default/e2c98edc98e0e4e952c73d7516da7fac53a87f93" title="What each signature rests on, and what that safety costs"><img src="https://talk.nervos.org/uploads/default/optimized/2X/e/e2c98edc98e0e4e952c73d7516da7fac53a87f93_2_690x388.png" alt="What each signature rests on, and what that safety costs" data-base62-sha1="wmfK9HzcCZufgY81Cfn99ZmYkQb" width="690" height="388" srcset="https://talk.nervos.org/uploads/default/optimized/2X/e/e2c98edc98e0e4e952c73d7516da7fac53a87f93_2_690x388.png, https://talk.nervos.org/uploads/default/optimized/2X/e/e2c98edc98e0e4e952c73d7516da7fac53a87f93_2_1035x582.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/e/e2c98edc98e0e4e952c73d7516da7fac53a87f93_2_1380x776.png 2x" data-dominant-color="232222"></a></div><p></p>
-<p>This is a study and a prototype, on testnet only, with code that is days old.</p>
-<p><strong>In short</strong></p>
-<ul>
-<li>CKB has one lock on mainnet today built to resist a quantum computer: SPHINCS+. We built a second one, on ML-DSA, another finished NIST standard.</li>
-<li>At the same security level it costs about a third as much on chain, and it signs in milliseconds where SPHINCS+ takes about a second.</li>
-<li>The price is trust: ML-DSA leans on newer maths than SPHINCS+. It is not safer, and SPHINCS+ stays the careful choice for savings.</li>
-<li>We are asking two things: try to break it, and tell us whether CKB wants a second lock at all.</li>
-</ul>
-<p>The details a reviewer needs are folded away under each section. Open them to check us.</p>
-<h2><a name="p-27422-why-1" class="anchor" href="https://talk.nervos.org#p-27422-why-1" aria-label="Heading link"></a>Why</h2>
-<p>Most CKB addresses are protected by a kind of signature that a large enough quantum computer could forge. None exists yet, but coins are meant to be held for a long time. CKB already has an answer on mainnet: the SPHINCS+ lock from the Nervos team, which has had an external audit. This post is about whether it should stand alone.</p>
-<h2><a name="p-27422-what-each-scheme-asks-you-to-trust-2" class="anchor" href="https://talk.nervos.org#p-27422-what-each-scheme-asks-you-to-trust-2" aria-label="Heading link"></a>What each scheme asks you to trust</h2>
-<p>Every signature is safe only as long as some maths problem stays hard. So the first question is which problem.</p>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/a/a3b5d8f312c0adb2f3ff5127b856e06fae5aa0c0.png" data-download-href="https://talk.nervos.org/uploads/default/a3b5d8f312c0adb2f3ff5127b856e06fae5aa0c0" title="What each scheme asks you to trust"><img src="https://talk.nervos.org/uploads/default/optimized/2X/a/a3b5d8f312c0adb2f3ff5127b856e06fae5aa0c0_2_690x388.png" alt="What each scheme asks you to trust" data-base62-sha1="nmfqUynKYeruImVjcnbbxgBPfxe" width="690" height="388" srcset="https://talk.nervos.org/uploads/default/optimized/2X/a/a3b5d8f312c0adb2f3ff5127b856e06fae5aa0c0_2_690x388.png, https://talk.nervos.org/uploads/default/optimized/2X/a/a3b5d8f312c0adb2f3ff5127b856e06fae5aa0c0_2_1035x582.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/a/a3b5d8f312c0adb2f3ff5127b856e06fae5aa0c0_2_1380x776.png 2x" data-dominant-color="1A1919"></a></div><p></p>
-<ul>
-<li><strong>SPHINCS+ needs only a hash function</strong>, the same kind of building block CKB already relies on everywhere. Nothing practical assumes less.</li>
-<li><strong>ML-DSA needs a hash function and a second problem, about lattices</strong>, which is believed hard for quantum computers but has been studied for less time. It assumes more than SPHINCS+, not something separate.</li>
-<li><strong>Falcon is not a standard yet</strong>, so we measured it and did not build on it.</li>
-</ul>
-<p>So ML-DSA is not a safer lock than SPHINCS+. And having two locks does not protect anyone twice: each address depends entirely on the lock it chose. What a second lock gives is a choice, a second implementation, and somewhere to move if one scheme or its code weakens. A lock that needs both signatures would give real protection against either one failing. We did not build that one, and it is the obvious next step if this thread asks for it.</p>
-
-The fine print: standards and security categories <a href="https://talk.nervos.org/t/a-second-post-quantum-lock-for-ckb-ml-dsa-beside-sphincs-checked-and-measured/11217/1">(click for more details)</a>
-<h2><a name="p-27422-what-the-lock-checks-3" class="anchor" href="https://talk.nervos.org#p-27422-what-the-lock-checks-3" aria-label="Heading link"></a>What the lock checks</h2>
-<p>The signature covers the whole transaction, so nothing in it can be changed after signing, and a signature made for one address cannot be reused on another.</p>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/f/f4a58271bfeeaeaac2db7a15674a82d114c9e3e9.png" data-download-href="https://talk.nervos.org/uploads/default/f4a58271bfeeaeaac2db7a15674a82d114c9e3e9" title="One code hash, three levels, the whole transaction signed"><img src="https://talk.nervos.org/uploads/default/optimized/2X/f/f4a58271bfeeaeaac2db7a15674a82d114c9e3e9_2_690x388.png" alt="One code hash, three levels, the whole transaction signed" data-base62-sha1="yUf6x0vDlU7Ys2B2nWOtNyKCnKV" width="690" height="388" srcset="https://talk.nervos.org/uploads/default/optimized/2X/f/f4a58271bfeeaeaac2db7a15674a82d114c9e3e9_2_690x388.png, https://talk.nervos.org/uploads/default/optimized/2X/f/f4a58271bfeeaeaac2db7a15674a82d114c9e3e9_2_1035x582.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/f/f4a58271bfeeaeaac2db7a15674a82d114c9e3e9_2_1380x776.png 2x" data-dominant-color="242323"></a></div><p></p>
-
-Exactly what is signed, for script developers <a href="https://talk.nervos.org/t/a-second-post-quantum-lock-for-ckb-ml-dsa-beside-sphincs-checked-and-measured/11217/1">(click for more details)</a>
-<h2><a name="p-27422-how-it-was-checked-4" class="anchor" href="https://talk.nervos.org#p-27422-how-it-was-checked-4" aria-label="Heading link"></a>How it was checked</h2>
-<p>We tested it against NIST’s own test cases, against a second library written by someone else, and against thousands of transactions changed after signing. Every one of those was refused. Then we ran the same tests on a lock we broke on purpose, to prove the tests can tell a broken lock from a sound one.</p>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/f/fd10b4d5c557d2afb030067673db86673141e5f5.png" data-download-href="https://talk.nervos.org/uploads/default/fd10b4d5c557d2afb030067673db86673141e5f5" title="Checked, with controls that must fail"><img src="https://talk.nervos.org/uploads/default/optimized/2X/f/fd10b4d5c557d2afb030067673db86673141e5f5_2_690x388.png" alt="Checked, with controls that must fail" data-base62-sha1="A6IAMCclGDltc5kIgThGtbO5Ryd" width="690" height="388" srcset="https://talk.nervos.org/uploads/default/optimized/2X/f/fd10b4d5c557d2afb030067673db86673141e5f5_2_690x388.png, https://talk.nervos.org/uploads/default/optimized/2X/f/fd10b4d5c557d2afb030067673db86673141e5f5_2_1035x582.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/f/fd10b4d5c557d2afb030067673db86673141e5f5_2_1380x776.png 2x" data-dominant-color="212020"></a></div><p></p>
-<p>Our own attempts to break the lock found no way to spend, replay or reshape a transaction. The same attempts on the wallet side found two bugs, both fixed: the wallet trusted an address stored in the browser without checking it, and a token sent to the account by a stranger blocked it from sending (nothing was lost). None of this is an outside review, which is why we are asking for one.</p>
-
-Each test and its numbers <a href="https://talk.nervos.org/t/a-second-post-quantum-lock-for-ckb-ml-dsa-beside-sphincs-checked-and-measured/11217/1">(click for more details)</a>
-
-Where it is on testnet <a href="https://talk.nervos.org/t/a-second-post-quantum-lock-for-ckb-ml-dsa-beside-sphincs-checked-and-measured/11217/1">(click for more details)</a>
-<h2><a name="p-27422-what-it-does-not-give-you-5" class="anchor" href="https://talk.nervos.org#p-27422-what-it-does-not-give-you-5" aria-label="Heading link"></a>What it does not give you</h2>
-<ul>
-<li><strong>It is not the safest option.</strong> ML-DSA assumes more than SPHINCS+. For coins held for decades, SPHINCS+ remains the careful choice.</li>
-<li><strong>The code is new.</strong> The lock is days old and the libraries under it are recent.</li>
-<li><strong>The wallet is not post-quantum from end to end.</strong> The signature on chain is. The passkey that unlocks the key on your phone still uses today’s cryptography.</li>
-<li><strong>Lose the passkey, lose the account</strong>, unless the wallet gives another way in. Ours does not yet.</li>
-<li><strong>One testnet copy can be changed by us.</strong> It sits behind a key we hold.</li>
-</ul>
-
-The same limits, for cryptographers <a href="https://talk.nervos.org/t/a-second-post-quantum-lock-for-ckb-ml-dsa-beside-sphincs-checked-and-measured/11217/1">(click for more details)</a>
-<h2><a name="p-27422-what-the-safety-costs-6" class="anchor" href="https://talk.nervos.org#p-27422-what-the-safety-costs-6" aria-label="Heading link"></a>What the safety costs</h2>
-<p>Three costs: the computing a node does to check a signature (cycles), the bytes it adds to the chain, and the time a person waits to sign. Each chart compares like with like, at the same NIST category.</p>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/0/0080334a6fb89733099cff096b8d7ab112d67c78.png" data-download-href="https://talk.nervos.org/uploads/default/0080334a6fb89733099cff096b8d7ab112d67c78" title="Cycles to verify, category by category"><img src="https://talk.nervos.org/uploads/default/optimized/2X/0/0080334a6fb89733099cff096b8d7ab112d67c78_2_690x388.png" alt="Cycles to verify, category by category" data-base62-sha1="4qFpLpmHDexLFc7yZmyZRGLTQY" width="690" height="388" srcset="https://talk.nervos.org/uploads/default/optimized/2X/0/0080334a6fb89733099cff096b8d7ab112d67c78_2_690x388.png, https://talk.nervos.org/uploads/default/optimized/2X/0/0080334a6fb89733099cff096b8d7ab112d67c78_2_1035x582.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/0/0080334a6fb89733099cff096b8d7ab112d67c78_2_1380x776.png 2x" data-dominant-color="252423"></a></div><p></p>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/3/3ba8caf984510bc62db29e903362a51e3783d662.png" data-download-href="https://talk.nervos.org/uploads/default/3ba8caf984510bc62db29e903362a51e3783d662" title="Bytes on chain: public key and signature"><img src="https://talk.nervos.org/uploads/default/optimized/2X/3/3ba8caf984510bc62db29e903362a51e3783d662_2_690x388.png" alt="Bytes on chain: public key and signature" data-base62-sha1="8vLO5eh7hu4fbaDak0gYS73Sgcq" width="690" height="388" srcset="https://talk.nervos.org/uploads/default/optimized/2X/3/3ba8caf984510bc62db29e903362a51e3783d662_2_690x388.png, https://talk.nervos.org/uploads/default/optimized/2X/3/3ba8caf984510bc62db29e903362a51e3783d662_2_1035x582.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/3/3ba8caf984510bc62db29e903362a51e3783d662_2_1380x776.png 2x" data-dominant-color="242322"></a></div><p></p>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/d/db869ade94baef5bce5558011c8e03b5a9e57f11.png" data-download-href="https://talk.nervos.org/uploads/default/db869ade94baef5bce5558011c8e03b5a9e57f11" title="Time to sign, in JavaScript on a desktop"><img src="https://talk.nervos.org/uploads/default/optimized/2X/d/db869ade94baef5bce5558011c8e03b5a9e57f11_2_690x388.png" alt="Time to sign, in JavaScript on a desktop" data-base62-sha1="vk0Xgbhp0iHvtd5juk04wbv97zP" width="690" height="388" srcset="https://talk.nervos.org/uploads/default/optimized/2X/d/db869ade94baef5bce5558011c8e03b5a9e57f11_2_690x388.png, https://talk.nervos.org/uploads/default/optimized/2X/d/db869ade94baef5bce5558011c8e03b5a9e57f11_2_1035x582.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/d/db869ade94baef5bce5558011c8e03b5a9e57f11_2_1380x776.png 2x" data-dominant-color="1F1F1E"></a></div><p></p>
-<p>At the same category, ML-DSA takes about a third of the computing and a third to a quarter of the bytes. That is the whole trade: ML-DSA is cheaper to use, and the price is the extra assumption.</p>
-
-How these were measured <a href="https://talk.nervos.org/t/a-second-post-quantum-lock-for-ckb-ml-dsa-beside-sphincs-checked-and-measured/11217/1">(click for more details)</a>
-<h2><a name="p-27422-in-a-wallet-7" class="anchor" href="https://talk.nervos.org#p-27422-in-a-wallet-7" aria-label="Heading link"></a>In a wallet</h2>
-<p>We tried it in a branch of Cellula Wallet, to see what it is like to use. The person sees every input and output before the passkey is asked.</p>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/0/0e2ee9c7f374fd12c23ce689758450e764c7deaa.png" data-download-href="https://talk.nervos.org/uploads/default/0e2ee9c7f374fd12c23ce689758450e764c7deaa" title="The review before signing"><img src="https://talk.nervos.org/uploads/default/optimized/2X/0/0e2ee9c7f374fd12c23ce689758450e764c7deaa_2_231x500.png" alt="The review before signing" data-base62-sha1="21tc89tantgEhPhWHgx2PxDwGoy" width="231" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/0/0e2ee9c7f374fd12c23ce689758450e764c7deaa_2_231x500.png, https://talk.nervos.org/uploads/default/optimized/2X/0/0e2ee9c7f374fd12c23ce689758450e764c7deaa_2_346x750.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/0/0e2ee9c7f374fd12c23ce689758450e764c7deaa_2_462x1000.png 2x" data-dominant-color="DADAC7"></a></div><p></p>
-<h2><a name="p-27422-the-questions-8" class="anchor" href="https://talk.nervos.org#p-27422-the-questions-8" aria-label="Heading link"></a>The questions</h2>
-<ol>
-<li>Would you read the lock and try to break it? The repository has the code, the tests, the controls and the benchmark.</li>
-<li>Does CKB want a second post-quantum lock, and in which shape?</li>
-</ol>
-
-<ul>
-<li>SPHINCS+ alone is enough</li>
-<li>A second lock, as a choice</li>
-<li>Only as a hybrid that needs both signatures</li>
-<li>Post-quantum locks are not a priority yet</li>
-<li>Not sure</li>
-</ul>
-<p><a href="https://talk.nervos.org/t/a-second-post-quantum-lock-for-ckb-ml-dsa-beside-sphincs-checked-and-measured/11217/1">Click to view the poll.</a></p>
-<p>Corrections are welcome, above all on the security argument.</p>
-<p>Code, tests and the benchmark: <a href="https://github.com/LusoCryptoLabs/ckb-mldsa-lock" class="inline-onebox" rel="noopener nofollow ugc">GitHub - LusoCryptoLabs/ckb-mldsa-lock: A CKB lock for ML-DSA (FIPS 204) signatures, with its tests, controls and benchmark. Prototype, testnet only. · GitHub</a></p>
-            <p><small>7 posts - 4 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/a-second-post-quantum-lock-for-ckb-ml-dsa-beside-sphincs-checked-and-measured/11217">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/a-second-post-quantum-lock-for-ckb-ml-dsa-beside-sphincs-checked-and-measured/11217</link>
-          <pubDate>Sun, 15 Nov 2026 04:26:21 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11217</guid>
-          <source url="https://talk.nervos.org/t/a-second-post-quantum-lock-for-ckb-ml-dsa-beside-sphincs-checked-and-measured/11217.rss">A second post-quantum lock for CKB? ML-DSA beside SPHINCS+, checked and measured</source>
-        </item>
-        <item>
-          <title>Spark Program | ServiceSeal: Prepaid Utility Passes on CKB</title>
-          <dc:creator><![CDATA[hardik]]></dc:creator>
-          <category>Spark Program</category>
-          <description><![CDATA[
-            <h1><a name="p-27420-spark-program-serviceseal-prepaid-utility-passes-on-ckb-piloted-at-a-charging-kiosk-in-lagos-1" class="anchor" href="https://talk.nervos.org#p-27420-spark-program-serviceseal-prepaid-utility-passes-on-ckb-piloted-at-a-charging-kiosk-in-lagos-1" aria-label="Heading link"></a>Spark Program | ServiceSeal: Prepaid Utility Passes on CKB, Piloted at a Charging Kiosk in Lagos</h1>
-<p>Applicant: Hardik Azmi (GitHub: <a href="http://github.com/DegenerateAlchemist" class="inline-onebox" rel="noopener nofollow ugc">DegenerateAlchemist (Yugi) · GitHub</a> )<br>
-Funding requested: $900 USD<br>
-Timeline: 6 weeks<br>
-Category: CKB Application / Retail Utility &amp; State Primitives<br>
-Repository: <a href="http://github.com/DegenerateAlchemist/service-seal" class="inline-onebox" rel="noopener nofollow ugc">GitHub - DegenerateAlchemist/service-seal · GitHub</a><br>
-Revision (v2): Following the committee’s feedback updated the Type Script and kiosk workflow so every debit requires both the attendant’s terminal signature and the customer’s pass signature (preventing attendant-only deductions when the customer is not present) and documented the limitation and drop-off mitigations for unrecorded deductions. budget unchanged</p>
-<h2><a name="p-27420-h-1-summary-2" class="anchor" href="https://talk.nervos.org#p-27420-h-1-summary-2" aria-label="Heading link"></a>1. Summary</h2>
-<p>Where I stay in Lagos, Nigeria power is terrible so people rely on neighbourhood charging kiosks to keep their phones, lamps and power banks working. Regular customers usually pay upfront for a few charges instead of paying every single time they drop a phone off.</p>
-<p>I own one of these charging kiosks though I don’t run it myself daily, I have someone employed there handling customers while I’m away. Right now, prepaid balances are written down in a paper notebook at the shop. When a customer insists they paid for five charges and only used two, while the notebook says four, the customer has no way to verify the record on their own. Since I’m not sitting at the shop, I only hear about the argument after.</p>
-<p>ServiceSeal moves that notebook record into a live CKB Cell. A customer gets a prepaid pass holding a set number of units. Each time they drop off a device to charge, my attendant logs the debit, the customer approves it with their pass key and the pass Cell updates to a new Cell with the lower balance and the next sequence number. A CKB Type Script checks that both the terminal and the customer signed the receipt, the sequence goes up by one, the balance drops by the exact amount recorded and the balance never drops below zero. Since a Cell can only be spent once, two conflicting updates can’t both go through. Both the customer and I can check the full usage history directly from CKB without relying on the notebook at the shop.</p>
-<h2><a name="p-27420-h-2-team-profile-3" class="anchor" href="https://talk.nervos.org#p-27420-h-2-team-profile-3" aria-label="Heading link"></a>2. Team Profile</h2>
-<p>Applicant: Hardik Azmi (DegenerateAlchemist on GitHub)<br>
-Role: Full-stack and smart contract developer, and owner of the Lagos charging kiosk used for the pilot<br>
-Contact: Nervos Talk<br>
-Background: I built Stellar Kit, an open-source tool for building, deploying and simulating smart contracts on Stellar that was funded by Stellar WA. I have also built different solutions across Solana, Stellar/Soroban, Sui and EVM. On CKB, I have worked on a CKB script and built the initial TypeScript core for ServiceSeal (v0.1.0). I am new to Fiber and this proposal does not use it.</p>
-<h2><a name="p-27420-h-3-the-problem-4" class="anchor" href="https://talk.nervos.org#p-27420-h-3-the-problem-4" aria-label="Heading link"></a>3. The Problem</h2>
-<p>Around here in Lagos, people buy most daily utilities in small retail portions: phone and battery charging, cooking gas refills, water and shared equipment time. Prepaid tabs are very common because customers like locking in credit when they have cash and shop owners want steady repeat customers.</p>
-<p>When you own the shop but have an employee running the counter, three issues come up all the time:</p>
-<ul>
-<li>Customer and attendant arguments: The customer has no proper receipt trail showing their starting balance and every deduction made from it.</li>
-<li>Owner and attendant reconciliation: When I check in at the end of the day, I cannot tell from home if numbers in the notebook were changed, scratched out or skipped.</li>
-<li>No simple tool for small retail utilities: Big companies can run custom backend databases, but for a local kiosk or gas shop spinning up a standard database still leaves the exact same trust problem since the operator can edit rows whenever they want.</li>
-</ul>
-<h2><a name="p-27420-h-4-how-it-works-5" class="anchor" href="https://talk.nervos.org#p-27420-h-4-how-it-works-5" aria-label="Heading link"></a>4. How It Works</h2>
-<p>Terms used in this proposal:</p>
-<ul>
-<li>Pass Cell: A live CKB Cell holding one customer’s prepaid balance for a specific terminal.</li>
-<li>Terminal: The signing key used by the attendant at the kiosk to log usage.</li>
-<li>Customer pass key: The customer’s signing key (kept in their phone browser or derived locally from their secret pass PIN at the counter, never stored on the kiosk) used to co-sign debits.</li>
-<li>Usage receipt: A message co-signed by both the terminal and the customer pass key with the session ID, terminal ID, sequence number and units used.</li>
-<li>Successor Cell: The new Pass Cell created when a usage receipt is applied.</li>
-</ul>
-<p>Open pass. A pass is created on CKB testnet with a starting unit balance (like 100 units) and sequence = 0, tied to the kiosk’s terminal ID, the terminal key hash and the customer’s pass key hash.</p>
-<p>Record usage. When a customer drops off a device to charge, the attendant enters the units used and the customer approves the debit on their phone browser (or by entering their secret pass PIN on the customer screen to sign locally). Both the terminal and the customer sign the receipt for sequence = last_sequence + 1. The transaction spends the old Pass Cell, puts the co-signed receipt in the witness and creates the Successor Cell with remaining_units = old_units - usage and sequence = old_sequence + 1.</p>
-<p>Check history. Anyone with the pass ID can open the web page or run the CLI tool to pull every debit from CKB transaction history and check the remaining balance without calling a ServiceSeal server.</p>
-<p>What it covers and what it doesn’t:</p>
-<ol>
-<li>Preventing deductions when the customer is not present (enforced on-chain by the Type Script): Because the Type Script checks both <code>device_key_hash</code> and <code>customer_key_hash</code> on every usage receipt, my attendant cannot deduct units on their own while a customer is away. Any transaction signed only by the kiosk terminal fails validation in CKB-VM. Likewise, a customer cannot alter their balance without the terminal signature.</li>
-<li>What happens if the attendant fails to record a deduction (limitation and workflow mitigation): Without a hardware meter wired into the power strip, an on-chain script cannot physically know that a phone was plugged into a wall socket if no transaction is submitted. If the attendant simply forgets to log a debit for a prepaid customer, the customer’s on-chain balance stays untouched, meaning the customer is never shortchanged (the loss falls on my kiosk, not the buyer). The real risk for me as the owner is the attendant charging a device off-book. To mitigate this in our kiosk workflow:
-<ul>
-<li>Debit on drop-off: The debit is co-signed when the customer hands over the phone, before it goes on the charging board.</li>
-<li>Sequence intake tags: Every device plugged into the board gets a numbered clip showing the pass’s latest on-chain <code>sequence</code> number from the terminal screen. When I check in or audit the shop, every device on the charging board must match a live on-chain sequence increment for that day.</li>
-<li>Customer co-sign habit: Since the customer only co-signs at drop-off for the exact units they are using right then, the attendant cannot come back later in the evening and retroactively batch-deduct an “unrecorded” charge without the customer present.</li>
-</ul>
-</li>
-</ol>
-<h2><a name="p-27420-h-5-technical-architecture-6" class="anchor" href="https://talk.nervos.org#p-27420-h-5-technical-architecture-6" aria-label="Heading link"></a>5. Technical Architecture</h2>
-<p>Already built (not funded by this grant):<br>
-The repository (v0.1.0) already has the off-chain protocol logic working in TypeScript:</p>
-<ul>
-<li>Fixed 100-byte SS01 Cell data layout (session_id, terminal_id, device_key_hash, remaining_units and last_sequence).</li>
-<li>Ed25519 receipt signing and verification.</li>
-<li>Sequence and balance transition checks.</li>
-<li>CKB witness encoding (encodeSessionWitness) and batch transitions (applyReceiptBatch).</li>
-<li>14 rejection tests covering replay, altered usage, wrong terminal, wrong session, skipped sequence, overdraw and bad state formatting.</li>
-</ul>
-<p>Funded by this grant:<br>
-ServiceSeal Type Script (CKB-VM): Enforces the SS01 transition rules on-chain (upgraded to include customer co-signing):</p>
-<ul>
-<li>session_id, terminal_id, device_key_hash and customer_key_hash stay the same between the input and output Pass Cells.</li>
-<li>output.last_sequence == input.last_sequence + 1.</li>
-<li>output.remaining_units == input.remaining_units - receipt.usage and receipt.usage &gt; 0.</li>
-<li>Dual authorisation check (terminal + customer): verifies that both the kiosk terminal and the customer authorised the debit. Week 1 validates this in CKB-VM first to measure cycle cost and cell capacity (either via dual witness signatures or by pairing the Type Script with the customer’s Lock Script) before building the rest of the app around it.</li>
-</ul>
-<p>Transaction Builder &amp; Verifier CLI: TypeScript functions using CCC to open a pass, co-sign and send a debit transaction on Pudge testnet and rebuild a pass’s history straight from CKB RPC/indexer.</p>
-<p>Kiosk Web UI (Testnet): A simple three-page web app (Open Pass, Kiosk Terminal + Customer Approval and Pass History) that my attendant and regular customers will test during a two-week pilot at the kiosk alongside our usual paper notebook.</p>
-<p>POC Scope:</p>
-<ul>
-<li>Testnet only (Pudge), using test units alongside normal cash/transfer payments at the kiosk.</li>
-<li>Out of scope for this grant: mainnet deployment, real money custody, Fiber channels, hardware socket meters or a formal security audit.</li>
-</ul>
-<h2><a name="p-27420-h-6-deliverables-7" class="anchor" href="https://talk.nervos.org#p-27420-h-6-deliverables-7" aria-label="Heading link"></a>6. Deliverables</h2>
-<ul>
-<li>ServiceSeal Type Script: CKB-VM script checking the pass rules, deployed on Pudge testnet with tests covering valid updates and invalid attempts (attendant-only debit without customer signature, replay, skipped sequence, overdraw, wrong terminal, changed identity fields and bad cell data).</li>
-<li>Transaction SDK &amp; History Verifier: Open-source TypeScript module and CLI command that builds create and co-signed debit transactions with CCC and rebuilds any pass’s history from CKB testnet RPC without a backend.</li>
-<li>Kiosk Testnet Web App: Simple browser UI for opening a pass, co-signing kiosk usage and checking pass history by ID, plus a short video showing the full flow and an overdraw or attendant-only transaction getting rejected on-chain.</li>
-<li>Lagos Kiosk Pilot &amp; Report: Two-week pilot run at my charging kiosk with my employee and regular customers, written up in a final post on Nervos Talk with testnet transaction hashes, cycle and capacity numbers and honest notes on how it went.</li>
-</ul>
-<p>All code will be open-source under the MIT license.</p>
-<h2><a name="p-27420-h-7-roadmap-8" class="anchor" href="https://talk.nervos.org#p-27420-h-7-roadmap-8" aria-label="Heading link"></a>7. Roadmap</h2>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Milestone</th>
-<th>Timeline</th>
-<th>Work</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1. On-chain check &amp; script layout</td>
-<td>Week 1</td>
-<td>Test SS01 witness and dual authorisation checks (terminal + customer) in CKB-VM, measure cycle cost and cell capacity and post the Week 1 numbers.</td>
-</tr>
-<tr>
-<td>2. Core Type Script &amp; rejection tests</td>
-<td>Weeks 2 to 3</td>
-<td>Write the full Type Script and rejection test suite (attendant-only debit without customer signature, replay, overdraw, skipped sequence, wrong terminal/session and bad output size) and deploy to Pudge testnet.</td>
-</tr>
-<tr>
-<td>3. CCC transaction builder &amp; Web UI</td>
-<td>Week 4</td>
-<td>Hook up CCC transaction building to the Open Pass, Kiosk Terminal + Customer Approval and Pass History pages, plus the CLI history checker.</td>
-</tr>
-<tr>
-<td>4. Lagos kiosk pilot</td>
-<td>Week 5</td>
-<td>Run ServiceSeal at my kiosk in Lagos alongside our paper notebook for regular customers, log real usage on Pudge testnet and note any issues my employee or customers run into.</td>
-</tr>
-<tr>
-<td>5. Release &amp; final report</td>
-<td>Week 6</td>
-<td>Post the pilot transaction hashes, cycle and capacity measurements, demo video and final report on Nervos Talk.</td>
-</tr>
-</tbody>
-</table>
-</div><h2><a name="p-27420-h-8-budget-900-usd-9" class="anchor" href="https://talk.nervos.org#p-27420-h-8-budget-900-usd-9" aria-label="Heading link"></a>8. Budget ($900 USD)</h2>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Area</th>
-<th>Hours / Basis</th>
-<th>Amount</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CKB Type Script, rejection tests and Pudge deployment</td>
-<td>24h × $15/hr</td>
-<td>$360</td>
-</tr>
-<tr>
-<td>CCC transaction builder, CLI verifier and Kiosk Web UI</td>
-<td>24h × $15/hr</td>
-<td>$360</td>
-</tr>
-<tr>
-<td>Two-week Lagos kiosk pilot, demo video and final report</td>
-<td>12h × $15/hr</td>
-<td>$180</td>
-</tr>
-<tr>
-<td><strong>Total</strong></td>
-<td><strong>60 hours</strong></td>
-<td><strong>$900</strong></td>
-</tr>
-</tbody>
-</table>
-</div><p>Paid in CKB under standard Spark Program rules. I am not asking for hardware, hosting or travel costs since the pilot runs at my own kiosk during normal work hours.</p>
-<h2><a name="p-27420-h-9-how-to-verify-10" class="anchor" href="https://talk.nervos.org#p-27420-h-9-how-to-verify-10" aria-label="Heading link"></a>9. How to Verify</h2>
-<p>Anyone reviewing the project can check the deliverables without relying on a server I control:</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Deliverable</th>
-<th>How to verify</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Type Script &amp; rejection tests</td>
-<td>Clone the repo and run the test command to see valid co-signed transitions pass and invalid transitions (including attendant-only debits) fail in the script.</td>
-</tr>
-<tr>
-<td>Deployed Pudge script</td>
-<td>Check the published script OutPoint and transaction hashes (opening a pass, valid debits and a rejected overdraw/unauthorised debit) on the Pudge testnet explorer.</td>
-</tr>
-<tr>
-<td>History verifier CLI</td>
-<td>Run the CLI checker against any pilot pass ID using a public Pudge RPC URL with the web app turned off, and compare the balance with the explorer.</td>
-</tr>
-<tr>
-<td>Kiosk Web UI &amp; pilot</td>
-<td>Open the testnet web app, create and debit a test pass and check the pass transaction hashes from the Lagos kiosk pilot in the final report.</td>
-</tr>
-</tbody>
-</table>
-</div><h2><a name="p-27420-h-10-ecosystem-value-post-spark-plans-11" class="anchor" href="https://talk.nervos.org#p-27420-h-10-ecosystem-value-post-spark-plans-11" aria-label="Heading link"></a>10. Ecosystem Value &amp; Post-Spark Plans</h2>
-<p>We are building ServiceSeal as a reusable CKB primitive for prepaid, terminal-metered state transitions not a one-off app tied to my shop. The <code>SS01</code> Pass Cell and Type Script give any CKB developer a ready-made primitive for services where a user locks in credit upfront and a terminal or attendant draws it down over time with co-signed receipts.</p>
-<p>For this Spark grant, I am proving the primitive on-chain and piloting it at my own charging kiosk in Lagos where my attendant and customers already deal with notebook disputes. Once the primitive is proven in the kiosk pilot, we plan to use it as the base layer for a broader local utility pass around here because people buy most everyday essentials in retail portions such as buying cooking gas locally by the refill or prepaid water and later pair the primitive with Fiber for payment settlement.</p>
-            <p><small>3 posts - 2 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/spark-program-serviceseal-prepaid-utility-passes-on-ckb/11215">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/spark-program-serviceseal-prepaid-utility-passes-on-ckb/11215</link>
-          <pubDate>Sat, 14 Nov 2026 17:06:34 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11215</guid>
-          <source url="https://talk.nervos.org/t/spark-program-serviceseal-prepaid-utility-passes-on-ckb/11215.rss">Spark Program | ServiceSeal: Prepaid Utility Passes on CKB</source>
         </item>
   </channel>
 </rss>
