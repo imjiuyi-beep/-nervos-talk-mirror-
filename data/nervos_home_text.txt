@@ -1,0 +1,62 @@
+MENU
+Common Knowledge Base
+Built on RISC-V and secured by Proof-of-Work, CKB is the most flexible and interoperable blockchain. It serves as the ultimate foundation of Nervos, a modular blockchain network built from the ground up to ensure outstanding security, decentralization, flexibility, and interoperability.
+NERVOS CKB DOCS
+Contract Kernel of Bitcoin
+Nervos CKB is the first fully Bitcoin-isomorphic Layer2 solution, utilizing Proof of Work (PoW) and UTXO models. Its main goal is to enhance Bitcoin by adding programmability and scalability through the RGB++ protocol, the UTXO Stack, and the CKB Lightning Network, without relying on cross-chain bridges. This aims to foster a thriving Bitcoin ecosystem.
+CKB ECO FUND
+Supreme Security and Decentrali­zation
+CKB leverages the battle-tested Proof-of-Work consensus algorithm to ensure exceptional security and decentralization under all conditions. It is truly decentralized, permissionless, and uniquely resistant to capture by adversarial actors.
+Unmatched Flexibility and Interopera­bility
+CKB is the only blockchain on the market that supports all cryptographic primitives. It can seamlessly interoperate with all heterogeneous blockchains and anchor all types of sidechains, state channels, and Layer 2 networks. Moreover, it comes with protocol-level account abstraction by default, enabling decentralized applications boasting unmatched user experience.
+Utility-driven Tokenomics
+CKB leverages a novel tokenomic model that aligns the interests of all Nervos participants and stakeholders. It ensures the miners are paid for providing security to the network in perpetuity.
+Modular Architecture
+Nervos was designed as a modular blockchain network from the get-go, meaning it can scale to millions of transactions per second through many diverse Layer 2 networks without sacrificing security or decentralization. CKB offers pristine security, while the Layer 2 networks built on top ensure unbounded scalability.
+Get Started
+Launch your own Nervos sidechain with Axon.
+Need high throughput? Build your own custom EVM-compatible sidechain and deploy it on Nervos with ease.
+AXON
+Build on hardware, not software.
+CKB's low-level virtual machine allows you to build without limits.
+DEVELOPERS
+Build universal decentralized applications.
+Experience protocol-level account abstraction and build dApps that work seamlessly across blockchains.
+LEARN MORE
+DISCOVER
+CKB
+Mining
+Wallets
+Journey
+Media Kit
+DEVELOPERS
+Documentation
+Github
+Explorer
+ECOSYSTEM
+Cryptape
+Cell Studio
+CKB ECO Fund
+Tunnel Vision Labs
+.bit
+APP5Labs
+COMMUNITY
+Community Fund DAO
+Nervos Talk Forum
+RFCs
+CKB Node Probe
+LEARN
+Knowledge Base
+Medium
+Youtube
+Become a part of something bigger.
+Sign up to the Nervos monthly newsletter to stay ahead of the curve.
+©Nervos is an open-source project initiated by the Nervos Foundation. All Rights Reserved.
+Scroll Down
+LIVE METRICS
+Live Cells
+1,419,684
+Bytes Stored
+149,793,350
+CKB in Nervos DAO
+8,232,741,586.34
