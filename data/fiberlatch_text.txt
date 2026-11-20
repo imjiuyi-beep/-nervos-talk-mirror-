@@ -1,0 +1,516 @@
+Skip to last reply
+Skip to top
+Skip to main content
+Sign Up
+Log In
+​
+Topics
+More
+CATEGORIES
+Announcements & Meta
+Infrastructure
+Applications & Ecosystem
+Cryptoeconomics & Mechanism Design
+Miners Pub
+DAOs & Funding
+All categories
+TAGS
+lang-zh
+lang-en
+CKB
+dapp
+lang-es
+All tags
+​
+​
+
+The forum now supports rendering Mermaid diagrams directly in posts, and the Babel Reunited translation plugin has completed an important fix to the underlying rendering layer.
+
+This feature came from community suggestions and analysis: @ArthurZhang raised the need in Forum tooling suggestion: Mermaid diagram support for technical posts, identified the official component, and pinpointed its compatibility issue with the translation plugin; @phroi’s ongoing testing feedback helped us dig out the root cause of the rendering problem. Thanks to both of you.
+
+You can now draw diagrams like this:
+
+Just write a ```mermaid code block in your post and it will automatically render as a diagram after publishing. For example, a flowchart:
+
+​
+
+Write a mermaid block
+
+Post it
+
+Rendered as SVG
+
+Fullscreen on hover
+
+Other diagram types such as sequence diagrams are also supported:
+
+​
+Translator
+Forum
+Author
+Translator
+Forum
+Author
+Diagram source is protected
+Post with a diagram
+Translate the prose
+Translated text
+Same diagram, translated prose
+
+For syntax reference, see the Mermaid official documentation. You can see the rendered result in real time in the editor preview.
+
+A few notes:
+
+Hovering over a diagram shows a fullscreen button; syntax errors won’t break the page — they’ll just display an error message box.
+Also shipping with this release is a fix to the underlying rendering layer: post body content now goes through Discourse’s core rendering pipeline in full. Features that had stopped working in translation-enabled categories are restored — the copy/fullscreen buttons in the top-right corner of code blocks, click-to-enlarge for images, and so on — and they work in translated views as well. You can verify this by switching the language tab at the top of this post: diagrams render correctly in the translated version too.
+Text inside diagrams is intentionally left untranslated. This is a deliberate trade-off: diagram source code is structure-sensitive, and having a model translate labels can easily corrupt the diagram. Better to leave it untranslated than to translate it badly.
+
+Feel free to give it a try.
+
+[DIS] FiberLatch Access - Open-Source Access Control for Fiber Payments
+DAOs & Funding
+CKB Community Fund DAO
+CKB
+dapp
+testnet
+552
+views
+50
+likes
+9
+links
+read
+7 min
+Jun 23
+1 / 7
+Jun 23
+Oct 10
+post by Ticoworld on Jun 23
+Ticoworld
+2
+Jun 23
+Original · English
+简体中文
+Español
+
+https://dao.ckb.community/landing?method=share&thread=vot-fiberlatch-access-open-source-access-control-for-fiber-payments-74170
+
+## Summary
+
+This proposal requests a grant of **$3,000** to build **FiberLatch Access**, an open-source access-control layer for Fiber payment flows.
+
+The simple idea is this:
+
+> fiber-pay helps apps accept Fiber payments.
+
+> FiberLatch Access helps apps decide what a paid user can access after payment.
+
+The proposed work will deliver:
+
+1. A proposed access receipt format for Fiber payment-gated resources.
+
+2. Clear expiration rules for paid access.
+
+3. Replay-protection rules to help prevent reuse of access receipts.
+
+4. Clear signing and verification rules for access receipts.
+
+5. A lightweight Node.js package developers can install and adapt.
+
+6. A paid-resource example showing how the pattern works.
+
+7. Documentation and a final report explaining how to use and review the work.
+
+FiberLatch Access is based on my existing FiberLatch work, where I already tested a payment-to-access flow on Fiber testnet. This grant is not for rebuilding that old work. It is for turning the useful access-control part into a small open-source developer tool that other builders can understand, install, and adapt.
+
+**Grant Amount Requested:** $3,000
+
+**ETA to Completion:** 6 weeks
+
+**CKB Wallet or Funding Address:** To be added before Voting Stage
+
+-–
+
+## Project Introduction
+
+Fiber payments become more useful when they can unlock real things inside applications.
+
+For example, a platform may want users to pay before accessing paid content, an API, a file, or a private resource.
+
+Accepting payment is only one part of that flow. After payment, the app still needs to know what the user paid for, whether the user should get access, when that access should expire, and whether the same access is being reused.
+
+FiberLatch Access focuses on this access layer.
+
+It is not a replacement for fiber-pay or any Fiber payment tool. It is a small open-source access-control layer that can work with Fiber payment flows.
+
+The goal is to make it easier for builders to connect Fiber payments to actual product access.
+
+-–
+
+## Why This Matters
+
+As Fiber payment tooling improves, developers will need simple patterns for what happens after payment.
+
+Without a reusable access-control pattern, each developer may need to rebuild the same logic from scratch.
+
+FiberLatch Access aims to provide a small and practical starting point for payment-gated access on Fiber.
+
+It can help propose a consistent pattern for a few important parts of the payment-to-access flow:
+
+- receipt format
+
+- expiration rules
+
+- replay protection
+
+- signing rules
+
+- verification rules
+
+The goal is not to build a large platform. The goal is to create a small reusable building block that other Fiber builders can learn from or adapt.
+
+-–
+
+## Team and Roles
+
+**Timothy Orichi / TicoWorld**
+
+Role: Lead developer
+
+I have been building FiberLatch as part of the CKBuilder program.
+
+FiberLatch started as a backend reference implementation for payment-gated access on Fiber. Through the CKBuilder process, it has gone through live testnet proof work, cleanup, feedback, and review follow-up.
+
+This proposal is the smaller grant-scoped direction of that work.
+
+-–
+
+## Current Status
+
+FiberLatch already exists as prior work.
+
+It has demonstrated this flow on Fiber testnet:
+
+1. A user makes a Fiber payment.
+
+2. The payment is verified.
+
+3. The app issues a signed access receipt.
+
+4. The receipt is verified.
+
+5. Access is granted once.
+
+6. Reuse is denied.
+
+Existing work includes:
+
+- backend reference implementation
+
+- Fiber testnet payment verification
+
+- signed access receipt flow
+
+- one-time access logic
+
+- protected resource demo
+
+- test coverage around the access flow
+
+- CKBuilder review and feedback
+
+This grant will not fund the previous backend work again.
+
+The grant will fund a smaller developer-facing access layer that packages the reusable idea in a simpler and more open-source friendly way.
+
+-–
+
+## What This Grant Will Build
+
+The grant will build FiberLatch Access as a lightweight open-source Node.js developer package and example.
+
+It will include:
+
+- a proposed access receipt format
+
+- expiration rules for paid access
+
+- replay-protection rules to help prevent reused receipts
+
+- clear signing and verification rules for access receipts
+
+- a small package for creating and verifying access receipts
+
+- a paid-resource example
+
+- documentation showing how FiberLatch Access can work with Fiber payment flows
+
+The first version will stay small and easy to review.
+
+-–
+
+## How It Complements Fiber Payment Tools
+
+Fiber payment tools help developers accept payments.
+
+FiberLatch Access focuses on access after payment.
+
+The relationship is simple:
+
+> Payment tools handle the payment side.
+
+> FiberLatch Access handles the access side.
+
+For example, an app could use Fiber payment tooling to confirm that a user has paid, then use FiberLatch Access to issue and verify access to a paid file, API, content page, or private resource.
+
+This keeps FiberLatch Access focused on access control instead of becoming another payment SDK.
+
+-–
+
+## Benefits for CKB and Fiber
+
+FiberLatch Access can help make Fiber payments more practical for real apps.
+
+It can:
+
+- help developers connect Fiber payments to real product access
+
+- provide a reusable access-control pattern for payment-gated apps
+
+- help standardise access receipts for paid resources
+
+- complement existing Fiber payment tooling instead of competing with it
+
+- give builders a small open-source example they can learn from
+
+- make it easier to build paid content, paid API, and paid-resource use cases on Fiber
+
+This is a small proposal, but it supports a useful developer need around Fiber payments.
+
+-–
+
+## Deliverables
+
+The grant will deliver:
+
+### 1. FiberLatch Access scope and design
+
+A short design document explaining what FiberLatch Access does, what it does not do, and how it can work with Fiber payment flows.
+
+### 2. Proposed access receipt format
+
+A reusable receipt format for representing paid access to a resource after a Fiber payment.
+
+### 3. Expiration and replay-protection rules
+
+Clear rules for when access receipts expire and how reuse should be denied.
+
+### 4. Signing and verification rules
+
+A simple standard for signing and verifying access receipts.
+
+### 5. Lightweight access receipt package
+
+A small open-source Node.js package for creating and verifying access receipts.
+
+### 6. Paid-resource example
+
+A simple example showing how a Fiber payment can lead to access being granted to a protected resource, and how reuse can be denied.
+
+### 7. Documentation and final report
+
+Clear setup docs, usage guide, limitations, and a final report showing what was built and how to test it.
+
+-–
+
+## Timeline
+
+The expected completion time is **6 weeks**.
+
+- **Weeks 1-2:** Finalize scope, package design, receipt format, expiration rules, and replay-protection rules.
+
+- **Weeks 3-4:** Build the access receipt package and paid-resource example.
+
+- **Weeks 5-6:** Write documentation, test the package, clean up, and submit the final report.
+
+-–
+
+## Budget
+
+**Total requested:** $3,000
+
+Breakdown:
+
+- Development: $2,400
+
+- Documentation and example work: $400
+
+- Testing, cleanup, and final report: $200
+
+**Hosting cost:** $0
+
+FiberLatch Access is not a hosted service. It is code, documentation, and an example that developers can run in their own projects.
+
+-–
+
+## Out of Scope
+
+This proposal does not include:
+
+- hosted service
+
+- payment SDK
+
+- dashboard
+
+- CLI
+
+- React SDK
+
+- checkout product
+
+- payment gateway
+
+- production readiness
+
+- mainnet readiness
+
+- security audit
+
+- long-term maintenance
+
+These can be considered later only if there is real demand.
+
+-–
+
+## Risks and Mitigation
+
+### Risk: The project may be confused with a payment SDK.
+
+Mitigation: FiberLatch Access will be clearly framed as an access-control layer, not a payment SDK.
+
+### Risk: The scope may grow too large.
+
+Mitigation: The grant is limited to one small package, one example, documentation, and a final report.
+
+### Risk: Developers may misunderstand what FiberLatch Access controls.
+
+Mitigation: The documentation will explain that the host app still owns its users, database, payment flow, and final access enforcement.
+
+### Risk: The first version may not cover every access-control use case.
+
+Mitigation: The first version will focus on a simple paid-resource pattern. More advanced use cases can be explored later if developers find it useful.
+
+-–
+
+## Closing
+
+Fiber payments become more useful when they can unlock real access inside applications.
+
+FiberLatch Access is a small open-source access-control layer for that next step.
+
+The aim is to help developers connect Fiber payments to paid content, APIs, files, tools, or other resources without copying the full FiberLatch backend.
+
+I would appreciate feedback from the community on the scope, naming, budget, and whether this is useful for Fiber application developers.
+
+-–
+
+## Supporting Links
+
+FiberLatch repo:
+
+github.com
+GitHub - Ticoworld/fiber-latch: Fiber payment verification to signed access...
+
+Fiber payment verification to signed access receipts on CKB Fiber.
+
+CKBuilder FiberLatch issue:
+
+github.com/Nervos-Community-Catalyst/CKBuilder-projects
+FiberLatch: live paid Fiber testnet payment to signed access receipt
+opened  May 29, 2026
+ Ticoworld
+
+## Project Summary
+
+FiberLatch is a backend-only Fiber payment verification expe…
+
+fiber-pay:
+
+retricsu.github.io
+fiber-pay | CLI + SDK Toolchain
+
+Promotional site for fiber-pay: operator-grade CLI and developer-first SDK on Fiber Network.
+
+Live paid Fiber proof tag:
+
+github.com
+GitHub - Ticoworld/fiber-latch at fiberlatch-live-paid-proof
+
+Fiber payment verification to signed access receipts on CKB Fiber. - Ticoworld/fiber-latch
+
+
+
+35
+​
+​
+CKB Ecosystem Biweekly Update
+Nervos Community Catalyst: Quarterly Reports
+552
+views
+50
+likes
+9
+links
+read
+7 min
+post by Ticoworld on Jun 30
+25 days later
+post by Ticoworld on Jul 26
+14 days later
+post by Ticoworld on Aug 9
+14 days later
+post by Ticoworld on Aug 23
+15 days later
+post by zz_tovarishch on Sep 8
+1 month later
+post by Ticoworld on Oct 10
+Reply
+
+
+New & Unread Topics
+Topic list, column headers with buttons are sortable.
+Topic	Replies	Views	Activity
+
+[DIS] Bitcoin Renegade Meet Up and Media Campaign
+CKB Community Fund DAO
+CKB
+fiber
+	6	327	Sep 10
+
+Unable to vote/like active proposal — Nervos DAO snapshot behavior on Metaforo
+CKB Community Fund DAO
+	4	139	Oct 20
+
+[Tool] CKB DAO Watchdog: Open-Source DAO Voting Verification Tool（开源的 DAO 投票验证工具）
+CKB Community Fund DAO
+	6	148	Jan 14
+
+[DIS] Mobile-Ready CKB Light Client (Pocket Node) for Android
+CKB Community Fund DAO
+CKB
+light-client
+	73	2.6k	25d
+
+[DIS] CrowdCell: Mainnet Launch of Trustless All-or-Nothing Crowdfunding on CKB
+CKB Community Fund DAO
+lang-en
+	0	228	Aug 12
+
+[DIS] CKB Poker: A Texas Hold’em Game and Open-Source Multiplayer Components Built on CKB
+CKB Community Fund DAO
+	0	109	29d
+Want to read more? Browse other topics in 
+CKB Community Fund DAO
+ or view latest topics.
+Powered by Discourse
