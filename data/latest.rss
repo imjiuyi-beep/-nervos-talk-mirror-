@@ -5,8 +5,147 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Fri, 20 Nov 2026 18:53:24 +0000</lastBuildDate>
+      <lastBuildDate>Fri, 20 Nov 2026 21:05:46 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>Sigsheet: one file for signing CKB multisig transactions across ckb-cli, Neuron and CCC apps (first spec draft, feedback wanted)</title>
+          <dc:creator><![CDATA[ILE_LABS]]></dc:creator>
+          <category>Infrastructure</category>
+          <description><![CDATA[
+            <p>Hi everyone,</p>
+<p>We’ve published the first draft of <strong>Sigsheet</strong>, an open file format for signing a CKB multisig transaction. Each signer uses the wallet they already have: ckb-cli, Neuron, or an app built on CCC. We’d like your feedback before we write the implementations.</p>
+<h2><a name="p-27667-the-problem-1" class="anchor" href="https://talk.nervos.org#p-27667-the-problem-1" aria-label="Heading link"></a>The problem</h2>
+<p>A CKB multisig transaction is usually signed by several people, often with different tools. Today two things get in the way.</p>
+<ul>
+<li><strong>Partial signatures don’t travel between tools.</strong> ckb-cli, Neuron, CCC and ckb-sdk each hold a partly signed multisig transaction in a different way. The incompatibility between ckb-cli’s <code>tx</code> file and Neuron was reported in 2024 (<a href="https://github.com/nervosnetwork/ckb-cli/issues/584" rel="noopener nofollow ugc">ckb-cli#584</a>, <a href="https://github.com/nervosnetwork/neuron/issues/3048" rel="noopener nofollow ugc">neuron#3048</a>). In our tests with ckb-cli 2.0.0, Neuron 0.204.1 and CCC 1.23.1, none of the three read another’s partial signatures: they were dropped on import, lost silently, or the file couldn’t be read at all (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/experiments/X1/results.md#interoperability-findings" rel="noopener nofollow ugc">the measurements</a>). So in practice, one person collects everyone’s signatures and assembles the transaction. Fiber’s 0.7.0 mainnet script upgrade this month, for example, gathered four of its five signatures from pull request comments (<a href="https://github.com/nervosnetwork/fiber-scripts/pull/34" rel="noopener nofollow ugc">fiber-scripts#34</a>).</li>
+<li><strong>A signature doesn’t cover the input cells.</strong> The multisig lock signs the transaction hash and the witnesses, and the transaction hash covers each input’s out point, not the cell it points to. A signer who can’t see the input cells can’t check the amounts they are signing.</li>
+</ul>
+<h2><a name="p-27667-what-sigsheet-is-2" class="anchor" href="https://talk.nervos.org#p-27667-what-sigsheet-is-2" aria-label="Heading link"></a>What Sigsheet is</h2>
+<p>One canonical JSON file per transaction. It carries:</p>
+<ul>
+<li>the transaction, with a witness template for each lock group to be signed;</li>
+<li>the previous transaction of every input, so a reader checks every input cell offline, by hash;</li>
+<li>the block headers and inclusion proofs a Nervos DAO withdrawal needs;</li>
+<li>the multisig configs;</li>
+<li>every signature so far, keyed by lock group and signer.</li>
+</ul>
+<p>How it’s used:</p>
+<ul>
+<li>Signers pass the file along, or each one shares a copy and anyone merges them. Any order gives the same bytes.</li>
+<li>Whoever holds a ready file finalizes it into a standard transaction.</li>
+<li>It works with the multisig locks and addresses already on chain: the genesis, 2024 and v2 deployments. There’s no new on-chain script.</li>
+</ul>
+<h2><a name="p-27667-the-goal-3" class="anchor" href="https://talk.nervos.org#p-27667-the-goal-3" aria-label="Heading link"></a>The goal</h2>
+<p>One file that every signer’s tool reads and writes: ckb-cli and Neuron directly, and apps built on CCC through a separate package. Signatures then move between tools with no bridge in the middle, and nobody has to collect and forward them.</p>
+<h2><a name="p-27667-whats-published-4" class="anchor" href="https://talk.nervos.org#p-27667-whats-published-4" aria-label="Heading link"></a>What’s published</h2>
+<p>All of this is in <a href="https://github.com/ILE-Labs/Sigsheet" rel="noopener nofollow ugc">github.com/ILE-Labs/Sigsheet</a>, linked at commits <code>4588a55</code> on <code>main</code> and <code>e4896d3</code> on <code>research</code> so every comment refers to a known version:</p>
+<ul>
+<li>
+<p><strong><a href="https://github.com/ILE-Labs/Sigsheet/blob/4588a558252a6f8d84f3b80bdd219d09033d1e82/spec/sigsheet.md" rel="noopener nofollow ugc">The specification, first draft</a>.</strong> It covers:</p>
+<ul>
+<li>the file and its canonical form;</li>
+<li>31 reader checks, all run offline;</li>
+<li>the message rule of each lock;</li>
+<li>merge, ready and finalize, including a rule for the signature sets the genesis multisig binary rejects;</li>
+<li>what a signer is shown;</li>
+<li>creating and sending;</li>
+<li>security considerations.</li>
+</ul>
+<p>Every rule links to its evidence.</p>
+</li>
+<li>
+<p><strong><a href="https://github.com/ILE-Labs/Sigsheet/tree/4588a558252a6f8d84f3b80bdd219d09033d1e82/vectors" rel="noopener nofollow ugc">Test vectors</a>:</strong> 24 cases, 18 attacks and 2 mainnet transactions, rebuilt byte for byte by one command.</p>
+</li>
+<li>
+<p><strong>An independent check:</strong></p>
+<ul>
+<li>every message is recomputed with CCC’s and ckb-cli’s own code;</li>
+<li>every signature is recovered;</li>
+<li>every final transaction runs through the deployed lock binaries under ckb-debugger.</li>
+</ul>
+<p>The checks run on Linux, macOS and Windows.</p>
+</li>
+<li>
+<p><strong><a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/design-record.md" rel="noopener nofollow ugc">The design record and its benchmarks</a>,</strong> on the repository’s <code>research</code> branch:</p>
+<ul>
+<li>every decision, with its evidence;</li>
+<li>the paths considered, and why each was dropped;</li>
+<li>the experiments.</li>
+</ul>
+</li>
+</ul>
+<h2><a name="p-27667-what-weve-learned-since-publishing-5" class="anchor" href="https://talk.nervos.org#p-27667-what-weve-learned-since-publishing-5" aria-label="Heading link"></a>What we’ve learned since publishing</h2>
+<ul>
+<li>On <a href="https://github.com/ckb-devrel/ccc/issues/646" rel="noopener nofollow ugc">ckb-devrel/ccc#646</a>, CCC’s maintainer closed the request: CCC currently has no plans to include Sigsheet, and further progress is welcome here on Nervos Talk. So we’re building it as a separate package on <code>@ckb-ccc/core</code> as published, with no change to CCC. The thread also asked why a new format is needed at all; the first question below answers it.</li>
+<li><strong>We’ve also shared it with ckb-cli’s and Neuron’s maintainers</strong> (<a href="https://github.com/nervosnetwork/ckb-cli/issues/694" rel="noopener nofollow ugc">ckb-cli#694</a>, <a href="https://github.com/nervosnetwork/neuron/issues/3518" rel="noopener nofollow ugc">neuron#3518</a>).</li>
+</ul>
+<h2><a name="p-27667-two-questions-weve-already-been-asked-6" class="anchor" href="https://talk.nervos.org#p-27667-two-questions-weve-already-been-asked-6" aria-label="Heading link"></a>Two questions we’ve already been asked</h2>
+<ul>
+<li><strong>Why not keep the partial signatures in the transaction itself?</strong> We tested that as our path D, and two design-stage measurements on Fiber’s 0.7.0 upgrade (a 3-of-5 multisig whose members sent five signatures) moved us off it. A witness with M slots can’t keep the signatures beyond M, and merging the five copies inside the witness in all 120 orders gave 60 different results (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/experiments/X3a/results.md#1-cccs-aggregatetransactions-depends-on-the-order-of-the-files" rel="noopener nofollow ugc">X3a, section 1</a>). Sigsheet keeps every signature by lock group and signer: its merge gave the same result in 2,000 of 2,000 trials (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/experiments/X3a/results.md#2-only-the-candidate-rule-gives-one-result-in-any-order-with-junk" rel="noopener nofollow ugc">X3a, section 2</a>), and finalizes to the standard transaction (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/paths.md#d-partial-signatures-inside-the-witness-merged-into-c" rel="noopener nofollow ugc">why path D was dropped</a>).</li>
+<li><strong>Why not a hosted multisig wallet?</strong> A hosted wallet removes the exchange when every member uses it. Sigsheet is for groups whose members sign with different tools, such as ckb-cli and Neuron, on any of the three multisig deployments. A service like that could also read and write the same file.</li>
+</ul>
+<h2><a name="p-27667-whats-next-the-roadmap-to-v10-7" class="anchor" href="https://talk.nervos.org#p-27667-whats-next-the-roadmap-to-v10-7" aria-label="Heading link"></a>What’s next: the roadmap to v1.0</h2>
+<ul>
+<li><strong><a href="https://github.com/ILE-Labs/Sigsheet/milestones" rel="noopener nofollow ugc">v0.1</a>:</strong>
+<ul>
+<li>the specification after this feedback;</li>
+<li>a TypeScript library on CCC, the reference implementation;</li>
+<li>ckb-cli commands, in Rust;</li>
+<li>Neuron support through Offline Sign;</li>
+<li>a demo on testnet with all three tools.</li>
+</ul>
+</li>
+<li><strong><a href="https://github.com/ILE-Labs/Sigsheet/milestone/6" rel="noopener nofollow ugc">v0.2</a>:</strong>
+<ul>
+<li>a readable summary for signers;</li>
+<li>a ckb-cli command that writes the file and that summary in one step;</li>
+<li>an optional relay that carries one signature at a time, about 367 bytes at design stage, instead of the whole file;</li>
+<li>Neuron’s own Sigsheet screens;</li>
+<li>Omnilock’s multisig mode;</li>
+<li>support in more tools.</li>
+</ul>
+</li>
+<li><strong><a href="https://github.com/ILE-Labs/Sigsheet/milestone/7" rel="noopener nofollow ugc">v1.0</a>:</strong> a stable specification with a conformance suite any implementation can run, proposed as a CKB RFC.</li>
+</ul>
+<p>None of this depends on any project including the changes:</p>
+<ul>
+<li>the TypeScript library will work with CCC as published;</li>
+<li>the ckb-cli and Neuron changes will be available as builds from the repository.</li>
+</ul>
+<p>At design stage, each wallet’s change was small:</p>
+<ul>
+<li>381 code lines in ckb-cli, 229 in CCC and 137 in Neuron;</li>
+<li>each wallet’s own tests gave the same results before and after (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/experiments/X6/results.md" rel="noopener nofollow ugc">X6</a>);</li>
+<li>on a local devnet, ckb-cli, CCC and Neuron signed one shared file in seven flows, all committed (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/experiments/X5/results.md" rel="noopener nofollow ugc">X5</a>).</li>
+</ul>
+<h2><a name="p-27667-the-feedback-were-looking-for-8" class="anchor" href="https://talk.nervos.org#p-27667-the-feedback-were-looking-for-8" aria-label="Heading link"></a>The feedback we’re looking for</h2>
+<ul>
+<li><strong>If you sign multisig transactions today,</strong> for a treasury, a team wallet or script deployments: which tools do your members sign with, and which transactions? We’ll make sure the first implementations cover them, and once they exist we’d like to run one of yours through Sigsheet with you, on testnet.</li>
+<li><strong>Wallet and SDK maintainers:</strong> what would your signing flow need from the format?</li>
+<li><strong>Security reviewers:</strong>
+<ul>
+<li>the reader checks (§5);</li>
+<li>the signature rules (§7);</li>
+<li>the attacks considered (§13).</li>
+</ul>
+</li>
+<li><strong>CoBuild and CKB IDL:</strong> the boundary in Annexes A and B.</li>
+</ul>
+<p><a class="mention" href="https://talk.nervos.org/u/quake">@quake</a>, <a class="mention" href="https://talk.nervos.org/u/phroi">@phroi</a>: Fiber’s 0.7.0 upgrade, which you both took part in, gathered its five signatures from the deploy file and four pull request comments. It’s the case we most want to get right. A whole Sigsheet file for that upgrade is about 733 KB at design stage, far more than a signature in a comment. So v0.2 adds a ckb-cli command that writes the file in one step, and a relay message of one signature, about 367 bytes. Your view on how signatures should travel in that flow would help most. <a class="mention" href="https://talk.nervos.org/u/doitian">@doitian</a>: the <code>request-signature</code> step you planned for <code>ckb-cli deploy</code> (<a href="https://github.com/nervosnetwork/ckb-cli/issues/603" rel="noopener nofollow ugc">ckb-cli#603</a>) is the job we want Sigsheet’s file to do, and your view on what it needs would help too. <a class="mention" href="https://talk.nervos.org/u/retricsu">@RetricSu</a>, <a class="mention" href="https://talk.nervos.org/u/rink1969">@rink1969</a>: you’ve signed multisig transactions with ckb-cli and Neuron and run into their limits (<a href="https://github.com/nervosnetwork/ckb-cli/issues/658" rel="noopener nofollow ugc">ckb-cli#658</a>, <a href="https://github.com/nervosnetwork/neuron/issues/3260" rel="noopener nofollow ugc">neuron#3260</a>), and we’d value your view of the draft.</p>
+<p>Every change the feedback leads to will be listed in the repository with specification v0.1, and linked from this thread.</p>
+<p>Thanks for reading. We’ll answer every comment here.</p>
+<p>— ILE Labs</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/sigsheet-one-file-for-signing-ckb-multisig-transactions-across-ckb-cli-neuron-and-ccc-apps-first-spec-draft-feedback-wanted/11298">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/sigsheet-one-file-for-signing-ckb-multisig-transactions-across-ckb-cli-neuron-and-ccc-apps-first-spec-draft-feedback-wanted/11298</link>
+          <pubDate>Fri, 20 Nov 2026 21:05:46 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11298</guid>
+          <source url="https://talk.nervos.org/t/sigsheet-one-file-for-signing-ckb-multisig-transactions-across-ckb-cli-neuron-and-ccc-apps-first-spec-draft-feedback-wanted/11298.rss">Sigsheet: one file for signing CKB multisig transactions across ckb-cli, Neuron and CCC apps (first spec draft, feedback wanted)</source>
+        </item>
         <item>
           <title>Unlinked for CKB: Tor-Routed RPC and Browser Privacy Extension</title>
           <dc:creator><![CDATA[Owais]]></dc:creator>
@@ -2132,7 +2271,7 @@ Owners may not engage (then published as independent work, disclosed); fixtures 
           <category>CKB Community Fund DAO</category>
           <description><![CDATA[
             <p>假设，我有50个账户，其中一些账户买了一些金额的ckb，锁定后具备投票资格，那么是否可以发起一个提案，用其中一些账户点赞，再投票，然后盗取DAO资金？，如果50个账户是我的50个朋友呢？或者其他可能性。，那么是不是DAO可以被以这样的方式随意推动提案成功并盗取资金？</p>
-            <p><small>12 posts - 7 participants</small></p>
+            <p><small>18 posts - 7 participants</small></p>
             <p><a href="https://talk.nervos.org/t/dao/11261">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/dao/11261</link>
@@ -6175,173 +6314,6 @@ Please plan to close and settle these V1 channels soon, as they will no longer b
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-11222</guid>
           <source url="https://talk.nervos.org/t/clasp-update/11222.rss">CLASP UPDATE</source>
-        </item>
-        <item>
-          <title>Fiber LSP: Running Channels on the Server, Signing in the Wallet</title>
-          <dc:creator><![CDATA[joii2020]]></dc:creator>
-          <category>Infrastructure</category>
-          <description><![CDATA[
-            <p>We have tried to port a full Fiber node to different types of clients, and even connect it to CKB Light Client. In practice, however, clients have difficulty staying online all the time: an application may exit unexpectedly, the system may stop or suspend background processes, or the network may disconnect suddenly. Brief disconnections are especially common when a phone switches between Wi-Fi and mobile networks.</p>
-<p>Fiber uses payment channels to send and receive payments. Once a local node loses its network connection, it can no longer exchange messages with other nodes. New payments cannot be sent or received normally, and pending payments may time out and fail. Even if a user has already shared a payment request, the node still needs to be online to process the incoming payment. If the node stays offline for a long time and no channel monitoring service is working, the other party may also use an old channel state to initiate an on-chain settlement. If the response deadline is missed, the user may lose funds in the channel.</p>
-<p>To address these problems, we are adding LSP (Lightning Service Provider) support to Fiber. Users still keep the root key used for registration and the channel private keys on the client. The server maintains network connections, receives messages, and monitors on-chain changes to the channels. When the client is temporarily offline, the server continues the work that requires a constant connection. When a step needs a client signature, the server saves the request and waits for the client to reconnect, check it, and sign it.</p>
-<p><strong>Fiber LSP is a built-in feature of the Fiber service, enabled through configuration, and is still under development.</strong> When enabled, the server runs a public relay node connected to the Fiber network. This node communicates with external nodes and forwards payments. The server also runs the channel and payment software for each registered identity as needed. Each uses its own private channels to send and receive payments through the relay node. Here, “private” means that the channel is not announced to the entire network.</p>
-<p>Both ends of a private channel run on the server. The client keeps the channel private keys for the wallet’s side, and checks and signs requests when signatures are needed. Each registered identity has separate channel, invoice, and payment records, while sharing the public relay node’s network connections and payment forwarding. An invoice is a payment request that can include an amount, payment information, and an expiry time.</p>
-<h2><a name="p-27430-connecting-a-wallet-for-the-first-time-registering-a-tenant-1" class="anchor" href="https://talk.nervos.org#p-27430-connecting-a-wallet-for-the-first-time-registering-a-tenant-1" aria-label="Heading link"></a>Connecting a Wallet for the First Time: Registering a Tenant</h2>
-<p>A wallet must register when it first connects to an LSP. Each registered identity is a tenant, identified by <code>tenant_id</code>. The server keeps separate channel, invoice, and payment records for each tenant. After registration, it returns the access token needed for later API calls.</p>
-<p>The current registration flow is shown below. The client handles signing. When access control is enabled, the registration API requires admin credentials. For a wallet used by end users, the service provider’s backend submits the request on the wallet’s behalf, and the admin credentials stay on the backend.</p>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/e/ef3996aaa67c9541911d2aef215c93e84033b2ef.jpeg" data-download-href="https://talk.nervos.org/uploads/default/ef3996aaa67c9541911d2aef215c93e84033b2ef" title="mermaid"><img src="https://talk.nervos.org/uploads/default/optimized/2X/e/ef3996aaa67c9541911d2aef215c93e84033b2ef_2_690x261.jpeg" alt="mermaid" data-base62-sha1="y8huTxcgrDJv7qwjKQdvuoSQKyX" width="690" height="261" srcset="https://talk.nervos.org/uploads/default/optimized/2X/e/ef3996aaa67c9541911d2aef215c93e84033b2ef_2_690x261.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/e/ef3996aaa67c9541911d2aef215c93e84033b2ef_2_1035x391.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/e/ef3996aaa67c9541911d2aef215c93e84033b2ef_2_1380x522.jpeg 2x" data-dominant-color="FBFBFB"></a></div><p></p>
-<p>Following the diagram, registration has four steps:</p>
-<ol>
-<li>
-<p><strong>Prepare the registration data.</strong> The client generates a single-use <code>request_id</code>, records the signing time as <code>signed_at</code>, and uses the previously verified public key of the LSP’s public node. The LSP public key is included in the signed data to prevent the registration data from being used with another LSP.</p>
-</li>
-<li>
-<p><strong>Sign and submit the registration.</strong> The client signs the registration data with its local root key and passes it to the service provider’s backend for submission. The root key always stays on the client.</p>
-</li>
-<li>
-<p><strong>The server checks and saves the registration record.</strong> The server verifies the signature, checks whether the signing time is valid and whether the request has already been used, then derives <code>tenant_id</code> from the client’s public key. It saves the registration data and the used request ID to prevent the same request from being reused.</p>
-</li>
-<li>
-<p><strong>Return the registration result and access token.</strong> The server returns the tenant information and <code>access_token</code>. This token uses the Biscuit format and specifies which tenant and which APIs a request can access. The wallet includes this token in later API calls.</p>
-</li>
-</ol>
-<p>After registration, the wallet still needs to open a private channel with the public relay node before it can send and receive payments. This channel follows Fiber’s existing rules for balance updates, signatures, and on-chain settlement. The client provides the signatures needed to confirm channel changes.</p>
-<h2><a name="p-27430-opening-a-channel-the-client-checks-and-signs-2" class="anchor" href="https://talk.nervos.org#p-27430-opening-a-channel-the-client-checks-and-signs-2" aria-label="Heading link"></a>Opening a Channel: The Client Checks and Signs</h2>
-<p>Fiber LSP follows Fiber’s existing rules: both parties first agree on the channel terms, then confirm balance changes through signatures, and settle on-chain when necessary. The main differences are where the channel runs, who funds it, and who signs:</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Item</th>
-<th>Regular Fiber node</th>
-<th>Fiber LSP tenant</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Channel endpoints</td>
-<td>The local node and another selected node can open a public or private channel</td>
-<td>The tenant’s channel runtime and the public relay node both run on the LSP server and open a private channel</td>
-</tr>
-<tr>
-<td>Funding</td>
-<td>Supports the node’s built-in wallet and external wallets</td>
-<td>The tenant has no built-in funding wallet and currently supports only external wallet funding</td>
-</tr>
-<tr>
-<td>Channel signing</td>
-<td>The node usually keeps the channel private keys and signs</td>
-<td>The client keeps the channel private keys; the server saves pending signing requests and continues after receiving the client’s signatures</td>
-</tr>
-</tbody>
-</table>
-</div><p>The client uses <code>fiber-lsp-sdk</code>, a library for applications, to check requests and sign them. To open a channel, the client needs to complete four tasks:</p>
-<ol>
-<li>
-<p><strong>Start opening the channel.</strong> After the user confirms the amount, asset, and channel terms, the client generates and saves the channel keys. It calls <code>open_channel_with_external_funding</code> with the tenant access token to open a channel with the LSP’s public relay node.</p>
-</li>
-<li>
-<p><strong>Sign the funding transaction.</strong> Check the returned transaction and channel terms, have the funding wallet sign the transaction, and submit it through <code>submit_signed_funding_tx</code>.</p>
-</li>
-<li>
-<p><strong>Handle channel signing.</strong> Retrieve requests through <code>get_channel_signing_status</code>, have the SDK check them and sign with the channel private keys, and submit the results through <code>submit_channel_signature</code>.</p>
-</li>
-<li>
-<p><strong>Confirm that the channel is ready.</strong> Check that the channel state is <code>ChannelReady</code>, and verify that the funding transaction has been confirmed on-chain and matches the locally saved transaction. Only then show that the channel has opened successfully.</p>
-</li>
-</ol>
-<p>The diagram below shows the main steps for opening a channel. Server represents the API and channel runtime that handle the current tenant’s requests. Relay represents the public relay node. Both run on the server. Client represents the wallet client, which uses <code>fiber-lsp-sdk</code> to check and sign the requested content.</p>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/3/354e32a5edd1950c04f3351d15cb17c1f563b372.jpeg" data-download-href="https://talk.nervos.org/uploads/default/354e32a5edd1950c04f3351d15cb17c1f563b372" title="mermaid"><img src="https://talk.nervos.org/uploads/default/optimized/2X/3/354e32a5edd1950c04f3351d15cb17c1f563b372_2_553x500.jpeg" alt="mermaid" data-base62-sha1="7ByQkv0tMyq7vRCvE88oMFtbdsu" width="553" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/3/354e32a5edd1950c04f3351d15cb17c1f563b372_2_553x500.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/3/354e32a5edd1950c04f3351d15cb17c1f563b372_2_829x750.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/3/354e32a5edd1950c04f3351d15cb17c1f563b372_2_1106x1000.jpeg 2x" data-dominant-color="FAFAFA"></a></div><p></p>
-<h3><a name="p-27430-how-the-client-stores-keys-checks-requests-and-signs-3" class="anchor" href="https://talk.nervos.org#p-27430-how-the-client-stores-keys-checks-requests-and-signs-3" aria-label="Heading link"></a>How the Client Stores Keys, Checks Requests, and Signs</h3>
-<p>During signing, <code>fiber-lsp-sdk</code> manages channel keys, checks requests, and generates signatures. The application handles network requests and data storage.</p>
-<p><strong>1. The client stores the keys, and the server receives public information</strong></p>
-<p>The SDK derives channel keys from the local root key and separate random data for each channel. The application must store the root key securely and provide a <code>SignerStore</code> to save the random data, channel state, and signing records. The mapping between channels and keys is stored in <code>HostedSessionState</code>, which the application saves separately. All of this data must be restored together after a restart.</p>
-<p>When opening a channel, the client sends only public information, such as channel public keys, to the server. Channel private keys and the secret data needed for signing stay on the client. The server uses the public information to agree on channel terms and verify later signatures. The channel private keys, funding wallet private keys, and tenant node private key serve different purposes. The funding wallet signs the funding transaction. The server keeps the tenant node private key and uses it for node identity and invoice signing.</p>
-<p><strong>2. The server saves requests, and the client retrieves the content to sign</strong></p>
-<p>The wallet starts operations through RPC (remote calls to the server API) and includes the tenant access token. To retrieve signing requests, it can call <code>get_channel_signing_status</code>. It can also subscribe to <code>channel_signing</code> over a persistent WebSocket connection to receive notifications of new requests. The access token is used to check API permissions, while the channel private keys are used for signing.</p>
-<p>When the server reaches a step that requires a client signature, it saves the request ID and the full content to be signed, then pauses the current step. The client uses this content to check how the operation will affect the channel’s funds. Server and Relay exchange channel messages within the same Fiber process, while the wallet retrieves signing requests and submits signatures through the tenant APIs.</p>
-<p><strong>3. The client checks the content, then signs and saves records after approval</strong></p>
-<p>The SDK first uses local records to find the keys for the channel, then checks the request. It mainly checks the following:</p>
-<ol>
-<li>
-<p><strong>Whether the channel and transaction match the agreed terms.</strong> Check the funding records, both parties’ public keys, the asset, balances, fees, and where funds will go after the channel closes. If unsettled payments are involved, also check whether the client has authorized them and whether their processing deadlines have passed.</p>
-</li>
-<li>
-<p><strong>Whether the signature is for the correct step.</strong> Check both parties’ public information for this signature, the signing purpose, and the round. For steps that require the other party to provide a signature first, also verify that signature.</p>
-</li>
-<li>
-<p><strong>Whether user confirmation is required.</strong> <code>SigningPolicy::Manual</code> requires user confirmation for every signature. After the channel opens, <code>Auto</code> can approve updates to channel balances and pending payment records automatically if they pass the SDK’s checks and do not change outbound payments. All other operations require user confirmation.</p>
-</li>
-</ol>
-<p>The SDK signs locally only after the checks and approval are complete. It uses MuSig2, which combines both parties’ partial signatures into a complete signature. When the SDK receives the other party’s partial signature, it also combines and saves the complete signature on the client. Before revoking an old state, it checks that the new state already has a complete signature that can be used to withdraw funds on-chain. Before signing to confirm channel balances and pending payment records, the SDK checks the current records and time again.</p>
-<p>The SDK returns a signature to the application only after successfully saving the signing history and related state. If saving fails, or another operation has already changed the records, it does not return the signature. When the client submits the signature, it also includes the request ID and the public information needed for the next signing round.</p>
-<p>The SDK’s signing review can include warnings, such as a signing nonce previously used for different content. These warnings do not automatically block signing. To reject a request based on a warning, the application must inspect the review before signing, for example during manual confirmation. <code>HostedSession</code> does not include this review in the result returned after automatic signing.</p>
-<p><strong>4. The server verifies the signature and continues the channel operation</strong></p>
-<p>The application submits the result through <code>submit_channel_signature</code>. The server checks the tenant, channel, and request ID, then verifies the signature. If verification passes, the server saves the signature and the public information needed for later signatures, then resumes the paused channel operation.</p>
-<p>If the client resubmits because it did not receive a response, and the content exactly matches the server’s saved record of the processed request, the server can return <code>AlreadyApplied</code> (already processed). For the same request, the server rejects a different signature or different public information for later signing rounds.</p>
-<h2><a name="p-27430-wallet-payments-forwarding-through-the-public-relay-node-4" class="anchor" href="https://talk.nervos.org#p-27430-wallet-payments-forwarding-through-the-public-relay-node-4" aria-label="Heading link"></a>Wallet Payments: Forwarding Through the Public Relay Node</h2>
-<p>Once the channel is ready, the wallet still follows Fiber’s existing invoice and channel rules to send and receive payments. The public relay node connects to the external network, finds payment routes, and forwards payments. The tenant runtime on the server handles its own incoming and outgoing payments and saves the records. The client confirms operations, checks channel changes, and signs.</p>
-<p>With trampoline forwarding, the payment is first sent to a designated relay node, which then finds the remaining route through other nodes to the recipient. The tenant runtime and public relay node both run on the LSP server. The client calls the tenant APIs with its access token to participate in sending and receiving payments.</p>
-<h3><a name="p-27430-receiving-a-payment-create-an-invoice-and-complete-channel-settlement-5" class="anchor" href="https://talk.nervos.org#p-27430-receiving-a-payment-create-an-invoice-and-complete-channel-settlement-5" aria-label="Heading link"></a>Receiving a Payment: Create an Invoice and Complete Channel Settlement</h3>
-<p>Before receiving a payment, the client generates and saves a secret value called the preimage (<code>payment_preimage</code>). It hashes this value to obtain <code>payment_hash</code>. The preimage is required to settle the payment, so the client keeps it locally until the conditions for receiving the payment are met, then submits it to the server.</p>
-<p>Receiving a payment has four main steps:</p>
-<ol>
-<li>
-<p><strong>Create and check the invoice.</strong> The client records the authorized amount, asset, and deadline in the SDK, then calls <code>new_invoice</code> with only <code>payment_hash</code>, keeping the preimage for now. The server signs the invoice with the tenant’s invoice key and includes information about the public relay node to tell the payer where to send the payment. The server saves the mapping between the invoice and the tenant. The client checks the returned invoice before sharing it with the payer.</p>
-</li>
-<li>
-<p><strong>The relay node receives and saves the pending payment.</strong> The payer sends the payment to Relay using the hint in the invoice. The server checks which tenant the invoice belongs to, verifies the amount, asset, and deadline, and saves the delivery record. If the private channel is unavailable, the server keeps the payer’s payment pending and retries within the buffer deadline. Once the channel is ready, Relay can start the private-channel payment even while the client is offline. Steps that require a client signature then wait for the client.</p>
-</li>
-<li>
-<p><strong>The client signs and submits the preimage.</strong> Relay pays the tenant through the private channel, and the client must check and sign the channel changes. After <code>get_invoice</code> returns <code>Received</code> (received but not yet settled), the client must also confirm that the incoming payment has been recorded in the local channel records and that the complete signature has been saved. The wallet must be able to use this signature to recover funds on-chain if necessary. The client then calls <code>authorize_preimage_release</code> with a trusted <code>ChainVerifier</code>. The SDK checks that the funding Cell (the CKB output holding the channel funds) is still unspent and matches local records, and that enough time remains for on-chain recovery. Only after this call succeeds does the client promptly submit the preimage through <code>settle_invoice</code> and continue providing the signatures needed for settlement.</p>
-</li>
-<li>
-<p><strong>Confirm receipt.</strong> Relay confirms success to the payer only after the payment through the private channel succeeds. The client shows that the funds have been received only after the invoice status is <code>Paid</code> (paid), and local records confirm that the payment is settled, the balance has increased, and the complete signature has been saved.</p>
-</li>
-</ol>
-<p>The diagram below combines the server’s delivery flow with the wallet’s signing and preimage checks. Public T is the public relay node. Hosted Tenant U provides the tenant API and runs its channels. Delivery Manager saves delivery progress and handles retries; Tenant Supervisor keeps the tenant runtime available. T, D, S, and U all run on the LSP server. Here, “upstream” means the payment from the payer to the LSP, and “downstream” means the payment from the LSP to the tenant. A TLC is a conditional payment in a channel that can be settled with the matching preimage or fail.</p>
-<p>The client keeps the preimage and submits it only after the payment arrives and the checks pass. The invoice is still a normal Fiber invoice. The payer does not need to know the recipient’s <code>tenant_id</code>.</p>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/f/fbb54246b0b809353d4737f061fab9d952fc0ea4.jpeg" data-download-href="https://talk.nervos.org/uploads/default/fbb54246b0b809353d4737f061fab9d952fc0ea4" title="mermaid"><img src="https://talk.nervos.org/uploads/default/optimized/2X/f/fbb54246b0b809353d4737f061fab9d952fc0ea4_2_338x500.jpeg" alt="mermaid" data-base62-sha1="zUIbO9n8T2k32yhWGSnVawnlZVq" width="338" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/f/fbb54246b0b809353d4737f061fab9d952fc0ea4_2_338x500.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/f/fbb54246b0b809353d4737f061fab9d952fc0ea4_2_507x750.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/f/fbb54246b0b809353d4737f061fab9d952fc0ea4_2_676x1000.jpeg 2x" data-dominant-color="FAFAF7"></a></div><p></p>
-<p>The delivery states shown at D track the LSP’s progress in forwarding the payment and returning its result. They are separate from the invoice states <code>Received</code> and <code>Paid</code>, and the payer’s payment status <code>Inflight</code>. Temporary errors can return the delivery to <code>Deferred</code> for another attempt. If the buffer deadline expires before the private-channel payment starts, the LSP fails the upstream TLC.</p>
-<p>For example, Xiaoming creates an invoice, sends it to a friend, and closes the wallet. When the friend pays, the LSP can continue receiving messages and saving progress. If Xiaoming reopens the wallet before the deadline, the client continues signing and settlement to receive the payment.</p>
-<p><strong>Saving a pending payment does not mean the funds have been received.</strong> Before Relay starts the private-channel payment, buffering is limited by the service provider’s settings, the invoice expiry, and the payment deadline. Once that payment has started, waiting for client signatures is subject to the channel’s safety deadline. If this deadline is reached while a required signature is still missing, the server may force-close the channel. A payment that has already timed out and failed will not automatically resume when the wallet is reopened.</p>
-<p><strong>### Sending a Payment: The Client Authorizes It, and the Relay Finds the Route and Forwards It</strong></p>
-<p>For outgoing payments, the client leaves the task of finding the remaining payment route to the public relay node. There are four main steps:</p>
-<ol>
-<li>
-<p><strong>Check the invoice and confirm the payment.</strong> The client checks the invoice signature, network, asset, amount, and expiry, and asks the user to confirm the amount, fees, and deadline. It then saves the user’s payment authorization through the SDK’s <code>authorize_payment</code>. For a trampoline payment, the channel debit also includes reserved fees, so the authorized amount must include these fees.</p>
-</li>
-<li>
-<p><strong>Start the payment.</strong> The client calls <code>send_payment</code> with the tenant access token, specifies the LSP’s public relay node through <code>trampoline_hops</code>, and sets the fee limit and payment deadline. The server sends the payment through the tenant’s private channel. The client checks the channel changes and signs.</p>
-</li>
-<li>
-<p><strong>The relay node forwards the payment and returns the result.</strong> Relay finds the remaining route, forwards the payment to the recipient, and returns the preimage or failure result along the original route. After receiving the preimage, the client checks that its hash equals <code>payment_hash</code>. If the check passes, it calls <code>authorize_fulfillment</code> to allow settlement and continues channel signing.</p>
-</li>
-<li>
-<p><strong>Confirm completion.</strong> The client queries <code>get_payment</code>. It shows success only when the status is <code>Success</code> (successful) and local records confirm that the payment is settled, the balance is correct, and the complete signature has been saved. A request timeout only means that no result has been received yet. The client must query progress using the original <code>payment_hash</code> to avoid paying twice.</p>
-</li>
-</ol>
-<p>The diagram below shows the main steps of a successful payment. Channel signing uses the same APIs described in the previous section.</p>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/6/6cd6813bd60eb5a607f82511941d9e2d78e37033.png" data-download-href="https://talk.nervos.org/uploads/default/6cd6813bd60eb5a607f82511941d9e2d78e37033" title="mermaid"><img src="https://talk.nervos.org/uploads/default/optimized/2X/6/6cd6813bd60eb5a607f82511941d9e2d78e37033_2_690x274.png" alt="mermaid" data-base62-sha1="fwP8L1ef0oISJSfzjpDZJXNbvzB" width="690" height="274" srcset="https://talk.nervos.org/uploads/default/optimized/2X/6/6cd6813bd60eb5a607f82511941d9e2d78e37033_2_690x274.png, https://talk.nervos.org/uploads/default/optimized/2X/6/6cd6813bd60eb5a607f82511941d9e2d78e37033_2_1035x411.png 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/6/6cd6813bd60eb5a607f82511941d9e2d78e37033_2_1380x548.png 2x" data-dominant-color="FAFAF7"></a></div><p></p>
-<p>Whether sending or receiving, the wallet confirms completion only after the server reports success and the wallet’s saved channel records show that the payment has settled. It must also have saved the complete signature needed to recover funds on-chain.</p>
-<h2><a name="p-27430-things-to-keep-in-mind-6" class="anchor" href="https://talk.nervos.org#p-27430-things-to-keep-in-mind-6" aria-label="Heading link"></a>Things to Keep in Mind</h2>
-<p>The LSP’s Watchtower (channel monitoring service) continues checking whether channels have closed and how their later on-chain settlement proceeds while the wallet is offline. If the other party uses an old channel state to initiate an on-chain settlement, a response is needed within the required time, or the user may lose funds in the channel. On-chain operations that require a client signature generate pending signing requests for the wallet to handle. The monitoring service keeps checking, but the client must still come online in time to sign when these operations are involved.</p>
-<p>Using an LSP also requires sufficient channel balances. For outgoing payments, the wallet’s side needs available funds. For incoming payments, the public relay node’s side needs enough balance to pay the wallet through the private channel. Other channels along the payment route also need sufficient balances.</p>
-<p>The wallet must also reliably save keys, channel records, and signing records so that it can continue after a restart. Backing up only the root key is not enough to restore all channel records. The application must separately design how to recover after device loss or data corruption.</p>
-<p>The service provider’s availability and ability to process requests in time still affect sending and receiving payments. The LSP can also see some of the payment information it processes, so service reliability and privacy protection should be considered when choosing a provider.</p>
-<blockquote>
-<p>Fiber LSP is still under development.</p>
-</blockquote>
-            <p><small>2 posts - 2 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/fiber-lsp-running-channels-on-the-server-signing-in-the-wallet/11220">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/fiber-lsp-running-channels-on-the-server-signing-in-the-wallet/11220</link>
-          <pubDate>Mon, 16 Nov 2026 04:22:41 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11220</guid>
-          <source url="https://talk.nervos.org/t/fiber-lsp-running-channels-on-the-server-signing-in-the-wallet/11220.rss">Fiber LSP: Running Channels on the Server, Signing in the Wallet</source>
         </item>
   </channel>
 </rss>
