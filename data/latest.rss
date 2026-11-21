@@ -2254,7 +2254,7 @@ Owners may not engage (then published as independent work, disclosed); fixtures 
 <p><strong>Amplification.</strong> Sharing the open call and the session recordings through ecosystem channels, so the learning resources reach more builders.</p>
 </li>
 </ul>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/dis-ckb-productathon-ship-on-ckb-kisumu-kenya/11262">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/dis-ckb-productathon-ship-on-ckb-kisumu-kenya/11262</link>
@@ -2277,7 +2277,7 @@ Owners may not engage (then published as independent work, disclosed); fixtures 
           <link>https://talk.nervos.org/t/dao/11261</link>
           <pubDate>Thu, 19 Nov 2026 03:17:43 +0000</pubDate>
           <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicClosed>Yes</discourse:topicClosed>
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-11261</guid>
           <source url="https://talk.nervos.org/t/dao/11261.rss">DAO提案公平性疑问？</source>
@@ -2557,7 +2557,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 <h2><a name="p-27569-reference-implementation-and-test-vectors-16" class="anchor" href="https://talk.nervos.org#p-27569-reference-implementation-and-test-vectors-16" aria-label="Heading link"></a>Reference implementation and test vectors</h2>
 <p><code>ckb-ward</code> (<a href="https://github.com/LusoCryptoLabs/ckb-ward" class="inline-onebox" rel="noopener nofollow ugc">GitHub - LusoCryptoLabs/ckb-ward: Ward: lock proof for CKB. Prove control of any CKB lock with a proof transaction that can never land on chain. · GitHub</a>, npm <code>ckb-ward</code>) implements the message, the transaction, the verifier, and three runners: one built from the node’s own script crates, one on ckb-debugger, and one on ckb-vm-js in a browser. It carries 17 signed proofs, each replayed by its tests with the expected exit codes for the proof and for controls: secp256k1 (testnet and mainnet), JoyID main key (testnet and mainnet, signed in the JoyID app), JoyID sub key, a 2-of-3 multisig, anyone-can-pay, Omnilock in Dogecoin, Ethereum and Bitcoin modes, PW-lock (testnet and mainnet), the Nostr lock, the quantum-resistant lock with an SLH-DSA key (testnet and mainnet), and a smart-account lock in two configurations. The full byte-exact vectors are in its <code>docs/SPEC.md</code>.</p>
 <p>CCC’s signer JSON-RPC rebuilds the input cell as described above, so a wallet connected through it can sign a proof for any of its locks. The change (ckb-devrel/ccc#641) is merged into CCC’s development branch and not yet in a release.</p>
-            <p><small>6 posts - 2 participants</small></p>
+            <p><small>8 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/rfc-draft-lock-proof-proving-control-of-a-ckb-lock/11260">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/rfc-draft-lock-proof-proving-control-of-a-ckb-lock/11260</link>
@@ -3027,7 +3027,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 <li>Testnet transfer: <a href="https://explorer.nervos.org/transaction/0xbb10d0b6fb9ad72f6618f29020a1f065e73b4435f5ce24515afcbcb5c50a1a85" rel="noopener nofollow ugc">https://explorer.nervos.org/transaction/0xbb10d0b6fb9ad72f6618f29020a1f065e73b4435f5ce24515afcbcb5c50a1a85</a></li>
 <li>Testnet 2-of-3: <a href="https://explorer.nervos.org/transaction/0x0ea1b3755a6a9610d266a791f2adb0b8c484e6fa1fe203ccfccffedfddbd535f" rel="noopener nofollow ugc">https://explorer.nervos.org/transaction/0x0ea1b3755a6a9610d266a791f2adb0b8c484e6fa1fe203ccfccffedfddbd535f</a></li>
 </ul>
-            <p><small>6 posts - 4 participants</small></p>
+            <p><small>7 posts - 5 participants</small></p>
             <p><a href="https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258</link>
