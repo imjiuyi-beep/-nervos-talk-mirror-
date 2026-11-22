@@ -5,8 +5,100 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Fri, 20 Nov 2026 21:05:46 +0000</lastBuildDate>
+      <lastBuildDate>Sun, 22 Nov 2026 11:13:29 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>Spark Program | FiberVPN: Pay-Per-Hour WireGuard Tunnels over Fiber</title>
+          <dc:creator><![CDATA[akanjacson]]></dc:creator>
+          <category>Spark Program</category>
+          <description><![CDATA[
+            <h1><a name="p-27694-h-1" class="anchor" href="https://talk.nervos.org#p-27694-h-1" aria-label="Heading link"></a></h1>
+<p><strong>Project:</strong> FiberVPN<br>
+<strong>Applicant:</strong> Akan Theodore (<code>kd-designs</code> on GitHub: <a href="https://github.com/kd-designs/fibervpn" class="inline-onebox" rel="noopener nofollow ugc">GitHub - kd-designs/fibervpn: Pay-per-hour and pay-per-MB WireGuard VPN exit gateway powered by Nervos Fiber Network · GitHub</a> )<br>
+<strong>Funding requested:</strong> $750 USD equivalent in CKB (payout address shared on approval)<br>
+<strong>Timeline:</strong> 5 weeks<br>
+<strong>Contact:</strong> Nervos Talk DM</p>
+<hr>
+<h3><a name="p-27694-what-fibervpn-is-2" class="anchor" href="https://talk.nervos.org#p-27694-what-fibervpn-is-2" aria-label="Heading link"></a>What FiberVPN Is</h3>
+<p>FiberVPN is a self-hosted WireGuard exit gateway and browser checkout that sells encrypted VPN tunnels by the hour or by the megabyte over Nervos Fiber Network.</p>
+<p>You open the web page, pick a tier (<code>1 hour / 500 MB</code> or <code>24 hours / 5 GB</code>), pay a Fiber invoice and get a WireGuard QR code and <code>.conf</code> file immediately. You scan it into the official WireGuard app on your phone or laptop, route traffic through the exit node and get disconnected cleanly as soon as the paid time or byte quota hits zero</p>
+<h3><a name="p-27694-why-build-this-3" class="anchor" href="https://talk.nervos.org#p-27694-why-build-this-3" aria-label="Heading link"></a>Why Build This</h3>
+<p>Most commercial VPNs force users into $10+/month subscriptions, email signups or credit card billing just to get encrypted internet on airport, hotel or cafe Wi-Fi for an afternoon. On Bitcoin Lightning, <strong>LNVPN</strong> showed that pay-as-you-go WireGuard tunnels are one of the few micropayment apps people actually return to use.</p>
+<p>FiberVPN brings that same pattern to Fiber without accounts or custodial logins:</p>
+<ul>
+<li>The browser generates the WireGuard keypair locally and persists it in <code>localStorage</code> so refreshing the tab while waiting for payment never orphans a paid tunnel.</li>
+<li>The backend validates the Curve25519 public key, creates a Fiber invoice via <code>fnn</code> (<code>new_invoice</code>) and allocates a tunnel IP only after <code>get_invoice</code> reports <code>Paid</code>.</li>
+<li>Every 10 seconds, the quota daemon checks <code>wg show wg0 transfer</code> and tears down any peer whose paid duration or byte limit is reached, recycling its IP back into the <code>/24</code> pool.</li>
+</ul>
+<p><em>How it sits next to other Fiber projects:</em> <code>MeterNet</code> meters local router Wi-Fi per megabyte via <code>openNDS</code> captive-portal rules, while <code>Fiber Paid HTTP</code> gates single HTTP requests behind payment headers. Neither gives a remote user an OS-level encrypted WireGuard tunnel they can turn on from anywhere using the standard WireGuard app.</p>
+<h3><a name="p-27694-how-it-works-4" class="anchor" href="https://talk.nervos.org#p-27694-how-it-works-4" aria-label="Heading link"></a>How It Works</h3>
+<pre><code class="lang-plaintext">Browser generates WireGuard keypair locally (saved in localStorage)
+  -&gt; sends publicKey + tier to FiberVPN gateway
+  -&gt; gateway validates Curve25519 key, calls fnn new_invoice and returns invoice
+
+User pays invoice (~1s via Fiber wallet or @nervosnetwork/fiber-js WASM)
+  -&gt; gateway sees Paid via get_invoice
+  -&gt; allocates IP from /24 pool -&gt; runs `wg set wg0 peer &lt;pubkey&gt; allowed-ips &lt;ip&gt;/32`
+  -&gt; browser injects local PrivateKey and renders WireGuard QR / .conf
+
+Quota daemon (every 10s, backed by SQLite)
+  -&gt; reads `wg show wg0 transfer`
+  -&gt; on expiry or rx+tx &gt;= maxBytes, runs `wg set wg0 peer &lt;pubkey&gt; remove` and recycles IP
+</code></pre>
+<p>The HTTP server runs unprivileged (not as <code>root</code>), scoped via <code>CAP_NET_ADMIN</code> / <code>sudoers</code> strictly to <code>wg set wg0</code> and <code>wg show wg0 transfer</code> with <code>execFile</code> and zero shell interpolation. During the public testnet trial, <code>nftables</code> forwarding on <code>wg0</code> blocks outbound SMTP (<code>25, 465, 587</code>) and BitTorrent while leaving standard web, SSH and DNS ports (<code>80, 443, 53</code>) open so testers cannot get the VPS flagged for spam.</p>
+<p>For reviewers who do not run a local <code>fnn</code> node, <strong>Week 2 puts a public testnet web MVP online</strong> with a built-in <code>@nervosnetwork/fiber-js</code> browser WASM flow alongside the raw invoice QR. You fund from the testnet faucet, pay a <code>15 min / 50 MB</code> test tier right in your browser, scan the WireGuard QR on your phone or laptop and confirm your public IP switches to the exit node and cuts off at expiry.</p>
+<h3><a name="p-27694-applicant-background-5" class="anchor" href="https://talk.nervos.org#p-27694-applicant-background-5" aria-label="Heading link"></a>Applicant Background</h3>
+<p>I’m Akan Theodore (<code>kd-designs</code>), an independent full-stack developer working mostly with TypeScript, Node.js services and Linux networking. I haven’t run a public <code>fnn</code> node before, so Week 1 tackles live Pudge testnet channel opening and <code>wg set</code> peer provisioning on a Linux VPS up front before building the browser UI on top of it.</p>
+<h3><a name="p-27694-what-already-exists-vs-what-the-grant-funds-6" class="anchor" href="https://talk.nervos.org#p-27694-what-already-exists-vs-what-the-grant-funds-6" aria-label="Heading link"></a>What Already Exists vs. What the Grant Funds</h3>
+<p>An initial <code>v0.1.0</code> core is already written in TypeScript ( <a href="http://github.com/kd-designs/fibervpn" class="inline-onebox" rel="noopener nofollow ugc">GitHub - kd-designs/fibervpn: Pay-per-hour and pay-per-MB WireGuard VPN exit gateway powered by Nervos Fiber Network · GitHub</a> ) and runs locally today:</p>
+<ul>
+<li>Curve25519 base64 key validation rejecting malformed or shell-injected keys (<code>src/wireguard.ts</code>)</li>
+<li><code>/24</code> IP pool allocator (<code>IpPoolAllocator</code>), <code>.conf</code> builder and <code>WgCliAdapter</code> using <code>execFile('wg', ...)</code></li>
+<li><code>FnnRpcClient</code> wired to FNN’s <code>new_invoice</code> and <code>get_invoice</code> JSON-RPC schema plus an in-memory mock (<code>src/fiber-rpc.ts</code>)</li>
+<li><code>VpnManager</code> with post-payment IP allocation, concurrent activation locking, duplicate-active-key protection and automatic time/byte quota cutoffs (<code>src/manager.ts</code>)</li>
+<li>8 passing unit tests (<code>npm test</code>) and a local simulation (<code>npm run demo</code>)</li>
+</ul>
+<p><strong>What this grant funds (5 weeks):</strong></p>
+<ul>
+<li><strong>Live Linux + WireGuard + <code>fnn</code> gateway:</strong> Provisioning <code>wg0</code> NAT/forwarding, <code>nftables</code> port filtering and a funded Pudge testnet <code>fnn</code> node on a public Linux VPS.</li>
+<li><strong>Public browser MVP (Week 2):</strong> Hosted testnet page with client-side Curve25519 keygen (<code>localStorage</code>-backed), <code>@nervosnetwork/fiber-js</code> WASM checkout alongside raw invoice QRs and WireGuard QR rendering.</li>
+<li><strong>SQLite persistence &amp; restart reconciliation (Week 3):</strong> Persisting sessions and byte checkpoints in SQLite so daemon restarts clean up peers that expired offline and never reset <code>wg</code> byte counters.</li>
+<li><strong>14-day public testnet trial &amp; verifier (Weeks 4-5):</strong> Opening the testnet exit node to Nervos Talk testers for two weeks, publishing a standalone status/verification CLI (<code>npx fibervpn status &lt;payment_hash&gt;</code>), recording an unedited mobile WireGuard demo video and posting the closing report with testnet payment hashes and honest latency/failure notes.</li>
+</ul>
+<h3><a name="p-27694-deliverables-timeline-7" class="anchor" href="https://talk.nervos.org#p-27694-deliverables-timeline-7" aria-label="Heading link"></a>Deliverables &amp; Timeline</h3>
+<ul>
+<li><strong>Week 1: Live <code>wg0</code> + <code>fnn</code> testnet node:</strong> Linux VPS running WireGuard <code>wg0</code>, <code>nftables</code> rules and a funded Pudge testnet <code>fnn</code> node; first real invoice-to-peer-add test passed</li>
+<li><strong>Week 2: Public testnet web MVP:</strong> Hosted demo URL posted on this thread with browser <code>@nervosnetwork/fiber-js</code> + QR checkout, WireGuard QR generation and live peer status board.</li>
+<li><strong>Week 3: Persistence &amp; quota cutoff suite:</strong> SQLite session recovery across restarts and live cutoff tests for both time expiry and byte-cap exhaustion.</li>
+<li><strong>Weeks 4-5: 14-day community trial, CLI &amp; wrap-up:</strong> Two weeks of public testnet usage, verification CLI published, unedited mobile WireGuard cutoff video recorded and closing report posted.</li>
+</ul>
+<h3><a name="p-27694-budget-750-usd-in-ckb-8" class="anchor" href="https://talk.nervos.org#p-27694-budget-750-usd-in-ckb-8" aria-label="Heading link"></a>Budget: $750 USD in CKB</h3>
+<p>Priced by milestone (no VPS hardware or hosting fees billed separately):</p>
+<ul>
+<li><strong>Week 1 ($150):</strong> Linux VPS <code>wg0</code> setup, <code>nftables</code> rules and testnet <code>fnn</code> channel liquidity</li>
+<li><strong>Week 2 ($200):</strong> Public testnet web MVP, client-side keygen, WASM checkout and WireGuard QR UI</li>
+<li><strong>Week 3 ($200):</strong> SQLite persistence, restart reconciliation and automated quota cutoff tests</li>
+<li><strong>Weeks 4-5 ($200):</strong> 14-day public trial, verification CLI, walkthrough video and closing report</li>
+</ul>
+<h3><a name="p-27694-how-anyone-can-verify-9" class="anchor" href="https://talk.nervos.org#p-27694-how-anyone-can-verify-9" aria-label="Heading link"></a>How Anyone Can Verify</h3>
+<ol>
+<li><strong>Right now (local repo):</strong> Clone <a href="http://github.com/kd-designs/fibervpn" class="inline-onebox" rel="noopener nofollow ugc">GitHub - kd-designs/fibervpn: Pay-per-hour and pay-per-MB WireGuard VPN exit gateway powered by Nervos Fiber Network · GitHub</a> , run <code>npm install &amp;&amp; npm test &amp;&amp; npm run demo</code> to verify the 8 tests, key validation, concurrency guard and quota cutoff simulation.</li>
+<li><strong>From Week 2:</strong> Open the live testnet URL, pay a testnet Fiber invoice via the browser WASM flow (or your own Fiber node), scan the WireGuard QR in the official WireGuard app, check <code>ifconfig.me</code> before and after connecting and watch traffic stop at expiry.</li>
+<li><strong>At completion:</strong> Run <code>npx fibervpn status &lt;payment_hash&gt;</code> against our public logs and watch the unedited phone-to-WireGuard walkthrough video.</li>
+</ol>
+<h3><a name="p-27694-maintenance-10" class="anchor" href="https://talk.nervos.org#p-27694-maintenance-10" aria-label="Heading link"></a>Maintenance</h3>
+<p>For 6 months after completion, I will keep <code>fibervpn</code> updated against <code>fnn</code> JSON-RPC changes and answer setup issues on GitHub within 48 hours.</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/spark-program-fibervpn-pay-per-hour-wireguard-tunnels-over-fiber/11300">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/spark-program-fibervpn-pay-per-hour-wireguard-tunnels-over-fiber/11300</link>
+          <pubDate>Sun, 22 Nov 2026 11:13:29 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11300</guid>
+          <source url="https://talk.nervos.org/t/spark-program-fibervpn-pay-per-hour-wireguard-tunnels-over-fiber/11300.rss">Spark Program | FiberVPN: Pay-Per-Hour WireGuard Tunnels over Fiber</source>
+        </item>
         <item>
           <title>Sigsheet: one file for signing CKB multisig transactions across ckb-cli, Neuron and CCC apps (first spec draft, feedback wanted)</title>
           <dc:creator><![CDATA[ILE_LABS]]></dc:creator>
@@ -3027,7 +3119,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 <li>Testnet transfer: <a href="https://explorer.nervos.org/transaction/0xbb10d0b6fb9ad72f6618f29020a1f065e73b4435f5ce24515afcbcb5c50a1a85" rel="noopener nofollow ugc">https://explorer.nervos.org/transaction/0xbb10d0b6fb9ad72f6618f29020a1f065e73b4435f5ce24515afcbcb5c50a1a85</a></li>
 <li>Testnet 2-of-3: <a href="https://explorer.nervos.org/transaction/0x0ea1b3755a6a9610d266a791f2adb0b8c484e6fa1fe203ccfccffedfddbd535f" rel="noopener nofollow ugc">https://explorer.nervos.org/transaction/0x0ea1b3755a6a9610d266a791f2adb0b8c484e6fa1fe203ccfccffedfddbd535f</a></li>
 </ul>
-            <p><small>7 posts - 5 participants</small></p>
+            <p><small>8 posts - 6 participants</small></p>
             <p><a href="https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258</link>
@@ -6260,60 +6352,6 @@ Please plan to close and settle these V1 channels soon, as they will no longer b
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-11225</guid>
           <source url="https://talk.nervos.org/t/dead-mans-switch-a-letter-that-opens-only-if-you-stop-checking-in-testnet/11225.rss">Dead Man&#39;s Switch — a letter that opens only if you stop checking in (testnet)</source>
-        </item>
-        <item>
-          <title>CLASP UPDATE</title>
-          <dc:creator><![CDATA[drey]]></dc:creator>
-          <category>Infrastructure</category>
-          <description><![CDATA[
-            <p>Hey everyone,</p>
-<p>I’m Drey, creator of Clasp, the permission layer for Fiber wallets that took first place in the Wallet &amp; Payment UX Infrastructure category at Gone in 60ms and was named overall winner. A couple of days ago I did an AMA on r/NervosNetwork and talked about what comes next. Rather than come back here with a plan, we built the first part of it. This post covers what people asked, what’s now live, and what’s still missing.</p>
-<h2><a name="p-27433-the-problem-briefly-1" class="anchor" href="https://talk.nervos.org#p-27433-the-problem-briefly-1" aria-label="Heading link"></a>The problem, briefly</h2>
-<p>If an app wants to make Fiber payments for you today, it needs access to your node’s RPC. That gives it everything, for as long as the credential lives. You can’t say “this app can spend up to 5 CKB over the next hour and nothing else.”</p>
-<p>Clasp adds that missing step. The app asks for permissions and spending limits, you cut them down and approve, and every payment after that goes through a policy engine before anything reaches the Fiber node. You can revoke the session whenever you want.</p>
-<p>AI agents are the case I care about most. An agent paying for APIs or data can’t stop and ask you about every small payment, and you can’t hand it your keys either. A capped, expiring, revocable session sits in between.</p>
-<h2><a name="p-27433-what-the-ama-asked-2" class="anchor" href="https://talk.nervos.org#p-27433-what-the-ama-asked-2" aria-label="Heading link"></a>What the AMA asked</h2>
-<p>TheCrimsonSquirrel asked:</p>
-<blockquote>
-<p>Are there any guardrails or patterns you’ve found necessary so an agent can spend within limits without too much user interaction, while still preventing spending too much?</p>
-</blockquote>
-<p>My answer was that routine payments should go through on their own and risky ones should need a human, and that Clasp only did the first half. It now does both.</p>
-<p>djminger007 asked what the concrete next step was, and how far the rules could go:</p>
-<blockquote>
-<p>can I define more advanced conditions (e.g. time-of-day restricts, rate limits, asset-specific rules, or demand multi-step confirms for high amounts)</p>
-</blockquote>
-<p>I said developer experience would come first, and listed four rules I wanted: time-of-day windows, a cap on transactions per hour, per-recipient budgets, and manual confirmation above a set amount. I was clear that none of them existed. Two of the four are now live, and the SDK is now something you can install.</p>
-<p>Thanks to both of you, and to the team that hosted the AMA. Full thread: <a href="https://www.reddit.com/r/NervosNetwork/comments/1xms28r/an_ama_with_drey_clasp_creator_and_gone_in_60ms/" rel="noopener nofollow ugc">https://www.reddit.com/r/NervosNetwork/comments/1xms28r/an_ama_with_drey_clasp_creator_and_gone_in_60ms/</a></p>
-<h2><a name="p-27433-whats-new-3" class="anchor" href="https://talk.nervos.org#p-27433-whats-new-3" aria-label="Heading link"></a>What’s new</h2>
-<p><strong>Ask me before paying over an amount.</strong> When the wallet owner approves a session, they can now set a threshold. A payment above it still runs through the whole policy engine and has its amount reserved, but nothing is sent. The app or agent gets back <code>approval_required</code> with a request id, and can call <code>waitForApproval()</code> to wait for the answer. Only a decision signed by the owner’s key settles the payment. In the Security Lab you can make the agent approve its own held payment: it gets <code>invalid_signature</code> and the payment stays where it is. If the owner declines, the hold expires after 10 minutes, or the session is revoked, the reserved amount goes back to the budget. Two approvals arriving at the same moment still pay once.</p>
-<p><strong>Rate caps.</strong> The owner can also cap how many payments go through per time window. The cap is checked inside the same database transaction as the spending cap, so if an agent fires a burst of requests at once, exactly the cap gets through and the rest come back <code>rate_limit_exceeded</code> with how many seconds to wait. Sub-agents count against their parent’s cap, so spinning up more agents doesn’t buy more payments. The Security Lab has a “Payment burst” attack for this.</p>
-<p><strong>The owner signs, not the app.</strong> Building the approval feature exposed a gap I want to be upfront about. The approve step used to live in our web wallet’s UI, and the server would create a session with whatever limits it was sent. Now a session can only be created from an approval signed by the owner’s key, and that key is also the only one that can approve a held payment. Revoking needs a signature from the app or the owner too. A self-hosted wallet core can restrict approvals to a list of owner keys. The public demo runs in open mode so every visitor gets a working wallet, and <code>/api/health</code> says which mode is running.</p>
-<p><strong>You can install it.</strong> The SDK is on npm as <code>@useclasp/client</code> and <code>@useclasp/react</code>, and <code>docker compose up</code> runs the wallet core privately behind the keyless relay. The quickstart goes from nothing to an agent whose large payment is held, approved and settled, with a verified receipt: <a href="https://github.com/Enoch208/Clasp/blob/main/docs/QUICKSTART.md" class="inline-onebox" rel="noopener nofollow ugc">Clasp/docs/QUICKSTART.md at main · Enoch208/Clasp · GitHub</a></p>
-<p>Before shipping I ran an adversarial review over the change (not a formal audit). It found real problems, including an approval that didn’t bind to the payment amount, so a lying relay could have shown the owner a smaller number than the one they were approving, and expiry values that could effectively mean “never”. Those are fixed, and each has a test that fails without the fix. The automated suite went from 122 tests to 178.</p>
-<p>You can check the live deployment from a terminal:</p>
-<p>You can check the live deployment yourself by opening <a href="https://useclasp.xyz/api/health" rel="noopener nofollow ugc">https://useclasp.xyz/api/health</a> in a browser. It returns a short status report that says whether it’s running on real Fiber testnet, whether sealing is on, and whether owner approvals are open or limited to a list of keys.</p>
-<h2><a name="p-27433-whats-next-4" class="anchor" href="https://talk.nervos.org#p-27433-whats-next-4" aria-label="Heading link"></a>What’s next</h2>
-<p>The rest of the AMA list, passkeys, recovering payments with unknown outcomes, and getting Clasp into existing Fiber wallets all need a proper plan. I’ll share that in its own post.</p>
-<p>If you’re building on Fiber, I’d like to know which rules your app or agent would actually need, and whether <code>npm install</code> plus Docker is enough to get you started. And if you find a way past the Security Lab, please tell me.</p>
-<ul>
-<li>Live app: <a href="https://useclasp.xyz" rel="noopener nofollow ugc">https://useclasp.xyz</a></li>
-<li>Security Lab: <a href="https://useclasp.xyz/lab" class="inline-onebox" rel="noopener nofollow ugc">Clasp — Connect apps to Fiber wallets. Never hand over the keys.</a></li>
-<li>Code: <a href="https://github.com/Enoch208/Clasp" class="inline-onebox" rel="noopener nofollow ugc">GitHub - Enoch208/Clasp: Secure, scoped, and revocable wallet sessions for Fiber Network — with permission controls, spending limits, real payments, replay protection, and instant revocation. · GitHub</a></li>
-<li>npm: <a href="https://www.npmjs.com/package/@useclasp/client" rel="noopener nofollow ugc">https://www.npmjs.com/package/@useclasp/client</a> and <a href="https://www.npmjs.com/package/@useclasp/react" rel="noopener nofollow ugc">https://www.npmjs.com/package/@useclasp/react</a></li>
-<li>Quickstart: <a href="https://github.com/Enoch208/Clasp/blob/main/docs/QUICKSTART.md" class="inline-onebox" rel="noopener nofollow ugc">Clasp/docs/QUICKSTART.md at main · Enoch208/Clasp · GitHub</a></li>
-<li>Demo video (about 3.5 minutes): <a href="https://youtu.be/HUzFXqXWo-A" rel="noopener nofollow ugc">https://youtu.be/HUzFXqXWo-A</a></li>
-<li>AMA thread: <a href="https://www.reddit.com/r/NervosNetwork/comments/1xms28r/an_ama_with_drey_clasp_creator_and_gone_in_60ms/" rel="noopener nofollow ugc">https://www.reddit.com/r/NervosNetwork/comments/1xms28r/an_ama_with_drey_clasp_creator_and_gone_in_60ms/</a></li>
-</ul>
-            <p><small>1 post - 1 participant</small></p>
-            <p><a href="https://talk.nervos.org/t/clasp-update/11222">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/clasp-update/11222</link>
-          <pubDate>Mon, 16 Nov 2026 09:31:27 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11222</guid>
-          <source url="https://talk.nervos.org/t/clasp-update/11222.rss">CLASP UPDATE</source>
         </item>
   </channel>
 </rss>
