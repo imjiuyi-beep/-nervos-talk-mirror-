@@ -5,13 +5,13 @@ url = os.environ.get("FETCH_URL", "https://www.google.com")
 name = os.environ.get("FETCH_NAME", "page")
 
 # ---------- 1) JSON/纯API类 URL：直接 HTTP 抓，不走浏览器 ----------
-if "publish.twitter.com/oembed" in url or url.endswith(".json") or "/api/" in url:
+if "publish.twitter.com/oembed" in url or (".json" in url) or "/api/" in url:
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
         with urllib.request.urlopen(req, timeout=30) as r:
             body = r.read().decode("utf-8", "replace")
-        open(f"data/{name}_text.txt", "w", encoding="utf-8").write(body[:60000])
-        open(f"data/{name}_page.html", "w", encoding="utf-8").write(body[:60000])
+        open(f"data/{name}_text.txt", "w", encoding="utf-8").write(body)
+        open(f"data/{name}_page.html", "w", encoding="utf-8").write(body)
         print(f"fetched(api) {url}")
         raise SystemExit(0)
     except SystemExit:
@@ -69,6 +69,6 @@ with sync_playwright() as p:
         txt = pg.inner_text("body")
     except Exception:
         txt = ""
-    open(f"data/{name}_text.txt", "w", encoding="utf-8").write(txt[:30000])
+    open(f"data/{name}_text.txt", "w", encoding="utf-8").write(txt[:200000])
     b.close()
 print(f"fetched {url}")
