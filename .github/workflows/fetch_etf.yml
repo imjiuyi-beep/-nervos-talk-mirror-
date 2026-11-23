@@ -1,0 +1,27 @@
+name: Fetch ETF
+on:
+  schedule:
+    - cron: "30 1 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: fetch-etf
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -q playwright && playwright install chromium --with-deps
+      - name: run
+        run: python3 scripts/fetch_etf.py
+      - name: commit
+        run: |
+          git config user.name bot
+          git config user.email bot@users.noreply.github.com
+          git add data/etf.json
+          git commit -m "etf $(date -u +%Y%m%d%H%M)" || echo none
+          git push
