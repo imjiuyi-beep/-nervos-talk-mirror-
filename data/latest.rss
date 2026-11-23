@@ -5,8 +5,673 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Sun, 22 Nov 2026 11:13:29 +0000</lastBuildDate>
+      <lastBuildDate>Mon, 23 Nov 2026 14:10:29 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>Spark Program | ckb-whitehat</title>
+          <dc:creator><![CDATA[nghiadang391]]></dc:creator>
+          <category>Spark Program</category>
+          <description><![CDATA[
+            <h1><a name="p-27761-ckb-whitehat-spark-program-application-1" class="anchor" href="https://talk.nervos.org#p-27761-ckb-whitehat-spark-program-application-1" aria-label="Heading link"></a>ckb-whitehat — Spark Program application</h1>
+<p><strong>Status: ready to run (tool shipped at <code>v0.4.2</code>).</strong> The repository<br>
+(<a href="https://github.com/nghiadang391/ckb-whitehat" rel="noopener nofollow ugc">https://github.com/nghiadang391/ckb-whitehat</a>)<br>
+already exists under my GitHub account (<code>nghiadang391</code>) and holds two completed<br>
+pilots plus a working Go CLI release (<code>v0.4.2</code>, CI green). This application<br>
+funds the first systematic whitehat verification of three more CKB-DAO-funded<br>
+CKB/Fiber money products, plus three net-new forward deliverables on the tool<br>
+itself. Code for each new target lands in this repo week by week, with its<br>
+<code>FINDINGS.md</code>, its deterministic PoC suite, and its patch packs.</p>
+<p><strong>License:</strong> MIT.</p>
+<hr>
+<p><strong>Title:</strong> Spark Program | ckb-whitehat: deterministic whitehat verification of CKB/Fiber money products — AI-assisted triage, replayable PoCs, patches, consent-based disclosure</p>
+<p><strong>Category:</strong> DAOs &amp; Funding → Spark Program <em>(posted directly in the Spark sub-section per the 2026-07-19 forum update)</em></p>
+<h2><a name="p-27761-h-1-project-overview-2" class="anchor" href="https://talk.nervos.org#p-27761-h-1-project-overview-2" aria-label="Heading link"></a>1. Project overview</h2>
+<ul>
+<li><strong>Project name:</strong> ckb-whitehat</li>
+<li><strong>Repository:</strong> <a href="https://github.com/nghiadang391/ckb-whitehat" rel="noopener nofollow ugc">https://github.com/nghiadang391/ckb-whitehat</a> (latest release: <code>v0.4.2</code>, MIT)</li>
+<li><strong>One-sentence summary:</strong> <code>ckb-whitehat</code> is a shipped community verification<br>
+CLI (<code>v0.4.2</code>) with a public track record (two completed pilots, 23 findings<br>
+— 21 <code>PROVEN</code> fired + 2 <code>STRUCTURAL</code> repo-verified); this grant funds<br>
+applying it to three more CKB-DAO-funded CKB/Fiber money products — each<br>
+shipped as one-command deterministic PoCs, minimal patches, and a<br>
+consent-based disclosure record — plus three net-new tool deliverables: a<br>
+standalone <code>verify</code> subcommand, a measured AI-cost reduction pass, and a<br>
+maintainer disclosure kit.</li>
+<li><strong>Type:</strong> developer security verification tooling (already built, MIT, single<br>
+static Go binary, zero runtime dependencies, CI green) plus a public body of<br>
+verified findings. Developers can also run <code>ckb-whitehat</code> locally as a<br>
+pre-push defensive security verification gate before shipping their own<br>
+CKB/Fiber apps. No changes to Fiber, CKB-VM, or any grantee’s codebase;<br>
+findings ship as PoCs + patches, applied only with the maintainer’s written<br>
+consent.</li>
+</ul>
+<h2><a name="p-27761-h-2-team-profile-3" class="anchor" href="https://talk.nervos.org#p-27761-h-2-team-profile-3" aria-label="Heading link"></a>2. Team profile</h2>
+<ul>
+<li><strong>Nghia Dang</strong> (GitHub: <a href="https://github.com/nghiadang391" rel="noopener nofollow ugc">nghiadang391</a>),<br>
+solo, all roles.</li>
+<li><strong>Contact:</strong>
+<ul>
+<li><strong>Discord:</strong> <code>nghia.dang.391</code></li>
+<li><strong>Email:</strong> <code>nghia.dang.391@gmail.com</code></li>
+<li><strong>GitHub:</strong> <a href="https://github.com/nghiadang391" rel="noopener nofollow ugc">https://github.com/nghiadang391</a></li>
+<li><strong>Nervos Talk:</strong> this account</li>
+</ul>
+</li>
+<li><strong>Background:</strong> CKB ecosystem builder; author of the <code>ckb-whitehat</code> tool and<br>
+methodology (<a href="https://github.com/nghiadang391/ckb-whitehat" rel="noopener nofollow ugc">https://github.com/nghiadang391/ckb-whitehat</a>,<br>
+MIT). Relevant public work, all verifiable in-repo:
+<ul>
+<li><strong>Dular pilot</strong> (M-Pesa STK-push → RUSD on-ramp over Fiber; an approved<br>
+$2,000 Spark grant, M1 verified with 3 production 1-KES deposits): <strong>9<br>
+findings</strong> — <strong>F1–F7 <code>PROVEN</code> (fired, including 1 CRITICAL)</strong> + <strong>F8–F9<br>
+<code>STRUCTURAL</code></strong> (verified repo inventory / pre-release lockfile pin). F1<br>
+(“forged STK callback = free RUSD”) ends in a real CKB Pudge testnet trace<br>
+where a fabricated KES receipt moved RUSD between two of our own local FNN<br>
+nodes (tx hashes recorded in <code>dular/FINDINGS.md</code>, <code>C4.1–C4.5</code>). The F2<br>
+ledger double-spend race ships with a 3-line fix and a harness that fails<br>
+on unmodified source and passes on the fix.</li>
+<li><strong>tapfiber pilot</strong> (Fiber order/receipt library, vendored in-tree): <strong>14<br>
+findings (<code>F1–F14</code>, all <code>PROVEN</code>/fired)</strong>, one-command zero-dependency<br>
+offline PoC suite (<code>node tapfiber/poc/attack.mjs</code>).</li>
+<li><strong>The tool itself (<code>v0.4.2</code>):</strong> single static Go binary (zero runtime<br>
+dependencies — no Node/npm needed to install; drives local authenticated<br>
+<code>claude</code>, <code>agy</code> [Antigravity CLI], or <code>codex</code> CLIs in auto-detect order<br>
+<code>claude → agy → codex</code>, never asking for API keys), embedded methodology,<br>
+read-only AI-assisted <code>init</code> with per-command risk analysis and approval<br>
+(<code>setup.json</code> handoff), live responsive 2-column TUI with one-key human<br>
+checkpoint gates (<code>triage</code> / <code>permission</code> / <code>publish</code>), self-contained<br>
+local Docker CKB devnet (<code>nervos/ckb:v0.210.0</code>) + 2 peered Fiber<br>
+(<code>nervos/fiber:0.10.1</code>) nodes with pre-funded CKB &amp; <code>TEST_XUDT</code> channels<br>
+(<code>ckb-whitehat chain up|status|down</code>), mainnet refusal guard + strict<br>
+post-run RPC hash verification, isolated Docker scratch Postgres<br>
+(<code>127.0.0.1:5439</code>), 5 embedded CKB/Fiber invariant packs, broad-allow +<br>
+strict high-risk denylist, polyglot stack support (Node, Rust/Cargo<br>
+<code>ckb-testtool</code>, Go, Python), <code>install.sh</code> + GitHub Releases (<code>sha256</code>-verified<br>
+self-update), and green CI.</li>
+</ul>
+</li>
+<li><strong>Weekly sync:</strong> text updates in this thread, every Saturday at a fixed time<br>
+(UTC), with the week’s findings table and repro commands.</li>
+</ul>
+<h2><a name="p-27761-h-3-project-background-4" class="anchor" href="https://talk.nervos.org#p-27761-h-3-project-background-4" aria-label="Heading link"></a>3. Project background</h2>
+<p>The grant cycle has produced a wave of CKB/Fiber <em>money</em> products —<br>
+stablecoin wallets, RUSD on-ramps, Fiber-based order/receipt systems, and<br>
+CKB-script apps. Where money moves, an unauthenticated callback, a ledger<br>
+double-spend race, or an unsafe config default is directly exploitable for<br>
+asset theft. Two lanes of verification already exist:</p>
+<ul>
+<li><strong>Protocol-core:</strong> the CKB-VM Sail Validation Sprint and the<br>
+ckb-verify / spark-verify acceptance-check tool cover the shared chain<br>
+assets and the author’s <em>own</em> declared flows.</li>
+<li><strong>Author-side regression:</strong> a project re-running its own acceptance<br>
+commands on a devnet.</li>
+</ul>
+<p>What is missing is the adversarial, community-owned middle lane: an outside<br>
+verifier testing the <em>default</em> code paths of funded apps — and giving builders<br>
+a reusable pre-push verification CLI they can run locally before shipping —<br>
+with deterministic evidence a maintainer can run and trust rather than a<br>
+report of opinions. The committee has shown it values concrete, verifiable<br>
+proof: the Dular approval turned on working multi-hop RUSD payment traces plus<br>
+a clear “How to Verify” section. This application funds that same shape — a<br>
+shipped tool (<code>v0.4.2</code>) with public evidence, applied to three new CKB/Fiber<br>
+targets.</p>
+<h2><a name="p-27761-h-4-solution-5" class="anchor" href="https://talk.nervos.org#p-27761-h-4-solution-5" aria-label="Heading link"></a>4. Solution</h2>
+<p>For each target, <code>ckb-whitehat</code> executes a fixed, reproducible pipeline:</p>
+<ol>
+<li><strong>Read-only init &amp; triage</strong> — <code>ckb-whitehat init</code> inspects the repo in<br>
+strictly read-only mode to map stack dependencies and host prerequisites<br>
+(with explicit per-command human approval for any target dependency install).<br>
+<code>ckb-whitehat run</code> then maps keygen/key storage, amount parsing (<code>BigInt</code> vs<br>
+<code>Number</code>), signing, vendor/network trust boundaries, balance/ledger<br>
+invariants, secrets-in-config, and on-chain interactions.</li>
+<li><strong>Named security invariant hypotheses</strong> — each names a code region, threat<br>
+class, and the money/safety invariant it violates (no double-credit,<br>
+non-negative balance under concurrency, callback authenticity, fail-closed<br>
+production defaults). Ranked and scoped to what is provable locally.</li>
+<li><strong>Deterministic PoCs</strong> — one replayable verification script per hypothesis:<br>
+unauthenticated-webhook test, concurrent DB race harness (against isolated<br>
+Docker scratch Postgres), config-matrix test, or boundary fuzz corpus. A<br>
+finding ships as <code>PROVEN</code> only when its script actually ran against<br>
+<em>unmodified</em> source and printed its captured <code>FINDING &lt;id&gt; FIRED</code> verdict.</li>
+<li><strong>On-chain evidence</strong> — for chain-interacting targets:
+<ul>
+<li><strong>Local deterministic devnet (<code>--chain</code>):</strong> self-contained Docker CKB<br>
+devnet + 2 peered FNN <code>v0.10.1</code> nodes with pre-funded CKB &amp; <code>TEST_XUDT</code><br>
+channels (zero faucet flakiness; every reported tx/payment hash is<br>
+automatically re-verified against local RPC by <code>ckb-whitehat</code> at the end<br>
+of <code>run</code>).</li>
+<li><strong>Public CKB Pudge testnet (when explorer-checkable public traces add<br>
+value):</strong> our own 2-node FNN stack, our own addresses, faucet assets —<br>
+impact confined strictly to our own addresses and local services. Mainnet<br>
+is hard-refused by the CLI.</li>
+</ul>
+</li>
+<li><strong>Patch guidance</strong> — minimal defensive fix per finding; for races/config<br>
+bugs, a working fixed module plus the <em>same harness re-run</em> proving it fails<br>
+before and passes after.</li>
+<li><strong>Consent-based disclosure</strong> — private report to the maintainer, patch<br>
+window, publication only on written consent. The dated disclosure log ships<br>
+as a deliverable so the community sees the pipeline end to end.</li>
+</ol>
+<p><strong>How the AI cost enters:</strong> steps 1–3 use the local agent CLI (<code>claude</code>, <code>agy</code>,<br>
+or <code>codex</code>); LLM tokens for triage, PoC engineering, and report drafting are a<br>
+real, auditable cost item budgeted explicitly in §7 (capped at $150 across all<br>
+3 targets, with per-target session logs and token counts).</p>
+<h2><a name="p-27761-h-5-technical-approach-6" class="anchor" href="https://talk.nervos.org#p-27761-h-5-technical-approach-6" aria-label="Heading link"></a>5. Technical approach</h2>
+<ul>
+<li><strong>Stack:</strong> <code>ckb-whitehat v0.4.2</code> static Go binary (<code>go test -race</code> green in<br>
+CI across Linux/macOS/Windows <code>amd64</code>/<code>arm64</code>) driving local <code>claude</code>, <code>agy</code>,<br>
+or <code>codex</code> CLIs, plus the target’s own runtime toolchain (polyglot support:<br>
+Node <code>.mjs</code>, Rust <code>cargo test</code> / <code>ckb-testtool</code>, Go, Python).</li>
+<li><strong>Local devnet &amp; DB harness (already shipped in <code>v0.3.x</code>):</strong>
+<ul>
+<li><code>ckb-whitehat chain up</code> boots an isolated Docker network (<code>172.29.0.0/24</code>)<br>
+with <code>nervos/ckb:v0.210.0</code> (<code>127.0.0.1:8114</code>) + 2 peered<br>
+<code>nervos/fiber:0.10.1</code> nodes (<code>127.0.0.1:8227</code> / <code>8327</code>), SHA-256-verified<br>
+Fiber contracts, pre-minted genesis CKB &amp; <code>TEST_XUDT</code>, and pre-opened<br>
+<code>ChannelReady</code> CKB (1,000 CKB) + <code>TEST_XUDT</code> (100 <code>TEST_XUDT</code>) channels.</li>
+<li>Five embedded reusable CKB/Fiber invariant packs materialized into every<br>
+workspace (<code>chain-client.mjs</code>, <code>pack-payment-idempotency.mjs</code>,<br>
+<code>pack-hold-invoice-htlc.mjs</code>, <code>pack-udt-decimals.mjs</code>,<br>
+<code>pack-self-custody.mjs</code>).</li>
+<li>Auto-provisioned isolated Docker scratch Postgres (<code>postgres:16-alpine</code> on<br>
+<code>127.0.0.1:5439</code>, throwaway credentials) whenever a target uses Postgres.</li>
+</ul>
+</li>
+<li><strong>Trust &amp; safety boundaries:</strong>
+<ul>
+<li>Untrusted target isolation: <code>--setting-sources user</code> (Claude), no<br>
+<code>--add-dir &lt;target&gt;</code> (<code>agy</code>, blocking untrusted <code>.agents/hooks.json</code>),<br>
+<code>project_doc_max_bytes=0</code> (Codex), hardened <code>git clone</code> (<code>hooksPath=/dev/null</code>,<br>
+<code>fsmonitor=false</code>, <code>symlinks=false</code>), and workspace-confined cwd.</li>
+<li>Broad safe tool allowlist paired with a strict high-risk denylist blocking<br>
+<code>rm -rf</code>, <code>git push</code>, <code>git reset --hard</code>, <code>sudo</code>, <code>curl</code>, <code>wget</code>, <code>ssh</code>,<br>
+<code>psql</code>, <code>env</code>, live web fetches, MCP, and target-repo writes.</li>
+<li>Mainnet refusal guard (<code>VerifyMainnetSafe</code>) checks CKB <code>get_blockchain_info</code><br>
+and FNN <code>chain_hash</code> before any <code>--chain</code> run.</li>
+<li>External third-party vendors (M-Pesa/Daraja, webhooks, external APIs) are<br>
+always mocked/stubbed locally; no live service is ever probed.</li>
+</ul>
+</li>
+<li><strong>Hard parts:</strong>
+<ul>
+<li>Keeping every PoC deterministic and one-command reproducible against<br>
+<em>unmodified</em> source across heterogeneous stacks (JS/TS, Rust CKB-scripts,<br>
+Go).</li>
+<li>Separating app-layer bugs from chain/FNN behavior in every recorded<br>
+on-chain state transition (linking upstream protocol issues rather than<br>
+claiming them as app findings).</li>
+<li>Managing responsible disclosure timelines while keeping pre-consent<br>
+details private and still giving the committee an auditable dated log.</li>
+</ul>
+</li>
+<li><strong>Language:</strong> English.</li>
+</ul>
+<h2><a name="p-27761-h-6-to-do-list-6-weeks-7" class="anchor" href="https://talk.nervos.org#p-27761-h-6-to-do-list-6-weeks-7" aria-label="Heading link"></a>6. To-Do list (6 weeks)</h2>
+<p>The CLI (<code>v0.4.2</code>) and local CKB/Fiber devnet + scratch Postgres harness are<br>
+already built and proven on two pilots. The funded work is: (a) applying<br>
+<code>ckb-whitehat</code> to three new CKB-DAO-funded CKB/Fiber money products, and (b)<br>
+three net-new forward deliverables on the tool itself.</p>
+<ul>
+<li><strong>Week 1:</strong> D1 target selection posted in-thread (3 CKB-DAO-funded CKB/Fiber<br>
+projects from the active Spark/CKB registry, at least one a money product:<br>
+wallet / on-ramp / exchange / payment tool), with rationale and overlap check<br>
+against Sail-validation and author-side regression lanes. Verify local<br>
+devnet (<code>ckb-whitehat chain up</code>) + baseline green trace for Target 1 (and<br>
+optional Pudge testnet trace if public explorer verification applies).
+<ul>
+<li><strong>Milestone: targets named and unchallenged for 7 days.</strong></li>
+</ul>
+</li>
+<li><strong>Week 2:</strong> Target 1, complete pack: offline findings + PoC suite + patch<br>
+guidance, local devnet / on-chain evidence (recorded hashes verified against<br>
+RPC), first private disclosure contact sent.
+<ul>
+<li><strong>Milestone: Target 1 pack reproducible with one command per finding;<br>
+disclosure <span class="hashtag-raw">#1</span> sent.</strong></li>
+</ul>
+</li>
+<li><strong>Week 3:</strong> Target 2, complete pack + disclosure <span class="hashtag-raw">#2</span> sent.</li>
+<li><strong>Week 4:</strong> Target 3, complete pack + disclosure <span class="hashtag-raw">#3</span> sent.
+<ul>
+<li><strong>Milestone: all three target packs merged to the repo, CI green.</strong></li>
+</ul>
+</li>
+<li><strong>Week 5:</strong> Net-new forward work (D6), three shippable PRs:
+<ol>
+<li><strong>Standalone <code>ckb-whitehat verify &lt;FINDINGS.md&gt;</code> subcommand:</strong> unlike<br>
+<code>v0.4.2</code>’s in-run post-check, this standalone subcommand lets any<br>
+committee reviewer or maintainer re-audit an <em>already published</em><br>
+<code>FINDINGS.md</code> with zero LLM calls — re-running its PoC suite and<br>
+re-verifying recorded tx/payment hashes against local devnet or Pudge<br>
+testnet RPC. Turns “How to Verify” into a single binary command.</li>
+<li><strong>Measured AI-cost reduction pass:</strong> establish a logged Week-1 token/cost<br>
+baseline per target, then cut total token spend via structured per-run<br>
+usage telemetry, prompt caching of the triage pass, tiered/smaller models<br>
+for mechanical checks, tighter gate-loop budgeting, and a <strong>hashed<br>
+known-issue catalog</strong> (recording deterministic <code>(step, exit_code, error_class)</code> hashes — never raw untrusted target output — mapped to<br>
+curated remedies so repeated environment failures short-circuit with zero<br>
+LLM turns and log <code>recovered-known-issue &lt;sig&gt;</code>). Target: <strong>≥ 40% token<br>
+reduction</strong> vs. baseline while still firing every finding on re-run.</li>
+<li><strong>1-page quickstart + maintainer disclosure kit:</strong> a concise quickstart<br>
+for developers running <code>ckb-whitehat</code> pre-push on their own repo, plus<br>
+the exact public maintainer disclosure letter template and consent<br>
+checklist.<br>
+Cross-target <code>SUMMARY.md</code> (finding taxonomy, recurring foot-guns,<br>
+recommended community fixes) drafted alongside.</li>
+</ol>
+</li>
+<li><strong>Week 6:</strong> Full regression re-run of every PoC against unmodified source;<br>
+secret-material sweep (confirming zero real provider keys, OTPs, phone PII,<br>
+or CKB hex keys in PoCs/reports); completion report with funds-usage vs. §7;<br>
+captioned 3-minute walkthrough demo of one full target run from <code>init</code><br>
+through fired PoC and verified on-chain trace.
+<ul>
+<li><strong>Milestone: final deliverable set live; <code>ckb-whitehat verify</code> green in CI.</strong></li>
+</ul>
+</li>
+</ul>
+<h2><a name="p-27761-h-7-required-funding-funding-breakdown-8" class="anchor" href="https://talk.nervos.org#p-27761-h-7-required-funding-funding-breakdown-8" aria-label="Heading link"></a>7. Required funding &amp; funding breakdown</h2>
+<p><strong>Total: $950 USD, paid in CKB</strong> (within the standard $1,000 single-category<br>
+budget tier).</p>
+<ul>
+<li><strong>Technical vs. Community allocation:</strong> <strong>$850 technical</strong> (AI verification<br>
+compute, PoC/patch engineering, standalone <code>verify</code> subcommand, AI-cost<br>
+reduction pass) / <strong>$100 community</strong> (1-page developer quickstart, public<br>
+maintainer disclosure kit, weekly forum updates &amp; maintainer disclosure<br>
+coordination).</li>
+</ul>
+<div class="md-table">
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Category</th>
+<th>Amount</th>
+<th>What it pays for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI / LLM analysis + agent compute</td>
+<td>Technical</td>
+<td><strong>$150</strong></td>
+<td>Triage passes, PoC development, report drafting, and checkpoint sessions across all 3 targets (audited via per-target session logs &amp; token counts).</td>
+</tr>
+<tr>
+<td>Target packs (D2–D4): PoC + patch engineering</td>
+<td>Technical</td>
+<td><strong>$600</strong></td>
+<td>~30 h per target pack: triage, deterministic offline + on-chain PoCs, minimal patches &amp; regression harnesses, and private disclosure prep.</td>
+</tr>
+<tr>
+<td>Forward tooling (D6a–b): <code>verify</code> subcommand + AI-cost reduction</td>
+<td>Technical</td>
+<td><strong>$100</strong></td>
+<td>Standalone <code>ckb-whitehat verify</code> CLI command, token telemetry, prompt-caching/tiering, and hashed known-issue recovery catalog.</td>
+</tr>
+<tr>
+<td>Community docs, disclosure kit &amp; coordination (D5, D6c)</td>
+<td>Community</td>
+<td><strong>$100</strong></td>
+<td>Cross-target <code>SUMMARY.md</code>, 1-page developer pre-push quickstart, public maintainer disclosure letter template, weekly updates, and maintainer follow-ups.</td>
+</tr>
+</tbody>
+</table>
+</div><ul>
+<li><strong>What costs nothing here and why:</strong> local Docker CKB devnet + 2-node FNN<br>
+<code>v0.10.1</code> + Docker scratch Postgres run locally ($0); optional Pudge testnet<br>
+assets come from public faucets ($0).</li>
+<li><strong>What it does not cover:</strong> mainnet replay (hard-refused by the CLI; if ever<br>
+requested separately, it would be explicitly scoped and budgeted).</li>
+<li><strong>Why this amount:</strong> deliberately compact and fully deliverable within 6<br>
+weeks; the shipped <code>v0.4.2</code> CLI and two completed pilots already exist in the<br>
+repo at $0 grant cost.</li>
+<li><strong>Disbursement:</strong> standard Spark milestone disbursement (e.g., 20% at<br>
+kickoff, 80% upon final deliverable verification).</li>
+</ul>
+<h2><a name="p-27761-h-8-deliverables-how-to-verify-9" class="anchor" href="https://talk.nervos.org#p-27761-h-8-deliverables-how-to-verify-9" aria-label="Heading link"></a>8. Deliverables + how to verify</h2>
+<p><strong>A. Deliverables</strong></p>
+<ol>
+<li><strong>D1 — Target selection post</strong> (Week 1, in-thread): 3 targets, selection<br>
+rationale, overlap check against Sail-validation and author-side regression<br>
+lanes. <em>Done when:</em> posted and unchallenged for 7 days.</li>
+<li><strong>D2–D4 — Three target verification packs</strong> (Weeks 2–4): per-target<br>
+<code>FINDINGS.md</code> (severity-ranked <code>PROVEN</code>/<code>STRUCTURAL</code>/<code>UNPROVEN</code> findings,<br>
+captured PoC outputs, minimal patches, regression re-runs, verified on-chain<br>
+tx/payment hashes where applicable), reproducible <code>poc/</code> suite, and<br>
+disclosure record. <em>Done when:</em> every <code>PROVEN</code> PoC reproduces with one<br>
+command against unmodified source and passes <code>ckb-whitehat verify</code>.</li>
+<li><strong>D5 — <code>SUMMARY.md</code> + dated disclosure log</strong> (Weeks 5–6): cross-target<br>
+finding taxonomy, recurring CKB/Fiber foot-guns, recommended fixes, and<br>
+dated record of every maintainer contact, patch-window status, and consent<br>
+state (<code>public</code> / <code>consented-private</code> / <code>pending</code>).</li>
+<li><strong>D6 — Three net-new forward PRs</strong> (Week 5):
+<ul>
+<li>Standalone <code>ckb-whitehat verify &lt;FINDINGS.md&gt;</code> subcommand — <em>done when:</em><br>
+re-audits all 3 new reports and the 2 pilots in one command each with zero<br>
+LLM calls, green in CI.</li>
+<li>AI-cost reduction pass + hashed known-issue catalog — <em>done when:</em><br>
+before/after table in-repo shows ≥ 40% token reduction vs. Week-1 baseline<br>
+with identical findings fired, and a reproducing re-run logs<br>
+<code>recovered-known-issue &lt;sig&gt;</code>.</li>
+<li>1-page developer quickstart + maintainer disclosure letter template —<br>
+<em>done when:</em> a developer can install and run <code>ckb-whitehat</code> on a fresh<br>
+target following only the 1-pager.</li>
+</ul>
+</li>
+<li><strong>Completion report &amp; 3-minute captioned demo</strong> (Week 6): funds usage vs.<br>
+§7 plus full run walkthrough video.</li>
+</ol>
+<p><strong>B. How to verify (no code review needed; low reviewer cost)</strong></p>
+<ul>
+<li><strong>Environment &amp; cost control:</strong>
+<ul>
+<li><em>Check 1 (offline pilot PoCs):</em> Linux/macOS/Windows with <strong>Node 18+ only</strong><br>
+— <strong>zero Docker, zero Postgres, zero network, ~5 seconds</strong>.</li>
+<li><em>Check 2 (local CKB/Fiber devnet harness):</em> Linux/macOS with <strong>Docker</strong> —<br>
+<strong>zero faucets, zero testnet keys, ~2 minutes</strong>.</li>
+<li><em>Check 3 &amp; 4 (on-chain hashes &amp; disclosure log):</em> <strong>browser only</strong>, ~2<br>
+minutes.</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><strong>Instant offline PoC verification (5 seconds, Node 18+ only):</strong><pre data-code-wrap="sh"><code class="lang-sh">git clone https://github.com/nghiadang391/ckb-whitehat
+cd ckb-whitehat
+node tapfiber/poc/attack.mjs
+</code></pre>
+<em>Expected output:</em> exits <code>0</code> and prints all 14 deterministic <code>FINDING F1 FIRED</code><br>
+through <code>FINDING F14 FIRED</code> verdict lines against unmodified vendored<br>
+<code>tapfiber</code> source.</li>
+<li><strong>Self-contained local CKB + Fiber devnet verification (~2 minutes, Docker):</strong><pre data-code-wrap="sh"><code class="lang-sh">curl -fsSL https://raw.githubusercontent.com/nghiadang391/ckb-whitehat/main/install.sh | sh
+ckb-whitehat chain up
+ckb-whitehat chain status
+</code></pre>
+<em>Expected output:</em> boots <code>nervos/ckb:v0.210.0</code> + 2 peered<br>
+<code>nervos/fiber:0.10.1</code> nodes and reports <code>ChannelReady</code> pre-funded CKB and<br>
+<code>TEST_XUDT</code> channels with zero faucet setup. (Clean up anytime with<br>
+<code>ckb-whitehat chain down</code>.)</li>
+<li><strong>Public on-chain hash verification (browser only):</strong> pick any recorded<br>
+Pudge testnet tx hash in <code>dular/FINDINGS.md</code> (e.g. funding tx<br>
+<code>0x72ed0d77…df27d3</code> from <code>dular/poc/c4-record.json</code>) or in any new D2–D4<br>
+report and verify block/channel amounts on <code>pudge.explorer.nervos.org</code> (and<br>
+once D6 ships, run <code>ckb-whitehat verify &lt;target&gt;/FINDINGS.md</code> directly).</li>
+<li><strong>Disclosure audit (browser only):</strong> inspect the dated disclosure log in<br>
+<code>SUMMARY.md</code> — every contact carries a date, response status, and<br>
+publication consent state.</li>
+</ol>
+<h2><a name="p-27761-h-9-current-state-vs-funded-work-10" class="anchor" href="https://talk.nervos.org#p-27761-h-9-current-state-vs-funded-work-10" aria-label="Heading link"></a>9. Current state vs. funded work</h2>
+<ul>
+<li><strong>Already exists (in <a href="https://github.com/nghiadang391/ckb-whitehat" rel="noopener nofollow ugc">nghiadang391/ckb-whitehat</a> <code>v0.4.2</code>, uncosted by any grant):</strong>
+<ul>
+<li>Two completed pilots: <strong>Dular</strong> (<code>F1–F7</code> <code>PROVEN</code> + <code>F8–F9</code> <code>STRUCTURAL</code> +<br>
+on-chain <code>C4.1–C4.5</code>) and <strong>tapfiber</strong> (<code>F1–F14</code>, all <code>PROVEN</code>), with<br>
+reproducible PoCs and recorded traces.</li>
+<li>The <code>v0.4.2</code> static Go CLI: <code>claude</code>/<code>agy</code>/<code>codex</code> drivers, read-only<br>
+AI-assisted <code>init</code>, responsive live TUI + checkpoint gates, self-contained<br>
+Docker CKB/Fiber devnet (<code>chain up|status|down</code>), isolated Docker scratch<br>
+Postgres, 5 embedded CKB/Fiber invariant packs, mainnet refusal guard,<br>
+in-run completeness &amp; RPC hash verification, broad-allow + strict denylist,<br>
+<code>install.sh</code>, <code>sha256</code>-verified <code>update</code>, and green CI.</li>
+</ul>
+</li>
+<li><strong>Funded work (net-new under this $950 grant):</strong>
+<ul>
+<li>Three new CKB/Fiber target verification packs (<strong>D2–D4</strong>): full triage →<br>
+deterministic offline + on-chain PoCs → minimal patches &amp; regression tests<br>
+→ consent-based disclosure.</li>
+<li>Cross-target <strong><code>SUMMARY.md</code></strong> + dated disclosure log (<strong>D5</strong>).</li>
+<li>Three net-new forward tool PRs (<strong>D6</strong>): standalone <code>ckb-whitehat verify</code><br>
+subcommand (zero-LLM reviewer re-audit), measured ≥ 40% AI-cost reduction<br>
+pass with hashed known-issue recovery catalog, and 1-page developer<br>
+quickstart + maintainer disclosure letter template.</li>
+<li>Auditable AI/LLM token compute across all 3 targets (§7).</li>
+<li><em>Boundary:</em> the two existing pilots and <code>v0.4.2</code> CLI are proof of<br>
+execution at $0 grant cost — they are not double-counted as funded<br>
+deliverables.</li>
+</ul>
+</li>
+</ul>
+<h2><a name="p-27761-h-10-ckb-alignment-11" class="anchor" href="https://talk.nervos.org#p-27761-h-10-ckb-alignment-11" aria-label="Heading link"></a>10. CKB alignment</h2>
+<ul>
+<li><strong>CKB Cell Model, xUDT/sUDT &amp; Fiber Network (<code>FNN v0.10.1</code>):</strong> every funded<br>
+target is a CKB/Fiber ecosystem project. The CLI ships dedicated local<br>
+devnet CKB + 2-node Fiber infrastructure and 5 reusable invariant packs<br>
+specifically targeting CKB/Fiber failure modes (Fiber payment idempotency,<br>
+hold-invoice/HTLC boundaries, UDT decimal/shannon <code>BigInt</code> overflow, and<br>
+browser/server self-custody key wrapping) plus Rust CKB-script (<code>cargo test</code><br>
+/ <code>ckb-testtool</code>) support.</li>
+<li><strong>Publicly re-checkable evidence:</strong> local devnet harnesses let anyone<br>
+re-verify deterministically in ~2 minutes with zero faucet dependency, and<br>
+public Pudge testnet traces remain explorer-verifiable. Mainnet is never<br>
+touched and is hard-refused in code.</li>
+<li><strong>Honest statements:</strong>
+<ul>
+<li>This is not a new payment protocol, not a custody product, and not<br>
+protocol-core work: Fiber’s and CKB-VM’s roadmaps stay with the core teams,<br>
+and any upstream issue tripped is linked rather than claimed.</li>
+<li>Its value to CKB is concrete, one-command reproducible security evidence<br>
+for DAO-funded money apps — plus MIT-licensed pre-push verification tooling<br>
+that CKB/Fiber builders and reviewers can keep reusing after this grant.</li>
+</ul>
+</li>
+</ul>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/spark-program-ckb-whitehat/11346">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/spark-program-ckb-whitehat/11346</link>
+          <pubDate>Mon, 23 Nov 2026 14:10:29 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11346</guid>
+          <source url="https://talk.nervos.org/t/spark-program-ckb-whitehat/11346.rss">Spark Program | ckb-whitehat</source>
+        </item>
+        <item>
+          <title>Spark Program 申请 | CellCat（暖暖猫舍）：能熔回 CKB 的链上基因猫</title>
+          <dc:creator><![CDATA[cool007zqw]]></dc:creator>
+          <category>Spark Program</category>
+          <description><![CDATA[
+            <p>( English below )</p>
+<h3><a name="p-27710-ckb-1" class="anchor" href="https://talk.nervos.org#p-27710-ckb-1" aria-label="Heading link"></a>这是什么？为什么要做在 CKB 上？</h3>
+<p>CellCat 是一个跑在 CKB 上的全链上基因猫小游戏，玩法很简单：<strong>领养 → 配对产蛋 → 等出块孵化 → 挂单交易 / 熔猫</strong>。</p>
+<p>选 CKB 带来的特性：</p>
+<ul>
+<li><strong>猫有真地板价</strong>：每只猫都是一个真实的 Cell，喂食就是往里存 CKB；不想玩了随时“熔猫”，Cell 里的 CKB 全退回钱包。</li>
+<li><strong>不存图，链上算基因</strong>：每只猫只存 32 字节 DNA（显性+隐性基因），繁殖先产蛋、到指定块高取区块头做随机源，链上重算 DNA 防作弊。</li>
+<li><strong>无托管原子交易</strong>：用 <code>sale-lock</code> 挂单，买家付够 CKB 直接换锁成交，卖家随时撤单，不需要把猫转给平台托管。</li>
+<li><strong>零门槛</strong>：接入 JoyID，不用装插件背助记词，打开网页就能玩。</li>
+</ul>
+<hr>
+<h3><a name="p-27710-devnet-2" class="anchor" href="https://talk.nervos.org#p-27710-devnet-2" aria-label="Heading link"></a>目前已经做完的部分（本地 Devnet 已跑通）</h3>
+<ul>
+<li><strong>4 个 Rust 合约</strong>（<code>cat-type</code>、<code>egg-type</code>、<code>sale-lock</code>、<code>config-type</code>）：纯手写字节布局和 <code>ckb_std::syscalls</code>，避开了 <code>riscv64imac</code> 原子指令的坑。</li>
+<li><strong>跨端基因库</strong>：Rust（<code>no_std</code>）和前端 JS 逐字节一致，有 82 条自动化校验向量。</li>
+<li><strong>合约测试</strong>：<code>ckb-testtool</code> 写了 20 多个正常和异常用例（防改 DNA、冷却、次数上限、繁育费、区块头、挂单少付/错付等），已全过。</li>
+<li><strong>移动端网页</strong>：猫舍、繁育、集市、明信片生成和基础社交交互在本地 devnet 上已经能玩。</li>
+</ul>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/0/0cb16da599c977a7d963a7328925f0d62fa4f27f.jpeg" data-download-href="https://talk.nervos.org/uploads/default/0cb16da599c977a7d963a7328925f0d62fa4f27f" title="图片"><img src="https://talk.nervos.org/uploads/default/optimized/2X/0/0cb16da599c977a7d963a7328925f0d62fa4f27f_2_256x500.jpeg" alt="图片" data-base62-sha1="1OhROKNpuuWjDXtkOWJ7C6vIfqD" width="256" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/0/0cb16da599c977a7d963a7328925f0d62fa4f27f_2_256x500.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/0/0cb16da599c977a7d963a7328925f0d62fa4f27f_2_384x750.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/0/0cb16da599c977a7d963a7328925f0d62fa4f27f_2_512x1000.jpeg 2x" data-dominant-color="545A65"></a></div><p></p>
+<hr>
+<h3><a name="p-27710-h-3" class="anchor" href="https://talk.nervos.org#p-27710-h-3" aria-label="Heading link"></a>开发规划</h3>
+<ul>
+<li><strong>第 1 周</strong>：完善玩法机制；美化视觉资产；复查合约的边界；测试经济学可持续性；部署到 <strong>CKB Testnet</strong> 。做数据统计 dashboard。</li>
+<li><strong>第 2 周</strong>：上公网 HTTPS 服务器，小范围拉 <strong>20–50 个内测玩家</strong>，实测领养、繁殖孵化、买卖、喂食和熔猫全流程。</li>
+<li><strong>第 3 周</strong>：内测收尾，发放激励，汇总反馈。进一步完善代码。</li>
+<li><strong>第 4 周</strong>：接通 <strong>JoyID（Testnet）</strong>。交付代码、演示录屏。</li>
+</ul>
+<hr>
+<h3><a name="p-27710-h-4" class="anchor" href="https://talk.nervos.org#p-27710-h-4" aria-label="Heading link"></a>验收</h3>
+<ol>
+<li><strong>直接玩</strong>：打开公网链接，用 JoyID 领猫、配种、等孵化、去集市挂单/买猫、熔掉退回 CKB，全流程可以体验验证。</li>
+<li><strong>查浏览器</strong>：结项时我会把 4 个合约的部署哈希，以及领养、繁殖、孵化、成交、熔猫的 Testnet 交易哈希全贴出来啊。 ，直接在 Explorer 上对账。</li>
+<li><strong>看录屏</strong>：附一段 2 分钟无剪辑实操录屏。</li>
+<li><strong>跑源码测试</strong>：拉下仓库直接在本地或者服务器部署运行</li>
+</ol>
+<hr>
+<h3><a name="p-27710-h-680-5" class="anchor" href="https://talk.nervos.org#p-27710-h-680-5" aria-label="Heading link"></a>预算：$680</h3>
+<div class="md-table">
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+<th style="text-align:right">金额</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人工工时</td>
+<td>30 小时 × $15/小时</td>
+<td style="text-align:right">$450</td>
+</tr>
+<tr>
+<td>AI Token</td>
+<td>编码 + 排查测试 + 猫猫部件美术素材优化</td>
+<td style="text-align:right">$100</td>
+</tr>
+<tr>
+<td>内测用户激励</td>
+<td>发给参与完整测试和报有效 Bug 的社区玩家（规则和转账记录全公开）</td>
+<td style="text-align:right">$100</td>
+</tr>
+<tr>
+<td>服务器</td>
+<td>云服务器 + 域名/HTTPS（覆盖内测及结项展示）</td>
+<td style="text-align:right">$30</td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td></td>
+<td style="text-align:right"><strong>$680</strong></td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h3><a name="p-27710-h-6" class="anchor" href="https://talk.nervos.org#p-27710-h-6" aria-label="Heading link"></a>关于我</h3>
+<p>简介：业余全栈开发，<a href="http://ckb123.com" rel="noopener nofollow ugc">ckb123.com</a>（已下线）站长，CKB 主网启动参与者之一</p>
+<p>GitHub： <a href="https://github.com/cool007zqw" class="inline-onebox" rel="noopener nofollow ugc">cool007zqw (Enzo Zheng) · GitHub</a> 大部分项目涉及工作或个人信息因此没有设为公开可见</p>
+<p>联系：请直接通过 Nervos Talk 联络</p>
+<p>What Is This, and Why Build It on CKB?</p>
+<p>CellCat is a fully on-chain genetic cat game built on CKB. The gameplay is simple: Adopt → Breed to produce eggs → Wait for block-based hatching → List for sale or burn cats.</p>
+<p>Why CKB?</p>
+<p>Real floor value for every cat: Each cat is represented by a real Cell. Feeding a cat means depositing CKB into its Cell. If you no longer want to play, you can simply “burn” the cat and recover all the CKB stored in its Cell back to your wallet.</p>
+<p>No images stored on-chain; genetics are computed on-chain: Each cat stores only 32 bytes of DNA (dominant + recessive genes). Breeding first produces an egg. Once a designated block height is reached, the block header is used as a randomness source, and the DNA is recomputed on-chain to prevent cheating.</p>
+<p>Non-custodial atomic trading: Cats are listed using sale-lock. Buyers can complete a purchase by paying the required amount of CKB and unlocking the transaction directly. Sellers can cancel their listings at any time. Cats never need to be transferred to a platform for custody.</p>
+<p>Zero-friction onboarding: Integrated with JoyID. No browser extensions or seed phrases required. Just open the website and start playing.</p>
+<p>What Has Been Completed So Far</p>
+<p>The entire system has been successfully tested on a local Devnet.</p>
+<p>Smart contracts</p>
+<ul>
+<li>Four Rust contracts implemented: “cat-type”, “egg-type”, “sale-lock”, and “config-type”.</li>
+<li>Handwritten byte layouts and “ckb_std::syscalls” are used to avoid issues with unsupported atomic instructions in “riscv64imac”.</li>
+</ul>
+<p>Cross-platform genetics library</p>
+<ul>
+<li>The Rust (“no_std”) and frontend JavaScript implementations produce byte-for-byte identical results.</li>
+<li>82 automated test vectors are in place to verify consistency.</li>
+</ul>
+<p>Smart contract testing</p>
+<ul>
+<li>More than 20 test cases implemented using “ckb-testtool”, covering both normal and edge cases.</li>
+<li>Test coverage includes DNA tampering prevention, cooldowns, breeding limits, breeding fees, block header validation, and underpayment/incorrect payment during marketplace transactions.</li>
+<li>All tests are passing.</li>
+</ul>
+<p>Mobile-friendly web application</p>
+<ul>
+<li>The cattery, breeding system, marketplace, postcard generation, and basic social interactions are all playable on the local Devnet.</li>
+</ul>
+<p>Development Roadmap</p>
+<p>Week 1:</p>
+<ul>
+<li>Finalize gameplay mechanics.</li>
+<li>Polish visual assets.</li>
+<li>Review smart contract edge cases.</li>
+<li>Evaluate the economic sustainability of the game.</li>
+<li>Deploy to CKB Testnet.</li>
+<li>Build a data analytics dashboard.</li>
+</ul>
+<p>Week 2:</p>
+<ul>
+<li>Launch a public HTTPS server.</li>
+<li>Recruit 20–50 players for a small closed beta.</li>
+<li>Test the complete user journey, including adoption, breeding, hatching, trading, feeding, and burning cats.</li>
+</ul>
+<p>Week 3:</p>
+<ul>
+<li>Wrap up the closed beta.</li>
+<li>Distribute participation incentives.</li>
+<li>Collect and review user feedback.</li>
+<li>Further improve the codebase.</li>
+</ul>
+<p>Week 4:</p>
+<ul>
+<li>Integrate JoyID on Testnet.</li>
+<li>Deliver the source code and a recorded demonstration.</li>
+</ul>
+<p>Acceptance Criteria</p>
+<ol>
+<li>Play the game directly</li>
+</ol>
+<p>Open the public URL and use JoyID to adopt cats, breed them, wait for eggs to hatch, list or purchase cats on the marketplace, and burn cats to recover their CKB. The entire gameplay loop will be publicly accessible and verifiable.</p>
+<ol start="2">
+<li>Verify on the blockchain</li>
+</ol>
+<p>At project completion, I will publish the deployment transaction hashes of all four smart contracts, along with the Testnet transaction hashes for adoption, breeding, hatching, successful trades, and cat burning.</p>
+<p>Everything can be independently verified and reconciled directly through the CKB Explorer.</p>
+<ol start="3">
+<li>Watch an unedited demo</li>
+</ol>
+<p>A two-minute, unedited screen recording demonstrating the actual gameplay will be provided.</p>
+<ol start="4">
+<li>Run the source code and tests</li>
+</ol>
+<p>Clone the repository and deploy and run the project locally or on your own server.</p>
+<p>Budget</p>
+<p>Total budget: $680</p>
+<p>Item| Description| Amount<br>
+Development labor| 30 hours × $15/hour| $450<br>
+AI tokens| Coding, debugging, testing, and optimization of cat visual assets| $100<br>
+Beta tester incentives| Rewards for community members who complete testing and report valid bugs (all rules and transaction records will be public)| $100<br>
+Server| Cloud server, domain, and HTTPS (covering the beta and final demonstration)| $30<br>
+Total| | $680</p>
+<p>About Me</p>
+<p>Background: Hobbyist full-stack developer, founder of <a href="http://ckb123.com" rel="noopener nofollow ugc">ckb123.com</a> (now offline), and one of the early participants in the CKB Mainnet launch.</p>
+<p>GitHub: Most of my projects involve work-related or personal information, so their repositories are not publicly accessible.</p>
+<p>Contact: Please reach out to me directly via Nervos Talk.</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/spark-program-cellcat-ckb/11308">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/spark-program-cellcat-ckb/11308</link>
+          <pubDate>Mon, 23 Nov 2026 08:15:25 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11308</guid>
+          <source url="https://talk.nervos.org/t/spark-program-cellcat-ckb/11308.rss">Spark Program 申请 | CellCat（暖暖猫舍）：能熔回 CKB 的链上基因猫</source>
+        </item>
+        <item>
+          <title>Godwoken Withdrawals Now Available — Force Bridge Compensation Portal Coming Soon</title>
+          <dc:creator><![CDATA[keith]]></dc:creator>
+          <category>Announcements &amp; Meta</category>
+          <description><![CDATA[
+            <p>Hi community,</p>
+<p>Godwoken withdrawals are now available for members who have already submitted a withdrawal request through <a href="https://www.magickbase.com/force-bridge-form" rel="noopener nofollow ugc">https://www.magickbase.com/force-bridge-form</a>.</p>
+<p>You can now visit the <a href="https://refund.godwoken.io/" rel="noopener nofollow ugc">https://refund.godwoken.io/</a> to complete your Godwoken withdrawal.</p>
+<p><strong>New withdrawal requests will be handled in the next batch.</strong> You can continue to submit requests through the same form.</p>
+<p>The <strong>Force Bridge Compensation Portal</strong> for withdrawals back to <strong>Ethereum and BSC</strong> will open soon.</p>
+<p>Thank you for your patience and support.</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/godwoken-withdrawals-now-available-force-bridge-compensation-portal-coming-soon/11307">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/godwoken-withdrawals-now-available-force-bridge-compensation-portal-coming-soon/11307</link>
+          <pubDate>Mon, 23 Nov 2026 06:44:55 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11307</guid>
+          <source url="https://talk.nervos.org/t/godwoken-withdrawals-now-available-force-bridge-compensation-portal-coming-soon/11307.rss">Godwoken Withdrawals Now Available — Force Bridge Compensation Portal Coming Soon</source>
+        </item>
         <item>
           <title>Spark Program | FiberVPN: Pay-Per-Hour WireGuard Tunnels over Fiber</title>
           <dc:creator><![CDATA[akanjacson]]></dc:creator>
@@ -2734,14 +3399,15 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
           <dc:creator><![CDATA[WuodOdhis]]></dc:creator>
           <category>CKB Community Fund DAO</category>
           <description><![CDATA[
-            <p>If you have used a Bitcoin hardware wallet, the flow is familiar.</p>
+            <h1><a name="p-27563-dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware-1" class="anchor" href="https://talk.nervos.org#p-27563-dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware-1" aria-label="Heading link"></a><strong>[DIS] KeyMe — CKB’s PSBT: Open Air-Gapped Signing and the First DIY Hardware</strong></h1>
+<p>If you have used a Bitcoin hardware wallet, the flow is familiar.</p>
 <p>A watch-only app builds a transaction. It hands it to a small device as a QR code or a file. The device shows the amount and the destination. You approve. The signed transaction goes back to the app, which broadcasts it. The machine that holds the key never talks to the internet.</p>
 <p>Bitcoin calls that container a <strong>PSBT</strong> (Partially Signed Bitcoin Transaction). The devices have names you may know: Coldcard, SeedSigner, Specter DIY. They do not share one design. They share one rule: the key lives on a device that cannot reach the network, and the device shows you what you are signing.</p>
 <p>CKB has a software offline workflow in Neuron, but no open, radio-less hardware equivalent. CKB transactions are not Bitcoin transactions. They carry cells, lock and type scripts, DAO state, xUDT amounts and multisig. A Bitcoin device cannot read them. In 2020, a grant added a Ledger app for CKB; it is a closed device. There is still no open, radio-less CKB signer that a community can inspect, build and improve.</p>
 <p>KeyMe is the CKB version. PSCT is the container, CKB’s equivalent of PSBT. KeyMe is the signer, a small, radio-less device that reads the PSCT, checks every byte, shows the transaction, and signs only after you approve. The first hardware is built on a Pico 2: a small board with a screen, a QR scanner, no radio, and no operating system. It is not a clone of a Bitcoin device; it is the shape that fits CKB.</p>
-<h2><a name="p-27563-the-one-minute-version-1" class="anchor" href="https://talk.nervos.org#p-27563-the-one-minute-version-1" aria-label="Heading link"></a><strong>The one-minute version</strong></h2>
+<h2><a name="p-27563-the-one-minute-version-2" class="anchor" href="https://talk.nervos.org#p-27563-the-one-minute-version-2" aria-label="Heading link"></a><strong>The one-minute version</strong></h2>
 <p>PSCT — a Partially Signed CKB Transaction — is a file with three parts: the transaction, a proof for every coin it spends, and the block headers the scripts need. The device checks that each proof hashes to the coin it claims, decodes the previous output, checks the script against its registry, and shows the amount, destination, fee and change. It signs only after you confirm. It never trusts the coordinator’s summary, an address label, or a script it does not know.</p>
-<h2><a name="p-27563-the-idea-is-not-new-2" class="anchor" href="https://talk.nervos.org#p-27563-the-idea-is-not-new-2" aria-label="Heading link"></a><strong>The idea is not new</strong></h2>
+<h2><a name="p-27563-the-idea-is-not-new-3" class="anchor" href="https://talk.nervos.org#p-27563-the-idea-is-not-new-3" aria-label="Heading link"></a><strong>The idea is not new</strong></h2>
 <p>In 2020, a CKB grant added a Ledger app for CKB (<a href="https://talk.nervos.org/t/4349">Nervos Talk</a>). It proved the demand; it is a closed device.</p>
 <p>In May 2021, Xuejie Xiao (<a class="mention" href="https://talk.nervos.org/u/xxuejie">@xxuejie</a>), a CKB core developer, posted “RFC Draft: CKB Offline Transaction Signing Scheme” (<a href="https://talk.nervos.org/t/rfc-draft-ckb-offline-transaction-signing-scheme/5794">Nervos Talk</a>). It separated transaction assembly from signing, defined the data the signer needs, described the review step, and ended with this:</p>
 <blockquote>
@@ -2756,7 +3422,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 <p>The 2021 draft planned the offline signer. The 2022 project planned the partial transaction format. Both named the hardware wallet. Neither shipped an open device. Neuron already supports an offline signing workflow, including offline multisig, but it keeps the key on an offline general-purpose computer. KeyMe is the hardware half: PSCT v0 is the signed container, and the Pico 2, the current Pico, is the device. v1 stays focused on the hardware and the PSCT container; v2 will explore potential pathways with Neuron.</p>
 <p>KeyMe keeps the 2021 goal and changes what building it taught us: canonical CBOR instead of a molecule envelope; hash-bound proofs instead of full input transactions; per-script-group signatures; a registry that refuses unknown scripts; finalize-or-throw. We did not carry the draft’s Lua signing path. A signer that executes arbitrary scripts is not a signer we can verify. The 2021 draft is the ancestor; PSCT v0 is the working version.</p>
 <p><strong>Grant requested:</strong> $9,500, in five payments of $1,900. <strong>ETA:</strong> 3.5 months from approval. <strong>What you get:</strong> three assembled units (two for independent testers), open firmware, open hardware, and documentation.</p>
-<h2><a name="p-27563-what-is-already-built-3" class="anchor" href="https://talk.nervos.org#p-27563-what-is-already-built-3" aria-label="Heading link"></a><strong>What is already built</strong></h2>
+<h2><a name="p-27563-what-is-already-built-4" class="anchor" href="https://talk.nervos.org#p-27563-what-is-already-built-4" aria-label="Heading link"></a><strong>What is already built</strong></h2>
 <p>KeyMe’s software is not a paper design. It is the oracle the hardware will be tested against.</p>
 <div class="md-table">
 <table>
@@ -2798,7 +3464,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 </tbody>
 </table>
 </div><p>The testnet transfer is <a href="https://explorer.nervos.org/transaction/0xbb10d0b6fb9ad72f6618f29020a1f065e73b4435f5ce24515afcbcb5c50a1a85" rel="noopener nofollow ugc">0xbb10d0b6…1a85</a>; the 2-of-3 spend is <a href="https://explorer.nervos.org/transaction/0x0ea1b3755a6a9610d266a791f2adb0b8c484e6fa1fe203ccfccffedfddbd535f" rel="noopener nofollow ugc">0x0ea1b375…535f</a>. The DAO and xUDT runs are devnet, not public chain; the scripts are in the repository. In total: 68 tests, plus the Rust conformance run. The repository is <code>https://github.com/WuodOdhis/keyme</code>; the spec is <code>spec/psct-v0.md</code>.</p>
-<h2><a name="p-27563-what-this-grant-delivers-4" class="anchor" href="https://talk.nervos.org#p-27563-what-this-grant-delivers-4" aria-label="Heading link"></a><strong>What this grant delivers</strong></h2>
+<h2><a name="p-27563-what-this-grant-delivers-5" class="anchor" href="https://talk.nervos.org#p-27563-what-this-grant-delivers-5" aria-label="Heading link"></a><strong>What this grant delivers</strong></h2>
 <ul>
 <li><strong>Three assembled units.</strong> Two go to independent testers; one stays with the project for demos. A fourth parts set is the spare.</li>
 <li><strong>Firmware v0.1.0</strong> for the RP2350: PSCT parsing, proof binding, script registry, DAO/xUDT display, secp256k1 signing, QR in/out, PIN and encrypted seed, signed boot.</li>
@@ -2807,18 +3473,20 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 <li><strong>Documentation.</strong> Build guide, flashing, test report, demo video, threat model.</li>
 <li><strong>Licences.</strong> MIT/Apache-2.0 for code, CERN-OHL-S-2.0 for hardware, CC-BY-4.0 for docs.</li>
 </ul>
-<h2><a name="p-27563-how-it-works-5" class="anchor" href="https://talk.nervos.org#p-27563-how-it-works-5" aria-label="Heading link"></a><strong>How it works</strong></h2>
+<h2><a name="p-27563-how-it-works-6" class="anchor" href="https://talk.nervos.org#p-27563-how-it-works-6" aria-label="Heading link"></a><strong>How it works</strong></h2>
 <p>The coordinator proposes; the device verifies.</p>
 <p><a href="https://raw.githubusercontent.com/WuodOdhis/keyme/main/docs/assets/psct-flow.png?v=3" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/6/64a1328b16b970d3cefe0d01ee367b6d4149451d.png" alt="PSCT signing flow" data-base62-sha1="emd6SvYncn2876sSuC8LUmqXyoZ" width="524" height="500"></a></p>
 <p>The device trusts only three things: the canonical PSCT bytes, proofs that hash to the inputs they claim, and its own account and script registry. If a lock or type is unknown, it refuses. If the CBOR is non-canonical, it refuses. If the proof, network or header is wrong, it refuses. There is no “proceed anyway” button.</p>
 <p>The device has no operating system, no shell and no network stack. The firmware is the only code. The RP2350 boots from signed flash; the seed is BIP39, encrypted at rest with a PIN and the ATECC608B key, and decrypted only while signing. USB is power-only while signing; QR is the data path. v0.1 has no third-party audit and no lab-grade physical security; that is a v0.2 conversation.</p>
-<h2><a name="p-27563-demo-6" class="anchor" href="https://talk.nervos.org#p-27563-demo-6" aria-label="Heading link"></a><strong>Demo</strong></h2>
+<h2><a name="p-27563-demo-7" class="anchor" href="https://talk.nervos.org#p-27563-demo-7" aria-label="Heading link"></a><strong>Demo</strong></h2>
 <p>A short concept animation shows the flow: the coordinator builds the PSCT, the frames cross the air gap, the device audits the input proofs and change lock, and a malware-swapped change output is refused. It is a simulation, not the protocol; the QR grid is illustrative, and the real verifier is the test suite. The automatic refusal is the change-output check; the destination remains a human check.</p>
 <p><a href="https://wuododhis.github.io/keyme/demo/ckb-airgap-demo.html" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/4/4903492c5d7fb52f4b1eefae217883b56b18a199.png" alt="Open the interactive demo" data-base62-sha1="apTTvb7GiiGgRlRVMpFcFPWhOfT" width="690" height="436"></a></p>
 <p><em>Click the still to open the interactive demo.</em></p>
 <p><strong>Normal flow</strong></p>
+<p><a href="https://camo.githubusercontent.com/3b3507450c0a55ecb3067ccd883e99baa1f46310784bc5ab0cb765f9d9bebebe/68747470733a2f2f77756f646f646869732e6769746875622e696f2f6b65796d652f64656d6f2f636b622d6169726761702d64656d6f2e676966" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/2/2b7fe14347a4630920d60989081a9cf7b3dbd2c6.gif" alt="PSCT air-gap flow" data-base62-sha1="6cOvMTYDtFAlrjQSvMIXrgliwhE" width="690" height="437"></a></p>
 <p><strong>Tamper: a swapped change output is refused</strong></p>
-<h2><a name="p-27563-hardware-7" class="anchor" href="https://talk.nervos.org#p-27563-hardware-7" aria-label="Heading link"></a><strong>Hardware</strong></h2>
+<p><a href="https://camo.githubusercontent.com/222d0bf52c6b1974e38e70be7bf569e451a3169248ebbb79724f249c529a4678/68747470733a2f2f77756f646f646869732e6769746875622e696f2f6b65796d652f64656d6f2f636b622d6169726761702d64656d6f2d74616d7065722e676966" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/3/3372a52972f76d98a5bfe91b60ca0f9e08b1d7ac.gif" alt="Tamper refusal" data-base62-sha1="7l7YA3QNBLCDmphdQCXuuOzmm2o" width="690" height="437"></a></p>
+<h2><a name="p-27563-hardware-8" class="anchor" href="https://talk.nervos.org#p-27563-hardware-8" aria-label="Heading link"></a><strong>Hardware</strong></h2>
 <p>The units are off-the-shelf modules on a carrier board. No custom injection mold, no custom silicon.</p>
 <p><a href="https://raw.githubusercontent.com/WuodOdhis/keyme/main/docs/assets/keyme-hardware.png?v=3" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/c/c2775a0efff7405163b7de57899720e32432cd79.png" alt="KeyMe hardware block" data-base62-sha1="rKkl2gT07GjxxBQyNxiBph4i9sZ" width="690" height="246"></a></p>
 <p>Why these parts:</p>
@@ -2905,7 +3573,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 </tbody>
 </table>
 </div><p>One unit is about $100 in parts (v2 should be significantly cheaper once we have the hardware supply chain right). The build guide is the point: anyone can make one.</p>
-<h2><a name="p-27563-milestones-8" class="anchor" href="https://talk.nervos.org#p-27563-milestones-8" aria-label="Heading link"></a><strong>Milestones</strong></h2>
+<h2><a name="p-27563-milestones-9" class="anchor" href="https://talk.nervos.org#p-27563-milestones-9" aria-label="Heading link"></a><strong>Milestones</strong></h2>
 <p>3.5 months, five payments of $1,900: the first at approval, then one after each milestone. Each milestone payment follows a public report and the committee’s check.</p>
 <div class="md-table">
 <table>
@@ -2952,7 +3620,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 </table>
 </div><p>The first payment is released at approval and funds the hardware order. The kickoff report at week 1 is reviewed before the M1 payment.</p>
 <p>The minimum viable outcome is one working unit plus open firmware and docs. If something has to give, the cut order is spare unit → custom carrier board → ATECC. The firmware and docs are never cut.</p>
-<h2><a name="p-27563-budget-9" class="anchor" href="https://talk.nervos.org#p-27563-budget-9" aria-label="Heading link"></a><strong>Budget</strong></h2>
+<h2><a name="p-27563-budget-10" class="anchor" href="https://talk.nervos.org#p-27563-budget-10" aria-label="Heading link"></a><strong>Budget</strong></h2>
 <div class="md-table">
 <table>
 <thead>
@@ -2966,7 +3634,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 <tr>
 <td>Development</td>
 <td>$7,638</td>
-<td>Firmware, host QR page, carrier board design, tests. About 400 hours over 14 weeks at a community rate.</td>
+<td>Firmware, host QR page, carrier board design, tests. About 400 hours over 14 weeks, shared across the two of us at a community rate.</td>
 </tr>
 <tr>
 <td>Hardware</td>
@@ -2991,7 +3659,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 </tbody>
 </table>
 </div><p>If hardware costs more (tax, a part price change), I absorb it or drop the spare unit. The software is donated; the hardware is at cost. Payments are in CKB at the payment-date rate, as recent grants are.</p>
-<h2><a name="p-27563-path-to-sustainability-10" class="anchor" href="https://talk.nervos.org#p-27563-path-to-sustainability-10" aria-label="Heading link"></a><strong>Path to sustainability</strong></h2>
+<h2><a name="p-27563-path-to-sustainability-11" class="anchor" href="https://talk.nervos.org#p-27563-path-to-sustainability-11" aria-label="Heading link"></a><strong>Path to sustainability</strong></h2>
 <p>The grant pays for the open design and the first three units; it does not fund inventory. After v0.1, the same design can be sold as an assembled, tested unit to people who do not want to source parts, print a case, or flash firmware.</p>
 <ul>
 <li><strong>DIY:</strong> the BOM and build guide stay open; anyone can build at parts cost.</li>
@@ -3000,13 +3668,13 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 </ul>
 <p>The margin from assembled units funds the next batch and the v0.2 revision: a custom PCB, a secure element and an independent audit. The design stays open; the paid product is assembly and support, not a closed lock-in. The exact price is set after the v0.1 BOM is final.</p>
 <p>This grant is not a promise of a company or a retail product. It proves the design and the first units; the assembled path is how the work can continue without a new grant for every unit.</p>
-<h2><a name="p-27563-what-this-is-not-11" class="anchor" href="https://talk.nervos.org#p-27563-what-this-is-not-11" aria-label="Heading link"></a><strong>What this is not</strong></h2>
+<h2><a name="p-27563-what-this-is-not-12" class="anchor" href="https://talk.nervos.org#p-27563-what-this-is-not-12" aria-label="Heading link"></a><strong>What this is not</strong></h2>
 <ul>
 <li>Not a production wallet, not certified, not an audited vault.</li>
 <li>No custody of mainnet funds, no mobile app, no custom injection mold, no retail packaging.</li>
 <li>No third-party audit in this grant. That is v0.2: a custom PCB, a secure element, an audit, and a small batch.</li>
 </ul>
-<h2><a name="p-27563-risks-12" class="anchor" href="https://talk.nervos.org#p-27563-risks-12" aria-label="Heading link"></a><strong>Risks</strong></h2>
+<h2><a name="p-27563-risks-13" class="anchor" href="https://talk.nervos.org#p-27563-risks-13" aria-label="Heading link"></a><strong>Risks</strong></h2>
 <div class="md-table">
 <table>
 <thead>
@@ -3022,7 +3690,7 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 </tr>
 <tr>
 <td>The 3.5-month schedule is tight</td>
-<td>The Rust PSCT code and conformance vectors already exist; hardware is ordered at kickoff; the cut order protects the core; progress notes at each milestone.</td>
+<td>The Rust PSCT code and conformance vectors already exist; xmoshte owns the hardware in parallel; hardware is ordered at kickoff; the cut order protects the core; progress notes at each milestone.</td>
 </tr>
 <tr>
 <td>520KB is tight with the display and QR</td>
@@ -3050,8 +3718,18 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 </tr>
 </tbody>
 </table>
-</div><h2><a name="p-27563-why-me-13" class="anchor" href="https://talk.nervos.org#p-27563-why-me-13" aria-label="Heading link"></a><strong>Why me</strong></h2>
-<p>I am WuodOdhis. I hold a BSc in Electrical Engineering. I am well versed in the hardware side of this build — board-level design, power, displays, scanners and embedded debugging — and my software and blockchain work covers the PSCT verifier, transaction semantics and the signed bytes. Together they give me an end-to-end understanding of the device, from the carrier board and power path to the signature.</p>
+</div><h2><a name="p-27563-why-me-14" class="anchor" href="https://talk.nervos.org#p-27563-why-me-14" aria-label="Heading link"></a><strong>Why me</strong></h2>
+<p>I am WuodOdhis. I lead the software side: the PSCT spec, verifier, coordinator, signer and the firmware application. I hold a BSc in Electrical Engineering, which gives me the vocabulary to work across the hardware/software boundary.</p>
+<h3><a name="p-27563-hardware-lead-15" class="anchor" href="https://talk.nervos.org#p-27563-hardware-lead-15" aria-label="Heading link"></a><strong>Hardware lead</strong></h3>
+<p>I am not doing the hardware half alone. moshte (<a href="https://github.com/xmoshte" rel="noopener nofollow ugc">@xmoshte</a>) is the hardware lead and a long-time friend and collaborator. His public hardware portfolio includes:</p>
+<ul>
+<li><a href="https://github.com/xmoshte/revolv-47_hw" rel="noopener nofollow ugc">Revolv-47</a> — Altium design files for a BLDC electronic speed controller with USB-C PD and power electronics.</li>
+<li><a href="https://github.com/xmoshte/chavi-21_hw" rel="noopener nofollow ugc">Chavi-21</a> — USB-C PD 1S–4S battery charging and power source module.</li>
+<li><a href="https://github.com/xmoshte/nielo" rel="noopener nofollow ugc">Nielo</a> — Raspberry Pi Compute Module 5 carrier board.</li>
+<li><a href="https://github.com/xmoshte/CBC_hw" rel="noopener nofollow ugc">CBC</a> — KiCad design files for the Chord Board Controller, with <a href="https://github.com/xmoshte/cbc_fw" rel="noopener nofollow ugc">ZMK firmware</a>.</li>
+<li><a href="https://github.com/xmoshte/semgdaq_fw" rel="noopener nofollow ugc">Semgdaq</a> — PCB manufacturing files, firmware and applications for a biosignals board.</li>
+</ul>
+<p>He owns the carrier board, power path, enclosure, assembly and bring-up; I own the PSCT verifier, firmware application, host tool and tests. The $7,638 development budget is shared between us; the hardware BOM is separate.</p>
 <p>The public CKB work below is the base this proposal builds on.</p>
 <div class="md-table">
 <table>
@@ -3101,8 +3779,9 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 </tbody>
 </table>
 </div><p>I wrote the PSCT spec, the verifier, the coordinator, the signer and the tests. The device firmware will be a port of the same rules against the same vectors. The 2021 draft stopped at the design; this is the implementation.</p>
-<p>Full public record: <a href="https://github.com/WuodOdhis/keyme/blob/main/docs/08-prior-work.md" rel="noopener nofollow ugc">docs/08-prior-work.md</a>.</p>
-<h2><a name="p-27563-links-14" class="anchor" href="https://talk.nervos.org#p-27563-links-14" aria-label="Heading link"></a><strong>Links</strong></h2>
+<p>Full public record: <a href="https://github.com/WuodOdhis/keyme/blob/main/docs/08-prior-work.md" rel="noopener nofollow ugc">docs/08-prior-work.md</a>.<br>
+Team and hardware portfolio: <a href="https://github.com/WuodOdhis/keyme/blob/main/docs/09-team.md" rel="noopener nofollow ugc">docs/09-team.md</a>.</p>
+<h2><a name="p-27563-links-16" class="anchor" href="https://talk.nervos.org#p-27563-links-16" aria-label="Heading link"></a><strong>Links</strong></h2>
 <ul>
 <li>Pico 2: <a href="https://www.raspberrypi.com/products/raspberry-pi-pico-2/" rel="noopener nofollow ugc">https://www.raspberrypi.com/products/raspberry-pi-pico-2/</a></li>
 <li>2022 Open Transaction: <a href="https://github.com/nervosnetwork/ckb/discussions/3607" rel="noopener nofollow ugc">nervosnetwork/ckb#3607</a></li>
@@ -3112,14 +3791,14 @@ s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type,
 <li>2020 Ledger grant: <a href="https://talk.nervos.org/t/4349" class="inline-onebox">Obsidian Systems - Ledger Nano S/X Application for Nervos</a></li>
 <li>Neuron: <a href="https://github.com/nervosnetwork/neuron" class="inline-onebox" rel="noopener nofollow ugc">GitHub - nervosnetwork/neuron: Neuron: Nervos CKB Wallet · GitHub</a></li>
 <li>Repository: <code>https://github.com/WuodOdhis/keyme</code></li>
-<li>Prior work: <a href="https://github.com/WuodOdhis/keyme/blob/main/docs/08-prior-work.md" rel="noopener nofollow ugc">https://github.com/WuodOdhis/keyme/blob/main/docs/08-prior-work.md</a></li>
+<li>Prior work: <a href="https://github.com/WuodOdhis/keyme/blob/main/docs/08-prior-work.md" class="inline-onebox" rel="noopener nofollow ugc">keyme/docs/08-prior-work.md at main · WuodOdhis/keyme · GitHub</a></li>
 <li>PSCT spec: <code>https://github.com/WuodOdhis/keyme/blob/main/spec/psct-v0.md</code></li>
 <li>Stage 2 record: <code>https://github.com/WuodOdhis/keyme/blob/main/docs/04-stage2.md</code></li>
 <li>Threat model: <code>https://github.com/WuodOdhis/keyme/blob/main/docs/05-threat-model.md</code></li>
 <li>Testnet transfer: <a href="https://explorer.nervos.org/transaction/0xbb10d0b6fb9ad72f6618f29020a1f065e73b4435f5ce24515afcbcb5c50a1a85" rel="noopener nofollow ugc">https://explorer.nervos.org/transaction/0xbb10d0b6fb9ad72f6618f29020a1f065e73b4435f5ce24515afcbcb5c50a1a85</a></li>
 <li>Testnet 2-of-3: <a href="https://explorer.nervos.org/transaction/0x0ea1b3755a6a9610d266a791f2adb0b8c484e6fa1fe203ccfccffedfddbd535f" rel="noopener nofollow ugc">https://explorer.nervos.org/transaction/0x0ea1b3755a6a9610d266a791f2adb0b8c484e6fa1fe203ccfccffedfddbd535f</a></li>
 </ul>
-            <p><small>9 posts - 6 participants</small></p>
+            <p><small>12 posts - 6 participants</small></p>
             <p><a href="https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258</link>
@@ -4039,7 +4718,7 @@ Tester feedback and fixes; spec, threat model, disclaimer, README; demo video; f
 <li><a href="https://github.com/nervosnetwork/fiber/issues/1625" rel="noopener nofollow ugc">Fiber issue #1625, multi-tenant hosted LSP design</a>: the hosted model, delivery buffering, trust assumptions and non-goals.</li>
 <li><a href="https://talk.nervos.org/t/11068">Cellula LSP scale test</a>: architecture and the requirement that the payee be awake to sign.</li>
 </ul>
-            <p><small>3 posts - 2 participants</small></p>
+            <p><small>4 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/dis-fiber-claim-cell-async-receive-and-on-chain-claims-for-fiber-lsps/11254">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/dis-fiber-claim-cell-async-receive-and-on-chain-claims-for-fiber-lsps/11254</link>
@@ -5691,667 +6370,6 @@ Exact tie: refund outcome
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-11239</guid>
           <source url="https://talk.nervos.org/t/spark-program-lifeboat-see-what-an-address-owns-on-ckb-and-get-it-out-when-the-app-is-gone/11239.rss">Spark Program | Lifeboat: see what an address owns on CKB, and get it out when the app is gone</source>
-        </item>
-        <item>
-          <title>[DIS] Twine — Non-Custodial P2P for Nervos CKB on Nostr and Fiber</title>
-          <dc:creator><![CDATA[ebubedev]]></dc:creator>
-          <category>CKB Community Fund DAO</category>
-          <description><![CDATA[
-            <h2><a name="p-27455-h-2-summary-1" class="anchor" href="https://talk.nervos.org#p-27455-h-2-summary-1" aria-label="Heading link"></a>2. Summary</h2>
-<p>CKB is still hard to buy or sell for local money. An exchange asks the seller to deposit the coins first. An identity check turns people away. Twine is the other path, and it already trades on testnet. Two people trade directly. The seller locks CKB in their own Fiber channel by paying a hold Twine creates. The buyer pays the seller in local currency, outside Twine. Twine keeps the order book. It can release that hold only by paying the buyer, and it learns the buyer’s secret only from that payment. Twine <strong>never holds the cash</strong>, and the operator cannot settle that lock into the operator’s own wallet. The operator does decide the dispute. The same person runs the hub and publishes the solver. A seller uses a hub whose solver they trust. A solver key that is also the buyer cannot award that trade.</p>
-<p>The hub operator publishes the solver. That solver can pay the buyer or wait for the seller’s channel lock to expire. Orders travel on Nostr. The coins move on Fiber. The Twine daemon does not open or fund channels. A buyer whose Fiber node cannot receive gets inbound from an LSP. There is no open-source LSP for that yet. Milestone 3 builds one. It opens the channel from its own node to any Fiber node, not only Fiber Studio, on testnet, and the channel liquidity is mine. JIT receive inside testnet Cellula stays a collaboration with the Cellula developers and is not part of this grant. This grant finishes the solver app, the rebuilt trading app, the website, and that LSP. Every check during those four months is testnet. When that work is in, the public hub switches to mainnet.</p>
-<ul>
-<li><strong>Grant Amount Requested:</strong> $12,000 USD (payable in CKB at the public CKB/USD rate when each payment is disbursed)</li>
-<li><strong>ETA to Completion:</strong> 4 months from approval</li>
-<li><strong>CKB Wallet / Funding Address:</strong> &lt;Insert CKB address &gt;</li>
-</ul>
-<h2><a name="p-27455-h-3-project-introduction-2" class="anchor" href="https://talk.nervos.org#p-27455-h-3-project-introduction-2" aria-label="Heading link"></a>3. Project Introduction</h2>
-<h3><a name="p-27455-the-problem-3" class="anchor" href="https://talk.nervos.org#p-27455-the-problem-3" aria-label="Heading link"></a>The Problem</h3>
-<p>Buying or selling CKB for local currency today means a centralized exchange or an identity-checked on-ramp. Where those are banned, people still need a way to trade.</p>
-<ul>
-<li><strong>Deposit first.</strong> Centralized P2P desks make the seller send CKB into the desk’s wallet before anyone can buy. A freeze or a hack takes those coins.</li>
-<li><strong>Identity checks shut people out.</strong> KYC ramps collect identity documents and often reject the places where person-to-person trading is how people actually get coins.</li>
-<li><strong>Exchanges are banned.</strong> In some countries a centralized desk is not allowed. People there still need to buy and sell CKB for local money, and the trade left is person to person.</li>
-<li><strong>That trade has no lock.</strong> Someone has to go first. The seller can take the local money and keep the CKB, or the buyer can take the CKB and not pay.</li>
-<li><strong>A swap cannot pay a bank.</strong> On-chain markets such as UTXOSwap move crypto for crypto. They cannot settle a bank transfer, mobile money, or cash.</li>
-</ul>
-<h3><a name="p-27455-the-solution-4" class="anchor" href="https://talk.nervos.org#p-27455-the-solution-4" aria-label="Heading link"></a>The Solution</h3>
-<p>Twine lets a seller and a buyer trade CKB for local currency while the CKB stays in Fiber channels they already control. The buyer pays the seller directly. Twine records the payment method and the clock. It does not hold the cash or process the payment. The beta ran more than 20 testnet trades while bugs were being fixed, so I do not have an exact count.</p>
-<h3><a name="p-27455-why-now-5" class="anchor" href="https://talk.nervos.org#p-27455-why-now-5" aria-label="Heading link"></a>Why Now?</h3>
-<p>Fiber hold invoices make this escrow possible with the tools Fiber already ships. Twine adds no custom CKB script. A normal trade window is <strong>48 hours</strong> from the lock. A trampoline payout, including a buyer on testnet Cellula, is <strong>68 hours</strong>. Those are the clocks Twine enforces. The seller’s channel stays locked until Fiber’s TLC expires. On a testnet Cellula seller that expiry was measured at <strong>64 hours</strong> and <strong>132 hours</strong> after the lock. The coins return then. The 48-hour and 68-hour numbers are not that measurement.</p>
-<h3><a name="p-27455-user-experience-6" class="anchor" href="https://talk.nervos.org#p-27455-user-experience-6" aria-label="Heading link"></a>User Experience</h3>
-<p>The order book is public Nostr messages. A trader needs a Nostr key, a relay, and their own Fiber wallet.</p>
-<ul>
-<li><strong>On a computer:</strong> Fiber Studio, or any Fiber wallet, pays the lock and receives the CKB. The seller needs a channel that can send. A Fiber node that cannot receive gets inbound from the LSP in Milestone 3. That open is for any Fiber node, not only Fiber Studio. The Twine daemon does not open the channel.</li>
-<li><strong>On a phone:</strong> testnet Cellula pays the lock and receives the CKB. The Cellula wallet is testnet only. twine-app shows the lock as a QR code. The trader pays it from Cellula, or scans it with Fiber Studio on a computer. A Cellula buyer who cannot receive gets inbound from JIT in Cellula. I will build that with the Cellula developers. It is not part of this grant. Until that inbound exists, the daemon keeps payment instructions closed.</li>
-</ul>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/3/328ca4f3b05d02b477c538aef137c1d83bbcd043.jpeg" data-download-href="https://talk.nervos.org/uploads/default/328ca4f3b05d02b477c538aef137c1d83bbcd043" title="Hold QR in the phone app"><img src="https://talk.nervos.org/uploads/default/optimized/2X/3/328ca4f3b05d02b477c538aef137c1d83bbcd043_2_517x291.jpeg" alt="Hold QR in the phone app" data-base62-sha1="7dbcyWq560HXSJ2XR6qnEjjHoRl" width="517" height="291" srcset="https://talk.nervos.org/uploads/default/optimized/2X/3/328ca4f3b05d02b477c538aef137c1d83bbcd043_2_517x291.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/3/328ca4f3b05d02b477c538aef137c1d83bbcd043_2_775x436.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/3/328ca4f3b05d02b477c538aef137c1d83bbcd043_2_1034x582.jpeg 2x" data-dominant-color="A2A195"></a></div><p></p>
-<h2><a name="p-27455-h-4-team-roles-7" class="anchor" href="https://talk.nervos.org#p-27455-h-4-team-roles-7" aria-label="Heading link"></a>4. Team &amp; Roles</h2>
-<p><strong>Chukwuma Ebube</strong> (<a href="https://ebube.dev" rel="noopener nofollow ugc">ebube.dev</a> | GitHub: <a href="https://github.com/chukwuma619" rel="noopener nofollow ugc">@chukwuma619</a>) — Lead Developer, and the only person paid by this grant. I am the only maintainer.</p>
-<p>I am a software engineer with over five years of experience, building on Nervos CKB. The CKB Community Fund previously funded <strong>Fiber Studio</strong> under the Fiber Desktop v1 grant. That proposal passed, all three milestones were completed, and the app is still actively maintained. Twine is the next step of that Fiber work: the same hold invoices, used so people can trade CKB for local money.</p>
-<ul>
-<li><strong>Fiber Studio</strong> (<a href="https://getfiberstudio.com" rel="noopener nofollow ugc">getfiberstudio.com</a> | <a href="https://github.com/chukwuma619/fiber-studio" rel="noopener nofollow ugc">GitHub</a>) — desktop app for a Fiber node. Channels, CKB and UDT payments, and Lightning through a cross-chain hub. Keys stay on the machine.</li>
-<li><strong>Fiber CCH Hub</strong> (<a href="https://github.com/chukwuma619/fiber-cch-hub" rel="noopener nofollow ugc">GitHub</a>) — self-hosted kit for atomic swaps between Fiber and Bitcoin Lightning.</li>
-<li><strong>FiberFlow</strong> (<a href="https://github.com/chukwuma619/fiberflow" rel="noopener nofollow ugc">GitHub</a>) — self-hosted checkout for stores on Fiber. The merchant keeps the wallet key.</li>
-<li><strong>backr</strong> (<a href="https://github.com/chukwuma619/backr" rel="noopener nofollow ugc">GitHub</a>) — creator memberships on Nervos CKB, paid over Fiber.</li>
-<li><strong>ckeeper</strong> (<a href="https://github.com/chukwuma619/ckeeper" rel="noopener nofollow ugc">GitHub</a>) — a Telegram bot for a CKB wallet: balance, send, and limits in a direct message.</li>
-</ul>
-<h2><a name="p-27455-h-5-current-status-8" class="anchor" href="https://talk.nervos.org#p-27455-h-5-current-status-8" aria-label="Heading link"></a>5. Current Status</h2>
-<p>This is not a paper design. The coordinator, the phone wake-up, the Fiber node package, a proof-of-concept app, and a download site are public and running against testnet. The grant pays for the solver app, the rebuilt trading app, the website, and a testnet LSP. The LSP opens inbound for any Fiber node that cannot receive.</p>
-<h3><a name="p-27455-the-beta-9" class="anchor" href="https://talk.nervos.org#p-27455-the-beta-9" aria-label="Heading link"></a>The beta</h3>
-<p>The beta closed with 100+ downloads and more than 20 testnet trades. Bugs were fixed while those trades were running, so the count is a floor, not an exact ledger. I am not turning the download number into a user count, and I do not have a fiat total for those trades. The community is on Telegram and X.</p>
-<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/1/1d4b130bbd484f77079806bacfdb67bb24931658.jpeg" data-download-href="https://talk.nervos.org/uploads/default/1d4b130bbd484f77079806bacfdb67bb24931658" title="Testnet beta of twine-app"><img src="https://talk.nervos.org/uploads/default/optimized/2X/1/1d4b130bbd484f77079806bacfdb67bb24931658_2_517x291.jpeg" alt="Testnet beta of twine-app" data-base62-sha1="4b8GX7jPrXDlip6mNq4AOyrimHS" width="517" height="291" srcset="https://talk.nervos.org/uploads/default/optimized/2X/1/1d4b130bbd484f77079806bacfdb67bb24931658_2_517x291.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/1/1d4b130bbd484f77079806bacfdb67bb24931658_2_775x436.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/1/1d4b130bbd484f77079806bacfdb67bb24931658_2_1034x582.jpeg 2x" data-dominant-color="A99DAE"></a></div><p></p>
-<h3><a name="p-27455-implemented-today-in-code-and-on-testnet-10" class="anchor" href="https://talk.nervos.org#p-27455-implemented-today-in-code-and-on-testnet-10" aria-label="Heading link"></a>Implemented today (in code and on testnet)</h3>
-<ul>
-<li><strong>Trade engine.</strong> Live on testnet: sell ads (kind <code>31420</code>), full or partial takes, a Fiber hold under the buyer’s <code>H(S_b)</code>, settle on release. Cancel works only before the seller has paid. The daemon does not open or fund channels.</li>
-<li><strong>Route gate.</strong> A dry-run route check sends no coins. No route means <code>awaiting-route</code> before fiat, or <code>awaiting-invoice</code> if fiat was already marked sent.</li>
-<li><strong>Clocks.</strong> The trade window is <strong>48 hours</strong> from the lock, or <strong>68 hours</strong> when the buyer invoice is trampoline (testnet Cellula is one). <code>hold_window_end_ms</code> uses the earlier of that window and the inbound TLC expiry, so the trade stops on time even when the TLC is longer. An unpaid hold expires after <strong>1 hour</strong>. The buyer can mark the local payment sent only while the hold still leaves <strong>2 hours</strong> to release, <strong>4 hours</strong> for a dispute, and Fiber’s routing time (at least <strong>30 minutes</strong>). After that mark, the seller has 2 hours, then the buyer is asked to dispute. The seller’s CKB stays in the channel until the TLC expires. A testnet Cellula seller measured <strong>64 hours</strong> and <strong>132 hours</strong> from lock to that expiry. The daemon test already keeps a 132-hour TLC on a 48-hour trade window. Fiber returns the coins at the TLC expiry, not at 48 hours.</li>
-<li><strong>Disputes.</strong> Live when <code>TWINE_SOLVER</code> is set. Kind <code>31421</code> names the solver and the 4-hour window. The solver can pay the buyer, record that the buyer did not pay, or record that the money arrived and the CKB could not be delivered. A buyer who never marks the payment sent does not get a public record today. Month 2 publishes that no-show as <code>buyer-unpaid</code>.</li>
-<li><strong>Public failures.</strong> Kind <code>31422</code> already publishes <code>fiat-owed</code>, <code>buyer-unpaid</code>, and <code>unresolved</code>. Successful settles are Month 2. The app totals are Month 3.</li>
-<li><strong>Phone wake.</strong> <code>twine-push</code> sends an empty alert. The trade stays in the app.</li>
-<li><strong>Host install.</strong> <code>DEPLOY.md</code> and <code>docker/</code> run Fiber <code>fnn</code> 0.10.0, the daemon, and push. The coordinator image is Month 2.</li>
-<li><strong>App.</strong> <code>twine-app</code> already posts, takes, chats, attaches a receipt, opens a dispute, and shows the hold as a QR. Android, macOS, Linux, and Windows builds are published. It holds no Fiber key and cannot award. <code>twine-solver</code> is Month 1. Store listing is Month 4.</li>
-</ul>
-<h2><a name="p-27455-h-6-application-design-11" class="anchor" href="https://talk.nervos.org#p-27455-h-6-application-design-11" aria-label="Heading link"></a>6. Application Design</h2>
-<p>Orders and chat are Nostr messages. The coins move on Fiber. Local currency stays outside Twine.</p>
-<h3><a name="p-27455-h-61-functional-overview-12" class="anchor" href="https://talk.nervos.org#p-27455-h-61-functional-overview-12" aria-label="Heading link"></a>6.1 Functional Overview</h3>
-<p>Cancel works only while the hold is unpaid. A dispute does not pause the Fiber timelock. A route check is a look, not a reservation. Month 4 puts one trade on an ad and gives each payment method its own window inside the hold.</p>
-<h4><a name="p-27455-trade-sequence-13" class="anchor" href="https://talk.nervos.org#p-27455-trade-sequence-13" aria-label="Heading link"></a>Trade Sequence</h4>
-<p>The buyer mints secret <code>S_b</code> on their own Fiber node and builds a payout invoice under <code>H(S_b)</code> (SHA-256). Take carries that invoice. Twine copies the hash onto a hold invoice and stores no preimage. Fiat never touches Twine. The operator learns <code>S_b</code> only when <code>send_payment</code> on the buyer invoice succeeds, then uses that same preimage to settle the hold.</p>
-<pre data-code-wrap="mermaid"><code class="lang-mermaid">sequenceDiagram
-  autonumber
-  actor Maker as Maker seller
-  actor Taker as Taker buyer
-  participant Client as twine-app
-  participant Nostr as Nostr Relays
-  participant Twine as twine Daemon
-  participant Hub as Operator Fiber Node
-  participant Fiat as Local currency
-
-  Maker-&gt;&gt;Client: Post sell ad
-  Client-&gt;&gt;Nostr: new-order NIP-44
-  Nostr-&gt;&gt;Twine: Decrypt and store
-  Twine-&gt;&gt;Nostr: Publish order event
-
-  Taker-&gt;&gt;Taker: mint S_b, invoice under H(S_b)
-  Taker-&gt;&gt;Client: Take with that invoice
-  Client-&gt;&gt;Nostr: take NIP-44
-  Nostr-&gt;&gt;Twine: parse payment_hash H(S_b)
-  Twine-&gt;&gt;Hub: hold invoice under same H(S_b), no S_b
-  Twine-&gt;&gt;Nostr: pay-invoice
-  Nostr-&gt;&gt;Maker: Prompt seller to lock coins
-
-  Maker-&gt;&gt;Hub: Pay hold locked to H(S_b)
-  Hub--&gt;&gt;Twine: Invoice status Received
-  Twine-&gt;&gt;Hub: send_payment dry_run on buyer invoice
-  alt Route exists
-    Hub--&gt;&gt;Twine: route exists, no preimage
-    Twine-&gt;&gt;Nostr: Status waiting-fiat
-  else No route
-    Hub--&gt;&gt;Twine: no path
-    Twine-&gt;&gt;Nostr: Status awaiting-route
-    Taker-&gt;&gt;Client: Resubmit same H(S_b) invoice
-    Twine-&gt;&gt;Hub: dry_run again
-    Twine-&gt;&gt;Nostr: Status waiting-fiat
-  end
-
-  Taker-&gt;&gt;Fiat: Send fiat directly to seller
-  Taker-&gt;&gt;Client: Upload receipt and mark fiat-sent
-  Client-&gt;&gt;Nostr: fiat-sent
-  Nostr-&gt;&gt;Twine: Record the report, then dry_run
-  alt Route still exists
-    Twine-&gt;&gt;Nostr: fiat-sent-ok
-  else Route gone
-    Twine-&gt;&gt;Nostr: fiat-sent-ok, status awaiting-invoice
-    Taker-&gt;&gt;Client: Resubmit same H(S_b) invoice
-    Twine-&gt;&gt;Hub: dry_run again
-    Twine-&gt;&gt;Nostr: Status fiat-sent
-  end
-
-  Maker-&gt;&gt;Client: Confirm fiat and release
-  Client-&gt;&gt;Nostr: release
-  Nostr-&gt;&gt;Twine: Trigger release
-  Twine-&gt;&gt;Hub: send_payment to buyer invoice
-  Hub--&gt;&gt;Twine: payout reveals S_b
-  Twine-&gt;&gt;Hub: settle_invoice with S_b
-  Twine-&gt;&gt;Nostr: Status settled
-</code></pre>
-<h4><a name="p-27455-trade-state-machine-14" class="anchor" href="https://talk.nervos.org#p-27455-trade-state-machine-14" aria-label="Heading link"></a>Trade State Machine</h4>
-<p>Partial takes can share one ad today. Milestone 4 keeps a single trade in flight per ad.</p>
-<pre data-code-wrap="mermaid"><code class="lang-mermaid">stateDiagram-v2
-  [*] --&gt; waitingHold: take with payout invoice
-  waitingHold: waiting-hold
-  awaitingRoute: awaiting-route
-  waitingFiat: waiting-fiat
-  fiatSent: fiat-sent
-  awaitingInvoice: awaiting-invoice
-  disputed: disputed
-  releasing: releasing
-  refunding: refunding
-  settled: settled
-  canceled: canceled
-  expired: expired
-
-  waitingHold --&gt; awaitingRoute: Payout invoice has no route
-  awaitingRoute --&gt; waitingFiat: Same invoice routes
-  waitingHold --&gt; waitingFiat: Seller locks CKB and a route exists
-  waitingHold --&gt; canceled: Cancel while invoice Open
-  waitingFiat --&gt; fiatSent: Buyer marks fiat sent
-  awaitingRoute --&gt; disputed: Dispute opened
-  waitingFiat --&gt; disputed: Dispute opened
-  awaitingRoute --&gt; refunding: Window expires before a route
-  waitingFiat --&gt; refunding: Fiat window expires
-  fiatSent --&gt; releasing: Seller releases
-  fiatSent --&gt; disputed: Dispute opened
-  fiatSent --&gt; awaitingInvoice: Route missing after fiat was marked sent
-  fiatSent --&gt; refunding: Release window expires
-  awaitingInvoice --&gt; fiatSent: Retry with same payment hash
-  awaitingInvoice --&gt; releasing: Seller releases, or the acknowledged invoice routes
-  awaitingInvoice --&gt; disputed: Dispute opened
-  awaitingInvoice --&gt; refunding: Release window expires
-  releasing --&gt; awaitingInvoice: Payout fails
-  disputed --&gt; disputed: Buyer marks fiat sent, dispute stays open
-  disputed --&gt; releasing: Seller or solver pays buyer
-  disputed --&gt; refunding: Solver refunds seller or records fiat-owed
-  disputed --&gt; refunding: Fiat or release window expires
-  releasing --&gt; settled: Payout succeeds, hold settled
-  refunding --&gt; expired: Fiber timelock returns CKB
-</code></pre>
-<p>When fiat was marked sent and the solver window ends with no decision, the trade stays <code>fiat-sent</code> or <code>disputed</code> and the daemon publishes <code>unresolved</code>. Release is refused. The trade window moves the trade to <code>refunding</code>. Fiber moves it to <code>expired</code> when the seller’s TLC expires and the coins come back. On a long seller route that expiry is later than the trade window. A dispute opened before fiat is marked sent still refunds at the fiat deadline. The coins still wait for the TLC.</p>
-<p>Fiber team members <a class="mention" href="https://talk.nervos.org/u/arthurzhang">@ArthurZhang</a>, <a class="mention" href="https://talk.nervos.org/u/quake">@quake</a>, <a class="mention" href="https://talk.nervos.org/u/t_silva">@T_Silva</a> and others gave feedback on the Fiber integration. Thanking them here is not an endorsement of this proposal.</p>
-<h3><a name="p-27455-h-62-architecture-components-15" class="anchor" href="https://talk.nervos.org#p-27455-h-62-architecture-components-15" aria-label="Heading link"></a>6.2 Architecture &amp; Components</h3>
-<p>No new CKB script. The lock is a Fiber hold invoice on <code>fnn</code> 0.10.0. Kind <code>31420</code> is a public ad. Kind <code>31421</code> is the hub’s public card. Kind <code>31422</code> is a public trade outcome. Kind <code>4242</code> is a private action between a trader and the daemon. Kind <code>4243</code> is a private chat between the two traders. Traders use their own Fiber wallet. Twine does not ship one. CCC and the Nervos DAO are outside this design. The repositories stay public. Milestone 1 adds the license file.</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Status</th>
-<th>Role</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>twine-daemon</strong></td>
-<td>Live</td>
-<td>Core Rust coordinator. Trade state machine, SQLite, Nostr, Fiber JSON-RPC. On release it pays the buyer’s invoice. It does not open, fund, or rebalance channels.</td>
-</tr>
-<tr>
-<td><strong>twine-push</strong></td>
-<td>Live</td>
-<td>Content-free FCM doorbell. Watches kind <code>4242</code> and kind <code>4243</code> <code>#p</code> tags and wakes the phone without trade content in the notification.</td>
-</tr>
-<tr>
-<td><strong>Fiber image (<code>docker/</code>)</strong></td>
-<td>Live</td>
-<td>Builds/runs <code>fnn</code> 0.10.0 for the operator hub. Host setup is in <code>DEPLOY.md</code>.</td>
-</tr>
-<tr>
-<td><strong>twine-app</strong></td>
-<td>Live PoC</td>
-<td>Trading client (book, chat, dispute open, sealed evidence, trader keystore). Grant Milestone 4 rebuilds it. It stores the trader’s Nostr secret and has no solver key and no award screen.</td>
-</tr>
-<tr>
-<td><strong>twine-solver</strong></td>
-<td>Planned</td>
-<td>Separate app from the same Flutter project. Milestone 1. One hub, the dispute queue, and the three awards. Its keystore holds only the solver key.</td>
-</tr>
-<tr>
-<td><strong>twine-web</strong></td>
-<td>Early</td>
-<td>Download/marketing site today. Grant Milestone 4 adds guides and help, a live order book, and a public node directory.</td>
-</tr>
-<tr>
-<td><strong>twine-cli</strong></td>
-<td>After this grant</td>
-<td>Terminal client for a trader or a solver. Not part of this grant. The app already trades without it. Built once the desk has real use. It holds no Fiber key.</td>
-</tr>
-<tr>
-<td><strong>LSP</strong></td>
-<td>Planned</td>
-<td>Milestone 3. No open-source LSP for this exists yet. Opens inbound for any Fiber node that cannot receive, not only Fiber Studio. Not part of <code>twine-daemon</code>. Testnet. The CKB in those channels is mine.</td>
-</tr>
-</tbody>
-</table>
-</div><pre data-code-wrap="mermaid"><code class="lang-mermaid">flowchart TB
-  subgraph clients [Clients]
-    App["twine-app"]
-    Solver["twine-solver planned"]
-    Web["twine-web"]
-  end
-
-  Nostr["Nostr Relays"]
-
-  subgraph host [Operator Host]
-    Daemon["twine-daemon"]
-    Push["twine-push"]
-    Hub["fnn Fiber Hub"]
-    DB["SQLite"]
-  end
-
-  subgraph wallets [Trader Wallets]
-    Studio["Fiber Studio"]
-    Cellula["Cellula"]
-    Ext["External Fiber Node"]
-  end
-
-  CKB["CKB Chain"]
-  Fiat["Fiat outside Twine"]
-  FCM["FCM"]
-
-  App --&gt;|NIP-44 actions and chat| Nostr
-  Solver --&gt;|NIP-44 awards and dispute chat| Nostr
-  Web --&gt;|Read public book and directory| Nostr
-  Nostr --&gt;|Kind 4242 to operator| Daemon
-  Nostr --&gt;|Kind 4242 or 4243 p-tags| Push
-  Push --&gt;|content-free wake| FCM
-  FCM --&gt; App
-  FCM --&gt; Solver
-  Daemon --&gt; DB
-  Daemon --&gt;|JSON-RPC| Hub
-  Studio --&gt;|Pay hold / receive payout| Hub
-  Cellula --&gt;|Pay hold / receive payout| Hub
-  Ext --&gt;|Pay hold / receive payout| Hub
-  Hub --&gt; CKB
-  Studio --&gt; CKB
-  Cellula --&gt; CKB
-  Ext --&gt; CKB
-  App -.-&gt;|Encrypted receipt only| Fiat
-</code></pre>
-<h3><a name="p-27455-h-63-design-rationale-16" class="anchor" href="https://talk.nervos.org#p-27455-h-63-design-rationale-16" aria-label="Heading link"></a>6.3 Design Rationale</h3>
-<p>Nostr carries the book, so there is no new on-chain order-book script. Fiber’s hold invoice is the lock: the hash, the timelock, and the refund already ship. The seller’s CKB stays in the channel the seller paid from. Milestone 4 keeps one trade in flight per ad. A partial amount on that one trade stays.</p>
-<p>The hold uses the buyer’s payment hash <code>H(S_b)</code>. Twine never mints <code>S_b</code>. The operator learns it only when the payout to the buyer succeeds, and only then settles the hold. A retry must reuse that hash. <code>cancel_invoice</code> runs only while the hold is still <code>Open</code>. After the seller has paid, the daemon refuses that call, so the operator cannot hand the coins back early and cannot take them.</p>
-<p>The hub can wait out the TLC instead of releasing. It cannot collect the locked CKB without paying the buyer. Local currency is outside Fiber. The hub operator publishes one solver, and on the public hub that solver is me. Traders accept that solver by using the hub. <code>award-buyer</code> pays the buyer. <code>buyer-unpaid</code>, or a window with no decision, leaves the coins until the TLC expires, and the daemon refuses a later release. <code>fiat-owed</code> records that the local money arrived and the CKB could not be delivered. Paying the buyer, or recording <code>fiat-owed</code>, requires this trade’s chat sealed to the solver. The daemon stores that ciphertext and cannot read it. The solver cannot pay a buyer who never sealed the chat. The award is public on kind <code>31422</code>.</p>
-<p><strong>What the seller trusts the operator for.</strong> Three things.</p>
-<ol>
-<li>The operator’s Fiber node sends the payout when the seller, or the solver, releases. If that node is down, the coins sit until the TLC expires and return to the seller. The buyer who already paid is left with a public note, not the coins.</li>
-<li>As the published solver, the operator decides a dispute. A wrong <code>award-buyer</code> sends the seller’s CKB to the buyer. A wrong <code>buyer-unpaid</code> returns the CKB to the seller after the buyer has paid.</li>
-<li>The operator keeps the node up until the TLC expires. The operator cannot settle the lock into the operator’s own wallet. The secret comes from paying the buyer.</li>
-</ol>
-<p><strong>Trade on a hub whose solver you trust.</strong> Anyone can run this software. The solver on a hub is that hub’s operator, named on its kind <code>31421</code> card before anyone locks coins. On the public hub that solver is me. A seller who does not trust that person uses another hub, or does not take the ad. The daemon does not fix a bad choice of hub.</p>
-<p><strong>If the solver and the buyer are the same key.</strong> The daemon checks the seller, then the buyer, then the solver. A message from the buyer’s key is the buyer, even when that key is also <code>TWINE_SOLVER</code>. <code>resolve</code> accepts only the solver, so that key cannot award the trade. The dispute runs out the window, the record is <code>unresolved</code>, and the CKB returns to the seller when the TLC expires. The same check applies if the solver’s key is the seller’s key: they can release, which any seller can do, and they cannot send <code>resolve</code>. The coins still return to the seller if nobody else decides.</p>
-<p><strong>If the same person uses two keys.</strong> The daemon cannot tell. A solver key can send <code>award-buyer</code>, and the hub pays the other key’s invoice. The daemon also does not refuse a take from the solver key. That is the trust in the previous list. I will not use the solver key to trade on the public hub. A hub that does is a hub to leave.</p>
-<p><strong>What “non-custodial” means here.</strong> Twine never holds the cash. The seller’s CKB sits in the seller’s channel, locked to the buyer’s secret. The operator cannot spend that lock except by paying the buyer. It does not mean the operator makes no decision. The title stays. This paragraph is the limit on it.</p>
-<p><strong>Two clocks.</strong> Twine sets the hold invoice’s <code>final_expiry_delta</code> to 48 hours, or 68 hours for a trampoline buyer invoice. That is the trade window. Fiber adds hop time on the seller’s path, and Twine cannot set the TLC expiry that results. <code>hold_window_end_ms</code> ends the trade at the earlier of the trade window and the inbound TLC expiry. The channel unlock is the TLC. Month 2 records <code>locked_at</code> and that TLC expiry on the public trade. The 48-hour and 68-hour claim is the trade window only. A check that measures lock to TLC expiry will show the longer number on a testnet Cellula seller, and that longer number is what the proposal now says.</p>
-<p>The fee is one secret and two amounts. There is no second lock the hub can settle first.</p>
-<h3><a name="p-27455-h-64-fee-model-sustainability-17" class="anchor" href="https://talk.nervos.org#p-27455-h-64-fee-model-sustainability-17" aria-label="Heading link"></a>6.4 Fee Model &amp; Sustainability</h3>
-<p>Fees are <strong>not charged today</strong>. The software still requires the buyer’s invoice to equal the hold. Month 2 adds one coordinator fee, taken only when a trade settles, split across both sides in CKB.</p>
-<p>The fee is upkeep for the daemon and hub the trader chose. Anyone who runs a coordinator sets the rate, including 0%.</p>
-<p>The seller locks <code>H = principal + seller_fee</code>. The buyer invoice is <code>P = principal - buyer_fee</code> under the same <code>H(S_b)</code>. The hub pays <code>P</code>, settles the hold for <code>H</code>, and keeps <code>H - P</code>. The preimage rule is unchanged.</p>
-<p><strong>Example (100 CKB principal, 0.5% each side):</strong></p>
-<ol>
-<li>The seller locks <strong>100.5 CKB</strong> (<code>H</code>). The seller also pays the route fee on that hold. The hub receives the invoice amount, 100.5.</li>
-<li>The buyer’s invoice is <strong>99.5 CKB</strong> (<code>P</code>), under the same <code>H(S_b)</code>.</li>
-<li>The hub pays that invoice. <code>send_payment</code> caps the route fee at <strong>0.5%</strong> (<code>MAX_FEE_RATE</code> is 5 per thousand). A trampoline payout that uses the cap costs the hub about <strong>0.5 CKB</strong> to deliver 99.5, so the hub sends about <strong>100.0</strong>.</li>
-<li>The hub settles the hold for 100.5. About <strong>0.5 CKB</strong> stays in the hub channel, not 1.0.</li>
-</ol>
-<p>The 1.0 CKB is <code>H - P</code> before the route fee. On the trampoline path measured in review, 100 in and 100.5 out, the hub’s remainder is the seller’s half. A direct path with a smaller route fee leaves more of the 1.0. I am not raising the rate to cover the route. An operator who wants the full 1.0 after routing sets a higher rate on their own card.</p>
-<p>If that fee should leave the hub node, the daemon may send it onward only after the hold is settled, under a new payment hash. The trade is already settled. A failed hop does not reopen the hold.</p>
-<p>The rate, including 0%, is on the hub’s public card (kind <code>31421</code>) before anyone locks coins. The $1,500 infrastructure line is the year the public site and hub run, including updates to that site, whether or not a hub charges a fee. After that year, the fee is how an operator covers the server. The fee does not buy channel liquidity. The CKB in the hub, and the CKB the LSP puts in a channel, are mine.</p>
-<h2><a name="p-27455-h-7-key-benefits-for-ckb-18" class="anchor" href="https://talk.nervos.org#p-27455-h-7-key-benefits-for-ckb-18" aria-label="Heading link"></a>7. Key Benefits for CKB</h2>
-<p>This puts CKB in people’s hands through the payment channels Nervos already built.</p>
-<ul>
-<li><strong>Fiber gets a real payment.</strong> Every completed trade is a hold plus a payout, often across more than one hop, for local money a swap cannot settle. People who can buy and sell CKB this way open a channel and use it. That use is what this brings to CKB.</li>
-<li><strong>Someone else can run it.</strong> The coordinator image and the public event kinds are the tooling. Another operator sets their own fee, including 0%.</li>
-</ul>
-<p>Months 0 through 4 are built and accepted on testnet. Nothing in those months is a mainnet launch. When the Milestone 4 delivery checks pass, I switch the public hub to mainnet. The 12-month run starts then, on my own CKB, with the payable and receivable amounts published on kind <code>31421</code>. Store listings during development talk to the testnet hub. After the switch they talk to the mainnet hub. Cellula is testnet only, so it is not part of that switch. The mainnet path on a phone is Fiber Studio. Before I raise that published cap, I review the desk myself. The repositories stay public, so anyone can review them too, including the Nervos team. There is no mainnet pilot in front of the solver.</p>
-<h2><a name="p-27455-h-8-detailed-deliverables-milestones-19" class="anchor" href="https://talk.nervos.org#p-27455-h-8-detailed-deliverables-milestones-19" aria-label="Heading link"></a>8. Detailed Deliverables &amp; Milestones</h2>
-<p>Four months from approval, all of it on testnet. Kickoff, Milestone 1, and Milestone 2 are <strong>$2,400</strong> each. Milestone 3, the LSP, is <strong>$3,000</strong>. Milestone 4 is <strong>$1,800</strong>. Each payment follows a public progress report on Nervos Talk. I write that report, and each acceptance item is marked done or still open. I do not request the next payment while an acceptance item for the current milestone is still open.</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Milestone</th>
-<th>Planned work</th>
-<th>Timeline</th>
-<th>Budget</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Kickoff</strong></td>
-<td>Work starts on a testnet that already trades</td>
-<td>Month 0</td>
-<td>$2,400</td>
-</tr>
-<tr>
-<td><strong>Milestone 1</strong></td>
-<td>The solver app</td>
-<td>Month 1</td>
-<td>$2,400</td>
-</tr>
-<tr>
-<td><strong>Milestone 2</strong></td>
-<td>The fee, the public trade record, and a coordinator someone else can host</td>
-<td>Month 2</td>
-<td>$2,400</td>
-</tr>
-<tr>
-<td><strong>Milestone 3</strong></td>
-<td>The LSP. It opens inbound for any Fiber node that cannot receive</td>
-<td>Month 3</td>
-<td>$3,000</td>
-</tr>
-<tr>
-<td><strong>Milestone 4</strong></td>
-<td>The trading app redesign, the website, guides, and store listings, accepted on testnet, then the public hub switches to mainnet</td>
-<td>Month 4</td>
-<td>$1,800</td>
-</tr>
-<tr>
-<td><strong>Total</strong></td>
-<td></td>
-<td><strong>4 Months</strong></td>
-<td><strong>$12,000</strong></td>
-</tr>
-</tbody>
-</table>
-</div><h3><a name="p-27455-milestone-1-solver-app-month-1-20" class="anchor" href="https://talk.nervos.org#p-27455-milestone-1-solver-app-month-1-20" aria-label="Heading link"></a>Milestone 1 — Solver app (Month 1)</h3>
-<p>The daemon already accepts <code>resolve</code>. The trading app can open a dispute and seal the chat. It cannot award, and this month does not add an award screen to it. <code>twine-solver</code> is a separate install from the same Flutter project, for the hub operator.</p>
-<ul>
-<li><strong>Deliverables:</strong>
-<ul>
-<li><strong><code>twine-solver</code>.</strong> The solver <code>nsec</code> is a different key from any trading identity, in this app’s own keystore, with screenshot blocking on key screens. A QR shows the solver <code>npub</code> to the hub operator. <code>twine-app</code> cannot import that key.</li>
-<li>One hub and its relays. No order book. Live pending disputes, take one case, and my disputes (in progress / closed). A content-free <code>twine-push</code> wake goes to every configured solver until someone takes the case, then a wake that it was taken.</li>
-<li>Chat with the buyer and the seller. Read sealed trade evidence when a party shares it.</li>
-<li>Resolve with <code>award-buyer</code>, <code>buyer-unpaid</code>, or <code>fiat-owed</code>. A locked hold stays off <code>cancel_invoice</code>.</li>
-<li>Optional read vs read-write: watch the queue, or award.</li>
-<li>Direct download for the operator. It is not part of the App Store or Play Store submission.</li>
-<li><strong>License file.</strong> An open-source license on the daemon, the app, and the website. <code>twine-solver</code> uses it.</li>
-</ul>
-</li>
-<li><strong>Acceptance Criteria:</strong>
-<ul>
-<li>A solver key awards a disputed testnet trade from <code>twine-solver</code>. That key is absent from <code>twine-app</code>, and the trading app has no award action. The daemon does not call <code>cancel_invoice</code> on the received hold.</li>
-<li>The daemon, app, and website repositories each contain that license file, and <code>twine-solver</code> uses it.</li>
-</ul>
-</li>
-</ul>
-<h3><a name="p-27455-milestone-2-fee-public-record-and-a-hostable-coordinator-month-2-21" class="anchor" href="https://talk.nervos.org#p-27455-milestone-2-fee-public-record-and-a-hostable-coordinator-month-2-21" aria-label="Heading link"></a>Milestone 2 — Fee, public record, and a hostable coordinator (Month 2)</h3>
-<p>This month is the daemon work the desk needs before anyone else can host it: a public settle record, a fee that does not put the trade at risk, a lock cap that grows with reputation, maintenance mode, a protocol version, and a Docker image a third party can run. All of it is testnet.</p>
-<ul>
-<li><strong>Deliverables:</strong>
-<ul>
-<li><strong>Key model before more history is published.</strong> Reputation mode keeps a stable identity key and signs each trade with a per-trade key. The record attaches when that identity is revealed. Privacy mode uses a fresh key per trade and shows a blank history. Kind <code>31422</code> names the key that owns the record.</li>
-<li><strong>A new taker cannot lock a large ad for free.</strong> The hub publishes <code>new_taker_cap_ckb</code> on kind <code>31421</code>. A key with no settled trade on this hub, including a privacy-mode key, may have one open lock, and that lock cannot exceed the cap. Each settled trade on this hub doubles the cap, up to the ad. Privacy mode stays on the blank-history cap. It does not wipe it.</li>
-<li><strong>A no-show is a public record.</strong> If the fiat window ends and the buyer never marked the payment sent, the daemon publishes <code>buyer-unpaid</code>. Today that record exists only when the solver writes it.</li>
-<li><strong>Lock time on the public trade.</strong> Kind <code>31422</code> carries <code>locked_at</code> and the inbound TLC expiry read from <code>list_channels</code>. The trade window is the earlier of that expiry and <code>locked_at</code> plus 48 hours (68 hours for a trampoline payout).</li>
-<li><strong>Publish successful settles</strong> on kind <code>31422</code>. Today that kind is <code>fiat-owed</code>, <code>buyer-unpaid</code>, and <code>unresolved</code>.</li>
-<li><strong>Protocol version</strong> on kind <code>31421</code> and kind <code>4242</code>. The shipping app and a newer hub refuse each other on purpose.</li>
-<li><strong>Coordinator Docker image</strong> and docs for a third-party operator. The Fiber image under <code>docker/</code> is already <code>fnn</code> 0.10.0. Those docs point at Fiber’s <code>admin.backup</code> for the node store. The daemon does not keep a second copy of channel state.</li>
-<li><strong>Maintenance mode.</strong> Block new takes while in-flight holds settle or expire.</li>
-<li><strong>Coordinator fee,</strong> including a rate of 0%. The seller locks the principal plus the seller’s fee. The buyer is paid the principal minus the buyer’s fee, under the same hash. Today <code>payout_invoice_ok</code> rejects a buyer invoice that does not equal the hold. This milestone allows the smaller payout. If testnet cannot settle the larger hold afterward, the report says so, the public hub stays at 0%, and that closes the fee item.</li>
-</ul>
-</li>
-<li><strong>Acceptance Criteria:</strong> This milestone is paid when the public settle record, the new-taker cap, maintenance mode, and the Docker image pass. The fee item closes on a successful testnet settle or on the written report in the last fee check.
-<ul>
-<li>A settled testnet trade is a public kind <code>31422</code> event that names the record’s owner key, <code>locked_at</code>, and the inbound TLC expiry. A privacy-mode key has no prior record on that hub, and a take above <code>new_taker_cap_ckb</code> is refused. A second open lock from that key is refused.</li>
-<li>A testnet trade whose buyer never marks fiat sent becomes a public <code>buyer-unpaid</code> record when the fiat window ends.</li>
-<li>The 100 CKB fee example settles on testnet, or the report leaves the public hub at 0%. The report states the route fee on that payout and the CKB left in the hub channel after it.</li>
-<li>Maintenance mode blocks new takes and leaves in-flight holds to settle or expire.</li>
-<li>A third party can deploy the coordinator from the published Docker image and docs.</li>
-</ul>
-</li>
-</ul>
-<h3><a name="p-27455-milestone-3-lsp-month-3-22" class="anchor" href="https://talk.nervos.org#p-27455-milestone-3-lsp-month-3-22" aria-label="Heading link"></a>Milestone 3 — LSP (Month 3)</h3>
-<p>There is no open-source LSP for a Fiber node that cannot receive. This month builds one. A Fiber node with no inbound asks it for capacity. It opens a channel to that node, funds the inbound side, and stands in until that node can receive. Fiber Studio is one such node. Any other Fiber node can ask for the same open. The check stays on testnet.</p>
-<ul>
-<li><strong>Deliverables:</strong>
-<ul>
-<li><strong>LSP, testnet.</strong> Not part of <code>twine-daemon</code>. A Fiber node with no inbound asks it for a channel. The LSP opens that channel from its own node and funds the inbound side in time for the payout. The same open works for Fiber Studio and for any other Fiber node. The CKB in the channel is mine. This grant does not buy that liquidity. The fee does not buy it either. <code>twine-daemon</code> still only pays the buyer’s invoice. It does not call <code>open_channel</code>. JIT inside testnet Cellula stays with the Cellula developers and is not this item. The LSP code is public, under the same open-source license as the daemon.</li>
-</ul>
-</li>
-<li><strong>Acceptance Criteria:</strong>
-<ul>
-<li>On testnet, a Fiber node with no inbound receives a CKB payment after the LSP opens and funds that inbound. A second check uses a node that is not Fiber Studio. The Twine daemon does not call <code>open_channel</code> on that trade.</li>
-</ul>
-</li>
-</ul>
-<h3><a name="p-27455-milestone-4-trading-app-website-guides-and-store-listings-month-4-23" class="anchor" href="https://talk.nervos.org#p-27455-milestone-4-trading-app-website-guides-and-store-listings-month-4-23" aria-label="Heading link"></a>Milestone 4 — Trading app, website, guides, and store listings (Month 4)</h3>
-<p>Rebuilds the trading app for iPhone, Android, Mac, Windows, and Linux, against testnet, and ships the public website, the guides, and the store listings. The solver app stays a separate install. The daemon gains three rules: one open trade per ad, a clock per payment method, and hub capacity on kind <code>31421</code>. UDT markets and market-price ads leave this grant. Cellula, where the app mentions it, is named as testnet only. The testnet checks come first. When they pass, I switch the public hub to mainnet. I run that mainnet hub for 12 months on my own CKB and post a quarterly note.</p>
-<ul>
-<li><strong>Deliverables:</strong>
-<ul>
-<li><strong>One open trade per ad.</strong> The live daemon still takes several slices of one post while CKB remains.</li>
-<li><strong>Per-rail payment catalog</strong> on ads for local-currency methods. Each method has a maximum fiat window that still leaves the 2-hour release grace, the 4-hour solver window, and the Fiber routing buffer. The catalog puts the rail and the clock on the order.</li>
-<li><strong>Hub capacity on kind <code>31421</code>.</strong> Payable CKB is <code>local_balance</code> minus <code>offered_tlc_balance</code>. Receivable CKB is <code>remote_balance</code> minus <code>received_tlc_balance</code>. Only enabled channels count, and a one-way channel counts only in the direction it allows. A path through other nodes is a separate check. The card also carries a short operator profile and the new-taker cap from Month 2. The app shows that capacity before a take and says whether the path is direct or multi-hop. It also says when the trader’s own wallet has no inbound capacity. The route check after the hold locks still opens the payment instructions.</li>
-<li>Rebuild of <code>twine-app</code> on the live trade flow. Chat, dispute open, and the trader keystore stay. No solver key. Adds filters and the counterparty’s public record. The trade screen shows the trade window and the TLC expiry from Month 2. This month produces the builds submitted to the stores. Those builds talk to a testnet hub until the mainnet switch.</li>
-<li><strong>Aggregates in the client</strong>, from kind <code>31422</code>: settled count, completion rate, median time to pay, median time to release.</li>
-<li><strong>Fixed-price ads.</strong> Trust shown on a counterparty is the settle record.</li>
-<li><strong>twine-web:</strong> guides and help, a live kind <code>31420</code> book, and a directory of hubs from kind <code>31421</code> capacity and health. The site today is the download page.</li>
-<li><strong>Relay failover</strong>, and maker relay lists (NIP-65), so one dead relay does not hide the book.</li>
-<li><strong>Ad expiry</strong> on the daemon clock for maker posts that are not refreshed, plus a NIP-40 <code>expiration</code> tag. The daemon clock is the authority. NIP-40 is still a draft, and a relay may keep the event.</li>
-<li><strong>Hub health</strong> on the same <code>31421</code> event: Fiber RPC reachable, channels open, a recent payout-path dry-run succeeded, relays reachable. Refresh it on a clock. Capacity is the hub capacity added in this milestone.</li>
-<li><strong>Operator metrics</strong> from the daemon: RPC errors, stuck phases, relay lag. Traders see the Nostr health event. The operator uses the logs.</li>
-<li>Submit the rebuilt trading app to Google Play and the Apple App Store. Those filings need a D-U-N-S number, and getting that number means applying for the documents first. That cost comes out of the infrastructure line. <code>twine-solver</code> stays a direct download. Direct downloads of the trading app stay available for Android, desktop, and iOS TestFlight.</li>
-</ul>
-</li>
-<li><strong>Acceptance Criteria:</strong> This milestone is paid when the rebuilt app, the site, the store filings, and the mainnet switch pass.
-<ul>
-<li><code>cargo test</code> passes, including one in-flight trade per ad.</li>
-<li>A kind <code>31421</code> event shows payable and receivable CKB from the hub’s own channels, plus the operator profile.</li>
-<li>Two local-currency methods on an ad each carry their own fiat window inside the trade window (48 hours plain, 68 hours trampoline). The trade screen shows that window and the TLC expiry.</li>
-<li>A testnet CKB trade completes on a mobile build and a desktop build of the rebuilt app, using the same Nostr key.</li>
-<li>The order book can filter, and the counterparty screen shows settled count, completion rate, and the two medians computed from kind <code>31422</code>.</li>
-<li>twine-web shows the guides, the live kind <code>31420</code> book, and a hub directory whose capacity and health match kind <code>31421</code>.</li>
-<li>With one configured relay down, the book still loads from another.</li>
-<li>Google Play and App Store submissions are filed (in review or live). The listing text says the wallet path through Cellula is testnet.</li>
-<li>After those testnet checks, the public kind <code>31421</code> card names the mainnet Fiber node. The site book follows that card. Cellula is not on this hub.</li>
-</ul>
-</li>
-</ul>
-<h3><a name="p-27455-after-this-grant-24" class="anchor" href="https://talk.nervos.org#p-27455-after-this-grant-24" aria-label="Heading link"></a>After this grant</h3>
-<p>Worth doing once the desk has real use. The lock stays one secret created by the buyer, and each hub keeps one published solver. None of this is part of the $12,000.</p>
-<ul>
-<li><strong><code>twine-cli</code>.</strong> A terminal trader and solver over Nostr, so someone can trade without the app. The app already trades without it. It holds no Fiber key. It is built once the desk has real use.</li>
-<li><strong>Review before the cap goes up.</strong> The switch at the end of Milestone 4 opens the desk. The cap on kind <code>31421</code> stays the CKB I fund until I have reviewed the desk myself. Anyone can review the same code, including the Nervos team. This grant does not hire an audit firm.</li>
-<li><strong>JIT stays out of the Twine daemon.</strong> An earlier Twine build opened a private one-way channel from the hub when the buyer could not receive. That came out. The hub would have been the liquidity provider, and every wallet would have had to auto-accept a channel this desk opened. The LSP in Milestone 3 is the replacement. It opens inbound for any Fiber node, not only Fiber Studio. I will work with the Cellula developers on JIT receive in testnet Cellula. That Cellula work is outside this $12,000.</li>
-<li><strong>Whitelisted UDT markets</strong>, one asset per channel, on testnet. A mainnet UDT market still waits until public Fiber channels hold that token.</li>
-<li><strong>Market-price ads</strong>, with a fiat premium or discount against a CKB/fiat rate the hub publishes.</li>
-<li>Maker-defined shorter fiat timers inside the hub’s hold envelope. The per-method windows in Milestone 4 come first.</li>
-<li>Buy-side maker ads (“want to buy CKB”). The trade hold still uses a buyer-minted payout hash.</li>
-<li>A dispute assistant in a separate process. It never moves funds and never awards. It uses a read-only solver key, and the daemon rejects <code>resolve</code> from that key.</li>
-<li>Reputation federation across hubs a client already trusts.</li>
-<li>Mainnet fee defaults and rate limits on the public book.</li>
-<li><strong>Routing and client extras:</strong> <code>hop_hints</code>, websocket updates with polling kept as the fallback, encrypted Blossom receipts, NIP-59 gift wrap, content-free Web Push, external signers (NIP-46, NIP-07, NIP-55), an optional profile, optional NIP-13 proof of work, and NIP-51 mute lists.</li>
-</ul>
-<h2><a name="p-27455-h-9-budget-breakdown-25" class="anchor" href="https://talk.nervos.org#p-27455-h-9-budget-breakdown-25" aria-label="Heading link"></a>9. Budget Breakdown</h2>
-<p><strong>$12,000</strong>, at the public CKB/USD rate when each payment is disbursed. Kickoff, Milestone 1, and Milestone 2 are $2,400 each. Milestone 3 is $3,000. Milestone 4 is $1,800. Development is my time, on testnet. The CKB the LSP puts in a channel, and the CKB in the mainnet hub, are outside this budget. The fee does not buy that liquidity. I review the desk myself. A hired audit firm is not in this budget. During the 12 months I run the public mainnet hub, I post a short note on Nervos Talk each quarter.</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Category</th>
-<th>Amount</th>
-<th>Scope Covered</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Development</strong></td>
-<td>$10,376</td>
-<td>Core daemon updates, rebuilt twine-app, the separate twine-solver app, twine-web, and the testnet LSP in Milestone 3. UDT, market-price ads, and Cellula’s own JIT are not in this line.</td>
-</tr>
-<tr>
-<td><strong>Infrastructure</strong></td>
-<td>$1,500</td>
-<td>The year the public site and hub run. That covers the machine, keeping the site updated through that year, the documents required to get a D-U-N-S number for the store applications, and miscellaneous.</td>
-</tr>
-<tr>
-<td><strong>App Store Fees</strong></td>
-<td>$124</td>
-<td>Apple Developer Program, <strong>$99</strong> for one year. Google Play Console, <strong>$25</strong> once. Renewing Apple after that year is on me.</td>
-</tr>
-<tr>
-<td><strong>Total</strong></td>
-<td><strong>$12,000</strong></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div><h2><a name="p-27455-h-10-out-of-scope-26" class="anchor" href="https://talk.nervos.org#p-27455-h-10-out-of-scope-26" aria-label="Heading link"></a>10. Out of Scope</h2>
-<p>This grant pays for the milestones above.</p>
-<ul>
-<li>A bank connection, custodial fiat, KYC, star ratings, or a legal opinion. Local-currency rules differ by country.</li>
-<li>DAO-funded channel liquidity. I fund the public hub, and I fund the CKB the LSP places in a channel. The daemon does not open, fund, or rebalance channels. Milestone 3 pays for building the LSP, not for the coins in it. The fee does not buy that liquidity. JIT inside testnet Cellula stays with the Cellula developers.</li>
-<li>A Fiber node or Fiber key inside either app.</li>
-<li>A mainnet trade as a paid check during development. The switch happens once the testnet work is in.</li>
-<li>A mainnet UDT market, UDT in this grant, market-price ads, concurrent trades on one ad, a hired audit firm, and hosting after those 12 months.</li>
-<li>The feature backlog under “After this grant.”</li>
-</ul>
-<h2><a name="p-27455-h-11-risks-mitigations-27" class="anchor" href="https://talk.nervos.org#p-27455-h-11-risks-mitigations-27" aria-label="Heading link"></a>11. Risks &amp; Mitigations</h2>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Risk</th>
-<th>Mitigation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>The other person disappears after the coins are locked</strong></td>
-<td>The trade window stops the trade at 48 hours, or 68 hours for a trampoline payout (testnet Cellula). The CKB returns when the TLC expires, which on a testnet Cellula seller was 64 hours and 132 hours. From Month 2, a buyer who never marks the payment sent is a public <code>buyer-unpaid</code> record.</td>
-</tr>
-<tr>
-<td><strong>Someone tries to cancel a funded lock</strong></td>
-<td><code>cancel_invoice</code> is allowed only while the hold is unpaid. After that it is refused.</td>
-</tr>
-<tr>
-<td><strong>Local payment is slower than a crypto transfer</strong></td>
-<td>The lock leaves 2 hours to release, 4 hours to dispute, and time to route. Month 4 gives each payment method its own window inside that lock.</td>
-</tr>
-<tr>
-<td><strong>A new buyer has no inbound capacity</strong></td>
-<td>Payment instructions stay closed until a route exists. The Twine daemon does not open the channel. Milestone 3’s LSP opens inbound for any Fiber node that cannot receive, with my CKB. A testnet Cellula buyer gets inbound from JIT in Cellula, built with the Cellula developers, outside this grant. The buyer then sends the same invoice again. A missing route after fiat is marked sent keeps the report.</td>
-</tr>
-<tr>
-<td><strong>The seller takes the money and will not release</strong></td>
-<td>The buyer seals the chat to the published solver. That solver can pay the buyer, record that the buyer did not pay, or record that the money arrived and the CKB could not be delivered. The solver cannot pay a buyer who never sealed the chat.</td>
-</tr>
-<tr>
-<td><strong>The published solver awards the wrong party</strong></td>
-<td>Traders accept that solver by using the hub. The award is public on kind <code>31422</code>.</td>
-</tr>
-<tr>
-<td><strong>One maintainer</strong></td>
-<td>I am the only person on this grant. The repositories stay public. A missed month is reported on Talk before the next payment is requested.</td>
-</tr>
-<tr>
-<td><strong>A taker locks the seller and walks away</strong></td>
-<td>After the seller pays, cancel is refused, and the lock costs the taker nothing. From Month 2 a key with no settled trade on this hub, including privacy mode, gets one lock up to the published cap. The cap doubles with each settle on this hub.</td>
-</tr>
-<tr>
-<td><strong>The phone wake depends on FCM</strong></td>
-<td>The alert carries no trade content. The trade still completes in the app if the push does not arrive.</td>
-</tr>
-<tr>
-<td><strong>The coins cannot reach the buyer after the money was sent</strong></td>
-<td>The buyer retries under the same secret. An expired request refunds the seller. A confirmed fiat leg is published as <code>fiat-owed</code>.</td>
-</tr>
-<tr>
-<td><strong>The desk cannot send or receive enough CKB</strong></td>
-<td>Kind <code>31421</code> publishes those limits before anyone locks. Twine does not move channel funds to invent a route.</td>
-</tr>
-<tr>
-<td><strong>App store review takes time</strong></td>
-<td>Month 4 files the store submissions and also ships direct downloads and TestFlight. <code>twine-solver</code> is a direct download.</td>
-</tr>
-<tr>
-<td><strong>Fiber cannot settle the larger lock after the smaller payout</strong></td>
-<td>If testnet cannot do it, the report leaves the hub at 0%. The hub is still paid only by paying the buyer.</td>
-</tr>
-<tr>
-<td><strong>The book is empty</strong></td>
-<td>I am the first seller, with my own CKB. On testnet through development, then on the mainnet hub after the switch. Milestone 2’s image is how a second coordinator appears.</td>
-</tr>
-<tr>
-<td><strong>A milestone is read as a mainnet launch</strong></td>
-<td>Months 0 through 4 are accepted on testnet. The public hub switches to mainnet when the Milestone 4 checks pass. The 12 months after that are the hub I run. Cellula stays testnet only.</td>
-</tr>
-</tbody>
-</table>
-</div><h2><a name="p-27455-h-12-closing-28" class="anchor" href="https://talk.nervos.org#p-27455-h-12-closing-28" aria-label="Heading link"></a>12. Closing</h2>
-<p>Twine already trades CKB for local money on testnet. This grant is $12,000 over four months of testnet work, then a switch of the public hub to mainnet. Kickoff, Milestone 1, and Milestone 2 are $2,400 each. The LSP is $3,000. The last milestone is $1,800. The work finishes the solver app, the rebuilt trading app, the website, and a testnet LSP for any Fiber node that cannot receive.</p>
-<p>I welcome comments on the solver model and on the fee. Questions are welcome. I appreciate your consideration.</p>
-<h2><a name="p-27455-h-13-supporting-links-29" class="anchor" href="https://talk.nervos.org#p-27455-h-13-supporting-links-29" aria-label="Heading link"></a>13. Supporting Links</h2>
-<ul>
-<li><strong>Nervos Talk PoC Thread:</strong> <a href="https://talk.nervos.org/t/twine-buy-and-sell-ckb-without-depositing-on-an-exchange-fiber-p2p-poc/10741" class="inline-onebox">Twine: Buy and Sell CKB Without Depositing on an Exchange (Fiber P2P PoC)</a></li>
-<li><strong>Daemon Repository:</strong> <a href="https://github.com/chukwuma619/twine" rel="noopener nofollow ugc">github.com/chukwuma619/twine</a></li>
-<li><strong>Host install:</strong> <a href="https://github.com/chukwuma619/twine/blob/main/DEPLOY.md" rel="noopener nofollow ugc">DEPLOY.md</a></li>
-<li><strong>Client App Repository:</strong> <a href="https://github.com/chukwuma619/twine_app" rel="noopener nofollow ugc">github.com/chukwuma619/twine_app</a></li>
-<li><strong>Web Repository:</strong> <a href="https://github.com/chukwuma619/twine-web" rel="noopener nofollow ugc">github.com/chukwuma619/twine-web</a></li>
-<li><strong>Cellula (testnet):</strong> <a href="https://wallet.testnet.cellula.id" rel="noopener nofollow ugc">wallet.testnet.cellula.id</a></li>
-</ul>
-            <p><small>19 posts - 6 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/dis-twine-non-custodial-p2p-for-nervos-ckb-on-nostr-and-fiber/11228">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/dis-twine-non-custodial-p2p-for-nervos-ckb-on-nostr-and-fiber/11228</link>
-          <pubDate>Tue, 17 Nov 2026 04:51:04 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11228</guid>
-          <source url="https://talk.nervos.org/t/dis-twine-non-custodial-p2p-for-nervos-ckb-on-nostr-and-fiber/11228.rss">[DIS] Twine — Non-Custodial P2P for Nervos CKB on Nostr and Fiber</source>
-        </item>
-        <item>
-          <title>[NOTICE] Fiber v0.10.1 documentation is live</title>
-          <dc:creator><![CDATA[FiberDevs]]></dc:creator>
-          <category>Infrastructure</category>
-          <description><![CDATA[
-            <p>Hi friends!</p>
-<p>If you’re still running version 0.9.x, please UPDATE to v0.10.1 soon.</p>
-<p>The 0.10 version updates how nodes communicate, so <strong>0.9.x and 0.10.x nodes can NOT open new channels with each other.</strong><br>
-If you’re planning to open a new channel, check that your peer has upgraded too.</p>
-<p><strong>Existing channels between two 0.9.x nodes can still be used for now.</strong><br>
-Please plan to close and settle these V1 channels soon, as they will no longer be supported in the next major release.</p>
-<p>Check the release notes for the full picture:</p>
-<ul>
-<li>
-<p>v0.10.0: <a href="https://github.com/nervosnetwork/fiber/releases#release-v0.10.0" class="inline-onebox" rel="noopener nofollow ugc">Releases · nervosnetwork/fiber · GitHub</a></p>
-</li>
-<li>
-<p>v0.10.1: <a href="https://github.com/nervosnetwork/fiber/releases/tag/v0.10.1" class="inline-onebox" rel="noopener nofollow ugc">Release v0.10.1 · nervosnetwork/fiber · GitHub</a><sup></sup></p>
-</li>
-</ul>
-            <p><small>2 posts - 1 participant</small></p>
-            <p><a href="https://talk.nervos.org/t/notice-fiber-v0-10-1-documentation-is-live/11226">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/notice-fiber-v0-10-1-documentation-is-live/11226</link>
-          <pubDate>Tue, 17 Nov 2026 00:49:40 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11226</guid>
-          <source url="https://talk.nervos.org/t/notice-fiber-v0-10-1-documentation-is-live/11226.rss">[NOTICE] Fiber v0.10.1 documentation is live</source>
-        </item>
-        <item>
-          <title>Dead Man&#39;s Switch — a letter that opens only if you stop checking in (testnet)</title>
-          <dc:creator><![CDATA[psawyerberlin]]></dc:creator>
-          <category>Applications &amp; Ecosystem</category>
-          <description><![CDATA[
-            <p>Email drafts and paper envelopes both have the same flaw — somebody has to find them, and somebody can read them early.</p>
-<p><strong>Dead Man’s Switch</strong> is a letter that opens only if you stop checking in. You write it, you name who receives it, and you pick how often you’ll confirm you’re still here. Every check-in pushes the deadline back. Miss it, and the letter goes out. Change your mind, and you cancel — and from that moment nobody can ever read it, including me.</p>
-<p>Try it on testnet: <a href="https://dead-man-switch.chainsolution.net" rel="noopener nofollow ugc">https://dead-man-switch.chainsolution.net</a> (EN / FR / DE)</p>
-<h2><a name="p-27441-how-it-works-1" class="anchor" href="https://talk.nervos.org#p-27441-how-it-works-1" aria-label="Heading link"></a>How it works</h2>
-<p>The letter is encrypted in your browser. It is never stored on chain and I never see it.</p>
-<p>What’s on chain is a cell you own, holding a deadline. Checking in updates it. Cancelling consumes it — and because the cell carries a <code>type-id</code>, that id can never exist again, so the release condition becomes permanently unsatisfiable. That’s the part a date-based timelock can’t do: cancellation is arithmetic anyone can verify, not a promise.</p>
-<p>The decryption key is held in pieces by independent nodes running <a href="https://talk.nervos.org/t/spark-program-ckb-revocable-timelock-crt-timelock-encryption-you-can-cancel/10698">CRT (CKB Revocable Timelock)</a> as a service on <a href="https://talk.nervos.org/t/a-revenue-layer-for-ckb-nodes/10734">CSR</a> — a runtime that lets a CKB node run cell-resident services and collect fees for doing it. When the deadline passes, the nodes publish their pieces and the recipient can decrypt. When you cancel, they delete them.</p>
-<h2><a name="p-27441-the-honest-part-2" class="anchor" href="https://talk.nervos.org#p-27441-the-honest-part-2" aria-label="Heading link"></a>The honest part</h2>
-<p><strong>Right now this is me.</strong> There is one active CSR node on testnet, and it’s mine. That proves the protocol end to end; it proves nothing about decentralisation, and a single operator could in principle misbehave.</p>
-<p>So: <strong>this does not go to mainnet until enough independent operators are running the service.</strong> Not as a roadmap item — as a precondition. A dead man’s switch whose entire node set is one person is a worse product than no dead man’s switch, because it looks like a guarantee and isn’t.</p>
-<p>You can see who’s running what here: <a href="https://csr-monitor.chainsolution.net" rel="noopener nofollow ugc">https://csr-monitor.chainsolution.net</a></p>
-<p>If you run a CKB node and want to try CSR, that’s the thing that moves this forward. Happy to answer anything about the design, and criticism of the security model is welcome — it’s had two rounds of it already and got better each time.</p>
-            <p><small>1 post - 1 participant</small></p>
-            <p><a href="https://talk.nervos.org/t/dead-mans-switch-a-letter-that-opens-only-if-you-stop-checking-in-testnet/11225">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/dead-mans-switch-a-letter-that-opens-only-if-you-stop-checking-in-testnet/11225</link>
-          <pubDate>Mon, 16 Nov 2026 17:28:26 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11225</guid>
-          <source url="https://talk.nervos.org/t/dead-mans-switch-a-letter-that-opens-only-if-you-stop-checking-in-testnet/11225.rss">Dead Man&#39;s Switch — a letter that opens only if you stop checking in (testnet)</source>
         </item>
   </channel>
 </rss>
