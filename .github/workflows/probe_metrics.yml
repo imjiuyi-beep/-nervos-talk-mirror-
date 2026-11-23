@@ -1,0 +1,39 @@
+name: Probe Metrics
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: probe
+        shell: bash
+        run: |
+          set +e
+          out=data/_probe.txt
+          : > $out
+          echo "=== OKX funding ===" >> $out
+          curl -s --max-time 15 "https://www.okx.com/api/v5/public/funding-rate?instId=BTC-USDT-SWAP" | head -c 400 >> $out
+          echo "" >> $out
+          echo "=== Bybit ticker ===" >> $out
+          curl -s --max-time 15 "https://api.bybit.com/v5/market/tickers?category=linear&symbol=BTCUSDT" | head -c 400 >> $out
+          echo "" >> $out
+          echo "=== bitcoin-data mvrv ===" >> $out
+          curl -s --max-time 15 "https://bitcoin-data.com/v1/mvrv/last" | head -c 300 >> $out
+          echo "" >> $out
+          echo "=== coinglass mvrv ===" >> $out
+          curl -s --max-time 15 "https://open-api.coinglass.com/public/v2/indicator/mvrv?symbol=BTC" | head -c 300 >> $out
+          echo "" >> $out
+          echo "=== farside etf ===" >> $out
+          curl -s --max-time 15 -A "Mozilla/5.0" "https://farside.co.uk/btc/" | grep -oiE "total[^<]{0,40}" | head -5 >> $out
+          echo "" >> $out
+          cat $out
+      - name: commit
+        run: |
+          git config user.name bot
+          git config user.email bot@users.noreply.github.com
+          git add data/_probe.txt
+          git commit -m "probe metrics" || echo none
+          git push
