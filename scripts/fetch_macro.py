@@ -1,22 +1,33 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""宏观流动性抓取(FRED, 无需key) → data/macro.json
-境外 runner 运行; 供 BTC 框架接入宏观维度(M2/DXY/美股)
+"""宏观流动性抓取 → data/macro.json
+DXY/SPX/NDX 走 stooq(数据中心友好); M2 走 FRED(加长超时+重试, 可能被datacenter屏蔽则标记error)
 """
-import urllib.request, json, datetime, os, io, csv
+import urllib.request, json, datetime, os, io, csv, time
 
-FRED="https://fred.stlouisfed.org/graph/fredgraph.csv?id={}"
-SERIES={"m2":"M2SL","dxy":"DTWEXBGS","spx":"SP500","ndx":"NASDAQCOM"}
+STOOQ={"dxy":"dx.f","spx":"^spx","ndx":"^ndx"}
+FRED_ID={"m2":"M2SL"}
 
-def fetch(sid):
-    req=urllib.request.Request(FRED.format(sid),headers={"User-Agent":"Mozilla/5.0"})
-    txt=urllib.request.urlopen(req,timeout=60).read().decode("utf-8","ignore")
+def _get(url,timeout=60):
+    req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0"})
+    return urllib.request.urlopen(req,timeout=timeout).read().decode("utf-8","ignore")
+
+def fetch_stooq(sym):
+    txt=_get(f"https://stooq.com/q/d/l/?s={sym}&i=d",60)
+    rows=[]; r=csv.reader(io.StringIO(txt)); next(r)
+    for row in r:
+        if len(row)<5: continue
+        try: rows.append([row[0],float(row[4])])
+        except Exception: pass
+    return rows
+
+def fetch_fred(sid):
+    txt=_get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={sid}",120)
     rows=[]; r=csv.reader(io.StringIO(txt)); next(r)
     for row in r:
         if len(row)<2: continue
-        d,v=row[0],row[1]
-        if v in ("","." ,"NA"): continue
-        try: rows.append([d,float(v)])
+        if row[1] in ("","." ,"NA"): continue
+        try: rows.append([row[0],float(row[1])])
         except Exception: pass
     return rows
 
@@ -36,11 +47,19 @@ def summ(rows,n=500):
 
 def main():
     out={"updated":datetime.datetime.utcnow().isoformat()+"Z","series":{}}
-    for k,sid in SERIES.items():
+    for k,sym in STOOQ.items():
         try:
-            out["series"][k]=summ(fetch(sid)); print(k,"ok",out["series"][k].get("latest"),out["series"][k].get("latest_date"))
+            out["series"][k]=summ(fetch_stooq(sym)); print(k,"ok",out["series"][k].get("latest"),out["series"][k].get("latest_date"))
         except Exception as e:
             print(k,"ERR",str(e)[:100]); out["series"][k]={"error":str(e)[:100]}
+    for k,sid in FRED_ID.items():
+        ok=False
+        for attempt in range(2):
+            try:
+                out["series"][k]=summ(fetch_fred(sid)); print(k,"ok",out["series"][k].get("latest"),out["series"][k].get("latest_date")); ok=True; break
+            except Exception as e:
+                print(k,"attempt",attempt,"ERR",str(e)[:80]); time.sleep(3)
+        if not ok: out["series"][k]={"error":"fred unreachable from datacenter"}
     os.makedirs("data",exist_ok=True)
     with open("data/macro.json","w") as f: json.dump(out,f,ensure_ascii=False)
     print("saved data/macro.json")
