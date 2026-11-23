@@ -1,0 +1,12 @@
+=== OKX funding ===
+{"code":"0","data":[{"formulaType":"withRate","fundingRate":"-0.0000029086660681","fundingTime":"1795449600000","impactValue":"20000.0000000000000000","instId":"BTC-USDT-SWAP","instType":"SWAP","interestRate":"0.0001000000000000","maxFundingRate":"0.00375","method":"current_period","minFundingRate":"-0.00375","nextFundingRate":"","nextFundingTime":"1795478400000","premium":"-0.0004975059456037","p
+=== Bybit ticker ===
+{
+    error:The Amazon CloudFront distribution is configured to block access from your country
+}
+=== bitcoin-data mvrv ===
+{"d":"2026-11-16","unixTs":1794787200,"mvrv":1.2116,"delayed":true,"message":"Real-time data (last 7 days) requires an active subscription. https://bitcoin-data.com/bguser/pricing"}
+=== coinglass mvrv ===
+{"timestamp":1795430717653,"status":500,"error":"Internal Server Error","message":"","path":"/public/v2/indicator/mvrv"}
+=== farside etf ===
+
