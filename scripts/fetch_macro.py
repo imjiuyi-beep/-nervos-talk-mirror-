@@ -9,7 +9,7 @@ import urllib.request, json, datetime, os
 YF={"dxy":"DX-Y.NYB","spx":"^GSPC","ndx":"^IXIC"}
 
 def fetch_yahoo(sym):
-    url=f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range=5y&interval=1d"
+    url=f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range=10y&interval=1d"
     req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"})
     d=json.loads(urllib.request.urlopen(req,timeout=45).read().decode())
     r=d["chart"]["result"][0]
@@ -21,7 +21,7 @@ def fetch_yahoo(sym):
         rows.append([datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%d"),float(c)])
     return rows
 
-def summ(rows,n=500):
+def summ(rows,n=2600):
     if not rows: return {"error":"empty"}
     recent=rows[-n:]; latest=rows[-1]
     out={"latest_date":latest[0],"latest":latest[1],"series":recent}
