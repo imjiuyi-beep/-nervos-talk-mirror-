@@ -1,1 +1,1 @@
-{"updated": "2026-11-23T15:05:58.125965Z", "series": {"m2": {"error": "The read operation timed out"}, "dxy": {"error": "The read operation timed out"}, "spx": {"error": "The read operation timed out"}, "ndx": {"error": "The read operation timed out"}}}
+{"updated": "2026-11-23T15:10:31.894445Z", "series": {"dxy": {"error": "empty"}, "spx": {"error": "empty"}, "ndx": {"error": "empty"}, "m2": {"error": "fred unreachable from datacenter"}}}
