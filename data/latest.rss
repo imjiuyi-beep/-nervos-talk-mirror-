@@ -5,8 +5,25 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Tue, 24 Nov 2026 01:50:17 +0000</lastBuildDate>
+      <lastBuildDate>Tue, 24 Nov 2026 09:05:17 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>Dao提案的价值</title>
+          <dc:creator><![CDATA[hao_zhang]]></dc:creator>
+          <category>CKB Community Fund DAO</category>
+          <description><![CDATA[
+            <p>随着AI开发的发展，构建代码工作量的价值到底怎么衡量的，dao的这些提案，除了没有人用以外，代码开发的工作量本身真的值他们提案想要的那些钱吗？</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/dao/11365">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/dao/11365</link>
+          <pubDate>Tue, 24 Nov 2026 09:05:17 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11365</guid>
+          <source url="https://talk.nervos.org/t/dao/11365.rss">Dao提案的价值</source>
+        </item>
         <item>
           <title>Using the CKBHash Function in CKB Development</title>
           <dc:creator><![CDATA[jm9k]]></dc:creator>
@@ -114,7 +131,7 @@ const scriptHash = lockScript.hash();
 </ul>
 <hr>
 <p><em>This post was originally published on the Sōnami blog: <a href="https://blog.sonami.cc/posts/using-the-ckbhash-function-in-ckb-development/" class="inline-onebox">Using the CKBHash Function in CKB Development | Sōnami Blog</a></em></p>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/using-the-ckbhash-function-in-ckb-development/11362">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/using-the-ckbhash-function-in-ckb-development/11362</link>
@@ -301,7 +318,7 @@ console.log(`6. Address: ${address}`);
 </ul>
 <hr>
 <p><em>This post was originally published on the Sōnami blog: <a href="https://blog.sonami.cc/posts/understanding-ckb-lock-value-relationships/" class="inline-onebox">Understanding CKB Lock Value Relationships | Sōnami Blog</a></em></p>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/understanding-ckb-lock-value-relationships/11361">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/understanding-ckb-lock-value-relationships/11361</link>
@@ -608,7 +625,7 @@ As this standard is still a work in progress, several challenges remain to be ad
 </ul>
 <hr>
 <p><em>This post was originally published on the Sōnami blog: <a href="https://blog.sonami.cc/posts/design-patterns-utxo-transfers-cell-model/" class="inline-onebox">Design Patterns: UTXO Transfers Using the Cell Model | Sōnami Blog</a></em></p>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/design-patterns-utxo-transfers-using-the-cell-model/11360">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/design-patterns-utxo-transfers-using-the-cell-model/11360</link>
@@ -806,10 +823,9 @@ The cell model and ZK proofs fit together more naturally than I expected. Puttin
 <p>An engineer’s time costs more than subscriptions. At Sōnami, the loop removes many days of unnecessary review each month for every engineer. Put a price on those days, and the subscriptions look small. In most cases, the extra cost is easily justified.</p>
 <p>You are still the bottleneck. Crossfire makes sure your time is used only for the work that actually needs you.</p>
 <p>The subscriptions cost money. The reviews you never have to do are worth more.</p>
-<p>How do you review AI-written code today? We would like to hear what works for you.</p>
 <hr>
 <p><em>This post was originally published on the Sōnami blog: <a href="https://blog.sonami.cc/posts/crossfire-loop-multi-model-review/" class="inline-onebox">Crossfire Loop: You Are the Bottleneck | Sōnami Blog</a></em></p>
-            <p><small>2 posts - 2 participants</small></p>
+            <p><small>3 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/crossfire-loop-you-are-the-bottleneck/11358">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/crossfire-loop-you-are-the-bottleneck/11358</link>
@@ -4773,7 +4789,7 @@ Team and hardware portfolio: <a href="https://github.com/WuodOdhis/keyme/blob/ma
 <li>Testnet transfer: <a href="https://explorer.nervos.org/transaction/0xbb10d0b6fb9ad72f6618f29020a1f065e73b4435f5ce24515afcbcb5c50a1a85" rel="noopener nofollow ugc">https://explorer.nervos.org/transaction/0xbb10d0b6fb9ad72f6618f29020a1f065e73b4435f5ce24515afcbcb5c50a1a85</a></li>
 <li>Testnet 2-of-3: <a href="https://explorer.nervos.org/transaction/0x0ea1b3755a6a9610d266a791f2adb0b8c484e6fa1fe203ccfccffedfddbd535f" rel="noopener nofollow ugc">https://explorer.nervos.org/transaction/0x0ea1b3755a6a9610d266a791f2adb0b8c484e6fa1fe203ccfccffedfddbd535f</a></li>
 </ul>
-            <p><small>12 posts - 6 participants</small></p>
+            <p><small>11 posts - 6 participants</small></p>
             <p><a href="https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258</link>
@@ -5276,433 +5292,6 @@ Tester feedback and fixes; spec, threat model, disclaimer, README; demo video; f
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-11255</guid>
           <source url="https://talk.nervos.org/t/spark-program-ckautomata-protocol-hardening-user-onboarding-and-testnet-beta/11255.rss">Spark Program | CKAutomata: Protocol Hardening, User Onboarding and Testnet Beta</source>
-        </item>
-        <item>
-          <title>[DIS] Fiber Claim Cell: Async Receive and On-Chain Claims for Fiber LSPs</title>
-          <dc:creator><![CDATA[Akane]]></dc:creator>
-          <category>CKB Community Fund DAO</category>
-          <description><![CDATA[
-            <p>Following up on <a href="https://talk.nervos.org/t/fiber-lsp-running-channels-on-the-server-signing-in-the-wallet/11220/2">my earlier reply in the Fiber LSP discussion</a>, I’m excited to share <strong>Fiber Claim Cell</strong>!</p>
-<p>Since then, I’ve narrowed the project from a full LSP service to an on-chain claim module for existing LSPs and wallets.</p>
-<p>The focus is receiving a Fiber payment without a usable channel, with the recipient coming online later to claim it on CKB within a defined claim window.</p>
-<p>I’d love feedback from the Fiber team and LSP operators on how this could complement the hosted LSP work already under way.</p>
-<h2><a name="p-27533-summary-1" class="anchor" href="https://talk.nervos.org#p-27533-summary-1" aria-label="Heading link"></a>Summary</h2>
-<p>This proposal adds an on-chain claim option for receivers with no usable Fiber channel, without the LSP taking custody of the receiver’s funds. Optional stablecoin support also covers receivers with no CKB.</p>
-<p>The LSP funds a claim cell on CKB. Its claim path pays the designated receiver; the intended flow then uses the revealed preimage to settle the payer’s held payment.</p>
-<p>Amount verification and claim-timing safeguards are part of the funded work. The current prototype does not yet establish that the receiver can safely claim the correct amount in every case.</p>
-<p>Public LSPs are already under way. Fiber’s own hosted LSP support is in review. Cellula’s proposal for a public mainnet LSP, built on it, passed a Community Fund DAO vote on 16 November 2026.</p>
-<p>Both deliver a payment over a channel the receiver already has. This work adds the path for a receiver who has none, and is meant to plug into those LSPs, not to run another one.</p>
-<p>The mechanism already works. A draft specification, the L1 lock script, and a reference implementation of the module an LSP runs are public, and the full flow has run on three real Fiber nodes and the CKB testnet.</p>
-<p>Receivers are meant to need no new wallet. A web page asks the wallet they already have for one signed message and does the rest itself, so that only an LSP has to switch the module on. So far this has run in a browser test with a raw key. No real wallet has been connected yet, and recovery on a second device works only for wallets whose signatures are deterministic, which leaves out passkey wallets. Which wallets work is established in package C.</p>
-<p><strong>The proposed core budget is USD 26,500</strong>, covering packages A, C, E and F. Packages B and D are optional; including both brings the current estimate to <strong>USD 35,500</strong>.</p>
-<p>The final package list, auditor’s quote and CKB request will be confirmed before voting. The full set of packages is estimated to take about four and a half months.</p>
-<p>An advance of 10% is paid on approval and counted against package A. Further payments follow acceptance; package F is reimbursed at actual cost up to its ceiling.</p>
-<h2><a name="p-27533-where-this-fits-2" class="anchor" href="https://talk.nervos.org#p-27533-where-this-fits-2" aria-label="Heading link"></a>Where this fits</h2>
-<p>To receive a payment on Fiber, a user must be reachable and must already have a channel with enough inbound liquidity. Two efforts address this, and the second is built on the first: Cellula runs Fiber’s LSP branch plus its own fixes.</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Fiber hosted LSP</th>
-<th>Cellula public LSP</th>
-<th>This proposal</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Who</td>
-<td>Fiber core team: <a href="https://github.com/nervosnetwork/fiber/issues/1625" rel="noopener nofollow ugc">design</a>, <a href="https://github.com/nervosnetwork/fiber/pull/1623" rel="noopener nofollow ugc">PR #1623</a></td>
-<td>LusoCryptoLabs: <a href="https://talk.nervos.org/t/11089">DAO proposal</a>, <a href="https://talk.nervos.org/t/11068">scale test</a></td>
-<td><a href="https://github.com/Akane-CN/fiber-claim-cell" rel="noopener nofollow ugc">Akane-CN/fiber-claim-cell</a></td>
-</tr>
-<tr>
-<td>Status</td>
-<td>Pull request open. The design calls itself an integrated prototype, not production ready</td>
-<td><a href="https://talk.nervos.org/t/11089/19">Vote passed</a> on 16 November 2026. Running on testnet</td>
-<td>Reference implementation working on testnet</td>
-</tr>
-<tr>
-<td>Model</td>
-<td>One public node hosts many wallets. Each wallet keeps a private channel with it and signs on its own device</td>
-<td>The same model, operated as a public service</td>
-<td>A lock script and a module that an LSP adds</td>
-</tr>
-<tr>
-<td>Where the channel comes from</td>
-<td>The wallet funds its side. Liquidity policy is listed as an open question</td>
-<td>The proposal includes channels of 299 CKB for the first 1,000 wallets, funded by LusoCryptoLabs with its own capital, not the DAO grant</td>
-<td>Not addressed. Left to the LSP</td>
-</tr>
-<tr>
-<td>Receiver offline, has a channel</td>
-<td>The LSP keeps the payer’s payment pending and delivers when the wallet wakes: 24 hours by default, 7 days at most, then it fails the payment back</td>
-<td>Inherits this. Its tests state that the payee must be awake to sign</td>
-<td>Overlaps. See below</td>
-</tr>
-<tr>
-<td>Receiver has no channel</td>
-<td>Not supported. Delivery requires a registered wallet with a private channel</td>
-<td>Not described</td>
-<td>Claim cell on L1</td>
-</tr>
-<tr>
-<td>Payment larger than the channel can receive</td>
-<td>Not addressed</td>
-<td>Not addressed. A 299 CKB channel cannot receive more than that</td>
-<td>Claim cell on L1</td>
-</tr>
-<tr>
-<td>Payment delivered on L1</td>
-<td>No. Funds are credited only by a channel update</td>
-<td>No</td>
-<td>Yes, this is the mechanism</td>
-</tr>
-<tr>
-<td>Stablecoins, receiver with no CKB</td>
-<td>Not designed. The only asset rule is that amount and asset match</td>
-<td>Stablecoins not named in the proposal</td>
-<td>Script-level support verified on testnet. The LSP fronts the cell capacity</td>
-</tr>
-</tbody>
-</table>
-</div><p>This table is built from the documents linked in it, read on 17 November 2026. Either team may have plans that those documents do not show.</p>
-<p>What the table shows:</p>
-<ul>
-<li>
-<p><strong>The offline case is already handled.</strong> Fiber’s hosted delivery holds a payment for a sleeping wallet, which is what this project’s path A does. Path A exists in the reference implementation and is not developed further here.</p>
-</li>
-<li>
-<p><strong>An on-chain fallback is the gap this proposal targets.</strong> The public designs reviewed here do not describe an on-chain claim fallback for these cases.</p>
-<p>These are a receiver with no channel, a payment above the receiver’s inbound capacity, and a stablecoin payment to a receiver with no CKB.</p>
-</li>
-<li>
-<p><strong>The claim cell is a natural fallback for hosted delivery.</strong> Where the hosted LSP would fail a payment back because there is no channel, no capacity, or no time left in the buffer window, it can open a claim cell instead. That is the integration proposed in package D.</p>
-</li>
-</ul>
-<h2><a name="p-27533-what-already-exists-3" class="anchor" href="https://talk.nervos.org#p-27533-what-already-exists-3" aria-label="Heading link"></a>What already exists</h2>
-<p>Everything below is public at <a href="https://github.com/Akane-CN/fiber-claim-cell" rel="noopener nofollow ugc">Akane-CN/fiber-claim-cell</a> and can be reproduced from the repository.</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Item</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://github.com/Akane-CN/fiber-claim-cell/blob/main/rfcs/0001-async-receive.md" rel="noopener nofollow ugc">RFC 0001</a>: async receive</td>
-<td>Draft. Timing rules checked against the Fiber source at commit <code>21c4dfb</code></td>
-</tr>
-<tr>
-<td><code>async-claim-lock</code> L1 script</td>
-<td>Implemented in Rust, 17 KB. 33 script-level tests pass in the CKB-VM verifier. The build is reproducible and checked against the deployed code hash</td>
-</tr>
-<tr>
-<td>Lock script on testnet</td>
-<td><a href="https://testnet.explorer.nervos.org/transaction/0xb367c3c1a9b840df3c4ea5838ec2190a1a6a16f61da9961912c38d5dd520e186" rel="noopener nofollow ugc">Deployed</a>. 25 on-chain checks pass for CKB and xUDT, including 15 transactions the node had to reject and did</td>
-</tr>
-<tr>
-<td>LSP-side module</td>
-<td>Reference implementation: registration, hold invoices, per-payment state machine, exposure cap, HTTP interface, and a refund watcher that holds no key. CKB payments only. It is a module for an LSP to run, not an LSP</td>
-</tr>
-<tr>
-<td>End-to-end run</td>
-<td>27 checks pass on three Fiber v0.10.1 nodes built from source, on CKB testnet</td>
-</tr>
-<tr>
-<td>Watchtower recovery after an LSP outage</td>
-<td>One run at real timings: recovery succeeded and 9 of 10 checks pass. The failed check concerned force-close timing; the payer still showed the payment as in flight. See Risks for the full timeline, including the brief LSP restart.</td>
-</tr>
-<tr>
-<td>Internal review</td>
-<td>One adversarial review each of the script and of the LSP-side and page code. Every finding and what was done about it is in <a href="https://github.com/Akane-CN/fiber-claim-cell/blob/main/docs/review-notes.md" rel="noopener nofollow ugc">review-notes.md</a>. It is not a substitute for the audit in package E</td>
-</tr>
-</tbody>
-</table>
-</div><p>A receive web app is also working. It turns an existing wallet into a receiver without changing the wallet: the page derives the payment secrets from one signed message, checks each claim cell against the chain, and submits the claim, which needs no signature. In a browser test on testnet, a wallet with no CKB and no Fiber node <a href="https://testnet.explorer.nervos.org/transaction/0x4d2cb410b9db009db8dfdd8a71f4a79cd18e9f39c4969ea8fae850c9b173bd94" rel="noopener nofollow ugc">collected 248.75 CKB</a> with no action beyond opening the page, and a second device with empty browser storage recovered the same pay link and history from the wallet alone. 11 checks pass. The test signs with a raw key; connecting a real wallet through the CCC connector is built in but has not been exercised. Recovery on another device relies on the wallet producing the same signature for the same message. Wallets that sign with passkeys do not, so for them the receiving identity lives only in the browser that created it.</p>
-<p>The end-to-end run used an ordinary Fiber node as the payer, with no knowledge of this protocol:</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Scenario</th>
-<th>Result on testnet</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Receiver wakes up and is paid over its channel</td>
-<td>Payer paid 100 CKB, receiver got 99.9 CKB, payer got the receiver’s preimage. About 10 seconds end to end</td>
-</tr>
-<tr>
-<td>Receiver offline, claims later on L1</td>
-<td>A wallet that had never held CKB <a href="https://testnet.explorer.nervos.org/transaction/0x59b813b8fbfd3ae095504fa2302ba42a0a12aa40f37e3d858d2f4ab260760eb7" rel="noopener nofollow ugc">claimed 298.7 CKB</a> with no signature. The LSP read the preimage from the chain and the payer’s payment then succeeded</td>
-</tr>
-<tr>
-<td>Nobody claims</td>
-<td>The LSP <a href="https://testnet.explorer.nervos.org/transaction/0xbe002334bc2ed607859d95d48569d18781892a1a7ad9499e8e08221326904aa3" rel="noopener nofollow ugc">refunded</a> after expiry. The payer’s payment failed cleanly and its channel balance returned to its original value</td>
-</tr>
-<tr>
-<td>LSP crashes while sending a claim cell, restarts, then is down when the cell expires</td>
-<td>The restarted LSP sent the <a href="https://testnet.explorer.nervos.org/transaction/0x245fca069c922d42b6023e6434b20a9c8ea8aae22dc9a8cab2ca83211b03bfbc" rel="noopener nofollow ugc">same transaction</a> again and only one claim cell existed. While the LSP was down, a watcher holding no key <a href="https://testnet.explorer.nervos.org/transaction/0x5ba6d757e187d16f718d266d13c64b265a8a171874e3400c85ac785df0cedc5c" rel="noopener nofollow ugc">refunded</a> the expired cell. The LSP came back, read the refund from the chain, and returned the payer’s money</td>
-</tr>
-</tbody>
-</table>
-</div><p>Reading the Fiber source also turned up two places where the public RPC documentation disagrees with the code, and one rule it does not state. The minimum final expiry delta is 160 minutes, not the documented 16 hours. <code>cancel_invoice</code> works on a held payment, not only on an open invoice as documented. And a hold invoice has no hold timeout of its own, which the documentation does not say either way: the 120-second hold timeout in the code applies only to multi-part payments whose preimage is already known. The RFC is written against the code.</p>
-<p>What this work has not yet shown:</p>
-<ul>
-<li>The refund and crash scenarios shortened the claim cell’s expiry to 90 and 150 seconds. Only the watchtower run used real, hours-long timings, and it ran once. A refund at real timings has not been tested.</li>
-<li>xUDT was verified at the script level only, not end to end.</li>
-<li>In the watchtower path, an upstream peer that does not force-close and a preimage that reaches the watchtower late have not been run.</li>
-<li>No real wallet has been connected to the receive page.</li>
-<li>The receiver cannot yet check the amount it is paid against what the payer sent. See Risks.</li>
-<li>The lock script has not been audited.</li>
-</ul>
-<h2><a name="p-27533-how-it-works-4" class="anchor" href="https://talk.nervos.org#p-27533-how-it-works-4" aria-label="Heading link"></a>How it works</h2>
-<ol>
-<li>The payer pays an invoice whose hash was set by the receiver.</li>
-<li>The LSP holds the payment and sends the receiver a wake-up push.</li>
-<li><strong>Path A, receiver online in time.</strong> The LSP forwards the payment with the same hash. The receiver settles, and the preimage goes to the LSP.</li>
-<li><strong>Path B, receiver not online or has no channel.</strong> The LSP locks the amount in a claim cell on L1. The receiver claims later, and the preimage goes on chain.</li>
-<li>In the intended flow, the LSP uses the revealed preimage to settle upstream, completing the payer’s payment.</li>
-<li>If the claim cell is never claimed, the LSP refunds it and cancels the invoice, and the payer gets its money back.</li>
-</ol>
-<p>Both paths use a receiver-controlled payment hash. The LSP settles upstream with the revealed preimage; that preimage alone does not prove the correct amount has reached the receiver.</p>
-<p>Safe use also depends on amount verification, confirmations and the claim cutoff described under Risks. The funded work completes and validates these checks, with client claim logic included in the audit scope.</p>
-<p><strong>Async receive (RFC 0001, working today).</strong> The receiver registers a pool of payment hashes with the LSP. The LSP issues hold invoices from that pool and holds an incoming payment without settling it.</p>
-<ul>
-<li><strong>Path A.</strong> The receiver wakes up and hands the LSP an invoice for the same hash. The LSP pays it over their channel, learns the preimage when the receiver settles, and settles upstream.</li>
-<li><strong>Path B.</strong> If the receiver does not show up, or has no channel, the LSP locks the amount in a claim cell on L1. The cell’s lock checks no signature. It only constrains outputs: a claim with the preimage can pay only the receiver, and a refund, which becomes valid at expiry, can pay only the LSP. Expiry does not close the claim path: from then until one of the two confirms, both are valid and they race. The receiver’s safety therefore also rests on client-side checks, described under Risks. The receiver claims later with a single L1 transaction and needs no CKB to do it, because the fee comes out of the cell.</li>
-<li><strong>Refund.</strong> If nobody claims, the LSP refunds the cell and cancels the invoice, and the payer’s payment fails with nothing lost.</li>
-</ul>
-<p>Under HTLCs the payer’s payment stays pending until the receiver reveals the preimage, for at most the invoice’s final expiry delta, which Fiber caps at 14 days. This is a limit of the design, stated in the RFC.</p>
-<p><strong>Receiving stablecoins with zero CKB.</strong> A UDT cell needs 142 CKB of capacity that a new user does not have. On path B the LSP fronts that capacity and deducts its value from the payment at a quoted rate. The script-level version of this already passes on testnet.</p>
-<h2><a name="p-27533-scope-5" class="anchor" href="https://talk.nervos.org#p-27533-scope-5" aria-label="Heading link"></a>Scope</h2>
-<p>The scope is the on-chain claim capability, made safe enough for an LSP operator to switch on. Everything is released under the MIT licence.</p>
-<p>Core scope (packages A, C, E and F):</p>
-<ul>
-<li>The <code>async-claim-lock</code> script: reproducible build, audit, mainnet deployment.</li>
-<li>RFC 0001, revised for the timing and liveness rules found in testing.</li>
-<li>The LSP-side module that holds a payment, opens and refunds claim cells, and settles upstream, with the safeguards an operator needs: refund watchers, an exposure cap, crash recovery.</li>
-<li>A client library that carries the receiver’s safety checks, so wallets do not reimplement them.</li>
-</ul>
-<p>Optional extensions:</p>
-<ul>
-<li><strong>B. Stablecoins:</strong> payments end to end, including capacity fronting for receivers with no CKB.</li>
-<li><strong>D. Hosted LSP integration:</strong> the claim path takes over where a hosted delivery cannot complete.</li>
-</ul>
-<p>Dropped from the earlier draft, because others are already building them:</p>
-<ul>
-<li>Holding a payment for an offline wallet that has a channel. Fiber’s hosted delivery does this, with a 24-hour default window.</li>
-<li>A specification and implementation for giving wallets inbound channels. Fiber’s LSP support and Cellula’s LSP cover this.</li>
-<li>A public reference LSP on mainnet. Cellula has an approved proposal for public LSP deployment and operation; channel liquidity is funded by LusoCryptoLabs, not the DAO grant.</li>
-<li>Liquidity capital of any kind.</li>
-</ul>
-<h2><a name="p-27533-work-packages-and-budget-6" class="anchor" href="https://talk.nervos.org#p-27533-work-packages-and-budget-6" aria-label="Heading link"></a>Work packages and budget</h2>
-<p>Engineering deliverables are fixed-price. Package E includes an estimated audit fee, which is confirmed before voting. Package F is reimbursed at actual cost up to its ceiling.</p>
-<p>Accepted engineering packages are paid less any advance already credited to them. Delivery overruns are not added to the approved engineering prices.</p>
-<p>The core request is currently USD 26,500 for A, C, E and F. Packages B and D are optional. The final request is set before voting from the selected packages and the confirmed audit quote.</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Package</th>
-<th>What is delivered</th>
-<th>Budget, USD</th>
-<th>In the core</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A. Hardening</td>
-<td>RFC 0001 revised, including a rule that lets the receiver check the amount, implemented in the module. Tests at real timings, including the point where the node returns a held payment. Recovery from an LSP outage while claim cells are live. Refund watcher, preimage relay and exposure cap taken from the working prototypes to production. Signed receiver authentication, a real database</td>
-<td>6,500</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>B. Stablecoins</td>
-<td>xUDT payments end to end on testnet, with capacity fronting and its pricing</td>
-<td>4,500</td>
-<td>No</td>
-</tr>
-<tr>
-<td>C. Client library</td>
-<td>TypeScript library on CCC: hash pool, claim cell verification, confirmation and expiry rules, on-chain claim. The receive web app, which works with existing wallets through one signed message, taken from working prototype to release and tested with real wallets</td>
-<td>6,000</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>D. LSP integration</td>
-<td>The claim path as the fallback inside Fiber’s hosted LSP: when a delivery would fail for lack of a channel, capacity or time, a claim cell is opened instead. Built on Fiber’s LSP support once it is released</td>
-<td>4,500</td>
-<td>No</td>
-</tr>
-<tr>
-<td>E. Audit and mainnet</td>
-<td>Third-party audit of the lock script, of the client library’s claim logic, and of how the web app derives and stores its secrets. Fixes. Mainnet deployment with the code hash published</td>
-<td>11,500</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>F. Running costs</td>
-<td>Test infrastructure, mainnet deployment capacity, buffer for audit rework. A ceiling, not a fixed price: paid at actual cost</td>
-<td>2,500</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td><strong>Proposed core</strong></td>
-<td>A, C, E, F</td>
-<td><strong>26,500</strong></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>With both optional packages</strong></td>
-<td>A, B, C, D, E, F</td>
-<td><strong>35,500</strong></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div><p>Before voting, two things can change the requested budget:</p>
-<ul>
-<li><strong>Audit fee.</strong> USD 10,000 of package E’s price is the auditor’s fee. It is an estimate until a firm quotes for the script and the client logic together, and the price of E moves with the quote. Any saving is returned.</li>
-<li><strong>Packages B and D.</strong> B depends on which stablecoin LSP operators want first. D depends on an operator agreeing to integrate and on Fiber’s LSP support being released; without both it is left out and not charged.</li>
-</ul>
-<p>All packages together take about four and a half months.</p>
-<p>Three months of maintenance after the last package are included at no extra cost.</p>
-<h2><a name="p-27533-payment-terms-7" class="anchor" href="https://talk.nervos.org#p-27533-payment-terms-7" aria-label="Heading link"></a>Payment terms</h2>
-<p>Payments follow the Community Fund DAO rules. The proposed schedule is below; the applicable rules will be confirmed with the DAO stewards before voting.</p>
-<ul>
-<li><strong>Amount.</strong> The rules have budgets requested in CKB. The prices in this post are in USD. The voting post states the request as a CKB amount, converted from the final USD total at the CKB price on the day it is posted, and shows both figures.</li>
-<li><strong>Quorum.</strong> Three times that CKB amount, as the rules require.</li>
-<li><strong>Stages.</strong> The budget is over USD 10,000, so it is paid in stages. 10% of the final total is paid on approval, inside the rule’s limit of 20% and USD 10,000. That advance is not extra money: it is counted against package A, and the rest of A’s price is paid when A is accepted. Every other selected engineering package is paid in full when it is accepted. Package F is settled last, at actual cost up to its ceiling, and what is not spent is not claimed.</li>
-<li><strong>Final amount.</strong> The request is fixed before the voting post, from the packages finally included and the auditor’s quote, and does not change after the vote.</li>
-<li><strong>Reporting.</strong> At each stage, a public report of what was delivered and what was spent, as the rules require.</li>
-<li><strong>Disbursement.</strong> By the DAO’s funds management committee under its default rules.</li>
-</ul>
-<h2><a name="p-27533-risks-8" class="anchor" href="https://talk.nervos.org#p-27533-risks-8" aria-label="Heading link"></a>Risks</h2>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Risk</th>
-<th>How it is handled</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Fiber’s LSP support or Cellula’s LSP ends up covering the same cases</td>
-<td>The comparison under “Where this fits” is drawn from both teams’ public documents, and both are asked to correct it in this thread. Any package they already cover is dropped. The on-chain claim is built as a module they can adopt, not a competing service</td>
-</tr>
-<tr>
-<td>Claim and refund race after expiry. The script lets a claim through after expiry until the refund confirms, so a receiver who reveals the preimage too late can lose it to a refund that lands first</td>
-<td>The receiver’s client must stop claiming a fixed margin before expiry, and must wait for confirmations on the claim cell before revealing anything. These checks live in the client library, wallets use the library instead of reimplementing them, and the library’s claim logic is inside the audit scope alongside the script</td>
-</tr>
-<tr>
-<td>The LSP is offline when a claim lands. The node returns the incoming payment about 161 minutes before that payment expires. An LSP that is down between a claim and that point pays the receiver and collects nothing. A payer and a receiver acting together, or one person playing both, can time a claim to an outage and take the full amount</td>
-<td>Four layers. (1) The gap is sized to the operator’s recovery time: at least 24 hours, not the 4 hours used in testing, which leaves about 21 hours to come back and settle. (2) The refund needs no signature, so independent watchers submit it the moment the cell expires. (3) A watcher separate from the node reads the preimage from L1 and hands it to Fiber’s watchtower, so the payment can still be collected on chain after a force close. Fiber’s source shows this works only if the upstream peer force-closes, the preimage reaches the watchtower in time, and the LSP runs the watchtower itself. This was run once on testnet with real nodes and real timings. The LSP node was down when the claim landed, came back for about a minute to settle a second payment, and was then stopped for good with this one unsettled. The payer’s node <a href="https://testnet.explorer.nervos.org/transaction/0x35c539ced670c704193d5e07140a34b0813069e0a2b010b78360cf8e812ed5a4" rel="noopener nofollow ugc">force-closed</a> at minute 266, and the watchtower <a href="https://testnet.explorer.nervos.org/transaction/0xf1795e601a7c34a7dca16735f8860a60f61ae3bf3a84b52b3fd21330b922c44f" rel="noopener nofollow ugc">collected the 200 CKB</a> 82 minutes later, 62 minutes before the payment expired. 9 of 10 checks pass: the force-close timing check failed by one minute, after the test machine restarted and took the payer’s node down for up to 20 minutes. The payer’s node still showed the payment as in flight when the run ended. One run on one channel is not enough. The cases where the upstream peer does not force-close or the preimage arrives late, and the payer’s final state, are tested in package A. (4) The value in live claim cells is capped per receiver and overall, which bounds the worst case</td>
-</tr>
-<tr>
-<td>The receive page does not work with a given wallet. It has been tested only with a raw key, and recovery on a second device needs deterministic signatures, which passkey wallets do not give</td>
-<td>Compatibility is not promised in general. Package C is accepted only when two different existing wallets have each collected a payment unchanged, and the release lists the wallets tested and those that cannot recover on a second device</td>
-</tr>
-<tr>
-<td>The receiver cannot check the amount. The page learns what the payer paid from the LSP, so an LSP could open a smaller claim cell, let the receiver claim it, and settle the full amount upstream</td>
-<td>Open in the RFC today. The revision in package A has to close it, for example by having the receiver fix the amount for each hash or the payer carry it to the receiver, and the client library then enforces the rule</td>
-</tr>
-<tr>
-<td>The audit finds a serious flaw</td>
-<td>No mainnet deployment until every high finding is fixed. The script is under 500 lines with no signature verification. Package F holds a buffer for rework</td>
-</tr>
-<tr>
-<td>Held payments tie up liquidity along the route</td>
-<td>Invoices cap how long a payment may be held. Multi-part payments are disabled because Fiber can settle them partially when held. Designs based on PTLCs that remove the hold are out of scope</td>
-</tr>
-<tr>
-<td>Fiber’s RPC and LSP interfaces are still changing</td>
-<td>Fiber calls sit behind one client module, each release pins a Fiber version, and package D starts only after Fiber’s LSP support is released</td>
-</tr>
-<tr>
-<td>An operator enabling this needs capital locked in claim cells</td>
-<td>The exposure cap sets how much. This proposal asks for no capital; an operator funds its own</td>
-</tr>
-<tr>
-<td>No LSP operator adopts it</td>
-<td>Adoption is reported at each milestone but is not an acceptance criterion, because it is not ours to deliver. Package D is charged only if an operator commits</td>
-</tr>
-<tr>
-<td>CKB price moves</td>
-<td>The request is made in CKB, as the DAO rules require, converted from the USD total on the day of the voting post</td>
-</tr>
-</tbody>
-</table>
-</div><h2><a name="p-27533-acceptance-and-targets-9" class="anchor" href="https://talk.nervos.org#p-27533-acceptance-and-targets-9" aria-label="Heading link"></a>Acceptance and targets</h2>
-<p>Acceptance criteria are things the team can deliver on its own, and each can be checked by anyone. Results that depend on other people are listed separately as targets: they are reported, but a milestone does not wait on them.</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Package</th>
-<th>Accepted when</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A. Hardening</td>
-<td>The revised RFC 0001 is published and open for review, with a rule for how the receiver checks the amount. A public test report shows the flow at real timings, the behaviour at the point where the node returns a held payment, and recovery from an LSP outage with claim cells live. Watchtower settlement has worked once; the report covers what that run did not: an upstream peer that does not force-close, a preimage that arrives late, a refund at real timings, and the payer’s final state</td>
-</tr>
-<tr>
-<td>B. Stablecoins</td>
-<td>A wallet holding no CKB receives a stablecoin payment through a claim cell on testnet, and the transactions are public</td>
-</tr>
-<tr>
-<td>C. Client library</td>
-<td>The library is on npm. Its tests show it refusing each unsafe claim: wrong cell, too few confirmations, too close to expiry. The receive web app collects a payment on testnet with at least two different existing wallets, with no change to either wallet. The release lists the wallets tested and those that cannot recover on a second device</td>
-</tr>
-<tr>
-<td>D. LSP integration</td>
-<td>The module runs inside the partner’s LSP on testnet, and a payment to a receiver with no channel completes through it</td>
-</tr>
-<tr>
-<td>E. Audit and mainnet</td>
-<td>The audit report, covering the script, the client claim logic and the web app’s secret handling, is public. Every high and medium finding is fixed. The script is on mainnet and its code hash matches the audited build. One payment to a wallet with no CKB and no channel completes on mainnet through our own instance, with the exposure capped</td>
-</tr>
-<tr>
-<td>F. Running costs</td>
-<td>Not a deliverable. Settled against receipts published with the final report, up to the ceiling. Unspent money is not claimed</td>
-</tr>
-</tbody>
-</table>
-</div><p>Targets, not criteria:</p>
-<ul>
-<li>At least one LSP operator, other than our own instance, switches the claim path on on mainnet. The intent is that no wallet has to change for this; which wallets that holds for is reported from package C.</li>
-<li>At least one Fiber core developer reviews RFC 0001. What we commit to is submitting it in a reviewable form and answering every comment in public.</li>
-<li>A second party runs the module from the documentation without our help.</li>
-</ul>
-<h2><a name="p-27533-sources-10" class="anchor" href="https://talk.nervos.org#p-27533-sources-10" aria-label="Heading link"></a>Sources</h2>
-<ul>
-<li><a href="https://github.com/Akane-CN/fiber-claim-cell" rel="noopener nofollow ugc">Akane-CN/fiber-claim-cell</a>: RFC 0001, the lock script, the LSP-side module, and the testnet reports.</li>
-<li><a href="https://github.com/nervosnetwork/fiber/pull/1623" rel="noopener nofollow ugc">Fiber PR #1623, LSP support</a>: the core team’s LSP work, open at the time of writing.</li>
-<li><a href="https://talk.nervos.org/t/11089">[DIS] Cellula on Fiber</a> and its <a href="https://talk.nervos.org/t/11089/19">vote result</a>: the approved public LSP proposal, its budget and its payment terms.</li>
-<li><a href="https://talk.nervos.org/t/ckb-community-fund-dao-rules-and-process/6874">CKB Community Fund DAO Rules and Process</a>: the rules in force.</li>
-<li><a href="https://talk.nervos.org/t/fiber-protocol-complete-network-tested-development-status-challenges-and-2026-outlook/9827">Fiber: Protocol-Complete, Network-Tested – 2026 Outlook</a>: liquidity as a 2026 focus.</li>
-<li><a href="https://github.com/nervosnetwork/fiber/tree/21c4dfbdbd48ca3eac55332c9f1cc3e241b1582e" rel="noopener nofollow ugc">Fiber source at commit 21c4dfb</a>: hold invoice behaviour and expiry constants.</li>
-<li><a href="https://github.com/Akane-CN/fiber-claim-cell/blob/main/contracts/async-claim-lock/src/main.rs" rel="noopener nofollow ugc">async-claim-lock, refund and payout checks</a>: the script rules described under Risks.</li>
-<li><a href="https://github.com/nervosnetwork/fiber/issues/1625" rel="noopener nofollow ugc">Fiber issue #1625, multi-tenant hosted LSP design</a>: the hosted model, delivery buffering, trust assumptions and non-goals.</li>
-<li><a href="https://talk.nervos.org/t/11068">Cellula LSP scale test</a>: architecture and the requirement that the payee be awake to sign.</li>
-</ul>
-            <p><small>4 posts - 2 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/dis-fiber-claim-cell-async-receive-and-on-chain-claims-for-fiber-lsps/11254">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/dis-fiber-claim-cell-async-receive-and-on-chain-claims-for-fiber-lsps/11254</link>
-          <pubDate>Wed, 18 Nov 2026 08:14:47 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11254</guid>
-          <source url="https://talk.nervos.org/t/dis-fiber-claim-cell-async-receive-and-on-chain-claims-for-fiber-lsps/11254.rss">[DIS] Fiber Claim Cell: Async Receive and On-Chain Claims for Fiber LSPs</source>
         </item>
   </channel>
 </rss>
