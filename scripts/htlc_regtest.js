@@ -23,7 +23,7 @@ function spendP2wsh({ utxo, script, value, signer, witnessExtra, destAddr, fee }
   const tx = new bitcoin.Transaction();
   tx.version = 2;
   tx.addInput(Buffer.from(utxo.txid, 'hex').reverse(), utxo.vout);
-  tx.addOutput(bitcoin.address.toOutputScript(destAddr, network), value - fee);
+  tx.addOutput(bitcoin.address.toOutputScript(destAddr, network), value - BigInt(fee));
   const sigHash = tx.hashForWitnessV0(0, script, value, bitcoin.Transaction.SIGHASH_ALL);
   const sig = signer.sign(sigHash);
   const sigEnc = bitcoin.script.signature.encode(Buffer.from(sig), bitcoin.Transaction.SIGHASH_ALL);
@@ -46,7 +46,7 @@ function spendP2wsh({ utxo, script, value, signer, witnessExtra, destAddr, fee }
   cli(`generatetoaddress 1 ${cli('getnewaddress')}`);
   const scan = cliJ(`scantxoutset start '["addr(${p2wsh.address})"]'`);
   const utxo = scan.unspents[0];
-  const value = Math.round(utxo.amount * 1e8);
+  const value = BigInt(Math.round(utxo.amount * 1e8));
   console.log('UTXO:', utxo.txid, 'vout', utxo.vout, 'value', utxo.amount, 'BTC');
 
   const dest = cli('getnewaddress');
