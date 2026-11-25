@@ -1,0 +1,179 @@
+Skip to main content
+Sign Up
+Log In
+​
+Topics
+More
+CATEGORIES
+Announcements & Meta
+Infrastructure
+Applications & Ecosystem
+Cryptoeconomics & Mechanism Design
+Miners Pub
+DAOs & Funding
+All categories
+TAGS
+lang-zh
+lang-en
+CKB
+dapp
+lang-es
+All tags
+​
+​
+
+The forum now supports rendering Mermaid diagrams directly in posts, and the Babel Reunited translation plugin has completed an important fix to the underlying rendering layer.
+
+This feature came from community suggestions and analysis: @ArthurZhang raised the need in Forum tooling suggestion: Mermaid diagram support for technical posts, identified the official component, and pinpointed its compatibility issue with the translation plugin; @phroi’s ongoing testing feedback helped us dig out the root cause of the rendering problem. Thanks to both of you.
+
+You can now draw diagrams like this:
+
+Just write a ```mermaid code block in your post and it will automatically render as a diagram after publishing. For example, a flowchart:
+
+​
+
+Write a mermaid block
+
+Post it
+
+Rendered as SVG
+
+Fullscreen on hover
+
+Other diagram types such as sequence diagrams are also supported:
+
+​
+Translator
+Forum
+Author
+Translator
+Forum
+Author
+Diagram source is protected
+Post with a diagram
+Translate the prose
+Translated text
+Same diagram, translated prose
+
+For syntax reference, see the Mermaid official documentation. You can see the rendered result in real time in the editor preview.
+
+A few notes:
+
+Hovering over a diagram shows a fullscreen button; syntax errors won’t break the page — they’ll just display an error message box.
+Also shipping with this release is a fix to the underlying rendering layer: post body content now goes through Discourse’s core rendering pipeline in full. Features that had stopped working in translation-enabled categories are restored — the copy/fullscreen buttons in the top-right corner of code blocks, click-to-enlarge for images, and so on — and they work in translated views as well. You can verify this by switching the language tab at the top of this post: diagrams render correctly in the translated version too.
+Text inside diagrams is intentionally left untranslated. This is a deliberate trade-off: diagram source code is structure-sensitive, and having a model translate labels can easily corrupt the diagram. Better to leave it untranslated than to translate it badly.
+
+Feel free to give it a try.
+
+Oracell: Contention-Free Witness Oracle for Nervos CKB (Phase 1 MVP Live on Pudge — Feedback Welcome)
+Infrastructure
+CKB
+CKB-VM
+Nov 24
+1 / 1
+Nov 24
+4h ago
+post by RikoKurnia 4 hours ago
+RikoKurnia
+4h
+Original · English
+简体中文
+Español
+
+Hi everyone,
+
+I’ve been working on Oracell, a contention-free oracle infrastructure built natively for Nervos CKB’s Cell Model as part of the CKB Builder Track (Week 11–12). Following initial architecture discussions, Phase 1 (MVP) is now live on Pudge Testnet (rikokurnia/oracell on GitHub, live app at oracell [dot] vercel [dot] app), and I’d love to gather technical feedback from the wider CKB community before moving into Phase 2.
+
+The Problem We’re Solving
+
+Traditional push-based oracles map poorly onto CKB’s Extended UTXO (Cell) architecture:
+
+Cell Contention: Updating a single shared price cell destroys its previous OutPoint, causing concurrent DeFi liquidations or swaps referencing that cell in the same block to fail.
+Cherry-Picking / Stale Quote Risks: Because CKB-VM scripts execute deterministically without access to global block height or wall-clock time, loose signature windows allow latency arbitrage against older quotes.
+Capacity Rent: Requiring every consuming dApp to maintain and mutate its own on-chain price cell increases state rent and cycle overhead.
+Phase 1 Architecture & What’s Live
+
+Instead of mutating a shared oracle cell, Oracell delivers signed multi-source market quotes (aggregated from CEX feeds with CKB anchor metadata) directly through the transaction witness:
+
+Stateless Witness Verification: @oracell/sdk packs a 184-byte BIP-340 Schnorr proof into WitnessArgs.output_type without consuming any shared oracle cell—allowing parallel transactions in the same block with zero contention.
+Tip-Header Binding (header_deps): Each quote commits to a recent CKB block hash. The on-chain RISC-V verifier (oracell-verifier) enforces a two-block freshness window relative to supplied header_deps, while the SDK proof runner checks the live RPC tip at submission.
+Hosted API & SDK: Both ESM and CommonJS clients of @oracell/sdk work out of the box against our hosted /api/oracle/feeds and /api/oracle/quote endpoints without requiring a local server.
+Verified Pudge Proof & Benchmarks
+Code Cell Deployment (Pudge): Tx 0xb2834f4487155d69fa5780a40819196cca1f818a3e62175bb9f2f39a7aeac0b1 (Block 23,135,440, 102,616 bytes RISC-V ELF, data2)
+Confirmed Consuming Transaction: Tx 0x14beb0d8c0bc0b2a2f1c4aa788c3171284b4c5443074a28059e234cc5bf0ee90 (Block 23,135,450, 5,530,230 RPC cycles)
+CKB-VM Emulator Contention Benchmark:
+Shared-cell baseline: 1 / 20 transactions admitted (19 cell contention conflicts)
+Oracell stateless witness: 100 / 100 transactions verified (0 conflicts, 3,886,926 cycles per verification)
+References (plain text while my new account’s link limit is still active):
+GitHub Repository: rikokurnia/oracell (commit fb9f0b5, see contracts/DEPLOYMENT.md)
+Live Explorer & Sandbox: oracell [dot] vercel [dot] app (/markets, /docs, /sandbox)
+CKBuilder Technical Review Issue: Nervos-Community-Catalyst/CKBuilder-projects Issue #57
+Explicit Phase 1 Boundaries
+
+To be completely transparent about current limitations:
+
+Single Publisher Key: Phase 1 uses a single pinned BIP-340 Schnorr publisher key. Distributed key generation (DKG), threshold Schnorr aggregation (MuSig2 / FROST), and CKB collateral staking/slashing are scoped for Phase 3.
+Relative header_deps Freshness: Because CKB-VM cannot read global state or the live network tip, the on-chain two-block window is evaluated relative to the transaction’s supplied header_deps. In production DeFi/L2 flows, this is paired with client/co-signer tip verification at submission time.
+Looking for Community Feedback (Next Phases)
+
+Before scoping a follow-up milestone (Phase 2), I would appreciate feedback from CKB developers on three questions:
+
+CellScript Integration: Would a native CellScript helper/module for consuming Oracell’s 184-byte witness proof be useful for teams building CKB-Native DeFi protocols?
+Fiber Network & Perun Use Cases: For builders working on Fiber or Perun, is there active demand for discrete Schnorr nonces / DLC adaptor attestations for conditional swaps, hedging, or dispute resolution?
+Testnet Early Adopters: Are any teams building on Pudge interested in testing @oracell/sdk in a live dApp (lending, DEX, or hedging) and sharing integration friction points?
+
+Thanks in advance for taking a look—any critique on the verifier design, witness format, or roadmap priorities is very welcome.
+
+
+
+1
+​
+​
+15
+views
+Reply
+
+
+New & Unread Topics
+Topic list, column headers with buttons are sortable.
+Topic	Replies	Views	Activity
+
+Morph Channel：一种 CKB Cell 模型下的通道 / 工厂讨论方向
+Infrastructure
+lang-zh
+	4	351	Jun 10
+
+Towards a Based EVM Layer on CKB: Three Architectural Options
+Infrastructure
+	6	168	Oct 8
+
+Had fun with ckb-cli and vibe coding
+Infrastructure
+lang-en
+	1	97	Jan 6
+
+CellScript Package and Deployment Registry: Early Design Discussion
+Infrastructure
+CKB
+CKB-VM
+CellScript
+lang-en
+	4	133	May 6
+
+Pckt: A Friendly Way to Send CKB | pckt：一种友好的发送 CKB 的方式
+Infrastructure
+CKB
+Nervos-项目动态
+appchain
+dapp
+lang-en
+	4	178	May 1
+
+Ward: lock proof for CKB
+Infrastructure
+CKB
+	3	93	9d
+Want to read more? Browse other topics in 
+Infrastructure
+ or view latest topics.
+Powered by Discourse
