@@ -1,0 +1,31 @@
+name: HTLC Regtest E2E
+on:
+  workflow_dispatch:
+
+jobs:
+  htlc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install bitcoind
+        run: |
+          curl -sL -o /tmp/btc.tar.gz https://bitcoincore.org/bin/bitcoin-core-27.0/bitcoin-27.0-x86_64-linux-gnu.tar.gz
+          tar xzf /tmp/btc.tar.gz -C /tmp
+          echo "/tmp/bitcoin-27.0/bin" >> $GITHUB_PATH
+      - name: Start regtest + mine
+        run: |
+          mkdir -p /tmp/btcdata
+          bitcoind -regtest -datadir=/tmp/btcdata -daemon -fallbackfee=0.0002
+          sleep 8
+          bitcoin-cli -regtest -datadir=/tmp/btcdata createwallet w
+          A=$(bitcoin-cli -regtest -datadir=/tmp/btcdata getnewaddress)
+          bitcoin-cli -regtest -datadir=/tmp/btcdata generatetoaddress 101 $A
+          echo "--- chain ---"
+          bitcoin-cli -regtest -datadir=/tmp/btcdata getblockchaininfo | grep -E '"blocks"|"chain"'
+      - name: Install deps
+        run: npm install bitcoinjs-lib ecpair tiny-secp256k1
+      - name: Run HTLC E2E
+        run: node scripts/htlc_regtest.js
