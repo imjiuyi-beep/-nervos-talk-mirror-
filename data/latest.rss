@@ -5,8 +5,169 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Tue, 24 Nov 2026 09:05:17 +0000</lastBuildDate>
+      <lastBuildDate>Tue, 24 Nov 2026 22:03:43 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>Oracell: Contention-Free Witness Oracle for Nervos CKB (Phase 1 MVP Live on Pudge — Feedback Welcome)</title>
+          <dc:creator><![CDATA[RikoKurnia]]></dc:creator>
+          <category>Infrastructure</category>
+          <description><![CDATA[
+            <p>Hi everyone,</p>
+<p>I’ve been working on <strong>Oracell</strong>, a contention-free oracle infrastructure built natively for Nervos CKB’s Cell Model as part of the CKB Builder Track (Week 11–12). Following initial architecture discussions, Phase 1 (MVP) is now live on <strong>Pudge Testnet</strong> (<code>rikokurnia/oracell</code> on GitHub, live app at <code>oracell [dot] vercel [dot] app</code>), and I’d love to gather technical feedback from the wider CKB community before moving into Phase 2.</p>
+<hr>
+<h3><a name="p-27813-the-problem-were-solving-1" class="anchor" href="https://talk.nervos.org#p-27813-the-problem-were-solving-1" aria-label="Heading link"></a>The Problem We’re Solving</h3>
+<p>Traditional push-based oracles map poorly onto CKB’s Extended UTXO (Cell) architecture:</p>
+<ol>
+<li><strong>Cell Contention:</strong> Updating a single shared price cell destroys its previous <code>OutPoint</code>, causing concurrent DeFi liquidations or swaps referencing that cell in the same block to fail.</li>
+<li><strong>Cherry-Picking / Stale Quote Risks:</strong> Because CKB-VM scripts execute deterministically without access to global block height or wall-clock time, loose signature windows allow latency arbitrage against older quotes.</li>
+<li><strong>Capacity Rent:</strong> Requiring every consuming dApp to maintain and mutate its own on-chain price cell increases state rent and cycle overhead.</li>
+</ol>
+<hr>
+<h3><a name="p-27813-phase-1-architecture-whats-live-2" class="anchor" href="https://talk.nervos.org#p-27813-phase-1-architecture-whats-live-2" aria-label="Heading link"></a>Phase 1 Architecture &amp; What’s Live</h3>
+<p>Instead of mutating a shared oracle cell, Oracell delivers signed multi-source market quotes (aggregated from CEX feeds with CKB anchor metadata) directly through the transaction <strong>witness</strong>:</p>
+<ul>
+<li><strong>Stateless Witness Verification:</strong> <code>@oracell/sdk</code> packs a <code>184</code>-byte BIP-340 Schnorr proof into <code>WitnessArgs.output_type</code> without consuming any shared oracle cell—allowing parallel transactions in the same block with zero contention.</li>
+<li><strong>Tip-Header Binding (<code>header_deps</code>):</strong> Each quote commits to a recent CKB block hash. The on-chain RISC-V verifier (<code>oracell-verifier</code>) enforces a two-block freshness window relative to supplied <code>header_deps</code>, while the SDK proof runner checks the live RPC tip at submission.</li>
+<li><strong>Hosted API &amp; SDK:</strong> Both ESM and CommonJS clients of <code>@oracell/sdk</code> work out of the box against our hosted <code>/api/oracle/feeds</code> and <code>/api/oracle/quote</code> endpoints without requiring a local server.</li>
+</ul>
+<hr>
+<h3><a name="p-27813-verified-pudge-proof-benchmarks-3" class="anchor" href="https://talk.nervos.org#p-27813-verified-pudge-proof-benchmarks-3" aria-label="Heading link"></a>Verified Pudge Proof &amp; Benchmarks</h3>
+<ul>
+<li><strong>Code Cell Deployment (Pudge):</strong> Tx <code>0xb2834f4487155d69fa5780a40819196cca1f818a3e62175bb9f2f39a7aeac0b1</code> (Block <code>23,135,440</code>, <code>102,616</code> bytes RISC-V ELF, <code>data2</code>)</li>
+<li><strong>Confirmed Consuming Transaction:</strong> Tx <code>0x14beb0d8c0bc0b2a2f1c4aa788c3171284b4c5443074a28059e234cc5bf0ee90</code> (Block <code>23,135,450</code>, <code>5,530,230</code> RPC cycles)</li>
+<li><strong>CKB-VM Emulator Contention Benchmark:</strong>
+<ul>
+<li>Shared-cell baseline: <code>1 / 20</code> transactions admitted (<code>19</code> cell contention conflicts)</li>
+<li>Oracell stateless witness: <code>100 / 100</code> transactions verified (<code>0</code> conflicts, <code>3,886,926</code> cycles per verification)</li>
+</ul>
+</li>
+<li><strong>References (plain text while my new account’s link limit is still active):</strong>
+<ul>
+<li><strong>GitHub Repository:</strong> <code>rikokurnia/oracell</code> (commit <code>fb9f0b5</code>, see <code>contracts/DEPLOYMENT.md</code>)</li>
+<li><strong>Live Explorer &amp; Sandbox:</strong> <code>oracell [dot] vercel [dot] app</code> (<code>/markets</code>, <code>/docs</code>, <code>/sandbox</code>)</li>
+<li><strong>CKBuilder Technical Review Issue:</strong> <code>Nervos-Community-Catalyst/CKBuilder-projects</code> Issue <code>#57</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3><a name="p-27813-explicit-phase-1-boundaries-4" class="anchor" href="https://talk.nervos.org#p-27813-explicit-phase-1-boundaries-4" aria-label="Heading link"></a>Explicit Phase 1 Boundaries</h3>
+<p>To be completely transparent about current limitations:</p>
+<ol>
+<li><strong>Single Publisher Key:</strong> Phase 1 uses a single pinned BIP-340 Schnorr publisher key. Distributed key generation (DKG), threshold Schnorr aggregation (<code>MuSig2</code> / <code>FROST</code>), and CKB collateral staking/slashing are scoped for <strong>Phase 3</strong>.</li>
+<li><strong>Relative <code>header_deps</code> Freshness:</strong> Because CKB-VM cannot read global state or the live network tip, the on-chain two-block window is evaluated relative to the transaction’s supplied <code>header_deps</code>. In production DeFi/L2 flows, this is paired with client/co-signer tip verification at submission time.</li>
+</ol>
+<hr>
+<h3><a name="p-27813-looking-for-community-feedback-next-phases-5" class="anchor" href="https://talk.nervos.org#p-27813-looking-for-community-feedback-next-phases-5" aria-label="Heading link"></a>Looking for Community Feedback (Next Phases)</h3>
+<p>Before scoping a follow-up milestone (Phase 2), I would appreciate feedback from CKB developers on three questions:</p>
+<ol>
+<li><strong>CellScript Integration:</strong> Would a native <strong>CellScript</strong> helper/module for consuming Oracell’s <code>184</code>-byte witness proof be useful for teams building CKB-Native DeFi protocols?</li>
+<li><strong>Fiber Network &amp; Perun Use Cases:</strong> For builders working on <strong>Fiber</strong> or <strong>Perun</strong>, is there active demand for discrete Schnorr nonces / DLC adaptor attestations for conditional swaps, hedging, or dispute resolution?</li>
+<li><strong>Testnet Early Adopters:</strong> Are any teams building on Pudge interested in testing <code>@oracell/sdk</code> in a live dApp (lending, DEX, or hedging) and sharing integration friction points?</li>
+</ol>
+<p>Thanks in advance for taking a look—any critique on the verifier design, witness format, or roadmap priorities is very welcome.</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/oracell-contention-free-witness-oracle-for-nervos-ckb-phase-1-mvp-live-on-pudge-feedback-welcome/11368">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/oracell-contention-free-witness-oracle-for-nervos-ckb-phase-1-mvp-live-on-pudge-feedback-welcome/11368</link>
+          <pubDate>Tue, 24 Nov 2026 22:03:43 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11368</guid>
+          <source url="https://talk.nervos.org/t/oracell-contention-free-witness-oracle-for-nervos-ckb-phase-1-mvp-live-on-pudge-feedback-welcome/11368.rss">Oracell: Contention-Free Witness Oracle for Nervos CKB (Phase 1 MVP Live on Pudge — Feedback Welcome)</source>
+        </item>
+        <item>
+          <title>Crowns: a live 3D car race on CKB where the chain is the referee</title>
+          <dc:creator><![CDATA[Kaylah]]></dc:creator>
+          <category>Applications &amp; Ecosystem</category>
+          <description><![CDATA[
+            <p>Hi everyone <img src="https://talk.nervos.org/images/emoji/apple/waving_hand.png?v=15" title=":waving_hand:" class="emoji" alt=":waving_hand:" loading="lazy" width="20" height="20"> I’m Chioma, a builder in the CKBuilders program. I’ve been building <strong>Crowns</strong>, a real-time 3D car race where players put CKB on the line and the chain decides who won. It’s live on testnet, and I’d love for you to race it and tell me what you think.</p>
+<p><strong>Play:</strong> <a href="https://keepers-relay.vercel.app" rel="noopener nofollow ugc">https://keepers-relay.vercel.app</a> (testnet)<br>
+<strong>Code:</strong> <a href="https://github.com/Kaylahray/keepers_relay" class="inline-onebox" rel="noopener nofollow ugc">GitHub - Kaylahray/keepers_relay: Crowns: live 3D car races on Nervos CKB. 2–5 players race 3 laps for a shared pot; each phone signs its own moves, and the chain replays the whole race before paying the winner. Rust rules on CKB-VM and in WebAssembly, Spore trophies, testnet. · GitHub</a><br>
+<strong>Build thread:</strong> <a href="https://github.com/Nervos-Community-Catalyst/CKBuilder-projects/issues/45" class="inline-onebox" rel="noopener nofollow ugc">Crowns: a live multiplayer skill game where CKB-VM replays every run · Issue #45 · Nervos-Community-Catalyst/CKBuilder-projects · GitHub</a></p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/b/b19e2a2ace5ed363e677ddf14c3ddd79ec040598.jpeg" data-download-href="https://talk.nervos.org/uploads/default/b19e2a2ace5ed363e677ddf14c3ddd79ec040598" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/b/b19e2a2ace5ed363e677ddf14c3ddd79ec040598_2_690x287.jpeg" alt="image" data-base62-sha1="plhntnm85T63lI6wLbAh5VpkXJS" width="690" height="287" srcset="https://talk.nervos.org/uploads/default/optimized/2X/b/b19e2a2ace5ed363e677ddf14c3ddd79ec040598_2_690x287.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/b/b19e2a2ace5ed363e677ddf14c3ddd79ec040598_2_1035x430.jpeg 1.5x, https://talk.nervos.org/uploads/default/original/2X/b/b19e2a2ace5ed363e677ddf14c3ddd79ec040598.jpeg 2x" data-dominant-color="34261B"></a></div><p></p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/b/bafd9761c0496ef27e276b67b392b70987531956.jpeg" data-download-href="https://talk.nervos.org/uploads/default/bafd9761c0496ef27e276b67b392b70987531956" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/b/bafd9761c0496ef27e276b67b392b70987531956_2_690x326.jpeg" alt="image" data-base62-sha1="qGc7Q0GzNmfS5VzOJfH8sULsEnk" width="690" height="326" srcset="https://talk.nervos.org/uploads/default/optimized/2X/b/bafd9761c0496ef27e276b67b392b70987531956_2_690x326.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/b/bafd9761c0496ef27e276b67b392b70987531956_2_1035x489.jpeg 1.5x, https://talk.nervos.org/uploads/default/original/2X/b/bafd9761c0496ef27e276b67b392b70987531956.jpeg 2x" data-dominant-color="141617"></a></div><p></p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/d/de42b120cb32ac71442c11aae56d39eb9f59b86e.png" data-download-href="https://talk.nervos.org/uploads/default/de42b120cb32ac71442c11aae56d39eb9f59b86e" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/d/de42b120cb32ac71442c11aae56d39eb9f59b86e_2_690x348.png" alt="image" data-base62-sha1="vIcSSFIZnky6u1MvhdvrHeVsVT8" width="690" height="348" srcset="https://talk.nervos.org/uploads/default/optimized/2X/d/de42b120cb32ac71442c11aae56d39eb9f59b86e_2_690x348.png, https://talk.nervos.org/uploads/default/optimized/2X/d/de42b120cb32ac71442c11aae56d39eb9f59b86e_2_1035x522.png 1.5x, https://talk.nervos.org/uploads/default/original/2X/d/de42b120cb32ac71442c11aae56d39eb9f59b86e.png 2x" data-dominant-color="282A1B"></a></div><p></p>
+<h2><a name="p-27812-why-i-built-it-1" class="anchor" href="https://talk.nervos.org#p-27812-why-i-built-it-1" aria-label="Heading link"></a>Why I built it</h2>
+<p>In most online games with money on them, you have to trust the server. It holds the money, it decides who won, and you can’t check either. I wanted a fast, real-time game where <strong>nobody</strong> has to be trusted: not me, not the server. The chain holds the money and replays the race itself before it pays anyone.</p>
+<h2><a name="p-27812-what-it-is-2" class="anchor" href="https://talk.nervos.org#p-27812-what-it-is-2" aria-label="Heading link"></a>What it is</h2>
+<p>A race for 2 to 5 players: 3 laps, everyone driving at the same time, with items, boosts and crashes. Races come in two kinds:</p>
+<ul>
+<li><strong>Entry races:</strong> everyone puts in the same entry fee in CKB, and the winner takes the whole pot.</li>
+<li><strong>Sponsored races:</strong> the host puts up the prize and <strong>you join free</strong>. You only lock a deposit for your seat, and it all comes back after the race.</li>
+</ul>
+<p>In the game:</p>
+<ul>
+<li><strong>3 tracks:</strong> Harbour Loop (the fast one), Switchback Hill (tight hairpins) and Old Town (narrow streets), each with its own scenery.</li>
+<li><strong>8 items</strong> from pads on the road: Ram, Slick, Jolt, Barricade, Crown Rush, Ward, Patch and Draft. Crashes and hits cost health, and a wrecked car stops for a moment before it rejoins.</li>
+<li><strong>Phone or computer:</strong> on a phone, touch the left or right side of the screen to steer, with buttons for boost and brake. On a computer, use the keyboard.</li>
+<li><strong>Free practice</strong> against two bots on the same rules, with no wallet.</li>
+<li><strong>Trophies:</strong> win a race and claim a trophy, a Spore you own. You can only get one for a race you really won, and the CKB inside it stays yours.</li>
+<li><strong>Profiles:</strong> claim an <span class="mention">@username</span>, which is a cell you own on chain. Upload a picture or pick a ready-made look, and it’s minted as a Spore you own and set as your profile picture. Your trophies, wins and crown shards show on your profile and on the leaderboard.</li>
+<li><strong>Replays:</strong> anyone can open a finished race, see each driver’s time, shards and moves, and watch it again in 3D, rebuilt from the moves stored on chain.</li>
+</ul>
+<h2><a name="p-27812-how-a-race-works-3" class="anchor" href="https://talk.nervos.org#p-27812-how-a-race-works-3" aria-label="Heading link"></a>How a race works</h2>
+<ol>
+<li><strong>Host:</strong> someone opens a race and picks the track, the number of seats and when it starts (5 to 60 minutes). They either set an entry fee, or sponsor a prize and let players in free.</li>
+<li><strong>Join:</strong> players take a seat. Each player who joins takes a fifth off the time left.</li>
+<li><strong>Start:</strong> when the clock reaches zero, everyone is taken into the race at the same moment, with a 10-second countdown.</li>
+<li><strong>Payout:</strong> when the race ends, the winner is paid automatically. If nobody finishes, everyone gets their money back, and a sponsor gets their prize back.</li>
+</ol>
+<p>Your wallet only asks you once, when you join. While you race, your browser signs your moves with a temporary session key, so there are no popups mid-race.</p>
+<h2><a name="p-27812-how-ckb-makes-it-fair-4" class="anchor" href="https://talk.nervos.org#p-27812-how-ckb-makes-it-fair-4" aria-label="Heading link"></a>How CKB makes it fair</h2>
+<ul>
+<li><strong>No one holds the money.</strong> The host’s CKB sits in a match cell and each player’s in their own seat cell, all locked by the match script, <code>live-match</code>. Not me, not the server.</li>
+<li><strong>The chain is the referee.</strong> The finish transaction carries every car’s moves. <code>live-match</code> <strong>spawns the game script</strong> with <code>ckb-script-ipc</code> and calls it like a function: <code>judge(record)</code> replays the whole race tick by tick and returns each car’s place. Only then does <code>live-match</code> pay out.</li>
+<li><strong>Nobody can fake a win.</strong> Each player’s moves are signed by their own session key, and the script checks the winner’s signature. The race server (a small relay) passes moves between phones in real time, but it can’t invent them.</li>
+<li><strong>Money can’t get stuck.</strong> If the relay disappears, every entry can go back to its owner after a timeout the chain enforces, with nobody else’s signature.</li>
+<li><strong>Sponsored races can’t be farmed.</strong> Joining one needs a username cell in your wallet, which the chain checks through a cell dep, and the chain refuses one wallet taking two seats in a prize race.</li>
+<li><strong>One set of rules everywhere.</strong> The race rules are one Rust crate with integer maths only, compiled to RISC-V for CKB-VM and to WebAssembly for the browser and the relay, so all three always agree on who won.</li>
+<li><strong>Anyone can check it.</strong> The results page reads the moves from the finish transaction, replays the race in your browser and checks it against who the chain paid.</li>
+</ul>
+<h2><a name="p-27812-status-on-testnet-5" class="anchor" href="https://talk.nervos.org#p-27812-status-on-testnet-5" aria-label="Heading link"></a>Status on testnet</h2>
+<ul>
+<li>live-match (type ID): <code>0xcf2c00c07441a48baeb76284e8edb8d10c6e016865c3eb6b1f87ad3b57a146b7</code></li>
+<li>Latest upgrade, sponsored races (22 Nov): <a href="https://testnet.explorer.nervos.org/transaction/0x4e13e90fccc84eed10f25a749daf0a14beb27566fd575ab66f292827d2b557d4" rel="noopener nofollow ugc">0x4e13e90f…57d4</a></li>
+<li>First sponsored race: a 100 CKB prize, and the winner got their deposit back plus the prize. <strong>70,475,122 cycles</strong>: <a href="https://testnet.explorer.nervos.org/transaction/0x8e3bca4466a106ec3196aa2aa9877262cd1f1c774c3215f12f5a69935b0af623" rel="noopener nofollow ugc">0x8e3bca44…f623</a></li>
+<li>A close entry race on 23 Nov: won by 1.5 seconds with 251 signed moves, and the whole race was replayed on chain before paying 200 CKB. <strong>65,322,821 cycles</strong>: <a href="https://testnet.explorer.nervos.org/transaction/0xcef2e225ff74fc17a19020de74a58ba166324b3412f85f579a42a34c316ad515" rel="noopener nofollow ugc">0xcef2e225…d515</a></li>
+<li>49 transaction tests in <code>ckb-testtool</code> on the real RISC-V binaries, plus an OffCKB devnet test of seven full races with a real relay and bot drivers.</li>
+</ul>
+<p>The cycle counts above are the chain’s own. You can check them yourself: paste either hash into <a href="https://ckb-cycle-tools.vercel.app/?tx=0xcef2e225ff74fc17a19020de74a58ba166324b3412f85f579a42a34c316ad515" rel="noopener nofollow ugc">ckb-cycle-tools</a>. It replays the finish in your browser and splits it per script: for the 23 Nov race, <code>live-match</code> and the game it spawns are 63.5M of the 65.3M (97.3%), and the replay matches the node’s total exactly. The worst case (5 cars, full 3 minutes, twistiest track) is about 141M in my tests.</p>
+<h2><a name="p-27812-things-i-learned-on-ckb-6" class="anchor" href="https://talk.nervos.org#p-27812-things-i-learned-on-ckb-6" aria-label="Heading link"></a>Things I learned on CKB</h2>
+<ul>
+<li><strong>Spawn and IPC make a game a library.</strong> <code>live-match</code> doesn’t know anything about racing. It only asks a game script “who won?”. Any game that serves the same trait could use the same match script and its money rules.</li>
+<li><strong>Same result everywhere needs integer maths.</strong> One float anywhere and the phone and the chain would disagree. Fixed ticks and integer maths keep the browser, the relay and CKB-VM in step.</li>
+<li><strong>Profile the spawned script on its own.</strong> In a spawn, the match script is the parent (VM 0) and the game is a child (VM 1), so a plain profile only sees the parent. With <code>ckb-debugger --vm-id 1</code> and <a href="https://github.com/luongthanhtung03/ckb-cycle-tools" rel="noopener nofollow ugc">ckb-cycle-tools</a>, which can profile a spawned script on its own, I found that about half of the game’s cycles go to one function that finds the nearest point on the track. That’s where my next cut goes.</li>
+<li><strong>A cell dep is a free check.</strong> The sponsored-race username pass is read as a cell dep, so it costs the player nothing and the cell isn’t spent.</li>
+<li><strong>Signing live moves needs ordering.</strong> I found that key presses sent as separate web requests could reach the relay out of order. The phone then refused to sign a list it didn’t recognise, and a winner could lose the prize. Now each phone has one WebSocket, and every press is numbered.</li>
+</ul>
+<h2><a name="p-27812-what-it-doesnt-do-yet-7" class="anchor" href="https://talk.nervos.org#p-27812-what-it-doesnt-do-yet-7" aria-label="Heading link"></a>What it doesn’t do yet</h2>
+<ul>
+<li><strong>One relay.</strong> Only my relay runs races today. It can’t cheat, but if it’s down, races wait for the timeout refund.</li>
+<li><strong>Reload mid-race:</strong> a driver who reloads gets back into the race, but can’t sign the moves made before the reload yet.</li>
+<li><strong>Usernames</strong> are checked as free by the app before you claim one. Making that fully on chain is next.</li>
+<li><strong>Looks:</strong> each car is just its seat’s colour. Car skins you own as Spores, richer environments and real car models are next.</li>
+</ul>
+<h2><a name="p-27812-what-id-love-feedback-on-8" class="anchor" href="https://talk.nervos.org#p-27812-what-id-love-feedback-on-8" aria-label="Heading link"></a>What I’d love feedback on</h2>
+<ul>
+<li>How does racing feel on your phone? Is the steering responsive, and is the lag OK?</li>
+<li>Is anything confusing for someone new to CKB?</li>
+<li>About half the replay is a nearest-point search on the track. Has anyone made a search like this cheaper in CKB-VM?</li>
+<li>Each phone signs its moves with a session key, and the chain checks only the winner’s signature before paying. Do you see a gap in that, or a more CKB-native way to do it?</li>
+</ul>
+<p>It’s on <strong>testnet</strong>. Look for the gold <strong>Free entry</strong> races: you can join those without paying anything. Or grab some testnet CKB from the faucet and host your own, and share the link with friends: it shows a preview card of the race.</p>
+<p>Thanks for reading! <img src="https://talk.nervos.org/images/emoji/apple/chequered_flag.png?v=15" title=":chequered_flag:" class="emoji" alt=":chequered_flag:" loading="lazy" width="20" height="20"></p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/crowns-a-live-3d-car-race-on-ckb-where-the-chain-is-the-referee/11367">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/crowns-a-live-3d-car-race-on-ckb-where-the-chain-is-the-referee/11367</link>
+          <pubDate>Tue, 24 Nov 2026 16:04:46 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11367</guid>
+          <source url="https://talk.nervos.org/t/crowns-a-live-3d-car-race-on-ckb-where-the-chain-is-the-referee/11367.rss">Crowns: a live 3D car race on CKB where the chain is the referee</source>
+        </item>
         <item>
           <title>Dao提案的价值</title>
           <dc:creator><![CDATA[hao_zhang]]></dc:creator>
@@ -982,23 +1143,6 @@ The cell model and ZK proofs fit together more naturally than I expected. Puttin
           <source url="https://talk.nervos.org/t/ckb-x-kaze-unitour-phase-2-kicks-off-at-machakos-university-180-students-95-new-wallets/11355.rss">CKB x Kaze Unitour Phase 2 Kicks Off at Machakos University: 180+ Students, 95 New Wallets</source>
         </item>
         <item>
-          <title>CKB x Kaze Unitour Phase 2 Kicks Off at Machakos University: 180+ Students, 95 New Wallets</title>
-          <dc:creator><![CDATA[Dorex45]]></dc:creator>
-          <category>CKB Community Fund DAO</category>
-          <description><![CDATA[
-            <p>(topic deleted by author)</p>
-            <p><small>1 post - 1 participant</small></p>
-            <p><a href="https://talk.nervos.org/t/ckb-x-kaze-unitour-phase-2-kicks-off-at-machakos-university-180-students-95-new-wallets/11354">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/ckb-x-kaze-unitour-phase-2-kicks-off-at-machakos-university-180-students-95-new-wallets/11354</link>
-          <pubDate>Mon, 23 Nov 2026 21:08:52 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>Yes</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11354</guid>
-          <source url="https://talk.nervos.org/t/ckb-x-kaze-unitour-phase-2-kicks-off-at-machakos-university-180-students-95-new-wallets/11354.rss">CKB x Kaze Unitour Phase 2 Kicks Off at Machakos University: 180+ Students, 95 New Wallets</source>
-        </item>
-        <item>
           <title>Spark Program | ckb-whitehat</title>
           <dc:creator><![CDATA[nghiadang391]]></dc:creator>
           <category>Spark Program</category>
@@ -1784,7 +1928,7 @@ Quota daemon (every 10s, backed by SQLite)
 <li>It works with the multisig locks and addresses already on chain: the genesis, 2024 and v2 deployments. There’s no new on-chain script.</li>
 </ul>
 <h2><a name="p-27667-the-goal-3" class="anchor" href="https://talk.nervos.org#p-27667-the-goal-3" aria-label="Heading link"></a>The goal</h2>
-<p>One file that every signer’s tool reads and writes: ckb-cli and Neuron directly, and apps built on CCC through a separate package. Signatures then move between tools with no bridge in the middle, and nobody has to collect and forward them.</p>
+<p>One file that every signer’s tool reads and writes: apps built on CCC through a TypeScript library, any Rust tool through a Rust library, and the official ckb-cli and Neuron through one Sigsheet tool until they read it themselves. Wallets don’t talk to each other through it: every wallet writes to the same file, and nobody has to collect and forward signatures.</p>
 <h2><a name="p-27667-whats-published-4" class="anchor" href="https://talk.nervos.org#p-27667-whats-published-4" aria-label="Heading link"></a>What’s published</h2>
 <p>All of this is in <a href="https://github.com/ILE-Labs/Sigsheet" rel="noopener nofollow ugc">github.com/ILE-Labs/Sigsheet</a>, linked at commits <code>4588a55</code> on <code>main</code> and <code>e4896d3</code> on <code>research</code> so every comment refers to a known version:</p>
 <ul>
@@ -1838,15 +1982,15 @@ Quota daemon (every 10s, backed by SQLite)
 <ul>
 <li>the specification after this feedback;</li>
 <li>a TypeScript library on CCC, the reference implementation;</li>
-<li>ckb-cli commands, in Rust;</li>
-<li>Neuron support through Offline Sign;</li>
+<li>a Rust library;</li>
+<li>one Sigsheet tool for signers, which signs with the official ckb-cli and Neuron through their own export files;</li>
 <li>a demo on testnet with all three tools.</li>
 </ul>
 </li>
 <li><strong><a href="https://github.com/ILE-Labs/Sigsheet/milestone/6" rel="noopener nofollow ugc">v0.2</a>:</strong>
 <ul>
 <li>a readable summary for signers;</li>
-<li>a ckb-cli command that writes the file and that summary in one step;</li>
+<li>a command that writes the file and that summary in one step, in the Sigsheet tool and offered to ckb-cli;</li>
 <li>an optional relay that carries one signature at a time, about 367 bytes at design stage, instead of the whole file;</li>
 <li>Neuron’s own Sigsheet screens;</li>
 <li>Omnilock’s multisig mode;</li>
@@ -1858,7 +2002,7 @@ Quota daemon (every 10s, backed by SQLite)
 <p>None of this depends on any project including the changes:</p>
 <ul>
 <li>the TypeScript library will work with CCC as published;</li>
-<li>the ckb-cli and Neuron changes will be available as builds from the repository.</li>
+<li>ckb-cli and Neuron users sign with the official wallets, through the Sigsheet tool.</li>
 </ul>
 <p>At design stage, each wallet’s change was small:</p>
 <ul>
@@ -4909,389 +5053,6 @@ Tester feedback and fixes; spec, threat model, disclaimer, README; demo video; f
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-11257</guid>
           <source url="https://talk.nervos.org/t/spark-program-will-on-chain-tamper-evident-private-digital-wills-on-ckb/11257.rss">Spark Program | Will On-Chain: Tamper-Evident, Private Digital Wills on CKB</source>
-        </item>
-        <item>
-          <title>Spark Program | CKAutomata: Protocol Hardening, User Onboarding and Testnet Beta</title>
-          <dc:creator><![CDATA[Hallab]]></dc:creator>
-          <category>Spark Program</category>
-          <description><![CDATA[
-            <h1><a name="p-27544-spark-program-ckautomata-protocol-hardening-user-onboarding-and-testnet-beta-1" class="anchor" href="https://talk.nervos.org#p-27544-spark-program-ckautomata-protocol-hardening-user-onboarding-and-testnet-beta-1" aria-label="Heading link"></a>Spark Program | CKAutomata: Protocol Hardening, User Onboarding and Testnet Beta</h1>
-<h2><a name="p-27544-h-1-project-overview-2" class="anchor" href="https://talk.nervos.org#p-27544-h-1-project-overview-2" aria-label="Heading link"></a>1. Project Overview</h2>
-<p><strong>Project name:</strong> CKAutomata</p>
-<p><strong>One-line summary:</strong> An eight-week improvement and beta program for CKAutomata covering protocol hardening, simpler user onboarding, and structured user testing for CKB payment automation.</p>
-<p><strong>Positioning:</strong> CKAutomata is an open-source, non-custodial payment-automation application built for the CKB Cell Model.</p>
-<p><strong>Funding requested:</strong> USD 2,000 equivalent in CKB.</p>
-<p><strong>Duration:</strong> Eight weeks, starting after approval.</p>
-<p>CKAutomata supports three payment-automation services:</p>
-<ol>
-<li><strong>DAO Harvest:</strong> Collect earned Nervos DAO compensation and place the user’s exact original amount into a new DAO deposit.</li>
-<li><strong>Scheduled payments:</strong> Send a fixed amount of CKB to a chosen recipient at a future date and time.</li>
-<li><strong>Recurring distributions:</strong> Send a fixed amount repeatedly according to an approved interval and run limit.</li>
-</ol>
-<p>DAO Harvest is the main feature because it addresses a CKB-specific problem involving Nervos DAO withdrawal timing, compensation collection and re-deposit. Scheduled and recurring payments extend the same constrained-execution model to common payment use cases.</p>
-<p>The initial contracts, services and testnet application were completed before this application. This grant does not fund that earlier work. It funds a focused next stage with three outcomes: a documented protocol-hardening pass, a clearer onboarding experience and a measured testnet beta with external users.</p>
-<h2><a name="p-27544-h-2-team-profile-3" class="anchor" href="https://talk.nervos.org#p-27544-h-2-team-profile-3" aria-label="Heading link"></a>2. Team Profile</h2>
-<p><strong>Applicant and developer:</strong> Hallab</p>
-<ul>
-<li>GitHub: <a href="https://github.com/Hallab7" rel="noopener nofollow ugc">Hallab7</a></li>
-<li>Email: <a href="mailto:ibrahimhabeebolawale@gmail.com">ibrahimhabeebolawale@gmail.com</a></li>
-<li>Discord: hallab.</li>
-<li>Telegram: just_hallab</li>
-<li>Repository: <a href="https://github.com/Hallab7/ckb-automata" rel="noopener nofollow ugc">Hallab7/ckb-automata</a></li>
-</ul>
-<p>I designed and built the CKAutomata contracts, transaction builders, API, indexer, executor services, external-operator tooling, wallet review flow, frontend and owner-recovery tooling. The project has received detailed public technical feedback through CKBuilders. The resulting work includes improved transaction validation, owner recovery, operator selection, external execution, real Nervos DAO script testing and versioned testnet deployments.</p>
-<p>Project background:</p>
-<ul>
-<li><a href="https://talk.nervos.org/t/introducing-ckautomata-payment-automation-and-nervos-dao-harvest-on-ckb/10813">CKAutomata introduction on Nervos Talk</a></li>
-<li><a href="https://github.com/Nervos-Community-Catalyst/CKBuilder-projects/issues/43" rel="noopener nofollow ugc">CKBuilder review request and technical feedback</a></li>
-</ul>
-<h2><a name="p-27544-h-3-project-background-4" class="anchor" href="https://talk.nervos.org#p-27544-h-3-project-background-4" aria-label="Heading link"></a>3. Project Background</h2>
-<p>CKB users may need to make a payment at a future time, repeat a distribution or complete a multi-stage Nervos DAO process. Without automation, the user must remember each event, reconnect a wallet and manually submit every transaction.</p>
-<p>A normal hosted scheduler could solve the timing problem by holding a private key, but that introduces custody and gives the service more authority than it needs. CKAutomata instead places the approved terms in CKB cells and scripts. An executor may submit an eligible transaction, but the scripts restrict the recipient, amount, timing, service payment and state transition.</p>
-<p>DAO Harvest demonstrates the most important use case. A Nervos DAO withdrawal requires preparation followed by a later claim. A user collecting compensation and continuing with the original amount must also create another DAO deposit. CKAutomata coordinates those stages while keeping the protected original amount bound to the approved rules.</p>
-<p>The current challenge is no longer the initial implementation. Before broader development, CKAutomata needs:</p>
-<ul>
-<li>a focused hardening pass across the contract, transaction, wallet and executor boundaries;</li>
-<li>onboarding that non-technical users can understand without reading protocol documentation; and</li>
-<li>structured evidence showing whether users can complete the workflows and find them useful.</li>
-</ul>
-<h2><a name="p-27544-h-4-solution-5" class="anchor" href="https://talk.nervos.org#p-27544-h-4-solution-5" aria-label="Heading link"></a>4. Solution</h2>
-<p>The funded work will improve one consistent user journey across all three services:</p>
-<ol>
-<li>Connect a supported CKB testnet wallet.</li>
-<li>Choose DAO Harvest, a scheduled payment or a recurring distribution.</li>
-<li>Enter the amount, recipient, timing and service-specific terms.</li>
-<li>Review the payment destination, charges, executor rules and owner recovery in plain language.</li>
-<li>Approve the setup transaction in the wallet.</li>
-<li>Follow the automation through waiting, processing and completion.</li>
-<li>Use the available cancellation, exit or recovery action when necessary.</li>
-</ol>
-<p>The grant is divided into three workstreams.</p>
-<h3><a name="p-27544-a-protocol-hardening-6" class="anchor" href="https://talk.nervos.org#p-27544-a-protocol-hardening-6" aria-label="Heading link"></a>A. Protocol Hardening</h3>
-<p>The hardening work will cover the deployed testnet protocol and its transaction-building boundary:</p>
-<ul>
-<li>review the threat model for scheduled, recurring and DAO Harvest jobs;</li>
-<li>test recipient, amount, timing, fee, reward, successor and owner-refund invariants;</li>
-<li>extend malformed-witness, arithmetic-boundary and transaction-layout tests;</li>
-<li>test wallet-added funding inputs, change, dependencies and fee limits;</li>
-<li>test preferred-operator, fallback and competing-executor behavior;</li>
-<li>test API, indexer and executor interruption without granting additional authority;</li>
-<li>repeat owner cancellation, exit and recovery drills using public CKB data; and</li>
-<li>add every reproduced defect to the automated regression suite and CI gate.</li>
-</ul>
-<p>DAO Harvest will receive the deepest review because it includes Nervos DAO preparation, maturity, compensation accounting, re-deposit and owner recovery. The hardening report will clearly distinguish internal review from an independent professional security audit.</p>
-<h3><a name="p-27544-b-user-onboarding-7" class="anchor" href="https://talk.nervos.org#p-27544-b-user-onboarding-7" aria-label="Heading link"></a>B. User Onboarding</h3>
-<p>The onboarding work will make the existing application easier to understand and operate:</p>
-<ul>
-<li>create a short first-use path for choosing the correct automation type;</li>
-<li>simplify terms used for amounts, dates, charges, executors and recovery;</li>
-<li>show the complete amount the wallet will pay before approval;</li>
-<li>explain each status and the next expected action in plain language;</li>
-<li>improve wallet rejection, wrong-network, stale-review and service-unavailable messages;</li>
-<li>improve mobile and desktop setup, review and automation-detail screens;</li>
-<li>provide service-specific examples without presenting demo data as live evidence; and</li>
-<li>publish a concise user guide for all three services.</li>
-</ul>
-<h3><a name="p-27544-c-structured-user-testing-8" class="anchor" href="https://talk.nervos.org#p-27544-c-structured-user-testing-8" aria-label="Heading link"></a>C. Structured User Testing</h3>
-<p>The beta will recruit 8-12 external participants who can use a CKB testnet wallet. At least 8 completed sessions are required for the final dataset.</p>
-<p>Each participant will:</p>
-<ol>
-<li>connect, disconnect and reconnect a wallet;</li>
-<li>create and track a scheduled payment;</li>
-<li>configure a recurring distribution with the correct amount, interval and run limit;</li>
-<li>review a DAO Harvest setup and explain its purpose, charges and original-amount protection;</li>
-<li>find transaction evidence and the current automation status; and</li>
-<li>locate the available owner cancellation, exit or recovery action for a selected job.</li>
-</ol>
-<p>The beta uses valueless testnet CKB. No cash or token incentive is included in this grant.</p>
-<h3><a name="p-27544-beta-targets-9" class="anchor" href="https://talk.nervos.org#p-27544-beta-targets-9" aria-label="Heading link"></a>Beta Targets</h3>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th style="text-align:right">Target</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Recruited participants</td>
-<td style="text-align:right">8-12</td>
-</tr>
-<tr>
-<td>Completed test sessions</td>
-<td style="text-align:right">At least 8</td>
-</tr>
-<tr>
-<td>Scheduled-payment task completed without direct intervention</td>
-<td style="text-align:right">At least 80%</td>
-</tr>
-<tr>
-<td>Recurring-payment terms configured correctly</td>
-<td style="text-align:right">At least 80%</td>
-</tr>
-<tr>
-<td>DAO Harvest purpose and original-amount behavior understood</td>
-<td style="text-align:right">At least 80%</td>
-</tr>
-<tr>
-<td>Charges and owner recovery correctly understood</td>
-<td style="text-align:right">At least 80%</td>
-</tr>
-<tr>
-<td>Successful transactions, excluding deliberate rejection tests</td>
-<td style="text-align:right">At least 90%</td>
-</tr>
-<tr>
-<td>Critical value-loss or unauthorized-recipient failures</td>
-<td style="text-align:right">0</td>
-</tr>
-<tr>
-<td>Critical and high-severity beta findings</td>
-<td style="text-align:right">Fixed and retested, or explicitly unresolved with reproduction steps</td>
-</tr>
-</tbody>
-</table>
-</div><p>These targets are acceptance measurements, not guaranteed results. Any shortfall will be reported rather than hidden or reclassified.</p>
-<p>Percentage targets will be calculated from completed sessions and rounded up to the next whole participant.</p>
-<h2><a name="p-27544-h-5-technical-approach-10" class="anchor" href="https://talk.nervos.org#p-27544-h-5-technical-approach-10" aria-label="Heading link"></a>5. Technical Approach</h2>
-<p>CKAutomata uses CKB-native components rather than an off-chain payment ledger:</p>
-<ul>
-<li><strong>Contracts:</strong> Rust scripts compiled for CKB-VM validate job locks, policy rules, recipients, timing, value conservation, rewards and owner actions.</li>
-<li><strong>Schemas and builders:</strong> Molecule schemas and TypeScript builders create and inspect scheduled, recurring and DAO Harvest transactions.</li>
-<li><strong>Wallet boundary:</strong> CCC-compatible wallets approve and sign transactions; CKAutomata never receives a private key.</li>
-<li><strong>API and indexer:</strong> A Node.js API constructs unsigned transactions, while PostgreSQL and the CKB indexer provide readable automation state.</li>
-<li><strong>Executors:</strong> Hosted watchers discover eligible jobs and submit only transactions accepted by the scripts. External-operator tooling supports additional execution paths.</li>
-<li><strong>Frontend:</strong> A Next.js application provides setup, review, automation lists, details, activity and owner actions.</li>
-<li><strong>Recovery:</strong> Published manifests and recovery tooling allow owner transactions to be prepared from public CKB data without the hosted API, database, Redis or CKAutomata executors.</li>
-</ul>
-<p>The application remains testnet-only during this grant. The work will not be described as a formal audit or as evidence of mainnet readiness.</p>
-<h2><a name="p-27544-h-6-execution-plan-11" class="anchor" href="https://talk.nervos.org#p-27544-h-6-execution-plan-11" aria-label="Heading link"></a>6. Execution Plan</h2>
-<h3><a name="p-27544-week-1-baseline-and-threat-review-12" class="anchor" href="https://talk.nervos.org#p-27544-week-1-baseline-and-threat-review-12" aria-label="Heading link"></a>Week 1 — Baseline and Threat Review</h3>
-<ul>
-<li>Freeze the beta scope and source revision.</li>
-<li>Publish the test plan, threat-model update and current known limitations.</li>
-<li>Record baseline transaction, API, indexer and executor behavior.</li>
-<li>Start dedicated scheduled, recurring and DAO Harvest testnet jobs.</li>
-</ul>
-<p><strong>Milestone:</strong> Published baseline report, risk register and beta task script.</p>
-<h3><a name="p-27544-week-2-contract-and-transaction-hardening-13" class="anchor" href="https://talk.nervos.org#p-27544-week-2-contract-and-transaction-hardening-13" aria-label="Heading link"></a>Week 2 — Contract and Transaction Hardening</h3>
-<ul>
-<li>Run adversarial contract and transaction-boundary tests.</li>
-<li>Test recipient, amount, timing, successor, fee, reward and refund invariants.</li>
-<li>Test malformed witnesses, arithmetic boundaries and invalid transaction layouts.</li>
-<li>Fix findings and add regression coverage.</li>
-</ul>
-<p><strong>Milestone:</strong> Contract and builder findings are fixed or documented with regression coverage.</p>
-<h3><a name="p-27544-week-3-runtime-and-recovery-hardening-14" class="anchor" href="https://talk.nervos.org#p-27544-week-3-runtime-and-recovery-hardening-14" aria-label="Heading link"></a>Week 3 — Runtime and Recovery Hardening</h3>
-<ul>
-<li>Exercise preferred-operator, fallback and competing-executor behavior.</li>
-<li>Test delayed indexing, changed wallet transactions and fee boundaries.</li>
-<li>Test API, indexer and executor interruption.</li>
-<li>Repeat cancellation, exit and recovery construction without hosted services.</li>
-</ul>
-<p><strong>Milestone:</strong> Hardening report with findings, fixes, residual risks and a green expanded test gate.</p>
-<h3><a name="p-27544-week-4-onboarding-release-15" class="anchor" href="https://talk.nervos.org#p-27544-week-4-onboarding-release-15" aria-label="Heading link"></a>Week 4 — Onboarding Release</h3>
-<ul>
-<li>Improve first-use selection, setup terms, review totals, status explanations and owner-action guidance.</li>
-<li>Improve wallet, network, stale-review and service-error states.</li>
-<li>Test responsive desktop and mobile layouts.</li>
-<li>Publish the user guide and beta release.</li>
-</ul>
-<p><strong>Milestone:</strong> Public beta release and onboarding guide covering all three services.</p>
-<h3><a name="p-27544-week-5-first-user-testing-round-16" class="anchor" href="https://talk.nervos.org#p-27544-week-5-first-user-testing-round-16" aria-label="Heading link"></a>Week 5 — First User-Testing Round</h3>
-<ul>
-<li>Recruit 8-12 participants.</li>
-<li>Run the fixed task script and questionnaire with the first participant group.</li>
-<li>Record task completion, assistance required, transaction outcomes, comprehension and reported issues.</li>
-<li>Triage findings by severity and publish an interim update.</li>
-</ul>
-<p><strong>Milestone:</strong> First-round anonymized results, measured task outcomes and a prioritized issue register.</p>
-<h3><a name="p-27544-week-6-fix-complete-testing-and-retest-17" class="anchor" href="https://talk.nervos.org#p-27544-week-6-fix-complete-testing-and-retest-17" aria-label="Heading link"></a>Week 6 — Fix, Complete Testing and Retest</h3>
-<ul>
-<li>Fix critical, high-severity and repeated usability findings.</li>
-<li>Complete the remaining participant sessions.</li>
-<li>Re-run affected automated tests and repeat failed participant tasks after fixes.</li>
-<li>Finalize the anonymized dataset and beta metrics.</li>
-</ul>
-<p><strong>Milestone:</strong> At least 8 completed sessions, retest results and a release-candidate beta build.</p>
-<h3><a name="p-27544-week-7-operational-observation-and-evidence-18" class="anchor" href="https://talk.nervos.org#p-27544-week-7-operational-observation-and-evidence-18" aria-label="Heading link"></a>Week 7 — Operational Observation and Evidence</h3>
-<ul>
-<li>Run a seven-day observation of API, indexer and executor readiness.</li>
-<li>Verify dedicated scheduled, recurring and DAO Harvest testnet jobs.</li>
-<li>Publish transaction accounting, service incidents and recovery evidence.</li>
-<li>Resolve any release-blocking operational finding and repeat the affected check.</li>
-</ul>
-<p><strong>Milestone:</strong> Seven-day operational record and real testnet evidence package.</p>
-<h3><a name="p-27544-week-8-completion-19" class="anchor" href="https://talk.nervos.org#p-27544-week-8-completion-19" aria-label="Heading link"></a>Week 8 — Completion</h3>
-<ul>
-<li>Publish the final beta metrics and anonymized dataset.</li>
-<li>Publish a demo video and five-minute verification guide.</li>
-<li>Report actual spending, limitations and work remaining before mainnet consideration.</li>
-<li>Publish a continue, revise or stop recommendation for each automation service.</li>
-</ul>
-<p><strong>Milestone:</strong> Tagged beta release and complete public evidence package.</p>
-<p>Nervos DAO timing is controlled by the chain. If a beta Harvest position has not reached a later stage by Week 8, the report will show its exact confirmed state and continue tracking it publicly. A simulated maturity result will not be presented as a live transaction.</p>
-<h2><a name="p-27544-h-7-required-funding-and-breakdown-20" class="anchor" href="https://talk.nervos.org#p-27544-h-7-required-funding-and-breakdown-20" aria-label="Heading link"></a>7. Required Funding and Breakdown</h2>
-<p><strong>Total requested: USD 2,000, paid in CKB.</strong></p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Work</th>
-<th style="text-align:right">Amount</th>
-<th>Use</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Protocol and transaction hardening</td>
-<td style="text-align:right">$700</td>
-<td>Threat review, adversarial and boundary tests, multi-operator and recovery drills, fixes and CI coverage</td>
-</tr>
-<tr>
-<td>User onboarding</td>
-<td style="text-align:right">$450</td>
-<td>First-use flow, terminology, transaction review, status and recovery guidance, error states and responsive UI</td>
-</tr>
-<tr>
-<td>Structured user testing</td>
-<td style="text-align:right">$350</td>
-<td>Participant recruitment and support, fixed test sessions, data collection, issue triage and retesting</td>
-</tr>
-<tr>
-<td>Testnet operations and public evidence</td>
-<td style="text-align:right">$350</td>
-<td>Eight-week beta availability, dedicated jobs, service observation, outage drills, transaction decoding and evidence preparation</td>
-</tr>
-<tr>
-<td>Documentation, demo and completion report</td>
-<td style="text-align:right">$150</td>
-<td>User guide, verification guide, video, anonymized dataset, funding report and final assessment</td>
-</tr>
-<tr>
-<td><strong>Total</strong></td>
-<td style="text-align:right"><strong>$2,000</strong></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div><h3><a name="p-27544-why-more-than-1000-21" class="anchor" href="https://talk.nervos.org#p-27544-why-more-than-1000-21" aria-label="Heading link"></a>Why More Than $1,000</h3>
-<p>This proposal combines three dependent workstreams. User testing would not be responsible without first hardening the financial and recovery paths. Hardening alone would not show whether ordinary users can understand or use the product. Onboarding changes must then be tested with people other than the developer.</p>
-<p>The work also covers three automation services and includes CKB-contract tests, wallet transaction boundaries, executor behavior, service observation and structured external testing. A $1,000 grant could cover only part of that cycle and would leave either the technical work or the user evidence incomplete.</p>
-<p>The request does not pay for the original CKAutomata build, previous deployments, earlier reviews, mainnet deployment, a professional audit, tester incentives or long-term operations. Actual spending and any unspent amount will be reported at completion.</p>
-<p>The allocation places the largest share on the security-sensitive protocol work, followed by the onboarding implementation. User testing covers participant support, observation, analysis and retesting rather than incentives. Testnet operations cover keeping the beta available and observable throughout the eight-week program as well as producing reproducible transaction evidence. Documentation and reporting receive the smallest allocation.</p>
-<h2><a name="p-27544-h-8-deliverables-and-how-to-verify-22" class="anchor" href="https://talk.nervos.org#p-27544-h-8-deliverables-and-how-to-verify-22" aria-label="Heading link"></a>8. Deliverables and How to Verify</h2>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Deliverable</th>
-<th>Acceptance criteria</th>
-<th>Verification without deep code review</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Hardening report</td>
-<td>Threat model, findings, fixes, residual risks and explicit statement that no external audit was performed</td>
-<td>Read the report and open the linked regression tests and CI run</td>
-</tr>
-<tr>
-<td>Expanded test gate</td>
-<td>Contract, builder, wallet, operator, cancellation and recovery cases pass from a clean checkout</td>
-<td>Run the published verification command and confirm a green result</td>
-</tr>
-<tr>
-<td>Public beta release</td>
-<td>Scheduled, recurring and DAO Harvest setup, review, status and owner actions are usable on mobile and desktop</td>
-<td>Open the beta, connect a testnet wallet and complete the five-minute guide</td>
-</tr>
-<tr>
-<td>Testnet evidence</td>
-<td>At least two confirmed scheduled payments, two recurring executions and one new DAO Harvest setup, with decoded accounting</td>
-<td>Open the transaction links in the CKB testnet explorer and compare them with the evidence table</td>
-</tr>
-<tr>
-<td>Recovery evidence</td>
-<td>A documented owner cancellation or recovery construction that does not use hosted CKAutomata services</td>
-<td>Follow the recovery guide using public RPC data and inspect the unsigned transaction</td>
-</tr>
-<tr>
-<td>User-testing report</td>
-<td>8-12 recruited participants, at least 8 completed sessions, anonymized raw results, metrics and issue register</td>
-<td>Recalculate the reported totals from the published CSV or JSON data</td>
-</tr>
-<tr>
-<td>Demo and completion report</td>
-<td>Video, plan-versus-actual results, funding usage, limitations and next recommendation</td>
-<td>Watch the demo and follow the evidence index</td>
-</tr>
-</tbody>
-</table>
-</div><p>The public beta will remain available for at least 30 days after the completion report, subject to any third-party hosting limitation disclosed in that report.</p>
-<h2><a name="p-27544-h-9-current-state-vs-funded-work-23" class="anchor" href="https://talk.nervos.org#p-27544-h-9-current-state-vs-funded-work-23" aria-label="Heading link"></a>9. Current State vs. Funded Work</h2>
-<h3><a name="p-27544-already-completed-not-funded-by-this-grant-24" class="anchor" href="https://talk.nervos.org#p-27544-already-completed-not-funded-by-this-grant-24" aria-label="Heading link"></a>Already Completed — Not Funded by This Grant</h3>
-<ul>
-<li>Open-source MIT-licensed repository.</li>
-<li>Testnet contracts and versioned deployment manifests.</li>
-<li>Public frontend, API, indexer and hosted executor services.</li>
-<li>Scheduled-payment, recurring-distribution and DAO Harvest creation flows.</li>
-<li>Wallet review, signing and post-wallet transaction validation.</li>
-<li>Automation list, detail, activity and owner-action screens.</li>
-<li>Optional operator selection and fallback execution rules.</li>
-<li>External-operator hosting and registration tooling.</li>
-<li>Contract, API, web, executor, fuzz and recovery tests.</li>
-<li>Public technical review and remediation work.</li>
-</ul>
-<h3><a name="p-27544-new-work-requested-from-spark-25" class="anchor" href="https://talk.nervos.org#p-27544-new-work-requested-from-spark-25" aria-label="Heading link"></a>New Work Requested from Spark</h3>
-<ul>
-<li>A time-bounded hardening pass across the three automation services.</li>
-<li>New regression coverage for grant-period findings.</li>
-<li>Improved first-use, review, status, error and recovery experiences.</li>
-<li>A public beta guide and five-minute verification flow.</li>
-<li>Structured testing with 8-12 external participants.</li>
-<li>A seven-day operational observation and real transaction evidence package.</li>
-<li>A public beta report, anonymized dataset, demo and completion report.</li>
-</ul>
-<h2><a name="p-27544-h-10-out-of-scope-26" class="anchor" href="https://talk.nervos.org#p-27544-h-10-out-of-scope-26" aria-label="Heading link"></a>10. Out of Scope</h2>
-<ul>
-<li>CKB mainnet deployment or use of mainnet funds.</li>
-<li>A formal independent security audit.</li>
-<li>New automation categories beyond the three current services.</li>
-<li>Changes to Nervos DAO consensus rules.</li>
-<li>Claims that DAO Harvest increases Nervos DAO yield.</li>
-<li>Integration into another application.</li>
-<li>Tokens, reward pools, tester incentives or large-scale marketing.</li>
-<li>Guaranteed operation or maintenance beyond the grant period.</li>
-</ul>
-<h2><a name="p-27544-h-11-ckb-alignment-27" class="anchor" href="https://talk.nervos.org#p-27544-h-11-ckb-alignment-27" aria-label="Heading link"></a>11. CKB Alignment</h2>
-<p>CKAutomata depends directly on the CKB Cell Model. A Job Cell records an approved future action, while policy scripts constrain the recipient, amount, timing, state progression, executor payment and owner recovery. This allows execution to be delegated without giving the executor custody of the wallet or unrestricted control over the funds.</p>
-<p>The three services demonstrate practical CKB use cases:</p>
-<ul>
-<li>coordinating Nervos DAO compensation collection and re-deposit;</li>
-<li>making a one-time CKB payment at a future time;</li>
-<li>distributing CKB repeatedly under fixed terms; and</li>
-<li>allowing selected or compatible executors to process eligible jobs under script-enforced limits.</li>
-</ul>
-<p>The grant will produce reusable evidence about constrained payment automation, wallet review, external execution, owner recovery and user comprehension. The results will show which parts of CKAutomata are ready for continued development and what must be completed before any mainnet.</p>
-<h2><a name="p-27544-h-12-references-28" class="anchor" href="https://talk.nervos.org#p-27544-h-12-references-28" aria-label="Heading link"></a>12. References</h2>
-<ul>
-<li><a href="https://github.com/Hallab7/ckb-automata" rel="noopener nofollow ugc">CKAutomata source</a></li>
-<li><a href="https://ckb-automata.vercel.app/" rel="noopener nofollow ugc">CKAutomata testnet application</a></li>
-<li><a href="https://talk.nervos.org/t/introducing-ckautomata-payment-automation-and-nervos-dao-harvest-on-ckb/10813">CKAutomata introduction</a></li>
-<li><a href="https://github.com/Nervos-Community-Catalyst/CKBuilder-projects/issues/43" rel="noopener nofollow ugc">CKBuilder review</a></li>
-</ul>
-            <p><small>1 post - 1 participant</small></p>
-            <p><a href="https://talk.nervos.org/t/spark-program-ckautomata-protocol-hardening-user-onboarding-and-testnet-beta/11255">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/spark-program-ckautomata-protocol-hardening-user-onboarding-and-testnet-beta/11255</link>
-          <pubDate>Wed, 18 Nov 2026 10:44:37 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11255</guid>
-          <source url="https://talk.nervos.org/t/spark-program-ckautomata-protocol-hardening-user-onboarding-and-testnet-beta/11255.rss">Spark Program | CKAutomata: Protocol Hardening, User Onboarding and Testnet Beta</source>
         </item>
   </channel>
 </rss>
