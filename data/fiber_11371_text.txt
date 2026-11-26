@@ -1,0 +1,325 @@
+Skip to last reply
+Skip to top
+Skip to main content
+Sign Up
+Log In
+​
+Topics
+More
+CATEGORIES
+Announcements & Meta
+Infrastructure
+Applications & Ecosystem
+Cryptoeconomics & Mechanism Design
+Miners Pub
+DAOs & Funding
+All categories
+TAGS
+lang-zh
+lang-en
+CKB
+dapp
+lang-es
+All tags
+​
+​
+
+The forum now supports rendering Mermaid diagrams directly in posts, and the Babel Reunited translation plugin has completed an important fix to the underlying rendering layer.
+
+This feature came from community suggestions and analysis: @ArthurZhang raised the need in Forum tooling suggestion: Mermaid diagram support for technical posts, identified the official component, and pinpointed its compatibility issue with the translation plugin; @phroi’s ongoing testing feedback helped us dig out the root cause of the rendering problem. Thanks to both of you.
+
+You can now draw diagrams like this:
+
+Just write a ```mermaid code block in your post and it will automatically render as a diagram after publishing. For example, a flowchart:
+
+​
+
+Write a mermaid block
+
+Post it
+
+Rendered as SVG
+
+Fullscreen on hover
+
+Other diagram types such as sequence diagrams are also supported:
+
+​
+Translator
+Forum
+Author
+Translator
+Forum
+Author
+Diagram source is protected
+Post with a diagram
+Translate the prose
+Translated text
+Same diagram, translated prose
+
+For syntax reference, see the Mermaid official documentation. You can see the rendered result in real time in the editor preview.
+
+A few notes:
+
+Hovering over a diagram shows a fullscreen button; syntax errors won’t break the page — they’ll just display an error message box.
+Also shipping with this release is a fix to the underlying rendering layer: post body content now goes through Discourse’s core rendering pipeline in full. Features that had stopped working in translation-enabled categories are restored — the copy/fullscreen buttons in the top-right corner of code blocks, click-to-enlarge for images, and so on — and they work in translated views as well. You can verify this by switching the language tab at the top of this post: diagrams render correctly in the translated version too.
+Text inside diagrams is intentionally left untranslated. This is a deliberate trade-off: diagram source code is structure-sensitive, and having a model translate labels can easily corrupt the diagram. Better to leave it untranslated than to translate it badly.
+
+Feel free to give it a try.
+
+Show Me the Use Case: Fiber Network Product Hackathon announcement!
+Announcements & Meta
+Hackathon
+fiber
+84
+views
+20
+likes
+5
+links
+read
+4 min
+Nov 26
+1 / 5
+Nov 26
+1h ago
+post by neon.bit 4 hours ago
+neon.bit
+2
+4h
+Original · English
+简体中文
+Español
+
+image
+1920×1081 1.2 MB
+
+Show Me the Use Case: Fiber Network Product Hackathon
+Build products for the next stage of Fiber
+
+Registration for Show Me the Use Case: Fiber Product Hackathon opens soon!
+
+This is the follow-up to the Fiber Network Infrastructure Hackathon. Where that hackathon explored gaps in Fiber’s supporting infrastructure, this one focuses on building compelling products on Fiber Network that address real user needs.
+
+As a peer-to-peer payment network, Fiber offers a fast, low-cost alternative payment rail to traditional systems. It could support products across many areas, including regional and cross-border payments, gaming, social media, commerce and metered services.
+
+We’re asking developers to think like entrepreneurs: connect their technical expertise with real-world challenges and business opportunities. Strong projects will identify a specific audience, make a case for user demand and product-market fit, and show how they will reach, engage and onboard users. User experience and a credible path to market are central to this hackathon. In order to help guide developers in this respect, we’ve partnered with BlockDev to provide access to seasoned experts from MDI Venture and BRI Venture.
+
+Key details
+
+Registration opens: 27 November
+Pre-hackathon preparation and advice sessions: 30 November–4 December
+Hackathon: 4–18 December
+Duration: 2 weeks
+All dates and deadlines: UTC
+Platform: CKBoost
+Prize pool: $20,000
+Participation: Individuals and teams may enter; teams are strongly encouraged
+AI tooling: Successful submissions may claim up to $20 as an AI tooling allowance
+Registration: Link - goes live on 27 November
+
+Introduction
+
+Nervos CKB is a proof-of-work Layer 1 blockchain built for flexibility, decentralisation and long-term extensibility. Its Cell model supports smart contracts, custom assets, ownership and verification logic, while its RISC-V-based virtual machine gives developers flexibility in choosing the cryptography and protocols they use.
+
+Fiber Network is a payment-channel network for fast, low-cost, off-chain payments on CKB. It supports multiple asset types, including RGB++ assets and stablecoins, and creates opportunities for wallets, merchants, micropayments and other payment-focused services.
+
+This hackathon, organised by Nervos Community Catalyst, is about putting that payment capability to work in products people can understand and use. The strongest ideas will start with a specific problem and audience, show why Fiber is useful to the solution, and explain how that audience will be engaged.
+
+Mission brief
+
+Build a user-facing product on Fiber Network that solves a real problem for a clearly defined audience.
+
+Possible areas to explore include:
+
+Regional and cross-border payments
+Merchant checkout and commerce experiences
+Gaming and digital goods
+Social or community payments
+Metered services and pay-as-you-go access
+
+These examples are inspiration, not formal categories. All submissions will be judged together.
+
+Who should participate?
+
+The hackathon is open to CKB community developers and developers who are new to CKB. Participants may enter individually or as a team.
+
+Teams are strongly encouraged, since developing a product often calls for complementary skills. Team size alone will not affect judging. A team will be required for projects seeking post-hackathon support, and there will be a Best Team prize.
+
+Why participate?
+Build a user-facing product on Fiber Network
+Explore real payment problems across different industries
+Develop and test a product idea with support from experienced advisors
+Compete for a share of the $20,000 prize pool
+Give prizewinning projects a chance to discuss their next steps with advisors from VC after the hackathon
+Ecosystem partners
+
+This hackathon, organised by Nervos Community Catalyst, is supported by the Common Knowledge Base Association, including teams from CKB Devrel, CKB, and Fiber. Alongside technical support, senior developers will give presentations during registration week on key topics for developers to get up to speed.
+
+Furthermore, we’re working with BlockDev as our hackathon business advisory partner.
+
+During registration week, BlockDev will announce presentations covering the essentials of building a blockchain startup and what makes a startup investable. Advisors include Markus Liman, venture capitalist and CEO of BRI Venture, and Alvin Evander, Vice President of MDI Venture.
+
+After the hackathon, prizewinning projects will be invited to a further advice session with the advisors to help them consider the next steps in their journey.
+
+Getting started
+
+Use these resources to familiarise yourself with CKB and Fiber Network, and to find tutorials and examples to build from:
+
+CKB documentation
+Introduction to Nervos CKB
+How CKB Works, including links to the Quick Start and dApp tutorials
+AI resources and training tools
+Community-contributed learning
+Learning CKB: 24 lessons across 5 phases
+Learn CKB in 45 minutes
+Fiber Network
+Fiber documentation
+Fiber Storybook - Explaining Fiber Through Pico’s Airport Journey
+Toolchain overview
+Interactive tutorials - highly recommended!
+Fiber Showcase, with open-source demos and community applications
+Fiber Hackathon documentation, with resources, onboarding and tutorials
+Fiber Network product demos:
+Charge as you go - EV charging on Fiber
+Fiber chat - decentralized social demo
+
+To complete quests on CKBoost, you will need CKB testnet tokens. You can claim them from the Nervos Pudge Faucet.
+
+Fiber setup and demos
+
+Fiber LSP infrastructure will be available for developers to use, but there will be no shared public LSP service for this hackathon. Teams should plan to run the Fiber service their project needs locally, or run it on a public server if they prefer.
+
+A publicly hosted product interface plus a video demonstration is sufficient. The video should show the product in action, including Fiber-connected functionality that may not be available through the hosted interface.
+
+More detailed technical setup instructions will be shared before the hackathon.
+
+Deliverables
+
+Each submission should include:
+
+Project summary
+Target audience, market research, product-market fit and user acquisition strategy
+Team name and members
+Hosted product interface
+Video demonstration
+Technical breakdown, including an explanation of how the project uses Fiber
+Future roadmap and go-to-market strategy
+AI allowance claim, if applicable
+
+Functional demos are required; written proposals alone will not qualify. Code does not need to be open source, but must be made privately available to the judges for review. Submissions should explain what is fully working and identify any parts that are mocked or simulated.
+
+AI usage
+
+You may use AI tools to research, develop and document your project. Successful submissions may claim up to $20 as an AI tooling allowance.
+
+Use AI as an aid, and test and review your project throughout development to ensure it works as intended. We’ll be sharing more AI related tips and guidance over the pre-hackathon registration week.
+
+Judging criteria
+
+Projects will be assessed on:
+
+Functional completeness
+User flow and experience
+Relevance to Fiber Network and CKB
+Technical soundness
+User friendliness
+Market viability
+Documentation quality
+Practical usefulness
+Potential for further development
+Hackathon preparation checklist
+Think about a real problem, the people who experience it, and how your product could reach, engage and onboard them.
+Explore Fiber Network and decide how it could help solve that problem.
+Review the technical resources above and begin planning your project.
+Register through CKBoost when registration opens. Early registration will help you join the support channels and ask questions in advance.
+Plan your time across the hackathon dates so you can build, test and document a functional demo.
+Support
+
+The Build on CKB Telegram group will be the main discussion channel for hackathon-related questions and support. Participants will also receive information about support channels by email after registering.
+
+The Fiber DevRel team will be available to assist with technical questions.
+
+Rules
+Individuals and teams may enter.
+Only new projects are eligible for prizes. Pre-existing or repurposed projects are not eligible.
+Projects must be viable user-facing products. Infrastructure-focused projects are not eligible for this hackathon.
+Code does not have to be open source, but must be made privately available to the judges.
+Plagiarism will result in disqualification and loss of prize eligibility.
+All submissions must be made through CKBoost.
+There can be no deadline extensions. Submissions added after the deadline without prior permission may be ineligible for prizes.
+Prizes and deadline
+
+The total prize pool is $20,000:
+
+1st place: $6,500
+2nd place: $4,000
+3rd place: $3,000
+4th place: $2,000
+5th place: $1,000
+Commendation prizes: $500 each for five projects
+Best Team: $1,000
+
+Submissions close on Friday 18 December 23:59 UTC.
+
+After the hackathon
+
+As mentioned earlier, prizewinning teams will have the opportunity to discuss and receive advice from our hackathon partners who have a background in venture capital. This, however, is simply an initial step, and projects will be encouraged to move towards market viability and seeking further support where necessary.
+
+I’m excited to see what the community produces. Good luck to everyone!
+
+
+
+17
+​
+​
+84
+views
+20
+likes
+5
+links
+read
+4 min
+post by Ksa_1971 4 hours ago
+post by drey 4 hours ago
+post by Web3legend 2 hours ago
+post by Raymond_Chidera_Efit 1 hour ago
+Reply
+
+
+New & Unread Topics
+Topic list, column headers with buttons are sortable.
+Topic	Replies	Views	Activity
+
+What Nervos Talk Needs Most Is Not Free Speech
+Announcements & Meta
+	11	404	Apr 2
+
+Is it possible to have more reactions than just a heart?
+Announcements & Meta
+	5	262	Apr 20
+
+Positioning Nervos Talk – What Nervos Talk Is (and Isn’t)
+Announcements & Meta
+	1	165	Apr 2
+
+Can we add chat?
+Announcements & Meta
+	1	118	Apr 9
+
+A New Chapter for CKB: Introducing the Common Knowledge Base Association
+Announcements & Meta
+CKB
+lang-en
+	10	992	Jun 3
+
+Augmented Governance: What If the Math Could Veto a Bad Vote?
+Announcements & Meta
+CKB
+lang-en
+	0	92	Mar 18
+Want to read more? Browse other topics in 
+Announcements & Meta
+ or view latest topics.
+Powered by Discourse
