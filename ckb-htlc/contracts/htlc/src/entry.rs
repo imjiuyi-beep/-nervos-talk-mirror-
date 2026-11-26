@@ -20,7 +20,7 @@ pub fn main() -> Result<(), Error> {
     let timelock = u64::from_le_bytes(tl);
 
     let wa = load_witness_args(0, Source::GroupInput)?;
-    let lock = match wa.lock().to_opt() { Some(b) => b.unpack(), None => Bytes::new() };
+    let lock = match wa.lock().to_opt() { Some(b) => b.unpack(), None => Bytes::default() };
     let w = lock.as_ref();
 
     if w.len() == HASH_LEN {
