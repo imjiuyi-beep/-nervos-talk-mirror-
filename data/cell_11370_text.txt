@@ -1,0 +1,389 @@
+Skip to last reply
+Skip to top
+Skip to main content
+Sign Up
+Log In
+​
+Topics
+More
+CATEGORIES
+Announcements & Meta
+Infrastructure
+Applications & Ecosystem
+Cryptoeconomics & Mechanism Design
+Miners Pub
+DAOs & Funding
+All categories
+TAGS
+lang-zh
+lang-en
+CKB
+dapp
+lang-es
+All tags
+​
+​
+
+The forum now supports rendering Mermaid diagrams directly in posts, and the Babel Reunited translation plugin has completed an important fix to the underlying rendering layer.
+
+This feature came from community suggestions and analysis: @ArthurZhang raised the need in Forum tooling suggestion: Mermaid diagram support for technical posts, identified the official component, and pinpointed its compatibility issue with the translation plugin; @phroi’s ongoing testing feedback helped us dig out the root cause of the rendering problem. Thanks to both of you.
+
+You can now draw diagrams like this:
+
+Just write a ```mermaid code block in your post and it will automatically render as a diagram after publishing. For example, a flowchart:
+
+​
+
+Write a mermaid block
+
+Post it
+
+Rendered as SVG
+
+Fullscreen on hover
+
+Other diagram types such as sequence diagrams are also supported:
+
+​
+Translator
+Forum
+Author
+Translator
+Forum
+Author
+Diagram source is protected
+Post with a diagram
+Translate the prose
+Translated text
+Same diagram, translated prose
+
+For syntax reference, see the Mermaid official documentation. You can see the rendered result in real time in the editor preview.
+
+A few notes:
+
+Hovering over a diagram shows a fullscreen button; syntax errors won’t break the page — they’ll just display an error message box.
+Also shipping with this release is a fix to the underlying rendering layer: post body content now goes through Discourse’s core rendering pipeline in full. Features that had stopped working in translation-enabled categories are restored — the copy/fullscreen buttons in the top-right corner of code blocks, click-to-enlarge for images, and so on — and they work in translated views as well. You can verify this by switching the language tab at the top of this post: diagrams render correctly in the translated version too.
+Text inside diagrams is intentionally left untranslated. This is a deliberate trade-off: diagram source code is structure-sensitive, and having a model translate labels can easily corrupt the diagram. Better to leave it untranslated than to translate it badly.
+
+Feel free to give it a try.
+
+What Else Could a Cell Become ? [1]
+Infrastructure
+Cell
+cell-model
+layer2
+31
+views
+7
+likes
+read
+8 min
+Nov 26
+1 / 4
+Nov 26
+1h ago
+post by ArthurZhang 4 hours ago
+ArthurZhang
+1
+4h
+Original · English
+简体中文
+Español
+
+Polytype, Metatype, and the unfinished possibilities of the Cell model
+
+I. Revisiting the Cell model
+
+During CKCON 2026 last month, I found myself returning to a question I had encountered repeatedly whilst developing CellScript: how much does the author of one protocol need to know about another before the two can work together?
+
+@Hanssen has approached this through SSRI, @xxuejie and @janx through CoBuild, @OWK50GA through IDL. In CellScript, I introduced ProtocolBundle to coordinate the requirements of independently developed contracts. @doitian had been wrestling with various aspects of this problem long before many of us began building on CKB.
+
+Shortly before the conference, @jm9k asked me whether a Myelin session could run an enhanced Cell Model v1.5, with transaction structures and rules beyond those currently supported by CKB L1.
+
+I gave him a technical answer and went back to writing code, but the question stayed with me. Curiously enough, I always had an intuition whilst developing Myelin that, sooner or later, certain applications would warrant an alternative Cell-like UTXO model, supported alongside the original CKB model. And this question has planted a seed in my mind, and i began to think more seriously about what such a model might look like, and what new possibilities it could open up.
+
+It seems to me that the community have spent seven years learning how to build protocols around the Cell model. Suppose, for a moment, that we had the luxury of toying with the model itself, with everything we have learnt in the intervening years. Which of our architectural decisions would we make again? Which might we reconsider?
+
+I began looking through some of the older Nervos discussions and found several ideas worth dusting off.
+
+In August 2019, before CKB mainnet went live, Doitian published his Cell Model Changes Preview in v0.19.0, exploring a transaction structure in which Scripts and data were stored in separate collections, with Cells referring to their contents through hashes.
+
+Although this representation did not survive into the Cell model we use today, I find the structural separation between a Script and the Cell referencing it rather interesting.
+
+980×614 35.2 KB
+
+Figure 1. The 2019 design separated Script descriptions from Cell Outputs.
+
+Two years later, Xuejie’s Extensible UDT explored a different aspect of the model. An asset could carry additional validation logic through a vector of extension scripts, allowing monetary conservation and supplementary policies to coexist within a single Type implementation.
+
+The two proposals concern different things. The former explores how Scripts are represented and referenced; the latter explores how several validation programmes can jointly govern an asset. Read together, they invite an interesting architectural question about the relationship between a Cell and the programmes governing its evolution.
+
+In 2022, Doitian’s assert proposal separated the conditions of a partial transaction from its signing mechanism. His subsequent And-Then pattern, drawing upon Xuejie’s earlier Chained Lock work, allowed several validation programmes to share a script slot. The OTX prototype developed by Doitian and Ethan in 2023 encountered some of the subtler security problems arising when independently constructed transactions intersect with existing Script Groups.
+
+The 2024 article on ownerless contracts is particularly relevant to what I have in mind. Consider a protocol that wishes to enforce conditions on the creation of an asset whose Type slot is already occupied. Where should its validation logic reside? How can it work with an asset protocol whose author had no knowledge of its existence?
+
+During the iCKB discussions in 2025, Jan proposed a common Meta Type capable of dispatching constituent scripts. Phroi went further, questioning the number of script slots altogether, exploring independent data regions and considering the storage implications of such a model.
+
+Phroi also raised a similar question with me in April 2026, shortly after I introduced CellScript publicly. My answer at the time involved nothing more than companion Cells, receipts and explicit dependencies. I still consider these useful abstractions, particularly where separate state and independent lifecycles are desirable. Yet this left me wondering how much of this machinery we would need if the underlying Cell could express a richer set of relationships.
+
+image
+946×850 61 KB
+
+Figure 2. Selected historical explorations of script representation, validation, attachment and protocol composition.
+
+Looking back through these discussions, I began to recognise two dimensions of composability.
+
+One concerns how independent protocols discover one another, communicate their requirements and collaborate in constructing a transaction. Much of our work on CKB has been devoted to making this easier.
+
+The other concerns the object itself. Can an asset become subject to several independently developed protocols, with each retaining its own identity, validation context and authority over its particular concerns?
+
+I had often approached the second problem through the mechanisms available to the first. Perhaps it would be interesting to approach it from the Cell model instead.
+
+II. Beyond a single Type
+
+One of the things I have always admired about the Cell model is the distinction between Lock and Type. There is a rather profound idea embedded within this modest architectural decision: ownership and legitimate transformation are separate concerns.
+
+I may own an object whose existence is governed by rules beyond my authority. A fungible asset belongs to me, but possession of its private key does not entitle me to increase its monetary supply.
+
+Now suppose that I hold an asset subject to a vesting agreement and subsequently pledge it as collateral.
+
+There are three protocols involved. The asset protocol governs issuance and conservation; the vesting protocol determines when certain rights become exercisable; the lending protocol governs the conditions under which the collateral may be released.
+
+All three describe legitimate concerns about the same asset, and ideally their authors should be able to develop them independently.
+
+On CKB today, we have several ways of constructing such an arrangement. We could introduce companion Cells, use a specialised Lock, devise a wrapper or seek cooperation from the asset’s existing Type implementation.
+
+The appropriate choice depends on the application. Nevertheless, the author of a new protocol must often accommodate architectural decisions made by the author of an earlier one.
+
+I became curious about a simpler and more intuitice arrangement. Suppose the asset retains its original monetary rules and acquires additional validation relationships throughout its existence. Each relationship is represented explicitly in the ledger.
+
+I am tentatively calling this proposed model Polytype.
+
+image
+921×826 51.8 KB
+
+Figure 3. Independent constraints attached to a common Cell. Companion Cells remain useful wherever separate state or independent concurrency is required.
+
+A Polytype Cell retains one Lock and an atomic unit of state, together with a collection of independently identified Types. Each attached Type contributes its own conditions for the legitimacy of a transaction.
+
+For three Types, A, B and C, the admissible transactions satisfy:
+
+image
+846×581 46 KB
+
+The admissible transaction space is the intersection of the attached validators’ conditions.
+
+The composition rule is deliberately simple. Given a common transaction context, every attached validator must accept the proposed transition.
+
+(Of course, the intersection may be empty. Three perfectly respectable protocols, each behaving exactly as intended, could collectively produce an asset that nobody can ever spend. We would have invented a very sophisticated brick.)
+
+III. Polytype
+A Cell and its relationships
+
+Returning to Doitian’s 2019 proposal, we might find some practical advantages in separating Script descriptions from the Cells that reference them.
+
+A transaction containing many Cells governed by the same protocol has little reason to encode its complete Script description repeatedly. A transaction-level Script Dictionary could provide a compact representation, whilst the persistent ledger retains independently verifiable Script identities.
+
+image
+918×665 38.9 KB
+
+Figure 4. A possible Polytype encoding inspired by the 2019 Script collection. Dictionary indices are local to a transaction; persistent Script identities remain independently verifiable.
+
+The choice between hashes, indices and other forms of reference is largely a matter of representation. We could explore any of these without altering the fundamental validation semantics of Polytype.
+
+What matters semantically is that the relationship between Cells and Types becomes many-to-many. Each Cell can participate in several protocols, and each protocol can govern arbitrarily many Cells.
+
+This has a particularly interesting consequence for something CKB developers are already familiar with: Script Groups.
+
+Overlapping Type Groups
+
+One of the virtues of CKB’s Type Script Groups is that they allow a programme to reason about several related Cells at once.
+
+An asset validator, for instance, can examine a collection of consumed token Cells and compare their combined balance with that of the newly created Cells. The rules of monetary conservation are expressed over the group as a whole.
+
+Under Polytype, a Cell may belong to several Type Groups simultaneously.
+
+Consider two token Cells governed by the same monetary validator, A. One carries an additional vesting constraint, B, whilst the other carries a lending constraint, C.
+
+Both belong to the conservation group of A. Their respective obligations are examined independently by B and C.
+
+image
+925×735 39.8 KB
+
+Figure 5. One proposed transaction induces three overlapping Type Groups. Monetary conservation is evaluated across all three Cells; the additional validators evaluate their respective groups. Acceptance depends upon the actual rules of B and C.
+
+This is perhaps the most interesting property of the proposed model. An asset could acquire an additional policy without thereby acquiring a different monetary identity or becoming separated from its original conservation domain.
+
+Validator A sees the Cells relevant to its monetary rules. B sees those participating in the vesting arrangement. C sees those participating in the lending agreement.
+
+The runtime derives these groups from the complete Script identities and authenticated contents of the consumed and newly created Cells.
+
+Doitian’s OTX research becomes especially relevant here. A validator’s understanding of which Cells belong to its group is part of its security model. Group membership must be derived independently of the transaction builder’s intentions.
+
+There is, naturally, a question of data representation. Independently developed validators require compatible ways of interpreting the state they govern. Phroi’s earlier exploration of separate data regions deserves further attention in this regard.
+
+I would like to establish the grouping semantics first. There is plenty of room to experiment with how the underlying data ought to be organised.
+
+The evolution of constraints
+
+An interesting consequence of Polytype is that the relationships between a Cell and its governing protocols can themselves evolve.
+
+An asset may acquire a collateral constraint when pledged against a loan and discharge it upon repayment. An immutable-content validator might forbid its own removal, whilst a governance validator might permit its replacement under certain conditions.
+
+image
+1030×751 52.6 KB
+
+Figure 6. The attachment and removal of a constraint are themselves validated state transitions. The asset retains its original logical Type identity throughout.
+
+Since validation groups are derived from both consumed and newly created Cells, removing a Type remains subject to that Type’s own rules. The existing distinction between spending authority and validation authority is preserved.
+
+This opens up a possibility I find particularly compelling: an asset created today could participate in a protocol invented years later, without its original developer having anticipated that particular relationship.
+
+I think of this as a form of open-world composability.
+
+IV. Metatype: an experiment on CKB
+
+How much of the proposed semantics could we already express on CKB?
+
+@janx’s earlier suggestion of a common Meta Type provides a particularly promising starting point. CKB’s RISC-V execution environment gives us considerable freedom to experiment with the interpretation of a Cell without changing the consensus-level structure of the Cell itself.
+
+I would like to develop it a bit further here as a common composition mechanism occupying the ordinary Type Script slot. A Metatype Cell commits to a collection of logical Types, with the wrapper responsible for enforcing their validation.
+
+The difficulty lies in preserving the grouping semantics described earlier.
+
+Suppose two CKB Cells use Metatype, one carrying logical Types A and B, the other carrying A and C. Depending on their physical Script representation, they may belong to different CKB Type Script Groups.
+
+Yet A must be able to reason about both Cells together.
+
+image
+925×879 57.8 KB
+
+Figure 7. Metatype reconstructs logical Type Groups across differently composed physical CKB Cells. M₁ and M₂ denote distinct physical Script identities in this example.
+
+Simply spawning the constituent validators would leave this problem unresolved. A validator invoked through spawn does not automatically acquire a new understanding of its Script identity or the boundaries of its logical group.
+
+Metatype must reconstruct the relevant groups across the transaction, deriving their membership from authenticated manifests and verifying that each participating Cell is subject to the appropriate enforcement mechanism. Each validator must then be provided with an execution context consistent with its logical Type identity and group membership.
+
+The research objective can be expressed rather simply:
+
+image
+501×107 2.72 KB
+
+(Here, E translates a supported logical transaction into its physical CKB representation.)
+
+Within the supported domain, the two environments ought to agree on the validity of the same proposed transition. Establishing this equivalence also requires Metatype to reject malformed representations and attempts to conceal or discard existing validation obligations.
+
+Polytype and Metatype as two implementations of a common logical validation model. Establishing semantic equivalence between the two would itself be a worthwhile research objective.
+
+There is a pleasant research opportunity here for a DSL such as CellScript as well. Contracts compiled against a sufficiently precise logical validation interface could potentially target both environments.
+
+I am particularly keen to explore Metatype independently on CKB. Even if the native Polytype experiment never leaves the laboratory, there may be useful things we can learn and put into production on L1.
+
+Where our existing work comes together
+
+We can see that Hanssen’s SSRI provides a means for scripts to expose information and executable behaviour. Wilfrid’s IDL provides a vocabulary for describing interfaces. CoBuild and OTX concern the construction and authorisation of transactions involving independent participants. ProtocolBundle coordinates requirements arising from independently compiled contracts.
+
+image
+919×822 50.7 KB
+
+Figure 8. Protocol discovery, interface description, transaction construction, authorisation and validation within a common composition model. The layers indicate complementary responsibilities rather than mandatory dependencies.
+
+Polytype and Metatype give these capabilities a more explicit object upon which to operate.
+
+A validator might describe the evidence required to discharge an obligation. A wallet could discover this information and obtain suitable construction logic. Several protocols could contribute requirements to a partially constructed transaction, which could then be examined against their combined conditions.
+
+I also find Phroi’s suggestion of interpreting Cell data through SSRI-like methods particularly intriguing.
+
+An iCKB receipt, for example, might expose its economic relationship with CKB through a commonly understood asset interface, despite having a physical representation quite different from that of an ordinary UDT.
+
+Given sufficiently expressive interfaces, an application might learn something meaningful about an unfamiliar asset without having been written specifically for it.
+
+We would still have a great deal of work to do in establishing shared semantic conventions. Fortunately, many of the people I mentioned at the beginning of this article are already working on precisely these questions.
+
+V. An open world of Cells
+
+This brings me back to @jm9k’s question about Myelin.
+
+Myelin was originally conceived around close compatibility with CKB’s existing transaction and execution semantics. With Cell Model v1.5 still very much a todo!(), one possible direction is to explore native Polytype in a fast PoS execution layer, with Metatype providing a corresponding representation on L1. A Myelin session might offer another environment in which to investigate some of the same validation semantics, albeit with different assumptions about state progression and settlement.
+
+image
+931×929 61.2 KB
+
+Figure 9. Native Polytype execution and Metatype enforcement on CKB. State authentication, settlement and exclusive spending authority require their own cross-layer mechanisms.
+
+I find the prospect of an object travelling between these environments rather intriguing. An asset might undergo thousands of transitions elsewhere before returning to CKB. Ideally, the validators governing its behaviour could retain their logical identities throughout this journey, even as their physical representation changes.
+
+Phroi has previously expressed reservations about general-purpose L2 development within the Nervos ecosystem. I do share his concern about devoting years to infrastructure that ultimately does little to improve what developers can accomplish on L1.
+
+This is one of the reasons I am keen to give Metatype independent utility. An experimental execution environment could serve as somewhere to investigate more ambitious architectural ideas; the useful ones could find their way back into CKB through mechanisms available to us today.
+
+I suspect some of our existing abstractions will survive this exercise remarkably well. Others may become simpler. A few may turn out to have been elaborate solutions to problems peculiar to the original arrangement of script slots.
+
+Finding out which is which should be rather good fun.
+
+
+
+5
+​
+​
+31
+views
+7
+likes
+read
+8 min
+post by Ticoworld 4 hours ago
+post by ArthurZhang 1 hour ago
+post by Ticoworld 50 mins ago
+Reply
+
+
+New & Unread Topics
+Topic list, column headers with buttons are sortable.
+Topic	Replies	Views	Activity
+
+[RFC] CellScript 的包管理：一个 Go 语言风格的、基于 GitHub 的 CKB 合约包管理注册表
+Infrastructure
+CKB
+CKB-VM
+CellScript
+lang-zh
+	3	269	May 31
+
+Fiber Storybook: Explaining Fiber Through Pico’s Airport Journey
+Infrastructure
+fiber
+lang-en
+	6	240	May 29
+
+Fiber Manager Plugin Guide
+Infrastructure
+fiber
+lang-en
+	0	59	May 28
+
+CellScript x iCKB Equivalence Experiment
+Infrastructure
+CellScript
+iCKB
+lang-en
+	2	95	Jun 24
+
+CKB Lab: Interactive developer playground & transaction builder for CKB
+Infrastructure
+CKB
+CKB-VM
+lang-en
+	2	95	Aug 3
+
+When the Proof Finally Met the Cell
+Infrastructure
+CKB
+CKB-VM
+lang-en
+zkp
+	0	73	Aug 4
+Want to read more? Browse other topics in 
+Infrastructure
+ or view latest topics.
+Powered by Discourse
