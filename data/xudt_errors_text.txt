@@ -1,0 +1,14 @@
+ckb-script-error-codes
+
+This is a wiki to collect documentations about error codes returned by various ckb scripts.
+
+View On
+GitHub
+
+Script error codes page not submitted yet.
+
+You can contribute by submit the page in the GitHub repository.
+
+Project maintained by nervosnetwork
+
+Hosted on GitHub Pages — Theme by orderedlist
