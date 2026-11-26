@@ -1,8 +1,8 @@
 {
- "updated": "2026-11-25T09:40:18.314560Z",
- "funding_rate": 3.94663697722e-05,
- "funding_time": "1795622400000",
- "mvrv": 1.1785,
- "mvrv_date": "2026-11-18",
- "realized_price": 53447.67
+ "updated": "2026-11-26T09:16:18.332795Z",
+ "funding_rate": 8.47900928616e-05,
+ "funding_time": "1795708800000",
+ "mvrv": 1.1606,
+ "mvrv_date": "2026-11-19",
+ "realized_price": 53394.59
 }
