@@ -9,11 +9,13 @@ jobs:
       - uses: dtolnay/rust-toolchain@1.74.0
         with:
           targets: riscv64imac-unknown-none-elf
-      - name: install cross
-        run: cargo install cross --locked
+      - name: install riscv gcc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-riscv64-unknown-elf
       - name: build
         working-directory: ckb-htlc
-        run: cross build --release --target riscv64imac-unknown-none-elf -p ckb-htlc
+        run: cargo build --release --target riscv64imac-unknown-none-elf -p ckb-htlc
       - name: inspect
         run: |
           BIN=ckb-htlc/target/riscv64imac-unknown-none-elf/release/ckb-htlc

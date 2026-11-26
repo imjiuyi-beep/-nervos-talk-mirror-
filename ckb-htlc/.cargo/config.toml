@@ -1,0 +1,3 @@
+[target.riscv64imac-unknown-none-elf]
+linker = "riscv64-unknown-elf-gcc"
+rustflags = ["-C", "link-arg=-Ttext=0x10000", "-C", "link-arg=--gc-sections"]
