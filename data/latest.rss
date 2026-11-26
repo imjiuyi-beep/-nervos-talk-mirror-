@@ -5,8 +5,500 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Tue, 24 Nov 2026 22:03:43 +0000</lastBuildDate>
+      <lastBuildDate>Wed, 25 Nov 2026 15:02:32 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>Spark Program | Sigsheet: a unified standard for signing CKB multisig transactions</title>
+          <dc:creator><![CDATA[ILE_LABS]]></dc:creator>
+          <category>Spark Program</category>
+          <description><![CDATA[
+            <p><strong>Applicant:</strong> ILE Labs</p>
+<p><strong>Funding requested:</strong> $2,000 USD</p>
+<p><strong>Duration:</strong> 7 weeks, starting at approval (the first payment)</p>
+<p><strong>Payout address:</strong> ckb1qyqpkgfq00mzpsqh4e4gxpkdh3nafsepvl0qpddkyy</p>
+<p><strong>Contact:</strong> <a href="mailto:contact@ilelabs.org">contact@ilelabs.org</a>, Discord: emmzy_code01</p>
+<h2><a name="p-27826-in-our-own-words-1" class="anchor" href="https://talk.nervos.org#p-27826-in-our-own-words-1" aria-label="Heading link"></a>In our own words</h2>
+<p>Our first application, ckb-msig, converted signatures between the formats CKB wallets already write. The committee’s answer was clear: instead of adapting to the fragmentation, design the standard that every tool can adopt. So that’s what we did. Sigsheet is one file and one set of rules for a CKB multisig transaction, and the specification draft, its test vectors and an independent check are already public. This grant turns the draft into a standard wallets can adopt: two libraries that implement it, in TypeScript and Rust, one tool that lets today’s ckb-cli and Neuron users sign while their wallets catch up, and a demo on testnet across all three tools.</p>
+<h2><a name="p-27826-h-1-project-overview-2" class="anchor" href="https://talk.nervos.org#p-27826-h-1-project-overview-2" aria-label="Heading link"></a>1. Project Overview</h2>
+<p><strong>What it is.</strong> Sigsheet is an open standard for signing a CKB multisig transaction: one canonical JSON file per transaction, and the rules every tool follows to read, check, sign, merge and finalize it. It’s what the committee asked for in its reply to our first application (<a href="https://talk.nervos.org/t/11151/2">t/11151 #2</a>): “a <strong>unified standard for multisig signature formats</strong> — one that ckb-cli, Neuron, CCC, and other tools would collectively adopt.”</p>
+<p><strong>How wallets adopt it.</strong> Two libraries implement the whole standard and pass the same test vectors: TypeScript, for CCC apps and Neuron, and Rust, for ckb-cli and other Rust tools. A wallet adds one of them and signs with its own signer and keys. Its users can then co-sign with users of every other wallet that reads the file. Until a wallet does, one Sigsheet tool lets its users sign with the wallet as it is (section 4.4).</p>
+<p><strong>What it does for signers.</strong> Each signer uses the wallet they already have. Signatures are kept per lock group and per signer, so anyone can merge copies, in any order, with the same result, and nobody has to collect them. When enough members have signed, anyone finalizes the file into a standard CKB transaction.</p>
+<p><strong>Who it’s for:</strong></p>
+<ul>
+<li>groups whose members sign the same multisig with different tools: ckb-cli, Neuron or an app built on CCC;</li>
+<li>payout signers, team treasuries and contract upgrades (section 3.2);</li>
+<li>wallet and app developers, who get one tested format to support instead of one per tool, and a library that does the work (section 4.2).</li>
+</ul>
+<p><strong>At a glance:</strong></p>
+<ul>
+<li><strong>Name:</strong> Sigsheet</li>
+<li><strong>Type:</strong> an open standard with open-source implementations (MIT)</li>
+<li><strong>Repository:</strong> <a href="https://github.com/ILE-Labs/Sigsheet" rel="noopener nofollow ugc">ILE-Labs/Sigsheet</a>, with the <a href="https://github.com/ILE-Labs/Sigsheet/blob/fdba834c94adfe72ca2aad0009a7c7cb3a3a1981/spec/sigsheet.md" rel="noopener nofollow ugc">specification draft</a> and the <a href="https://github.com/ILE-Labs/Sigsheet/tree/e4896d399799786b8bf10dc9254c9b515aa48d18" rel="noopener nofollow ugc">research</a> behind it</li>
+<li><strong>Discussion:</strong> <a href="https://talk.nervos.org/t/11298">t/11298</a> on Nervos Talk</li>
+<li><strong>Duration:</strong> 7 weeks, one milestone a week</li>
+<li><strong>Phase:</strong> v0.1. v0.2 and v1.0 are open milestones (section 11).</li>
+</ul>
+<h2><a name="p-27826-h-2-team-profile-3" class="anchor" href="https://talk.nervos.org#p-27826-h-2-team-profile-3" aria-label="Heading link"></a>2. Team Profile</h2>
+<p>ILE Labs builds open-source tools for CKB. For Sigsheet we:</p>
+<ul>
+<li>wrote the specification draft and its 44 test vectors;</li>
+<li>built the generator that rebuilds every vector byte for byte, and an independent check against CCC’s, ckb-cli’s and ckb-sdk’s own code and the deployed lock binaries;</li>
+<li>tested today’s signing flows in ckb-cli, Neuron and CCC, and recorded every result on the research branch.</li>
+</ul>
+<p>Everything, including this application’s milestones and issues, is public in <a href="https://github.com/ILE-Labs/Sigsheet" rel="noopener nofollow ugc">ILE-Labs/Sigsheet</a>.</p>
+<h2><a name="p-27826-h-3-background-4" class="anchor" href="https://talk.nervos.org#p-27826-h-3-background-4" aria-label="Heading link"></a>3. Background</h2>
+<h3><a name="p-27826-h-31-the-problem-5" class="anchor" href="https://talk.nervos.org#p-27826-h-31-the-problem-5" aria-label="Heading link"></a>3.1 The problem</h3>
+<p>A CKB multisig transaction is signed by several people, often with different tools. Every tool and project that handles a partly signed multisig transaction keeps it in its own way. Our <a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/background.md" rel="noopener nofollow ugc">research</a> (sections 4 to 6, and 11) has the details:</p>
+<div class="md-table">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Tool or project</th>
+<th style="text-align:left">How it keeps a partly signed multisig transaction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>ckb-cli</strong></td>
+<td style="text-align:left">Its tx file, with the signatures keyed by lock args and no input cells, so it needs a node. Contract deployments use a separate deploy file</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Neuron</strong></td>
+<td style="text-align:left">Its offline-signing file: the signatures are appended in the witness, and who has signed is in a map keyed by lock hash</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>CCC, and every app built on it</strong></td>
+<td style="text-align:left">No file: the signatures live in the transaction’s witness, in slots of a fixed length</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>ckb-sdk</strong> (Rust)</td>
+<td style="text-align:left">No file: its signer puts each signature in the first empty slot of the witness</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>UTXO Global’s multisig wallet</strong></td>
+<td style="text-align:left">Its own <a href="https://github.com/UTXO-Global/utxo-global-multi-sig-api/tree/b0f6dd60f34029042d9f3b7562245209451e6415" rel="noopener nofollow ugc">server</a>. Signing goes through one wallet, its own (<a href="https://github.com/UTXO-Global/utxo-global-multi-sig-website/blob/7f248e6d668c8bd17ba66e9bb6f6f72092088f5b/providers/ccc.tsx#L8-L11" rel="noopener nofollow ugc">website</a>), and only the 2024 deployment is supported (<a href="https://github.com/UTXO-Global/utxo-global-multi-sig-api/blob/b0f6dd60f34029042d9f3b7562245209451e6415/src/services/constants.rs#L3-L6" rel="noopener nofollow ugc">server constants</a>)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>.bit’s signing site</strong></td>
+<td style="text-align:left">ckb-cli files only: “Invalid transaction data, only ckb-cli format is supported.” (<a href="https://github.com/dotbitHQ/ckb-multisig-wizard" rel="noopener nofollow ugc">ckb-multisig-wizard</a>)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>kuai</strong></td>
+<td style="text-align:left">“Currently kuai deployment contract only supports local signature deployment, which is a very bad experience when using multiple devices for multi-signature.” (<a href="https://github.com/ckb-js/kuai/issues/276" rel="noopener nofollow ugc">kuai#276</a>)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>ChainPay</strong></td>
+<td style="text-align:left">Its own coordinator: “ChainPay coordinates partial signatures.” (<a href="https://github.com/toastmanAu/chain-pay" rel="noopener nofollow ugc">chain-pay</a>)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>A 2024 proof of concept</strong></td>
+<td style="text-align:left">It converted ckb-cli and Neuron files, for the genesis deployment only. Its last commit was 2024-03-05 (<a href="https://github.com/cryptape/ckb-multisig-cobuild-poc" rel="noopener nofollow ugc">ckb-multisig-cobuild-poc</a>)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Two earlier shared formats</strong></td>
+<td style="text-align:left">An offline-signing draft (<a href="https://talk.nervos.org/t/5794/1">t/5794</a>, 2021) and CKB Open Transaction (<a href="https://github.com/nervosnetwork/rfcs/pull/406" rel="noopener nofollow ugc">rfcs#406</a>, closed unmerged). Neither became a standard</td>
+</tr>
+</tbody>
+</table>
+</div><p>So signatures don’t move between tools. Both of these were measured in <a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/experiments/X1/results.md#interoperability-findings" rel="noopener nofollow ugc">X1</a>:</p>
+<ul>
+<li><strong>ckb-cli to Neuron.</strong> The incompatibility was reported in 2024 (<a href="https://github.com/nervosnetwork/neuron/issues/3048" rel="noopener nofollow ugc">neuron#3048</a>), and Neuron added an import (<a href="https://github.com/nervosnetwork/neuron/pull/3169" rel="noopener nofollow ugc">#3169</a>). But with Neuron v0.204.1’s own code, importing a ckb-cli file that held two signatures gave signatures: {}.</li>
+<li><strong>Neuron to CCC.</strong> CCC reads Neuron’s exported transaction, but turns its witness into 0x, which loses the partial signature.</li>
+</ul>
+<p>So in practice:</p>
+<ul>
+<li><strong>one person collects the signatures</strong> from chat, PR comments or files, checks them by eye and assembles the transaction;</li>
+<li><strong>signers can’t check what they sign</strong> offline, from one file;</li>
+<li><strong>no tool covers all three multisig deployments.</strong> ckb-cli and Neuron don’t sign the 2024 deployment (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/design-record.md#82-acceptance-tests" rel="noopener nofollow ugc">design record, section 8.2</a>, test 5). Its lock held 4,935,609.54 CKB in 93 live cells at block 21,098,567 (measured on 2026-11-24 with get_cells_capacity on a public mainnet node).</li>
+</ul>
+<p>The problem isn’t making signatures. It’s making them portable, checkable and mergeable between tools.</p>
+<h3><a name="p-27826-h-32-evidence-of-demand-6" class="anchor" href="https://talk.nervos.org#p-27826-h-32-evidence-of-demand-6" aria-label="Heading link"></a>3.2 Evidence of demand</h3>
+<p>The full list, with every quote, is on the <a href="https://github.com/ILE-Labs/ckb-msig/tree/evidence" rel="noopener nofollow ugc">evidence branch</a> of our first project. These are the main ones.</p>
+<p><strong>Payouts take days or weeks.</strong></p>
+<ul>
+<li><strong>A DAO payout (2-of-3)</strong> was started on Aug 21 and completed on Sept 4. In zz_tovarishch’s words, <a href="https://talk.nervos.org/t/10583/20">t/10583/20</a>: “一位委员会成员在 8月21 该项目通过投票后，以2500/$0.00087= 2,873,564 CKB 发起了打款，随后在 9.4 其他委员会成员才完成了多签”. Translated: a committee member started the payment on Aug 21, after the vote, and only on Sept 4 did the other members complete the multisig.</li>
+<li><strong>The DAO said the same in 2024.</strong> JackyLHH, <a href="https://talk.nervos.org/t/7849/1">t/7849/1</a>: “This is because DAO’s funds are stored in a multisig wallet, so it takes some time to collect signatures due to timezone and other factors.”</li>
+<li><strong>Spark pays every grant from a multisig</strong> (<a href="https://talk.nervos.org/t/8752">t/8752</a>).</li>
+</ul>
+<p><strong>Contract upgrades run through PR comments.</strong> For Fiber’s v0.7.0 mainnet upgrade (<a href="https://github.com/nervosnetwork/fiber-scripts/pull/34" rel="noopener nofollow ugc">fiber-scripts#34</a>, 3-of-5), each signer ran ckb-cli deploy sign-txs and pasted the output into a comment, for one person to check and merge. v0.1 works on the transactions ckb-cli, CCC apps and Neuron build, not yet on ckb-cli’s deploy files.</p>
+<p><strong>Core developers asked for it.</strong></p>
+<ul>
+<li>doitian, <a href="https://github.com/nervosnetwork/ckb-cli/issues/603" rel="noopener nofollow ugc">ckb-cli#603</a>: “Help users to prepare files for requesting multisig signatures from signers. Generate the tx json file and a markdown guidance for signers.”</li>
+<li>doitian, <a href="https://github.com/nervosnetwork/ckb-cli/issues/569" rel="noopener nofollow ugc">ckb-cli#569</a>: “It’s frustrated that sign-txs does not tell how to use the generated signatures”</li>
+</ul>
+<p><strong>Teams keep building their own:</strong> .bit’s signing site, kuai and ChainPay, in the table in section 3.1.</p>
+<p><strong>Neuron users get stuck.</strong></p>
+<ul>
+<li>jordanmack, <a href="https://github.com/nervosnetwork/neuron/issues/2907" rel="noopener nofollow ugc">neuron#2907</a>: “I tried to send and I can’t figure out how to sign and broadcast.”</li>
+<li>rink1969, <a href="https://github.com/nervosnetwork/neuron/issues/3260" rel="noopener nofollow ugc">neuron#3260</a>: offline multisig on a transaction that mixed locks ended with “报签名失败” (translated: signing failed).</li>
+</ul>
+<p><strong>Bitcoin solved this with one shared format.</strong> <a href="https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki" rel="noopener nofollow ugc">PSBT (BIP-174)</a> “holds the signatures for an input while the input does not have a complete set of signatures”, and wallets interoperate through it. CKB has no such standard. Sigsheet is that standard for CKB.</p>
+<h3><a name="p-27826-h-33-what-changed-since-our-first-application-7" class="anchor" href="https://talk.nervos.org#p-27826-h-33-what-changed-since-our-first-application-7" aria-label="Heading link"></a>3.3 What changed since our first application</h3>
+<p>The committee gave two reasons (<a href="https://talk.nervos.org/t/11151/2">t/11151 #2</a>), and this is how Sigsheet answers each:</p>
+<ol>
+<li><strong>“signers must still collect all signatures and forward them to a single individual for aggregation”.</strong> In Sigsheet there’s no collector role. The file passes from signer to signer, or each signer posts a copy and anyone merges the copies, with the same result in any order. In v0.1 each signer still receives the file and passes it on, so the coordinating is reduced, not removed (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/design-record.md#10-counter-evidence-the-strongest-case-that-the-design-is-wrong" rel="noopener nofollow ugc">design record, section 10</a>). v0.2’s optional relay carries one signature at a time, so wallets can deliver them automatically.</li>
+<li><strong>“design and propose a unified standard for multisig signature formats”.</strong> That’s Sigsheet: a public specification with test vectors, not a converter. ckb-msig adapted to each tool’s format. Sigsheet gives every tool one format to read and write, and two libraries to adopt it with.</li>
+</ol>
+<h2><a name="p-27826-h-4-solution-8" class="anchor" href="https://talk.nervos.org#p-27826-h-4-solution-8" aria-label="Heading link"></a>4. Solution</h2>
+<h3><a name="p-27826-h-41-the-standard-9" class="anchor" href="https://talk.nervos.org#p-27826-h-41-the-standard-9" aria-label="Heading link"></a>4.1 The standard</h3>
+<p>A Sigsheet file carries everything a signer needs to check what they sign, offline and from the file alone (<a href="https://github.com/ILE-Labs/Sigsheet/blob/fdba834c94adfe72ca2aad0009a7c7cb3a3a1981/spec/sigsheet.md#1-introduction" rel="noopener nofollow ugc">spec, section 1</a>):</p>
+<ul>
+<li>the unsigned transaction, and the witness templates of its lock groups;</li>
+<li>every previous transaction its inputs spend, so each input cell is checked by hash;</li>
+<li>the headers and inclusion proofs a Nervos DAO withdrawal needs;</li>
+<li>the multisig configs;</li>
+<li>every signature so far, keyed by lock group and signer.</li>
+</ul>
+<p>The rules every implementation follows:</p>
+<ul>
+<li><strong>one canonical form</strong> (RFC 8785), so the same file has the same bytes everywhere;</li>
+<li><strong>31 reader checks</strong>, so every tool refuses the same bad files;</li>
+<li><strong>a lock’s kind comes from the chain, never from the file:</strong> the code hash and hash type of the cell it spends (<a href="https://github.com/ILE-Labs/Sigsheet/blob/fdba834c94adfe72ca2aad0009a7c7cb3a3a1981/spec/sigsheet.md#61-the-kinds-version-1-signs" rel="noopener nofollow ugc">spec, section 6.1</a>);</li>
+<li><strong>each lock’s own signing message,</strong> computed from the file alone;</li>
+<li><strong>a merge that gives the same bytes in any order,</strong> and a finalize that writes the standard transaction;</li>
+<li><strong>the three multisig deployments</strong> (genesis, 2024 and v2) and the single-key lock. New lock kinds are added without a format change (<a href="https://github.com/ILE-Labs/Sigsheet/blob/fdba834c94adfe72ca2aad0009a7c7cb3a3a1981/spec/sigsheet.md#12-versions-and-extension" rel="noopener nofollow ugc">spec, section 12</a>).</li>
+</ul>
+<p>The final transaction uses the existing CKB locks. Sigsheet needs no new on-chain script and no change to existing multisig addresses.</p>
+<h3><a name="p-27826-h-42-how-a-wallet-adopts-it-and-why-it-would-10" class="anchor" href="https://talk.nervos.org#p-27826-h-42-how-a-wallet-adopts-it-and-why-it-would-10" aria-label="Heading link"></a>4.2 How a wallet adopts it, and why it would</h3>
+<p><strong>How.</strong> A wallet adds Sigsheet with one of the two libraries. The languages match the main CKB tools: TypeScript, on <code>@ckb-ccc/core</code>, for CCC apps and Neuron; Rust for ckb-cli and other Rust tools. Then:</p>
+<ol>
+<li><strong>Open a Sigsheet.</strong> The library reads the file and runs every check.</li>
+<li><strong>Show the signer what they’re signing,</strong> derived from the checked data: the outputs, the inputs and their cells, and each group with its members.</li>
+<li><strong>Sign with the wallet’s own signer.</strong> The library gives the wallet each group’s signing message. The wallet signs it the way it signs today, with its own keys, and the library adds the signature. Keys never leave the wallet.</li>
+<li><strong>Share it.</strong> Merge copies, and finalize once enough members have signed.</li>
+<li><strong>Prove it.</strong> Run the 44 test vectors. Passing them means the wallet gives the same bytes as every other implementation.</li>
+</ol>
+<p><strong>At design stage</strong>, adding Sigsheet inside each wallet was a small change. It took 381 code lines in ckb-cli (plus 87 for creating a file), 229 in CCC and 137 in Neuron, and each wallet’s own tests gave the same results before and after (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/experiments/X6/results.md" rel="noopener nofollow ugc">X6</a>).</p>
+<p><strong>It works with CCC as it is.</strong> The TypeScript library is its own package on <code>@ckb-ccc/core</code> as published, so any CCC app can add it today, with nothing to merge into CCC and nothing to wait for. That’s where it sits after our discussion with CCC’s maintainer on <a href="https://github.com/ckb-devrel/ccc/issues/646" rel="noopener nofollow ugc">ccc#646</a>.</p>
+<p><strong>Why a wallet would adopt it:</strong></p>
+<ul>
+<li><strong>Its users can sign with everyone else’s.</strong> One format means a wallet’s users co-sign with the users of every other wallet that reads it, with no converter for each pair of wallets.</li>
+<li><strong>The hard parts come done.</strong> The canonical form, the 31 reader checks, the 18 attack cases, Nervos DAO withdrawals and the three multisig deployments are all specified and covered by the test vectors. A wallet doesn’t design or maintain any of it.</li>
+<li><strong>Its signers can check what they sign, offline.</strong> The file carries every previous transaction, so the wallet can show each input cell without trusting a node.</li>
+<li><strong>It keeps its own signing.</strong> The wallet signs with its own code and keys. The standard only fixes what the message is.</li>
+<li><strong>It’s small and open.</strong> The change was small at design stage (above), the specification and the libraries are MIT, and nothing is hosted.</li>
+<li><strong>The interim tool steps aside.</strong> Once a wallet reads Sigsheet itself, its users don’t need the Sigsheet tool.</li>
+</ul>
+<h3><a name="p-27826-h-43-how-its-used-11" class="anchor" href="https://talk.nervos.org#p-27826-h-43-how-its-used-11" aria-label="Heading link"></a>4.3 How it’s used</h3>
+<ol>
+<li>A signer’s tool creates a Sigsheet for a multisig transaction.</li>
+<li>Each signer’s tool reads the file and runs the checks.</li>
+<li>The signer reviews what the transaction does, and signs their group with their own wallet.</li>
+<li>The signed file is passed on, or posted as a copy.</li>
+<li>Anyone merges the copies. Any order gives the same file.</li>
+<li>When enough members have signed, anyone finalizes it into the transaction to send.</li>
+</ol>
+<h3><a name="p-27826-h-44-until-wallets-adopt-it-the-sigsheet-tool-12" class="anchor" href="https://talk.nervos.org#p-27826-h-44-until-wallets-adopt-it-the-sigsheet-tool-12" aria-label="Heading link"></a>4.4 Until wallets adopt it: the Sigsheet tool</h3>
+<p>Nothing in v0.1 waits for any wallet’s maintainers. Apps built on CCC sign with the TypeScript library directly. For the wallets that don’t read Sigsheet yet, one Sigsheet tool opens the file, checks it, and shows what’s being signed. Then it gets the signature from the signer’s own wallet, through that wallet’s own file: the official Neuron through its offline-signing file (<a href="https://github.com/nervosnetwork/neuron/issues/3518" rel="noopener nofollow ugc">neuron#3518</a>), and the official ckb-cli through its tx file (<a href="https://github.com/nervosnetwork/ckb-cli/issues/694" rel="noopener nofollow ugc">ckb-cli#694</a>). Neither wallet is changed, and no key passes through the tool.</p>
+<ul>
+<li><strong>What it adds:</strong> one step for those signers (sign in the wallet, then bring the signature back), which native support removes. ckb-cli’s signing reads the input cells from its node, as it does today.</li>
+<li><strong>Where today’s wallets fall short.</strong> The standard and both libraries handle these cases. The tool can only pass on what a wallet signs:
+<ul>
+<li>Neuron v0.204.1 leaves the witnesses beyond the inputs out of its signing message, so its signature on such a transaction doesn’t verify (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/experiments/X1/results.md#interoperability-findings" rel="noopener nofollow ugc">X1</a>). The tool holds those files back from Neuron signers, who sign them in ckb-cli or a CCC app instead, and we offer Neuron the fix as a pull request.</li>
+<li>The official ckb-cli and Neuron don’t sign the 2024 deployment at all. Sigsheet’s libraries handle it, so a 2024 multisig is signed in a wallet or app that uses one, such as a CCC app with the TypeScript library.</li>
+</ul>
+</li>
+</ul>
+<p><strong>It isn’t a bridge.</strong> Wallets don’t talk to each other through it. Every wallet writes to the same file, and anyone merges the copies. When a wallet adopts the standard, its signers don’t need the tool. The <a href="https://github.com/ILE-Labs/Sigsheet#questions" rel="noopener nofollow ugc">README’s questions</a> explain why one file and one tool work where a bridge doesn’t.</p>
+<h3><a name="p-27826-h-45-why-a-new-format-not-an-existing-one-13" class="anchor" href="https://talk.nervos.org#p-27826-h-45-why-a-new-format-not-an-existing-one-13" aria-label="Heading link"></a>4.5 Why a new format, not an existing one</h3>
+<p>We tested the alternatives before writing the spec (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/paths.md" rel="noopener nofollow ugc">paths</a>):</p>
+<ul>
+<li><strong>Converting between today’s formats</strong> is what ckb-msig did, and the committee asked for a standard instead.</li>
+<li><strong>Keeping partial signatures inside the transaction’s witness,</strong> as CCC does, depends on the order of the files.
+<ul>
+<li>Our test case was Fiber’s v0.7.0 upgrade, a 3-of-5 multisig with five signatures. Merging the five copies with CCC’s aggregateTransactions in all 120 orders always gave a valid multisig witness, but 60 different ones: it kept the first three signatures in file order.</li>
+<li>The single-key input’s signature survived only in the 24 orders where its copy came first (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/experiments/X3a/results.md#1-cccs-aggregatetransactions-depends-on-the-order-of-the-files" rel="noopener nofollow ugc">X3a, section 1</a>).</li>
+</ul>
+</li>
+<li><strong>Sigsheet keeps each signature by lock group and signer until the end.</strong> That rule gave the same result in 2,000 of 2,000 design-stage trials (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/experiments/X3a/results.md#2-only-the-candidate-rule-gives-one-result-in-any-order-with-junk" rel="noopener nofollow ugc">X3a, section 2</a>).</li>
+</ul>
+<h2><a name="p-27826-h-5-whats-already-built-14" class="anchor" href="https://talk.nervos.org#p-27826-h-5-whats-already-built-14" aria-label="Heading link"></a>5. What’s already built</h2>
+<p><strong>The MVP is complete</strong> (<a href="https://github.com/ILE-Labs/Sigsheet/milestone/9?closed=1" rel="noopener nofollow ugc">milestone</a>):</p>
+<ul>
+<li><strong>the <a href="https://github.com/ILE-Labs/Sigsheet/blob/fdba834c94adfe72ca2aad0009a7c7cb3a3a1981/spec/sigsheet.md" rel="noopener nofollow ugc">specification’s first draft</a>;</strong></li>
+<li><strong>44 <a href="https://github.com/ILE-Labs/Sigsheet/tree/fdba834c94adfe72ca2aad0009a7c7cb3a3a1981/vectors" rel="noopener nofollow ugc">test vectors</a>:</strong> 24 cases, 18 attacks and 2 mainnet transactions. Each case holds the file as created, one copy per signature, the merged file, the final transaction and its expected results. Each attack says whether a reader must refuse it or drop its signatures;</li>
+<li><strong>the generator,</strong> which rebuilds every vector byte for byte;</li>
+<li><strong>an <a href="https://github.com/ILE-Labs/Sigsheet/tree/fdba834c94adfe72ca2aad0009a7c7cb3a3a1981/check" rel="noopener nofollow ugc">independent check</a>:</strong> CCC’s, ckb-cli’s and ckb-sdk’s own code, and every final transaction run through the deployed lock binaries under ckb-debugger, with negative controls that must fail as the chain does;</li>
+<li><strong>the checks on Linux, macOS and Windows,</strong> on every pull request.</li>
+</ul>
+<p><strong>The research</strong> is on the <a href="https://github.com/ILE-Labs/Sigsheet/tree/e4896d399799786b8bf10dc9254c9b515aa48d18" rel="noopener nofollow ugc">research branch</a>: the design record, the experiments, and the design-stage wallet patches and benchmarks.</p>
+<p><strong>The feedback so far:</strong></p>
+<ul>
+<li><strong>The spec is open for comment</strong> in <a href="https://talk.nervos.org/t/11298">t/11298</a>, and has been shared with ckb-cli’s and Neuron’s maintainers (<a href="https://github.com/nervosnetwork/ckb-cli/issues/694" rel="noopener nofollow ugc">ckb-cli#694</a>, <a href="https://github.com/nervosnetwork/neuron/issues/3518" rel="noopener nofollow ugc">neuron#3518</a>).</li>
+<li><strong>On <a href="https://github.com/ckb-devrel/ccc/issues/646" rel="noopener nofollow ugc">ccc#646</a>, CCC’s side found three problems,</strong> and we’ve accepted all three for v0.1:
+<ul>
+<li>the Nervos DAO deposit-header index is read two ways, by the DAO script and by the node’s fee calculation;</li>
+<li>a merge can produce a file a reader refuses, by going past the 255-signature limit for a carried group;</li>
+<li>the CoBuild profile’s round trip covers fewer files than the draft said.</li>
+</ul>
+</li>
+</ul>
+<h2><a name="p-27826-h-6-what-this-grant-pays-for-seven-weeks-15" class="anchor" href="https://talk.nervos.org#p-27826-h-6-what-this-grant-pays-for-seven-weeks-15" aria-label="Heading link"></a>6. What this grant pays for: seven weeks</h2>
+<p>Each week is a <a href="https://github.com/ILE-Labs/Sigsheet/milestones" rel="noopener nofollow ugc">GitHub milestone</a>, and each task is an issue with its own acceptance test.</p>
+<div class="md-table">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Week</th>
+<th style="text-align:left">Milestone</th>
+<th style="text-align:left">Tasks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/milestone/1" rel="noopener nofollow ugc">TypeScript reference implementation on CCC: read, check and show</a></td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/issues/9" rel="noopener nofollow ugc">#9</a> read, check and show a file</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/milestone/10" rel="noopener nofollow ugc">TypeScript reference implementation on CCC: sign, merge, finalize, create and send</a></td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/issues/10" rel="noopener nofollow ugc">#10</a> sign, merge and finalize; <a href="https://github.com/ILE-Labs/Sigsheet/issues/11" rel="noopener nofollow ugc">#11</a> create and send</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/milestone/2" rel="noopener nofollow ugc">Rust library: read, check and show</a></td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/issues/12" rel="noopener nofollow ugc">#12</a> read, check and show a file</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/milestone/11" rel="noopener nofollow ugc">Rust library: sign, merge, finalize, create and send</a></td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/issues/13" rel="noopener nofollow ugc">#13</a> sign, merge and finalize; <a href="https://github.com/ILE-Labs/Sigsheet/issues/14" rel="noopener nofollow ugc">#14</a> create and send</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/milestone/3" rel="noopener nofollow ugc">The Sigsheet tool, with the official ckb-cli and Neuron</a></td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/issues/16" rel="noopener nofollow ugc">#16</a> sign in the official Neuron; <a href="https://github.com/ILE-Labs/Sigsheet/issues/17" rel="noopener nofollow ugc">#17</a> create a Sigsheet from Neuron’s export; <a href="https://github.com/ILE-Labs/Sigsheet/issues/15" rel="noopener nofollow ugc">#15</a> hold back files Neuron can’t sign, and offer Neuron the fix; <a href="https://github.com/ILE-Labs/Sigsheet/issues/55" rel="noopener nofollow ugc">#55</a> sign in the official ckb-cli, and create a Sigsheet from its tx file</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/milestone/4" rel="noopener nofollow ugc">Testnet demo with all three tools</a></td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/issues/18" rel="noopener nofollow ugc">#18</a> each tool reads and signs the files the other two create; <a href="https://github.com/ILE-Labs/Sigsheet/issues/19" rel="noopener nofollow ugc">#19</a> the testnet demo, with every transaction hash published</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/milestone/5" rel="noopener nofollow ugc">Spec v0.1, the documentation, the benchmarks re-run and v0.1.0</a></td>
+<td style="text-align:left"><a href="https://github.com/ILE-Labs/Sigsheet/issues/20" rel="noopener nofollow ugc">#20</a> answer every comment and list the changes; <a href="https://github.com/ILE-Labs/Sigsheet/issues/21" rel="noopener nofollow ugc">#21</a> specification v0.1; <a href="https://github.com/ILE-Labs/Sigsheet/issues/25" rel="noopener nofollow ugc">#25</a> all ten acceptance tests in one command, and the benchmarks re-run; <a href="https://github.com/ILE-Labs/Sigsheet/issues/52" rel="noopener nofollow ugc">#52</a> the documentation; <a href="https://github.com/ILE-Labs/Sigsheet/issues/26" rel="noopener nofollow ugc">#26</a> the v0.1.0 tag</td>
+</tr>
+</tbody>
+</table>
+</div><p>The testnet demo puts a 2-of-3 genesis multisig and a 3-of-5 v2 multisig on testnet, signed across the tools: once passed from signer to signer, and once posted as copies and merged by someone who isn’t a signer.</p>
+<h2><a name="p-27826-h-7-required-funding-and-breakdown-16" class="anchor" href="https://talk.nervos.org#p-27826-h-7-required-funding-and-breakdown-16" aria-label="Heading link"></a>7. Required Funding and Breakdown</h2>
+<p><strong>$2,000 in total,</strong> by week and task:</p>
+<div class="md-table">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Week</th>
+<th style="text-align:left">Task</th>
+<th style="text-align:left">Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><span class="hashtag-raw">#9</span> read, check and show</td>
+<td style="text-align:left">$170</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><span class="hashtag-raw">#10</span> sign, merge and finalize</td>
+<td style="text-align:left">$170</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><span class="hashtag-raw">#11</span> create and send</td>
+<td style="text-align:left">$110</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><span class="hashtag-raw">#12</span> read, check and show</td>
+<td style="text-align:left">$130</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><span class="hashtag-raw">#13</span> sign, merge and finalize</td>
+<td style="text-align:left">$150</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><span class="hashtag-raw">#14</span> create and send</td>
+<td style="text-align:left">$120</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><span class="hashtag-raw">#16</span> sign in the official Neuron</td>
+<td style="text-align:left">$110</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><span class="hashtag-raw">#17</span> create from Neuron’s export</td>
+<td style="text-align:left">$50</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><span class="hashtag-raw">#15</span> hold back files Neuron can’t sign, and the fix for Neuron</td>
+<td style="text-align:left">$60</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><span class="hashtag-raw">#55</span> sign in the official ckb-cli, and create from its tx file</td>
+<td style="text-align:left">$80</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><span class="hashtag-raw">#18</span> the cross-tool record</td>
+<td style="text-align:left">$200</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><span class="hashtag-raw">#19</span> the testnet demo</td>
+<td style="text-align:left">$150</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><span class="hashtag-raw">#20</span> answer the feedback</td>
+<td style="text-align:left">$50</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><span class="hashtag-raw">#21</span> specification v0.1</td>
+<td style="text-align:left">$100</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><span class="hashtag-raw">#25</span> the ten acceptance tests and the benchmarks</td>
+<td style="text-align:left">$100</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><span class="hashtag-raw">#52</span> the documentation</td>
+<td style="text-align:left">$100</td>
+</tr>
+<tr>
+<td style="text-align:left">After v0.1.0</td>
+<td style="text-align:left">Six months of maintenance: a reply within 72 hours to issues and feedback, fixes to v0.1, dependency updates and documentation</td>
+<td style="text-align:left">$150</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><strong>Total</strong></td>
+<td style="text-align:left"><strong>$2,000</strong></td>
+</tr>
+</tbody>
+</table>
+</div><p><strong>Why the weeks differ:</strong></p>
+<ul>
+<li><strong>Week 1 ($170)</strong> is the reader of every rule: the canonical check, the 31 checks, the lock kinds taken from the chain, and what a signer is shown.</li>
+<li><strong>Week 2 ($280)</strong> completes the reference implementation: signing through CCC’s signers, the merge, ready and finalize, and creating and sending with a node. The Sigsheet tool is built on it.</li>
+<li><strong>Week 3 ($130)</strong> is the same reader in Rust, giving the same results as the TypeScript library on every vector.</li>
+<li><strong>Week 4 ($270)</strong> is signing through a signer the wallet provides, the merge and finalize in Rust, and creating and sending.</li>
+<li><strong>Week 5 ($300)</strong> is the Sigsheet tool, built on the TypeScript library. The work is the two wallets’ own files, reading their signatures back, and the fix offered to Neuron, with Neuron’s own tests.</li>
+<li><strong>Week 6 ($350)</strong> runs every pairing of the three tools on a devnet, then the testnet transactions.</li>
+<li><strong>Week 7 ($350)</strong> is the specification after the feedback, the ten acceptance tests in one command, and the documentation.</li>
+</ul>
+<p><strong>Why above $1,000.</strong> One standard that three tools, in two languages, must implement and check against shared test vectors, on the genesis, 2024 and v2 deployments. With $1,000 we’d build the two implementations (Weeks 1 to 4, $850) and stop there: no Sigsheet tool for ckb-cli and Neuron signers, no cross-tool testnet demo, and no specification v0.1 from the feedback.</p>
+<p><strong>Payment.</strong> 20% ($400) at approval. The rest in parts at the weekly check-ins, each a closed milestone with its results shown, or after completion.</p>
+<h2><a name="p-27826-h-8-deliverables-and-how-to-verify-17" class="anchor" href="https://talk.nervos.org#p-27826-h-8-deliverables-and-how-to-verify-17" aria-label="Heading link"></a>8. Deliverables and How to Verify</h2>
+<p><strong>Each week closes a milestone</strong> whose issues say how they’re verified. Most checks need no code reading:</p>
+<ul>
+<li><strong>Transactions:</strong> the testnet demo’s transactions are published with their hashes and the tool behind each signature, so any explorer shows them (test 8).</li>
+<li><strong>One command:</strong> a single command runs all ten acceptance tests (<a href="https://github.com/ILE-Labs/Sigsheet/blob/e4896d399799786b8bf10dc9254c9b515aa48d18/design-record.md#82-acceptance-tests" rel="noopener nofollow ugc">design record, section 8.2</a>). The tests:
+<ul>
+<li>both implementations reproduce every vector byte for byte;</li>
+<li>each attack is refused, or its signatures are dropped;</li>
+<li>a merge in at least 200 random orders gives one result;</li>
+<li>every check runs with networking off;</li>
+<li>each tool reads and signs the files the other two create;</li>
+<li>a genesis multisig with N ≥ 11 passes a node’s pool check;</li>
+<li>each wallet’s own tests pass before and after its change;</li>
+<li>the testnet transactions;</li>
+<li>the feedback, with its list of changes;</li>
+<li>the Nervos DAO case.</li>
+</ul>
+</li>
+<li><strong>A record:</strong> for every pairing of tools, the files, their hashes and the committed devnet transactions are kept in the repository.</li>
+</ul>
+<p><strong>v0.1.0 is tagged</strong> only when all ten pass at that commit.</p>
+<h2><a name="p-27826-h-9-maintenance-18" class="anchor" href="https://talk.nervos.org#p-27826-h-9-maintenance-18" aria-label="Heading link"></a>9. Maintenance</h2>
+<p>For six months after v0.1.0, ILE Labs maintains the release:</p>
+<ul>
+<li>a reply within 72 hours to every new GitHub issue in the repository, and to every comment on this thread and on the spec thread (<a href="https://talk.nervos.org/t/11298">t/11298</a>);</li>
+<li>triage of reported issues;</li>
+<li>fixes to v0.1;</li>
+<li>corrections to checks or compatibility found in real use;</li>
+<li>dependency updates;</li>
+<li>the documentation and the test instructions.</li>
+</ul>
+<p>This doesn’t promise new features. The repository stays open to contributions and review.</p>
+<h2><a name="p-27826-h-10-ckb-alignment-19" class="anchor" href="https://talk.nervos.org#p-27826-h-10-ckb-alignment-19" aria-label="Heading link"></a>10. CKB Alignment</h2>
+<ul>
+<li><strong>It builds on what CKB already has:</strong> the existing multisig and single-key locks on all three deployments, and the standard transaction, with no new on-chain script.</li>
+<li><strong>Adopting it is small, and stays in each wallet’s hands:</strong> a library, the wallet’s own signer, and the shared test vectors.</li>
+<li><strong>It’s meant to become a CKB standard.</strong> v1.0 is a stable specification with a conformance suite any implementation can run, proposed as a CKB RFC.</li>
+<li><strong>It helps the people who sign CKB’s shared funds:</strong> payout signers, team treasuries and contract upgraders, whatever tool each member uses.</li>
+</ul>
+<h2><a name="p-27826-h-11-after-spark-the-roadmap-20" class="anchor" href="https://talk.nervos.org#p-27826-h-11-after-spark-the-roadmap-20" aria-label="Heading link"></a>11. After Spark: the roadmap</h2>
+<p>These are open milestones, published before this application:</p>
+<ul>
+<li><a href="https://github.com/ILE-Labs/Sigsheet/milestone/6" rel="noopener nofollow ugc"><strong>v0.2</strong></a><strong>:</strong>
+<ul>
+<li>a readable summary for signers;</li>
+<li>a command that writes the file and that summary in one step, in the Sigsheet tool and offered to ckb-cli;</li>
+<li>an optional relay that carries one signature at a time, about 367 bytes at design stage, instead of the whole file;</li>
+<li>Omnilock’s multisig mode;</li>
+<li>Neuron’s own Sigsheet screens, offered to Neuron as pull requests;</li>
+<li>support in more tools.</li>
+</ul>
+</li>
+<li><a href="https://github.com/ILE-Labs/Sigsheet/milestone/7" rel="noopener nofollow ugc"><strong>v1.0</strong></a><strong>:</strong> a stable specification with a conformance suite, proposed as a CKB RFC.</li>
+</ul>
+<h2><a name="p-27826-questions-we-expect-21" class="anchor" href="https://talk.nervos.org#p-27826-questions-we-expect-21" aria-label="Heading link"></a>Questions we expect</h2>
+<p><strong>Why would a wallet adopt Sigsheet, and how much work is it?</strong></p>
+<ul>
+<li><strong>Why:</strong> its users can then co-sign with the users of every other wallet that reads the file. The checks, the attack cases, Nervos DAO withdrawals and the three deployments come specified and tested, and the wallet keeps its own signing and keys.</li>
+<li><strong>The work:</strong> one library, the wallet’s own signer, and the 44 test vectors to prove it. At design stage the change was 381 code lines in ckb-cli, 229 in CCC and 137 in Neuron (section 4.2).</li>
+</ul>
+<p><strong>Isn’t the Sigsheet tool a bridge, like ckb-msig?</strong></p>
+<ul>
+<li><strong>No.</strong> ckb-msig converted between the formats wallets already write, and someone stayed in the middle.</li>
+<li><strong>With Sigsheet, wallets don’t talk to each other through the tool.</strong> Every wallet writes to the same file, and anyone merges the copies.</li>
+<li><strong>The tool is a signer’s way in,</strong> for wallets that don’t read Sigsheet yet. Two libraries, in TypeScript and Rust, let any wallet read it natively, and then its signers don’t need the tool.</li>
+<li><strong>It’s one week of seven:</strong> $300 of the $2,000. The rest pays for the two libraries, the cross-tool demo, specification v0.1 with its tests and documentation, and maintenance.</li>
+</ul>
+<p><strong>Does Sigsheet need CCC, ckb-cli or Neuron to change?</strong></p>
+<ul>
+<li><strong>No.</strong> The TypeScript library is its own package on <code>@ckb-ccc/core</code> as published, so any CCC app can use it today. On <a href="https://github.com/ckb-devrel/ccc/issues/646" rel="noopener nofollow ugc">ccc#646</a>, CCC’s maintainer said CCC currently has no plans to include Sigsheet itself, and welcomed progress updates here on Nervos Talk.</li>
+<li><strong>ckb-cli’s and Neuron’s maintainers have the spec</strong> (<a href="https://github.com/nervosnetwork/ckb-cli/issues/694" rel="noopener nofollow ugc">#694</a>, <a href="https://github.com/nervosnetwork/neuron/issues/3518" rel="noopener nofollow ugc">#3518</a>), and nothing in v0.1 waits for them. If maintainers later agree to include Sigsheet, ILE Labs will say so in a comment on this thread.</li>
+</ul>
+<p><strong>What if ckb-cli and Neuron never include it?</strong> Then their users sign with the official ckb-cli and Neuron, through the Sigsheet tool. Every file is the same Sigsheet, checked against the same vectors.</p>
+<p><strong>Why not a hosted multisig wallet?</strong> A hosted wallet removes the exchange when every member uses it, and its server holds the transactions and signatures. Sigsheet is for groups whose members sign with different tools, on any of the three multisig deployments, with nothing hosted. v0.2’s optional relay automates delivery for those who want it.</p>
+<p><strong>Isn’t this the same as tools that check a transaction before signing?</strong> Checking the inputs is one part of Sigsheet. The file carries every previous transaction, and each is checked by hash. Sigsheet’s main job is the part one signer can’t do alone: signatures from different tools in one file, kept per signer, merged in any order with the same result, and finalized by anyone.</p>
+<p><strong>Is it safe to use for funds?</strong></p>
+<ul>
+<li><strong>Sigsheet never signs and holds no keys.</strong> Each signer signs in their own wallet.</li>
+<li><strong>A reader takes each lock’s kind from the chain,</strong> never from the file.</li>
+<li><strong>A signature that doesn’t verify for this exact transaction isn’t accepted.</strong></li>
+<li><strong>Each of the 18 attack vectors says what a reader must do:</strong> refuse the file, or drop its signatures.</li>
+<li><strong>The chain checks every signature again.</strong></li>
+</ul>
+<p><strong>Who uses it first?</strong> Groups whose members already sign in different tools: payout signers, team treasuries and contract upgraders (section 3.2). v0.1 works on the transactions ckb-cli, CCC apps and Neuron build, not yet on ckb-cli’s deploy files.</p>
+<h2><a name="p-27826-contact-22" class="anchor" href="https://talk.nervos.org#p-27826-contact-22" aria-label="Heading link"></a>Contact</h2>
+<ul>
+<li><strong>Email:</strong> <a href="mailto:contact@ilelabs.org">contact@ilelabs.org</a></li>
+<li><strong>Discord:</strong> emmzy_code01</li>
+</ul>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/spark-program-sigsheet-a-unified-standard-for-signing-ckb-multisig-transactions/11369">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/spark-program-sigsheet-a-unified-standard-for-signing-ckb-multisig-transactions/11369</link>
+          <pubDate>Wed, 25 Nov 2026 15:02:32 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11369</guid>
+          <source url="https://talk.nervos.org/t/spark-program-sigsheet-a-unified-standard-for-signing-ckb-multisig-transactions/11369.rss">Spark Program | Sigsheet: a unified standard for signing CKB multisig transactions</source>
+        </item>
         <item>
           <title>Oracell: Contention-Free Witness Oracle for Nervos CKB (Phase 1 MVP Live on Pudge — Feedback Welcome)</title>
           <dc:creator><![CDATA[RikoKurnia]]></dc:creator>
@@ -65,7 +557,7 @@
 <li><strong>Testnet Early Adopters:</strong> Are any teams building on Pudge interested in testing <code>@oracell/sdk</code> in a live dApp (lending, DEX, or hedging) and sharing integration friction points?</li>
 </ol>
 <p>Thanks in advance for taking a look—any critique on the verifier design, witness format, or roadmap priorities is very welcome.</p>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/oracell-contention-free-witness-oracle-for-nervos-ckb-phase-1-mvp-live-on-pudge-feedback-welcome/11368">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/oracell-contention-free-witness-oracle-for-nervos-ckb-phase-1-mvp-live-on-pudge-feedback-welcome/11368</link>
@@ -157,7 +649,7 @@
 </ul>
 <p>It’s on <strong>testnet</strong>. Look for the gold <strong>Free entry</strong> races: you can join those without paying anything. Or grab some testnet CKB from the faucet and host your own, and share the link with friends: it shows a preview card of the race.</p>
 <p>Thanks for reading! <img src="https://talk.nervos.org/images/emoji/apple/chequered_flag.png?v=15" title=":chequered_flag:" class="emoji" alt=":chequered_flag:" loading="lazy" width="20" height="20"></p>
-            <p><small>2 posts - 2 participants</small></p>
+            <p><small>3 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/crowns-a-live-3d-car-race-on-ckb-where-the-chain-is-the-referee/11367">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/crowns-a-live-3d-car-race-on-ckb-where-the-chain-is-the-referee/11367</link>
@@ -4146,7 +4638,7 @@ Owners may not engage (then published as independent work, disclosed); fixtures 
 <p><strong>Amplification.</strong> Sharing the open call and the session recordings through ecosystem channels, so the learning resources reach more builders.</p>
 </li>
 </ul>
-            <p><small>5 posts - 4 participants</small></p>
+            <p><small>6 posts - 4 participants</small></p>
             <p><a href="https://talk.nervos.org/t/dis-ckb-productathon-ship-on-ckb-kisumu-kenya/11262">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/dis-ckb-productathon-ship-on-ckb-kisumu-kenya/11262</link>
@@ -4943,116 +5435,6 @@ Team and hardware portfolio: <a href="https://github.com/WuodOdhis/keyme/blob/ma
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-11258</guid>
           <source url="https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258.rss">[DIS] KeyMe — CKB&#39;s PSBT: Open Air-Gapped Signing and the First DIY Hardware</source>
-        </item>
-        <item>
-          <title>Spark Program | Will On-Chain: Tamper-Evident, Private Digital Wills on CKB</title>
-          <dc:creator><![CDATA[Chaichamp]]></dc:creator>
-          <category>Spark Program</category>
-          <description><![CDATA[
-            <p><strong>Applicant:</strong> Fizan (GitHub: Fizan324926)<br>
-<strong>Requested grant:</strong> $1,000 USD (equivalent in CKB at the official approval price snapshot)<br>
-<strong>Duration:</strong> 4 weeks<br>
-<strong>Disbursement:</strong> 20% (200)onapproval,80%(800) on completion and reproducible verification<br>
-<strong>License:</strong> MIT OR Apache-2.0</p>
-<p><strong>Making will accessible, transparent, and verifiable through CKB technology</strong></p>
-<p><strong>1. Summary</strong></p>
-<p>Will On-Chain is an open-source testnet app for sealing, updating and releasing a digital last will, using CKB as a tamper-evident, versioned registry. The will is encrypted in the browser and the key is split among chosen guardians, so the chain, the app and the developer cannot read it. The chain holds the ciphertext (or its hash), a timestamp, a version number, and an inactivity timer that lets a named executor signal a claim if the owner stops checking in.</p>
-<p>This is a technical MVP for a tamper-evident vault. It does not provide legal validity, and it does not claim the chain can verify a death. The scripts are unaudited and for testnet only.</p>
-<p><strong>2. Problem</strong></p>
-<p>Wills held on paper, with a lawyer, or in cloud storage can be lost, backdated, disputed or locked behind an account. Families often can’t tell whether a will exists or which version is current. Crypto holders have an extra problem: heirs may not know assets exist, and secrets can’t go into a plaintext will.</p>
-<p><strong>3. Why CKB</strong></p>
-<ul>
-<li><strong>Natural versioning.</strong> Updating a will spends the old cell and creates a new one with a higher version. The chain history is the revision history.</li>
-<li><strong>Timelocks without keepers.</strong> CKB’s since field lets a lock script enforce “owner can act anytime, executor only after a period of inactivity” with no oracle, keeper or admin key.</li>
-<li><strong>Capacity returns to the owner.</strong> Storing the cell costs a refundable deposit, not a fee.</li>
-<li><strong>Fixed, verifiable logic.</strong> The lock script is deployed by data hash and built reproducibly, so anyone can verify and redeploy it.</li>
-</ul>
-<p><em>Related Spark work:</em> CRT explores general revocable timelocks and Tranfr targets fund recovery. Will On-Chain is an end-to-end document workflow (encryption, key shares, versioning, executor view) built on similar primitives.</p>
-<p><strong>4. How it works</strong></p>
-<ol>
-<li><strong>Create.</strong> The owner uploads or writes a will. The browser encrypts it with AES-256-GCM and computes a SHA-256 digest.</li>
-<li><strong>Split the key.</strong> The key is split with Shamir secret sharing (e.g. 2-of-3) into shares exported as files or QR codes for guardians. Shares never touch the chain.</li>
-<li><strong>Seal.</strong> The app creates a will cell holding: version, document hash, timestamp, executor lock hash, inactivity period, and either the ciphertext or the hash plus a storage pointer for larger files.</li>
-<li><strong>Check in.</strong> The owner spends and recreates the cell at any time, which resets the timer. Updating works the same way with a higher version. Revoking spends the cell without recreating it.</li>
-<li><strong>Claim.</strong> If the inactivity period passes with no check-in, the executor can spend the cell through the timelocked path, creating a public, timestamped on-chain claim.</li>
-<li><strong>Release.</strong> Guardians see the on-chain claim and, per the owner’s instructions, hand their shares to the beneficiaries, who recombine them in the app to decrypt and verify the hash.</li>
-</ol>
-<p><strong>The inactivity period</strong> has no protocol default. It is set at creation by the will’s key holders, and the app simply enforces whatever they choose.</p>
-<p><strong>What is and isn’t private</strong><br>
-<strong>Phase</strong><br>
-<strong>Hidden</strong><br>
-<strong>Visible on-chain</strong><br>
-Sealed<br>
-Will contents, key shares<br>
-Document hash, version, timestamp, addresses, inactivity period, cell size<br>
-After a claim<br>
-Will contents (until shares are combined)<br>
-The claim and its timestamp<br>
-After release<br>
-Nothing, for those who hold enough shares<br>
-Same as above; decryption happens off-chain<br>
-Revoked<br>
-Contents stay encrypted<br>
-That a will existed and was revoked</p>
-<p><strong>Trust model:</strong> nothing on-chain can verify death, and the chain does not hold the decryption key. The timelock gives a public, owner-vetoable claim signal, and the guardians’ shares are the real access control. If the ciphertext is stored on-chain, it stays public forever, so its secrecy rests entirely on the encryption and the share holders.</p>
-<p><strong>5. Scope</strong></p>
-<p><strong>In scope (testnet MVP)</strong></p>
-<ul>
-<li>A small Rust lock script (ckb-std) with two paths: owner (update, check-in, revoke) and executor (after since maturity), with tests covering premature claim, unauthorized spend, check-in resetting the timer, and stale version spend</li>
-<li>Browser module: AES-256-GCM encryption, SHA-256 hashing, Shamir split/combine, share export/import (file and QR)</li>
-<li>Web app using CCC with standard CKB wallets: owner dashboard (create, update, check in, revoke) and executor/beneficiary view (check maturity, claim, recombine shares, decrypt, verify hash)</li>
-<li>Testnet deployment with tx hashes and reproducible build instructions</li>
-<li>Short spec, threat model, privacy and legal disclaimer, demo video, feedback from 3 to 5 testers</li>
-</ul>
-<p><strong>Stretch (only if ahead of schedule):</strong> optional witness signatures over the document hash, and a hash-only mode with an IPFS pointer.</p>
-<p><strong>6. Timeline</strong><br>
-<strong>Week</strong><br>
-<strong>Work</strong><br>
-1<br>
-Repo setup; cell data layout; lock script (owner and executor paths); ckb-testtool suite; testnet deploy<br>
-2<br>
-Browser encryption, hashing, Shamir split/combine, share export/import; create, update, check-in and revoke transactions via CCC<br>
-3<br>
-Owner dashboard and executor/beneficiary view; full create → check-in → claim → decrypt flow on testnet<br>
-4<br>
-Tester feedback and fixes; spec, threat model, disclaimer, README; demo video; final report with tx hashes</p>
-<p><strong>7. Budget</strong></p>
-<p>| Item | Amount |</p>
-<p>|—|—|</p>
-<p>| Lock script and tests (Week 1) | $250 |</p>
-<p>| Crypto module and CCC transactions (Week 2) | $250 |</p>
-<p>| Web app (Week 3) | $300 |</p>
-<p>| Testing, docs, demo, report (Week 4) | $200 |</p>
-<p>| **Total** | **$1,000** |</p>
-<p>Requested in CKB at the official approval snapshot rate. No other funding has been received for this work. I’ll post a short update on this thread weekly and publish fund usage at completion.</p>
-<p><strong>8. Risks and limitations</strong></p>
-<ul>
-<li><strong>Not audited.</strong> Delivery includes a self-review and a clear “unaudited, testnet only” notice. An audit is recommended before any mainnet use and is not funded here.</li>
-<li><strong>Key-share loss:</strong> documented in the threat model; the app warns users and supports re-splitting on update.</li>
-<li><strong>False or malicious claims:</strong> the owner’s check-in resets the timer, and the key holders choose the inactivity period.</li>
-<li><strong>Public metadata:</strong> addresses, timing and cell size are visible on-chain even while the will is encrypted. The docs describe mitigations.</li>
-<li><strong>Scope:</strong> if the web app runs long, the executor view takes priority over polish, and stretch items are dropped first.</li>
-</ul>
-<p><strong>9. How to verify</strong></p>
-<ul>
-<li>Public repo with the script, browser module, web app and demo, under the stated license</li>
-<li>Reproducible script build, published code hash and deployment tx</li>
-<li>Test suite runnable with a single documented command</li>
-<li>Testnet tx hashes for create, check-in, update, revoke, and claim</li>
-<li>Recorded end-to-end lifecycle, spec, threat model and deploy guide</li>
-</ul>
-<p><strong>10. Maintenance, ecosystem value and next steps</strong></p>
-<p>I commit to bug-fix and compatibility updates for 12 months after delivery, with a published contact for security reports. The project gives CKB a relatable, non-crypto use case and reusable pieces: a timelocked two-path lock, versioned encrypted documents, and a browser Shamir module. If the MVP works, a follow-up Community Fund DAO proposal could cover an audit, mainnet, m-of-n attestors, asset distribution and Fiber integration.</p>
-            <p><small>1 post - 1 participant</small></p>
-            <p><a href="https://talk.nervos.org/t/spark-program-will-on-chain-tamper-evident-private-digital-wills-on-ckb/11257">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/spark-program-will-on-chain-tamper-evident-private-digital-wills-on-ckb/11257</link>
-          <pubDate>Wed, 18 Nov 2026 18:34:59 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11257</guid>
-          <source url="https://talk.nervos.org/t/spark-program-will-on-chain-tamper-evident-private-digital-wills-on-ckb/11257.rss">Spark Program | Will On-Chain: Tamper-Evident, Private Digital Wills on CKB</source>
         </item>
   </channel>
 </rss>
