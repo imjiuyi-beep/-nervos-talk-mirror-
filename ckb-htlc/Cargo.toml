@@ -1,10 +1,20 @@
-[workspace]
-members = ["contracts/htlc"]
-resolver = "2"
+[package]
+name = "ckb-htlc"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "ckb-htlc"
+path = "src/main.rs"
+
+[dependencies]
+sha2 = { version = "0.10", default-features = false }
+ckb-std = { version = "0.16", default-features = false, features = ["allocator", "calc-hash", "ckb-types", "dummy-atomic"] }
 
 [profile.release]
 overflow-checks = true
-strip = true
 opt-level = "s"
-lto = false
+lto = true
+strip = true
 codegen-units = 1
+panic = "abort"
