@@ -5,8 +5,611 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Wed, 25 Nov 2026 15:02:32 +0000</lastBuildDate>
+      <lastBuildDate>Thu, 26 Nov 2026 13:22:06 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>Discussion: Improving the Fairness and Resilience of CKB Community Fund DAO Governance |关于 CKB Community Fund DAO 治理机制的一些思考与改进建议</title>
+          <dc:creator><![CDATA[yixiu.ckbfans.bit]]></dc:creator>
+          <category>CKB Community Fund DAO</category>
+          <description><![CDATA[
+            <p>近期几个提案的讨论，让我重新思考了 CKB Community Fund DAO 当前的治理机制。有两个值得我们认真讨论的问题：第一阶段的社区讨论与点赞机制，以及第二阶段的实际投票权重分配。</p>
+<h2><a name="p-27865-h-1" class="anchor" href="https://talk.nervos.org#p-27865-h-1" aria-label="Heading link"></a>关于第一阶段的讨论和点赞</h2>
+<p>我认为，讨论阶段的点赞行为很难通过明确的元规则（meta-rules）来有效约束。</p>
+<p>原因其实很简单：</p>
+<ul>
+<li>
+<p>论坛的注册门槛很低。</p>
+</li>
+<li>
+<p>点赞的门槛和成本也很低。</p>
+</li>
+<li>
+<p>我们很难判断不同时段、来自不同 IP 地址的不同账号，背后究竟是不是同一个人或同一个利益相关方。</p>
+</li>
+</ul>
+<p>这意味着， <strong>如果有人真的想影响第一阶段的结果，他完全有可能通过一些看起来并无明显异常的账号和点赞行为来做到这一点。</strong> 即使事后发现了一些可疑行为，也不一定有足够的证据证明这些账号之间存在关联，更不用说证明它们受到了谁的指使。</p>
+<p>我不认为我们有能力彻底解决这个问题：<strong>我们很难建立一套既能有效识别恶意行为，又不会误伤正常社区参与者的规则。</strong> 与其不断增加一些难以验证和执行的规则，不如<strong>保持现有相对简单的机制。</strong></p>
+<p>但这并不意味着第一阶段的点赞和讨论没有价值。恰恰相反，<strong>我认为讨论阶段真正重要的不是有多少人点赞，而是有多少社区成员愿意站出来，认真讨论提案的价值、质疑其中的问题，以及了解提案人和他们过去做过的事情。</strong></p>
+<p>这些讨论能够让更多人关注提案，也能帮助大家在进入第二阶段时做出更充分的判断。</p>
+<p><strong>我不太担心第一阶段的点赞数量，我更希望看到有更多社区成员参与讨论。</strong></p>
+<h2><a name="p-27865-h-2" class="anchor" href="https://talk.nervos.org#p-27865-h-2" aria-label="Heading link"></a>关于第二阶段的投票权重</h2>
+<p>相比第一阶段，我更担心的是第二阶段的实际投票。</p>
+<p>从近期几个提案的投票情况来看，实际参与投票的人数似乎并不多，而且大部分参与者的投票权重相对较低。在这种情况下，少数拥有数千万 CKB 投票权重的持有者，就足以对最终结果产生决定性影响。</p>
+<p>我不知道这是否应该被称为某种形式的 DAO governance capture（DAO 治理俘获），但我认为这至少暴露了一个DAO治理过程中值得关注的问题：<strong>当实际参与投票的人数有限时，少数大额持有者是否拥有了过大的决策影响力？</strong></p>
+<p>我并不反对大额 CKB 持有者参与治理，也不认为应该因为一个人持有大量 CKB 就限制他的投票权。</p>
+<p>但目前的投票权重仅取决于 NervosDAO 的锁仓金额，这意味着，一笔今天刚刚存入 NervosDAO 的资金，和一笔已经在 NervosDAO 中锁定了几年时间的资金，在单位 CKB 上拥有相同的投票权重。</p>
+<p>我觉得这才是我们当下最值得重新思考的地方。</p>
+<h2><a name="p-27865-h-2023-3" class="anchor" href="https://talk.nervos.org#p-27865-h-2023-3" aria-label="Heading link"></a>一个早在 2023 年就有人提出过的想法</h2>
+<p>其实，类似的问题在社区里早就讨论过。</p>
+<p>2023 年 1 月，<a class="mention" href="https://talk.nervos.org/u/yeti">@Yeti</a> 曾发起过关于 Binance 和其他交易所、托管机构投票权的讨论：</p>
+<aside class="quote quote-modified" data-post="1" data-topic="6888">
+  <div class="title">
+    <div class="quote-controls"></div>
+    <img alt="" width="24" height="24" src="https://talk.nervos.org/user_avatar/talk.nervos.org/yeti/48/9533_2.png" class="avatar">
+    <div class="quote-title__text-content">
+      <a href="https://talk.nervos.org/t/general-discussion-the-voting-rights-of-binance-and-other-exchanges-custodians/6888">(General discussion) The voting rights of Binance and other exchanges/custodians</a> <a class="badge-category__wrapper " href="https://talk.nervos.org/c/daos-funding/ckb-community-fund-dao/65"><span data-category-id="65" style="--category-badge-color: #12A89D; --category-badge-text-color: #FFFFFF; --parent-category-badge-color: #F39C12;" data-parent-category-id="73" data-drop-close="true" class="badge-category --style-square --has-parent"><span class="badge-category__name">CKB Community Fund DAO</span></span></a>
+    </div>
+  </div>
+  <blockquote>
+    Edited to add Chinese translation 
+<a class="mention" href="https://talk.nervos.org/u/jackylhh">@JackyLHH</a> I wasn’t sure how to label this topic, please feel free to change if needed. 
+What I would like to bring up for a general discussion (not a proposal) may not be a problem at this current time, but I believe that it is something that needs to be addressed sooner rather than later. 
+If it isn’t dealt with now, then there is a real possibility that a time will come that it is impossible to fix in a decentralised way using the governance system. 
+While I’…
+  </blockquote>
+</aside>
+
+<p>当时讨论的一个重要问题是：交易所可能将客户托管的 CKB 存入 NervosDAO，然后利用这些资金获得投票权。但这些 CKB 的实际所有者是交易所的客户，交易所却可能按照自己的利益参与治理。</p>
+<p>在讨论中，<a class="mention" href="https://talk.nervos.org/u/jackylhh">@JackyLHH</a> 提出了一个值得研究的方向：<strong>借鉴 Coin Days （币天）的概念，在计算投票权时，不仅考虑 NervosDAO 的存款金额，还考虑存款持续的时间。</strong></p>
+<p><a class="mention" href="https://talk.nervos.org/u/kumamon">@Kumamon</a> 也认同增加时间维度可能是一个好的方向。</p>
+<p><a class="mention" href="https://talk.nervos.org/u/yeti">@Yeti</a> 对这个想法表示了赞同，同时也提出了一个值得注意的问题：**我们需要让小额持有者仍然觉得自己的投票有意义，否则当他们发现自己的投票在数学上几乎不可能改变结果时，就可能逐渐失去参与治理的兴趣。</p>
+<p>我认为，这些观点在今天仍然具有参考价值。</p>
+<h2><a name="p-27865-nervosdao-4" class="anchor" href="https://talk.nervos.org#p-27865-nervosdao-4" aria-label="Heading link"></a>是否应该给 NervosDAO 投票权增加时间维度？</h2>
+<p>我想重新提出这个方向，并希望社区能够进一步讨论它是否适合应用于当前的 CKB Community Fund DAO。</p>
+<p>目前，投票权重仅取决于 NervosDAO 的锁仓金额。</p>
+<p><strong>我认为可以考虑引入一个时间系数：</strong></p>
+<p><strong>Voting Power = Deposited CKB × Time Coefficient</strong></p>
+<p>也就是说，每一笔 NervosDAO 存款除了记录金额，还应该考虑它已经在 NervosDAO 中持续锁定了多长时间。</p>
+<p>例如：</p>
+<ul>
+<li>
+<p>一笔刚刚存入 NervosDAO 的 CKB，其时间系数应该很低，因此实际投票权重会被折扣。</p>
+</li>
+<li>
+<p>一笔已经锁定数月的 CKB，可以获得更高的时间系数。</p>
+</li>
+<li>
+<p>一笔已经锁定数年的 CKB，可以逐渐获得完整的时间权重。</p>
+</li>
+</ul>
+<p>具体的时间系数可以采用线性增长、递减边际增长或其他经过计算的模型，并设置合理的上限。</p>
+<p>通过这样的机制将带来几个好处：</p>
+<ol>
+<li>
+<p><strong>增加临时资本影响治理的成本。</strong> 即使有人在提案投票前临时购买大量 CKB 并存入 NervosDAO，也无法立即获得完整的投票权重。</p>
+</li>
+<li>
+<p><strong>鼓励长期参与。</strong> 长期将 CKB 锁定在 NervosDAO 中的持有者，可以随着时间推移获得更高的投票权重。</p>
+</li>
+<li>
+<p><strong>减少单纯依赖资金规模的治理优势。</strong> 让资金规模和时间承诺共同决定投票权重，而不是仅仅比较谁拥有更多 CKB。</p>
+</li>
+<li>
+<p><strong>为小额长期持有者提供更多参与空间。</strong> 让长期参与者的投票能够获得更有意义的权重，而不至于完全被短期的大额资金淹没。</p>
+</li>
+</ol>
+<p>当然，这并不是一个可以解决所有治理问题的方案。</p>
+<p>例如，如果有人提前很长时间准备资金，时间权重依然无法阻止其影响投票。另一方面，时间权重也不能直接解决交易所托管资产的实际受益所有权与投票权归属问题。</p>
+<p>此外，<strong>我们还需要考虑如何避免老资金长期积累过大的治理优势，以及如何在不同时间曲线之间取得平衡。</strong></p>
+<p>这些都需要进一步研究和模拟，但不应成为我们一步一步完善 DAO 治理机制的障碍。</p>
+<h2><a name="p-27865-h-5" class="anchor" href="https://talk.nervos.org#p-27865-h-5" aria-label="Heading link"></a>最后</h2>
+<p>我希望借此机会重新开启关于 CKB Community Fund DAO 治理机制的讨论：</p>
+<ol>
+<li><strong>我们是否应该将 NervosDAO 存款时间纳入投票权重的计算？</strong></li>
+<li><strong>如果引入时间系数，应该采用怎样的计算模型？是否应该设置最大计权时间？</strong></li>
+<li><strong>如何在长期持有者与新进入生态的参与者之间保持平衡？</strong></li>
+<li><strong>除了时间权重，我们是否还需要考虑其他机制，以避免少数大额持有者在低投票参与率的情况下决定治理结果？</strong></li>
+</ol>
+<p>我并不认为当前的治理机制存在什么根本性错误。相反，我觉得<strong>通过实际提案和投票，不断暴露问题，再逐步改进，本身就是社区治理应该经历的过程。</strong></p>
+<p>我们不能等到这些问题变得难以解决时，才开始认真讨论它们。</p>
+<p><strong>A good governance system should not only make decisions possible, but also ensure that the community has a meaningful voice in making those decisions.</strong></p>
+<p>以上只是我的一些观察和想法，希望听听大家的意见。</p>
+            <p><small>2 posts - 2 participants</small></p>
+            <p><a href="https://talk.nervos.org/t/discussion-improving-the-fairness-and-resilience-of-ckb-community-fund-dao-governance-ckb-community-fund-dao/11376">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/discussion-improving-the-fairness-and-resilience-of-ckb-community-fund-dao-governance-ckb-community-fund-dao/11376</link>
+          <pubDate>Thu, 26 Nov 2026 13:22:06 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11376</guid>
+          <source url="https://talk.nervos.org/t/discussion-improving-the-fairness-and-resilience-of-ckb-community-fund-dao-governance-ckb-community-fund-dao/11376.rss">Discussion: Improving the Fairness and Resilience of CKB Community Fund DAO Governance |关于 CKB Community Fund DAO 治理机制的一些思考与改进建议</source>
+        </item>
+        <item>
+          <title>Receive CKB on Fiber without a channel or inbound liquidity</title>
+          <dc:creator><![CDATA[ebubedev]]></dc:creator>
+          <category>Infrastructure</category>
+          <description><![CDATA[
+            <p>People kept getting stuck on the same thing (esp. some of my Twine beta tester). They could create an invoice, and then nobody could pay it. No inbound liquidity, no route, and no obvious way to fix either one without finding a peer and opening a channel first.</p>
+<p>That is what <a href="https://github.com/nervosnetwork/fiber/pull/1766" rel="noopener nofollow ugc">Fiber PR #1766</a> i opened adds to Fiber. A receiver with no channel can still be paid in CKB. The receiver registers with a liquidity node. The invoice names that node. If there is no route, the liquidity node opens a private CKB channel sized for that payment and forwards it once the channel is ready.</p>
+<p>The pull request is open. It is not merged, and it is not in an official <code>fnn</code> release yet. Review is welcome on the PR.</p>
+<p><strong>Studio LSP</strong></p>
+<p><a href="https://github.com/chukwuma619/studio-lsp" rel="noopener nofollow ugc">Studio LSP</a> is the liquidity node I created and deployed for this. LSP means liquidity service provider: a Fiber node whose job is to open channels so another node can receive, and to sit on the other side of a channel when that node wants to send.</p>
+<p>It is a normal Fiber node with a public address, funded with CKB, and configured as a just-in-time liquidity service. Your node still runs on your machine. Your keys stay with you. Studio LSP is the peer the payment uses.</p>
+<p>It is a Fiber service, not a Fiber Studio feature. Any Fiber node that speaks this protocol can use it: <code>fnn</code>, fiber-wasm, and fiber-js. The repo has the testnet pubkey, the address, and the config to register your own node.</p>
+<p>Two cases:</p>
+<ul>
+<li><strong>Receive, and you have no channel.</strong> Your node registers with Studio LSP. The invoice points at it. The sender pays Studio LSP, Studio LSP opens a private CKB channel to you, funds it, and forwards the payment. You end up with a channel and the CKB.</li>
+<li><strong>Send.</strong> You open a private CKB channel to Studio LSP with your own funds. Studio LSP accepts and locks 1,000 CKB on its side. That balance is what you can receive later on the same channel.</li>
+</ul>
+<p><strong>Trying it today</strong></p>
+<p>Official Fiber does not include this yet, so a released <code>fnn</code> cannot register with Studio LSP. Fiber Studio 1.1.6 is the current way to try it, because that build bundles the JIT branch. Once the pull request is in a Fiber release, the same Studio LSP works from any node. The connection steps are in the <a href="https://github.com/chukwuma619/studio-lsp" rel="noopener nofollow ugc">repo</a>.</p>
+<p>On testnet, with <a href="https://github.com/chukwuma619/fiber-studio/releases/tag/v1.1.6" rel="noopener nofollow ugc">Fiber Studio 1.1.6</a> (<strong>Settings → Updates</strong>, or <a href="https://www.getfiberstudio.com/" rel="noopener nofollow ugc">getfiberstudio.com</a>):</p>
+<ol>
+<li>Start the node on testnet. It connects to Studio LSP on its own.</li>
+<li>Create a CKB invoice. A channel does not need to exist first.</li>
+<li>Have someone pay it. If you have no inbound route, Studio LSP opens a private channel and the payment lands.</li>
+<li>Add on-chain CKB when you want to send. The channel to Studio LSP is opened for you.</li>
+</ol>
+<p><strong>Limits on the testnet node</strong></p>
+<p>CKB only. UDT and Lightning are unchanged. Mainnet is not served by this node yet.</p>
+<div class="md-table">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Testnet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Who pays when a receive has to open a channel</td>
+<td>The sender, 10 CKB</td>
+</tr>
+<tr>
+<td>Smallest payment that can open a channel</td>
+<td>100 CKB</td>
+</tr>
+<tr>
+<td>Largest amount above the channel reserve</td>
+<td>9,900 CKB</td>
+</tr>
+<tr>
+<td>Inbound left after that first payment</td>
+<td>About 900 CKB, so a later receive can use the same channel</td>
+</tr>
+<tr>
+<td>When you open a channel to send</td>
+<td>Studio LSP locks 1,000 CKB on its side</td>
+</tr>
+</tbody>
+</table>
+</div><p>A receive fails if your node is offline, or if Studio LSP is offline or out of CKB. A second payment waits if the first channel is still opening. It does not reuse funding that was sized for the earlier payment.</p>
+<p>If you want to try a receive with no channel, use the 1.1.6 build on testnet. If you run Fiber yourself, read the flow in <a href="https://github.com/nervosnetwork/fiber/pull/1766" rel="noopener nofollow ugc">PR #1766</a> and the node setup in <a href="https://github.com/chukwuma619/studio-lsp" rel="noopener nofollow ugc">studio-lsp</a>. Comments on a receive that should have worked and did not are the most useful.</p>
+<p><strong>Confirm it</strong></p>
+<p>Update to Fiber Studio 1.1.6, start on testnet, and create a CKB invoice for <strong>100 CKB</strong>. Leave the description empty or put “JIT test”. You do not need a channel open first. Paste the invoice in a reply here.</p>
+<p>100 CKB is the smallest amount this node will open a channel for. I will pay each invoice when I see it. Keep your node running until the payment shows up.</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/receive-ckb-on-fiber-without-a-channel-or-inbound-liquidity/11375">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/receive-ckb-on-fiber-without-a-channel-or-inbound-liquidity/11375</link>
+          <pubDate>Thu, 26 Nov 2026 12:40:19 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11375</guid>
+          <source url="https://talk.nervos.org/t/receive-ckb-on-fiber-without-a-channel-or-inbound-liquidity/11375.rss">Receive CKB on Fiber without a channel or inbound liquidity</source>
+        </item>
+        <item>
+          <title>Spark 和 Community Fund DAO 资助的差异浅析</title>
+          <dc:creator><![CDATA[zz_tovarishch]]></dc:creator>
+          <category>Spark Program</category>
+          <description><![CDATA[
+            <p>近期发现 DAO 和 Spark 资助经常被放在一起讨论，虽然它们都是被放在 DAO &amp; Funding 分类下，但两者是两个完全不同的资助项目：<strong>运作方式、资助金额、预期目标等都完全不同</strong>。以下为二者差异的浅析，也向社区简单汇报 Spark 的运营近况。</p>
+<h3><a name="p-27846-community-fund-dao-1" class="anchor" href="https://talk.nervos.org#p-27846-community-fund-dao-1" aria-label="Heading link"></a>Community Fund DAO</h3>
+<aside class="quote no-group" data-username="JackyLHH" data-post="1" data-topic="6873">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" width="24" height="24" src="https://talk.nervos.org/user_avatar/talk.nervos.org/jackylhh/48/9804_2.png" class="avatar"><a href="https://talk.nervos.org/t/ckb-community-fund-dao/6873/1">CKB Community Fund DAO 规则和流程</a></div>
+<blockquote>
+<p>CKB Community Fund DAO 是由 Nervos 社区发起，社区和基金会共同捐款的社区基金，用于资助社区成员围绕 CKB 生态进行如代码开发、活动组织、内容制作、宣传推广等促进生态发展的工作。</p>
+</blockquote>
+</aside>
+<p>从这段描述可见，Community Fund DAO 采用的是去中心化治理模式，资助的范围多样，目的是促进生态发展。DAO 的每一笔资助都来自一个具体提案：任何人都可以按<a href="https://talk.nervos.org/t/ckb-community-fund-dao/6873">规则</a>发帖，讨论阶段一周内获得 30 个赞后进入 Metaforo 投票，按 Nervos DAO 存款加权决定是否通过。</p>
+<p>我是 DAO 的协调员，只负责流程，无权决定资助的倾向，DAO 本身也不会主动出资赞助某个项目或赛事。所以<strong>社区如果认为特定类型项目更值得支持，最合适的方式就有人提出这类提案，大家投票支持</strong>。如果想把对特定类型的资助倾斜变成制度，比如设立专项额度，则属于元规则修改，可以通过发起元规则提案的方式推进。</p>
+<h3><a name="p-27846-spark-2" class="anchor" href="https://talk.nervos.org#p-27846-spark-2" aria-label="Heading link"></a>Spark</h3>
+<aside class="quote no-group quote-modified" data-username="zz_tovarishch" data-post="1" data-topic="8751">
+<div class="title">
+<div class="quote-controls"></div>
+<img alt="" width="24" height="24" src="https://talk.nervos.org/user_avatar/talk.nervos.org/zz_tovarishch/48/8925_2.png" class="avatar"><a href="https://talk.nervos.org/t/spark-program/8751/1">星火计划 (Spark Program) 小额资助方案</a></div>
+<blockquote>
+<p><strong>星火计划</strong>"(Spark Program)，是一项小额项目资助机制<br>
+…<br>
+支持开发者验证创意、打造 Proof of Concept 原型或进行 demo 迭代<br>
+…</p>
+<p>通过小额资助让更多踏实的小创意快速成长，为未来申请更大型的资助打下基础</p>
+</blockquote>
+</aside>
+<p>Spark 的定位和DAO完全不同，它的目标是支持概念验证、演示和种子用户测试这类早期工作，单个项目通常在一千美元上下，采用的是委员会审核制，成员包括 <a class="mention" href="https://talk.nervos.org/u/hanssen">@Hanssen</a> 、 <a class="mention" href="https://talk.nervos.org/u/yixiu.ckbfans.bit">@yixiu.ckbfans.bit</a>  和 我， <a class="mention" href="https://talk.nervos.org/u/xingtianchunyan">@xingtianchunyan</a> 是协调员。<strong>虽然我们肯定希望所有获资助项目都能有长远发展，但对资助对象并不要求其在结项时就能被社区大规模使用或者直接具备生态、市场价值</strong>。</p>
+<p>从 2025 年 5 月启动以来，Spark 金库收到 Eco Fund 注资1,886,792 CKB + 10,000 USDI（2025年5月15日，按当日CKB价格该笔注资计<strong>20,000 USD</strong>），Foundation 注资 7,220,216 CKB （2026年4月1日，按当日CKB价格该笔注资计<strong>10,000 USD</strong>）。在一年半的运营中，Spark 始终坚持透明和严格的审核，使用了约 90%的注资，收到了近100份申请，立项了24个项目，其中以应用类项目的早期探索为主。</p>
+<p><strong>已结项的项目除了本身通过Spark的资助完成小规模的初期探索，也为社区沉淀了大量经验</strong>。下面是部分项目对于社区和生态可复用知识的汇总，供社区查阅</p>
+<div class="md-table">
+<table>
+<thead>
+<tr>
+<th>已结项项目</th>
+<th>开发者分享了什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dular</strong></td>
+<td>团队复盘了移动支付试点。结项报告记录了30名试点用户、57笔成功的 Fiber 支付和23份反馈。开发者还写到，商户关心钱能否在顾客与供应商之间接着流转，以及收款方离线时会遇到什么问题。<a href="https://talk.nervos.org/t/dular-what-mobile-money-users-taught-us-building-on-fiber/10717">试点心得</a> · <a href="https://talk.nervos.org/t/spark-program-dular/10212/43">结项报告</a></td>
+</tr>
+<tr>
+<td><strong>Nervos Brain</strong></td>
+<td>团队把面向 CKB 开发者的知识问答工具放进 Nervos Nation 的 Telegram 群内测。作者公开了交付和测试结果，并说明真实用户评分和固定场景测试各自如何统计。<a href="https://talk.nervos.org/t/spark-program-nervos-brain-a-global-developer-onboarding-engine-and-cross-language-hub-powered-by-agentic-rag/9995/41">开发者交付报告</a> · <a href="https://talk.nervos.org/t/spark-program-nervos-brain-a-global-developer-onboarding-engine-and-cross-language-hub-powered-by-agentic-rag/9995/47">群测说明</a></td>
+</tr>
+<tr>
+<td><strong>CKB-UGMP</strong></td>
+<td>开发者总结了做 Spore/DOB 铸造工具的初衷，比较了 IPFS、直接上链等存储方式，也分享了开发过程中对沟通和社区参与的体会。<a href="https://talk.nervos.org/t/spark-program-ckb-ugmp/10581">项目总结与心得</a></td>
+</tr>
+<tr>
+<td><strong>fiber-checkout</strong></td>
+<td>开发者对照原计划和实际交付，写了为何采用服务端代理、如何处理发票状态，以及结项后怎样持续检测上游更新对支付库的影响。<a href="https://talk.nervos.org/t/spark-program-fiber-checkout-a-stripe-style-react-payment-library-for-fiber-network/10045/26">开发者复盘</a> · <a href="https://talk.nervos.org/t/fiber-checkout-a-stripe-style-payment-library-for-fiber-network-post-grant-updates/10337">结项后维护记录</a></td>
+</tr>
+<tr>
+<td><strong>Blackbox</strong></td>
+<td>团队总结了硬件 POS 原型的测试方法、社区测试者发现的问题，以及下一轮硬件和交互设计要改什么。<a href="https://talk.nervos.org/t/blackbox-testing-completion-overview/9835">原型测试总结</a></td>
+</tr>
+<tr>
+<td><strong>WarSpore · Saga</strong></td>
+<td>开发者撰写了全链游戏的制作随笔、玩法和代币设计，也复盘了种子用户测试，并说明用户反馈和链上数据各自能支持哪些判断。<a href="https://talk.nervos.org/t/warspore-saga-introduction-essays/9812">游戏制作随笔</a> · <a href="https://talk.nervos.org/t/spark-program-warspore-saga/9700/7">试点复盘讨论</a></td>
+</tr>
+<tr>
+<td><strong>Quantum Purse</strong></td>
+<td>开发者在访谈和 AMA 中讲了做抗量子钱包的初衷、技术选择和开发过程。<a href="https://talk.nervos.org/t/ckb-eco-fund-tea-quantum-purse/8911">开发者专访</a> · <a href="https://talk.nervos.org/t/quantum-purse-ama-recap-questions-welcome-ama/9828">AMA 回顾</a></td>
+</tr>
+<tr>
+<td><strong>ckb-probe</strong></td>
+<td>开发者公开了用 eBPF 诊断 CKB 节点的性能实验和 RocksDB 案例，也记录了 WSL2 兼容性问题。<a href="https://talk.nervos.org/t/spark-program-ckb-probe-deep-observability-tool-for-ckb-nodes-based-on-aya-kernel-ebpf-ckb-probe-aya-ebpf-ckb/10008/58">性能评估与案例</a> · <a href="https://talk.nervos.org/t/spark-program-ckb-probe-deep-observability-tool-for-ckb-nodes-based-on-aya-kernel-ebpf-ckb-probe-aya-ebpf-ckb/10008/56">WSL2 排障记录</a></td>
+</tr>
+<tr>
+<td><strong>CKB Builder Lab</strong></td>
+<td>开发者公开了测试报告，并回应了下一步如何收集证据，判断这个工具是否真的帮助新开发者学习。<a href="https://talk.nervos.org/t/spark-program-ckb-builder-lab-interactive-developer-onboarding-infrastructure-for-the-ckb-ecosystem/10385/30">开发者报告</a> · <a href="https://talk.nervos.org/t/spark-program-ckb-builder-lab-interactive-developer-onboarding-infrastructure-for-the-ckb-ecosystem/10385/32">对结项评价的回应</a></td>
+</tr>
+<tr>
+<td><strong>CKB Wallet Behaviour Intelligence</strong></td>
+<td>开发者解释了为什么把研究范围从判断钱包背后的身份，收敛为找出可复现的链上行为模式，以及数据能支持怎样的解释。<a href="https://talk.nervos.org/t/spark-program-ckb-wallet-behaviour-intelligence/10338/28">开发者研究总结</a></td>
+</tr>
+<tr>
+<td><strong>CKB-VM Sail Validation Sprint</strong></td>
+<td>开发者说明了验证工具覆盖哪些指令和场景，也面向非技术成员撰写了文章，解释社区可以怎样参与复核。<a href="https://talk.nervos.org/t/spark-program-ckb-vm-sail-validation-sprint-risc-v-lean-4-rocq-coq-spike/10562/26">交付与验证范围</a> · <a href="https://talk.nervos.org/t/spark-program-ckb-vm-sail-validation-sprint-risc-v-lean-4-rocq-coq-spike/10562/29">非技术成员如何参与</a></td>
+</tr>
+<tr>
+<td><strong>Progress Tracking Platform</strong></td>
+<td>项目的公开结项帖附有开发团队报告，可查阅进度追踪平台的交付记录。<a href="https://talk.nervos.org/t/ckb-eco-fund-spark-tracking-platform-for-nervos-completion-report/9725">结项帖与团队报告入口</a></td>
+</tr>
+<tr>
+<td><strong>SoMo – Pixel Territory</strong></td>
+<td>开发者公开介绍了像素画布怎样使用 Spore、怎样定价的机制分析。<a href="https://talk.nervos.org/t/somo-the-first-pixel-in-a-world-you-get-to-run/9650">开发者技术与试用介绍</a></td>
+</tr>
+</tbody>
+</table>
+</div><p>此外，我们还看到，截至 2026 年 9 月 30 日，有 4 个项目在完成Spark后提交了 Community Fund DAO 资助提案，无论DAO投票的结果如何，<strong>这条路径验证了项目在完成Spark后，进一步成熟以获取更大资助的可行性</strong>。</p>
+<p>综上，如果开发者的项目有合适的部分工作想申请Spark，我们非常欢迎，但是否获批仍要看具体提案，尤其是范围是否控制在Spark定位以内。申请方式请见 <a href="https://talk.nervos.org/t/ckb-eco-fund-spark-program-mini-grant-initiative/8752">Spark 主帖</a>。</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/spark-community-fund-dao/11372">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/spark-community-fund-dao/11372</link>
+          <pubDate>Thu, 26 Nov 2026 09:24:59 +0000</pubDate>
+          <discourse:topicPinned>Yes</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11372</guid>
+          <source url="https://talk.nervos.org/t/spark-community-fund-dao/11372.rss">Spark 和 Community Fund DAO 资助的差异浅析</source>
+        </item>
+        <item>
+          <title>Show Me the Use Case: Fiber Network Product Hackathon announcement!</title>
+          <dc:creator><![CDATA[neon.bit]]></dc:creator>
+          <category>Announcements &amp; Meta</category>
+          <description><![CDATA[
+            <p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/d/d74499a50ab26134d53185b57c7deea83cb16d85.jpeg" data-download-href="https://talk.nervos.org/uploads/default/d74499a50ab26134d53185b57c7deea83cb16d85" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/d/d74499a50ab26134d53185b57c7deea83cb16d85_2_690x388.jpeg" alt="image" data-base62-sha1="uIlD8SEJ9YMI3H4uBGLnuiFK86h" width="690" height="388" srcset="https://talk.nervos.org/uploads/default/optimized/2X/d/d74499a50ab26134d53185b57c7deea83cb16d85_2_690x388.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/d/d74499a50ab26134d53185b57c7deea83cb16d85_2_1035x582.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/d/d74499a50ab26134d53185b57c7deea83cb16d85_2_1380x776.jpeg 2x" data-dominant-color="8D6697"></a></div><p></p>
+<h1><a name="p-27845-show-me-the-use-case-fiber-network-product-hackathon-1" class="anchor" href="https://talk.nervos.org#p-27845-show-me-the-use-case-fiber-network-product-hackathon-1" aria-label="Heading link"></a><strong>Show Me the Use Case: Fiber Network Product Hackathon</strong></h1>
+<h2><a name="p-27845-build-products-for-the-next-stage-of-fiber-2" class="anchor" href="https://talk.nervos.org#p-27845-build-products-for-the-next-stage-of-fiber-2" aria-label="Heading link"></a><strong>Build products for the next stage of Fiber</strong></h2>
+<p>Registration for <strong>Show Me the Use Case: Fiber Product Hackathon</strong> opens soon!</p>
+<p>This is the follow-up to the<a href="https://talk.nervos.org/t/gone-in-60ms-fiber-network-infrastructure-hackathon-announcement"> <strong>Fiber Network Infrastructure Hackathon</strong></a>. Where that hackathon explored gaps in Fiber’s supporting infrastructure, this one focuses on building compelling products on<a href="https://www.fiber.world/" rel="noopener nofollow ugc"> <strong>Fiber Network</strong></a> that address real user needs.</p>
+<p>As a peer-to-peer payment network, Fiber offers a <strong>fast, low-cost alternative payment rail</strong> to traditional systems. It could support products across many areas, including regional and cross-border payments, gaming, social media, commerce and metered services.</p>
+<p>We’re asking developers to think like entrepreneurs: <strong>connect their technical expertise with real-world challenges and business opportunities</strong>. Strong projects will identify a specific audience, make a case for user demand and product-market fit, and show how they will reach, engage and onboard users. User experience and a credible path to market are central to this hackathon. In order to help guide developers in this respect, we’ve partnered with <strong><a href="https://x.com/blockdev_org" rel="noopener nofollow ugc">BlockDev</a></strong> to provide access to seasoned experts from <strong>MDI Venture</strong> and <strong>BRI Venture</strong>.</p>
+<blockquote>
+<h2><strong>Key details</strong></h2>
+<p><strong>Registration opens:</strong> 27 November<br>
+<strong>Pre-hackathon preparation and advice sessions:</strong> 30 November–4 December<br>
+<strong>Hackathon:</strong> 4–18 December<br>
+<strong>Duration:</strong> 2 weeks<br>
+<strong>All dates and deadlines:</strong> UTC<br>
+<strong>Platform:</strong> CKBoost<br>
+<strong>Prize pool:</strong> $20,000<br>
+<strong>Participation:</strong> Individuals and teams may enter; teams are strongly encouraged<br>
+<strong>AI tooling:</strong> Successful submissions may claim up to $20 as an AI tooling allowance<br>
+<strong>Registration:</strong> <strong><a href="https://ckboost.netlify.app/campaign/0x279c0e333974713deec12ddb210bb787ae07ae54b884cbc141d26fe9f03ca450" rel="noopener nofollow ugc">Link</a> -  goes live on 27 November</strong></p>
+</blockquote>
+<h2><a name="p-27845-introduction-3" class="anchor" href="https://talk.nervos.org#p-27845-introduction-3" aria-label="Heading link"></a><strong>Introduction</strong></h2>
+<p><strong><a href="https://www.nervos.org/" rel="noopener nofollow ugc">Nervos CKB</a></strong> is a proof-of-work Layer 1 blockchain built for flexibility, decentralisation and long-term extensibility. Its Cell model supports smart contracts, custom assets, ownership and verification logic, while its RISC-V-based virtual machine gives developers flexibility in choosing the cryptography and protocols they use.</p>
+<p><strong><a href="https://www.fiber.world/" rel="noopener nofollow ugc">Fiber Network</a></strong> is a payment-channel network for fast, low-cost, off-chain payments on CKB. It supports multiple asset types, including RGB++ assets and stablecoins, and creates opportunities for wallets, merchants, micropayments and other payment-focused services.</p>
+<p>This hackathon, organised by <strong>Nervos Community Catalyst</strong>, is about putting that payment capability to work in <strong>products people can understand and use</strong>. The strongest ideas will start with a specific problem and audience, show why Fiber is useful to the solution, and <strong>explain how that audience will be engaged</strong>.</p>
+<h2><a name="p-27845-mission-brief-4" class="anchor" href="https://talk.nervos.org#p-27845-mission-brief-4" aria-label="Heading link"></a><strong>Mission brief</strong></h2>
+<p><strong>Build a user-facing product on Fiber Network that solves a real problem for a clearly defined audience.</strong></p>
+<p>Possible areas to explore include:</p>
+<ul>
+<li>Regional and cross-border payments</li>
+<li>Merchant checkout and commerce experiences</li>
+<li>Gaming and digital goods</li>
+<li>Social or community payments</li>
+<li>Metered services and pay-as-you-go access</li>
+</ul>
+<p>These examples are inspiration, not formal categories. All submissions will be judged together.</p>
+<h2><a name="p-27845-who-should-participate-5" class="anchor" href="https://talk.nervos.org#p-27845-who-should-participate-5" aria-label="Heading link"></a><strong>Who should participate?</strong></h2>
+<p>The hackathon is open to CKB community developers and developers who are new to CKB. Participants may enter individually or as a team.</p>
+<p><strong>Teams are strongly encouraged,</strong> since developing a product often calls for complementary skills. Team size alone will not affect judging. A team will be required for projects seeking post-hackathon support, and there will be a <strong>Best Team</strong> prize.</p>
+<h2><a name="p-27845-why-participate-6" class="anchor" href="https://talk.nervos.org#p-27845-why-participate-6" aria-label="Heading link"></a><strong>Why participate?</strong></h2>
+<ul>
+<li>Build a user-facing product on Fiber Network</li>
+<li>Explore real payment problems across different industries</li>
+<li>Develop and test a product idea with support from experienced advisors</li>
+<li>Compete for a share of the $20,000 prize pool</li>
+<li>Give prizewinning projects a chance to discuss their next steps with advisors from VC after the hackathon</li>
+</ul>
+<h2><a name="p-27845-ecosystem-partners-7" class="anchor" href="https://talk.nervos.org#p-27845-ecosystem-partners-7" aria-label="Heading link"></a><strong>Ecosystem partners</strong></h2>
+<p>This hackathon, organised by Nervos Community Catalyst, is supported by the <strong>Common Knowledge Base Association</strong>, including teams from CKB Devrel, CKB, and Fiber. Alongside technical support, senior developers will give presentations during registration week on key topics for developers to get up to speed.</p>
+<p>Furthermore, we’re working with <strong>BlockDev</strong> as our hackathon business advisory partner.</p>
+<p>During registration week, BlockDev will announce presentations covering the essentials of building a blockchain startup and what makes a startup investable. Advisors include <strong>Markus Liman</strong>, venture capitalist and CEO of <strong>BRI Venture</strong>, and <strong>Alvin Evander</strong>, Vice President of <strong>MDI Venture</strong>.</p>
+<p><strong>After the hackathon, prizewinning projects will be invited to a further advice session</strong> with the advisors to help them consider the next steps in their journey.</p>
+<h2><a name="p-27845-getting-started-8" class="anchor" href="https://talk.nervos.org#p-27845-getting-started-8" aria-label="Heading link"></a><strong>Getting started</strong></h2>
+<p>Use these resources to familiarise yourself with CKB and Fiber Network, and to find tutorials and examples to build from:</p>
+<ul>
+<li><strong>CKB documentation</strong>
+<ul>
+<li><a href="https://docs.nervos.org/docs/ckb-fundamentals/nervos-blockchain" rel="noopener nofollow ugc">Introduction to Nervos CKB</a></li>
+<li><a href="https://docs.nervos.org/docs/getting-started/how-ckb-works" rel="noopener nofollow ugc">How CKB Works</a>, including links to the Quick Start and dApp tutorials</li>
+<li><a href="https://docs.nervos.org/docs/ai-agents/ai-resource" rel="noopener nofollow ugc">AI resources and training tools</a></li>
+</ul>
+</li>
+<li><strong>Community-contributed learning</strong>
+<ul>
+<li><a href="https://website-sooty-chi-72.vercel.app/lessons" rel="noopener nofollow ugc">Learning CKB: 24 lessons across 5 phases</a></li>
+<li><a href="https://github.com/truthixify/learn-ckb-in-45-minutes" rel="noopener nofollow ugc">Learn CKB in 45 minutes</a></li>
+</ul>
+</li>
+<li><strong>Fiber Network</strong>
+<ul>
+<li><a href="https://www.fiber.world/docs" rel="noopener nofollow ugc">Fiber documentation</a>
+<ul>
+<li><a href="https://talk.nervos.org/t/fiber-storybook-explaining-fiber-through-pico-s-airport-journey/">Fiber Storybook - Explaining Fiber Through Pico’s Airport Journey</a></li>
+<li><a href="https://www.fiber.world/docs/build/toolchain" rel="noopener nofollow ugc">Toolchain overview</a></li>
+<li><a href="https://www.fiber.world/docs/build/interactive-tutorials" rel="noopener nofollow ugc">Interactive tutorials</a> - <strong>highly recommended!</strong></li>
+</ul>
+</li>
+<li><a href="https://www.fiber.world/showcase" rel="noopener nofollow ugc">Fiber Showcase</a>, with open-source demos and community applications</li>
+<li><a href="https://github.com/RetricSu/fiber-hackathon-docs/tree/master" rel="noopener nofollow ugc">Fiber Hackathon documentation</a>, with resources, onboarding and tutorials</li>
+<li>Fiber Network product demos:
+<ul>
+<li><a href="https://talk.nervos.org/t/charge-as-you-go-running-fiber-network-inside-an-ev-charging-scenario-fiber-network/">Charge as you go - EV charging on Fiber</a></li>
+<li><a href="https://talk.nervos.org/t/fiber-chat-a-decentralized-social-demo-based-on-fiber-network/">Fiber chat - decentralized social demo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>To complete quests on CKBoost, you will need CKB testnet tokens. You can claim them from the<a href="https://faucet.nervos.org/" rel="noopener nofollow ugc"> Nervos Pudge Faucet</a>.</p>
+<h2><a name="p-27845-fiber-setup-and-demos-9" class="anchor" href="https://talk.nervos.org#p-27845-fiber-setup-and-demos-9" aria-label="Heading link"></a><strong>Fiber setup and demos</strong></h2>
+<p>Fiber LSP infrastructure will be available for developers to use, but there will be no shared public LSP service for this hackathon. Teams should plan to run the Fiber service their project needs locally, or run it on a public server if they prefer.</p>
+<p>A publicly hosted product interface plus a video demonstration is sufficient. The video should show the product in action, including Fiber-connected functionality that may not be available through the hosted interface.</p>
+<p>More detailed technical setup instructions will be shared before the hackathon.</p>
+<h2><a name="p-27845-deliverables-10" class="anchor" href="https://talk.nervos.org#p-27845-deliverables-10" aria-label="Heading link"></a><strong>Deliverables</strong></h2>
+<p>Each submission should include:</p>
+<ul>
+<li>Project summary</li>
+<li>Target audience, market research, product-market fit and user acquisition strategy</li>
+<li>Team name and members</li>
+<li>Hosted product interface</li>
+<li>Video demonstration</li>
+<li>Technical breakdown, including an explanation of how the project uses Fiber</li>
+<li>Future roadmap and go-to-market strategy</li>
+<li>AI allowance claim, if applicable</li>
+</ul>
+<p>Functional demos are required; written proposals alone will not qualify. Code does not need to be open source, but must be made privately available to the judges for review. Submissions should explain what is fully working and identify any parts that are mocked or simulated.</p>
+<h2><a name="p-27845-ai-usage-11" class="anchor" href="https://talk.nervos.org#p-27845-ai-usage-11" aria-label="Heading link"></a><strong>AI usage</strong></h2>
+<p>You may use AI tools to research, develop and document your project. Successful submissions may claim up to <strong>$20</strong> as an AI tooling allowance.</p>
+<p>Use AI as an aid, and test and review your project throughout development to ensure it works as intended. We’ll be sharing more AI related tips and guidance over the pre-hackathon registration week.</p>
+<h2><a name="p-27845-judging-criteria-12" class="anchor" href="https://talk.nervos.org#p-27845-judging-criteria-12" aria-label="Heading link"></a><strong>Judging criteria</strong></h2>
+<p>Projects will be assessed on:</p>
+<ul>
+<li>Functional completeness</li>
+<li>User flow and experience</li>
+<li>Relevance to Fiber Network and CKB</li>
+<li>Technical soundness</li>
+<li>User friendliness</li>
+<li>Market viability</li>
+<li>Documentation quality</li>
+<li>Practical usefulness</li>
+<li>Potential for further development</li>
+</ul>
+<h2><a name="p-27845-hackathon-preparation-checklist-13" class="anchor" href="https://talk.nervos.org#p-27845-hackathon-preparation-checklist-13" aria-label="Heading link"></a><strong>Hackathon preparation checklist</strong></h2>
+<ol>
+<li><strong>Think about a real problem</strong>, the people who experience it, and how your product could reach, engage and onboard them.</li>
+<li>Explore Fiber Network and decide <strong>how it could help solve that problem</strong>.</li>
+<li>Review the technical resources above and begin planning your project.</li>
+<li><strong>Register through <a href="https://ckboost.netlify.app/" rel="noopener nofollow ugc">CKBoost </a>when registration opens</strong>. Early registration will help you join the support channels and ask questions in advance.</li>
+<li>Plan your time across the hackathon dates so you can build, test and document a functional demo.</li>
+</ol>
+<h2><a name="p-27845-support-14" class="anchor" href="https://talk.nervos.org#p-27845-support-14" aria-label="Heading link"></a><strong>Support</strong></h2>
+<p>The<a href="https://t.me/+FpFa74ubID4xNzg0" rel="noopener nofollow ugc"> <strong>Build on CKB Telegram group</strong></a> will be the main discussion channel for hackathon-related questions and support. Participants will also receive information about support channels by email after registering.</p>
+<p>The Fiber DevRel team will be available to assist with technical questions.</p>
+<h2><a name="p-27845-rules-15" class="anchor" href="https://talk.nervos.org#p-27845-rules-15" aria-label="Heading link"></a><strong>Rules</strong></h2>
+<ul>
+<li>Individuals and teams may enter.</li>
+<li>Only new projects are eligible for prizes. Pre-existing or repurposed projects are not eligible.</li>
+<li>Projects must be viable user-facing products. Infrastructure-focused projects are not eligible for this hackathon.</li>
+<li>Code does not have to be open source, but must be made privately available to the judges.</li>
+<li>Plagiarism will result in disqualification and loss of prize eligibility.</li>
+<li>All submissions must be made through CKBoost.</li>
+<li>There can be no deadline extensions. Submissions added after the deadline without prior permission may be ineligible for prizes.</li>
+</ul>
+<h2><a name="p-27845-prizes-and-deadline-16" class="anchor" href="https://talk.nervos.org#p-27845-prizes-and-deadline-16" aria-label="Heading link"></a><strong>Prizes and deadline</strong></h2>
+<p>The total prize pool is <strong>$20,000</strong>:</p>
+<ul>
+<li><strong>1st place:</strong> $6,500</li>
+<li><strong>2nd place:</strong> $4,000</li>
+<li><strong>3rd place:</strong> $3,000</li>
+<li><strong>4th place:</strong> $2,000</li>
+<li><strong>5th place:</strong> $1,000</li>
+<li><strong>Commendation prizes:</strong> $500 each for five projects</li>
+<li><strong>Best Team:</strong> $1,000</li>
+</ul>
+<p>Submissions close on <strong>Friday 18 December 23:59 UTC</strong>.</p>
+<h2><a name="p-27845-after-the-hackathon-17" class="anchor" href="https://talk.nervos.org#p-27845-after-the-hackathon-17" aria-label="Heading link"></a>After the hackathon</h2>
+<p>As mentioned earlier, prizewinning teams will have the opportunity to discuss and receive advice from our hackathon partners who have a background in venture capital. This, however, is simply an initial step, and projects will be encouraged to move towards market viability and seeking further support where necessary.</p>
+<p>I’m excited to see what the community produces. Good luck to everyone!</p>
+            <p><small>5 posts - 5 participants</small></p>
+            <p><a href="https://talk.nervos.org/t/show-me-the-use-case-fiber-network-product-hackathon-announcement/11371">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/show-me-the-use-case-fiber-network-product-hackathon-announcement/11371</link>
+          <pubDate>Thu, 26 Nov 2026 09:15:33 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11371</guid>
+          <source url="https://talk.nervos.org/t/show-me-the-use-case-fiber-network-product-hackathon-announcement/11371.rss">Show Me the Use Case: Fiber Network Product Hackathon announcement!</source>
+        </item>
+        <item>
+          <title>What Else Could a Cell Become ? [1]</title>
+          <dc:creator><![CDATA[ArthurZhang]]></dc:creator>
+          <category>Infrastructure</category>
+          <description><![CDATA[
+            <p><em>Polytype, Metatype, and the unfinished possibilities of the Cell model</em></p>
+<h1><a name="p-27844-i-revisiting-the-cell-model-1" class="anchor" href="https://talk.nervos.org#p-27844-i-revisiting-the-cell-model-1" aria-label="Heading link"></a><strong>I. Revisiting the Cell model</strong></h1>
+<p>During CKCON 2026 last month, I found myself returning to a question I had encountered repeatedly whilst developing <a href="https://talk.nervos.org/t/cellscript-a-dsl-for-cell-based-contracts/10193/36">CellScript</a>: how much does the author of one protocol need to know about another before the two can work together?</p>
+<p><a class="mention" href="https://talk.nervos.org/u/hanssen">@Hanssen</a> has approached this through SSRI, <a class="mention" href="https://talk.nervos.org/u/xxuejie">@xxuejie</a> and <a class="mention" href="https://talk.nervos.org/u/janx">@janx</a> through CoBuild, <a class="mention" href="https://talk.nervos.org/u/owk50ga">@OWK50GA</a> through IDL. In CellScript, I introduced <a href="https://github.com/CellScript-Labs/CellScript/issues/9">ProtocolBundle</a> to coordinate the requirements of independently developed contracts. <a class="mention" href="https://talk.nervos.org/u/doitian">@doitian</a> had been wrestling with various aspects of this problem long before many of us began building on CKB.</p>
+<p>Shortly before the conference, <a class="mention" href="https://talk.nervos.org/u/jm9k">@jm9k</a> <a href="https://talk.nervos.org/t/introducing-myelin-a-ckb-aligned-off-chain-cell-session-runtime/10498/11">asked me</a> whether a Myelin session could run an enhanced Cell Model v1.5, with transaction structures and rules beyond those currently supported by CKB L1.</p>
+<p>I gave him a technical answer and went back to writing code, but the question stayed with me. Curiously enough, I always had an intuition whilst developing Myelin that, sooner or later, certain applications would warrant an alternative Cell-like UTXO model, supported alongside the original CKB model. And this question has planted a seed in my mind, and i began to think more seriously about what such a model might look like, and what new possibilities it could open up.</p>
+<p>It seems to me that the community have spent seven years learning how to build protocols around the Cell model. Suppose, for a moment, that we had the luxury of toying with the model itself, with everything we have learnt in the intervening years. Which of our architectural decisions would we make again? Which might we reconsider?</p>
+<p>I began looking through some of the older Nervos discussions and found several ideas worth dusting off.</p>
+<p>In August 2019, before CKB mainnet went live, Doitian published his <a href="https://talk.nervos.org/t/cell-model-changes-preview-in-v0-19-0/3349?utm_source=chatgpt.com">Cell Model Changes Preview in v0.19.0</a>, exploring a transaction structure in which Scripts and data were stored in separate collections, with Cells referring to their contents through hashes.</p>
+<p>Although this representation did not survive into the Cell model we use today, I find the structural separation between a Script and the Cell referencing it rather interesting.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/8/83f58577c0e0aa55fcf12ed8ab8b118478d1a11e.png" data-download-href="https://talk.nervos.org/uploads/default/83f58577c0e0aa55fcf12ed8ab8b118478d1a11e" title=""><img src="https://talk.nervos.org/uploads/default/optimized/2X/8/83f58577c0e0aa55fcf12ed8ab8b118478d1a11e_2_690x432.png" alt="" data-base62-sha1="iPmzH2DZM2lWLMH34JyHVBKX1wO" width="690" height="432" role="presentation" srcset="https://talk.nervos.org/uploads/default/optimized/2X/8/83f58577c0e0aa55fcf12ed8ab8b118478d1a11e_2_690x432.png, https://talk.nervos.org/uploads/default/original/2X/8/83f58577c0e0aa55fcf12ed8ab8b118478d1a11e.png 1.5x, https://talk.nervos.org/uploads/default/original/2X/8/83f58577c0e0aa55fcf12ed8ab8b118478d1a11e.png 2x" data-dominant-color="EBEFEF"></a></div><br>
+<em>Figure 1. The 2019 design separated Script descriptions from Cell Outputs.</em><p></p>
+<p>Two years later, Xuejie’s <a href="https://talk.nervos.org/t/rfc-extensible-udt/5337?utm_source=chatgpt.com">Extensible UDT</a> explored a different aspect of the model. An asset could carry additional validation logic through a vector of extension scripts, allowing monetary conservation and supplementary policies to coexist within a single Type implementation.</p>
+<p>The two proposals concern different things. The former explores how Scripts are represented and referenced; the latter explores how several validation programmes can jointly govern an asset. Read together, they invite an interesting architectural question about the relationship between a Cell and the programmes governing its evolution.</p>
+<p>In 2022, Doitian’s assert proposal separated the conditions of a partial transaction from its signing mechanism. His subsequent <a href="https://github.com/nervosnetwork/ckb/discussions/3638?utm_source=chatgpt.com">And-Then pattern</a>, drawing upon Xuejie’s earlier Chained Lock work, allowed several validation programmes to share a script slot. The OTX prototype developed by Doitian and Ethan in 2023 encountered some of the subtler security problems arising when independently constructed transactions intersect with existing Script Groups.</p>
+<p>The 2024 article on <a href="https://talk.nervos.org/t/the-challenge-to-implement-ownerless-contracts-working-with-any-type-script/7843?utm_source=chatgpt.com">ownerless contracts</a> is particularly relevant to what I have in mind. <strong>Consider a protocol that wishes to enforce conditions on the creation of an asset whose Type slot is already occupied.</strong> Where should its validation logic reside? How can it work with an asset protocol whose author had no knowledge of its existence?</p>
+<p>During the iCKB discussions in 2025, Jan proposed a common Meta Type capable of dispatching constituent scripts. Phroi went further, questioning the number of script slots altogether, exploring independent data regions and considering the storage implications of such a model.</p>
+<p>Phroi also raised a similar question with me in April 2026, shortly after I introduced CellScript publicly. My answer at the time involved nothing more than companion Cells, receipts and explicit dependencies. I still consider these useful abstractions, particularly where separate state and independent lifecycles are desirable. Yet this left me wondering how much of this machinery we would need if the underlying Cell could express a richer set of relationships.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/0/0ec36a472b7f194ae5991f0a1b30baa369996718.png" data-download-href="https://talk.nervos.org/uploads/default/0ec36a472b7f194ae5991f0a1b30baa369996718" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/0/0ec36a472b7f194ae5991f0a1b30baa369996718_2_556x500.png" alt="image" data-base62-sha1="26BmilmuvpXY9FHRrMwTz2UChHq" width="556" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/0/0ec36a472b7f194ae5991f0a1b30baa369996718_2_556x500.png, https://talk.nervos.org/uploads/default/optimized/2X/0/0ec36a472b7f194ae5991f0a1b30baa369996718_2_834x750.png 1.5x, https://talk.nervos.org/uploads/default/original/2X/0/0ec36a472b7f194ae5991f0a1b30baa369996718.png 2x" data-dominant-color="EEF0EF"></a></div><br>
+<em>Figure 2. Selected historical explorations of script representation, validation, attachment and protocol composition.</em><p></p>
+<p>Looking back through these discussions, I began to recognise two dimensions of composability.</p>
+<p>One concerns how independent protocols discover one another, communicate their requirements and collaborate in constructing a transaction. Much of our work on CKB has been devoted to making this easier.</p>
+<p>The other concerns the object itself. Can an asset become subject to several independently developed protocols, with each retaining its own identity, validation context and authority over its particular concerns?</p>
+<p>I had often approached the second problem through the mechanisms available to the first. Perhaps it would be interesting to approach it from the Cell model instead.</p>
+<h1><a name="p-27844-ii-beyond-a-single-type-2" class="anchor" href="https://talk.nervos.org#p-27844-ii-beyond-a-single-type-2" aria-label="Heading link"></a><strong>II. Beyond a single Type</strong></h1>
+<p>One of the things I have always admired about the Cell model is the distinction between Lock and Type. There is a rather profound idea embedded within this modest architectural decision: ownership and legitimate transformation are separate concerns.</p>
+<p>I may own an object whose existence is governed by rules beyond my authority. A fungible asset belongs to me, but possession of its private key does not entitle me to increase its monetary supply.</p>
+<p>Now suppose that I hold an asset subject to a vesting agreement and subsequently pledge it as collateral.</p>
+<p>There are three protocols involved. The asset protocol governs issuance and conservation; the vesting protocol determines when certain rights become exercisable; the lending protocol governs the conditions under which the collateral may be released.</p>
+<p>All three describe legitimate concerns about the same asset, and ideally their authors should be able to develop them independently.</p>
+<p>On CKB today, we have several ways of constructing such an arrangement. We could introduce companion Cells, use a specialised Lock, devise a wrapper or seek cooperation from the asset’s existing Type implementation.</p>
+<p>The appropriate choice depends on the application. Nevertheless, the author of a new protocol must often accommodate architectural decisions made by the author of an earlier one.</p>
+<p>I became curious about a simpler and more intuitice arrangement. Suppose the asset retains its original monetary rules and acquires additional validation relationships throughout its existence. Each relationship is represented explicitly in the ledger.</p>
+<p>I am tentatively calling this proposed model Polytype.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/2/2fb4fe1abec63ee98b9acb7634d903239ddead34.png" data-download-href="https://talk.nervos.org/uploads/default/2fb4fe1abec63ee98b9acb7634d903239ddead34" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/2/2fb4fe1abec63ee98b9acb7634d903239ddead34_2_557x500.png" alt="image" data-base62-sha1="6O2do91tUTWMQ0O9cqEOwpaXSrG" width="557" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/2/2fb4fe1abec63ee98b9acb7634d903239ddead34_2_557x500.png, https://talk.nervos.org/uploads/default/optimized/2X/2/2fb4fe1abec63ee98b9acb7634d903239ddead34_2_835x750.png 1.5x, https://talk.nervos.org/uploads/default/original/2X/2/2fb4fe1abec63ee98b9acb7634d903239ddead34.png 2x" data-dominant-color="EEEEEE"></a></div><p></p>
+<p><em>Figure 3. Independent constraints attached to a common Cell. Companion Cells remain useful wherever separate state or independent concurrency is required.</em></p>
+<p>A Polytype Cell retains one Lock and an atomic unit of state, together with a collection of independently identified Types. Each attached Type contributes its own conditions for the legitimacy of a transaction.</p>
+<p>For three Types, A, B and C, the admissible transactions satisfy:</p>
+<p><img src="https://talk.nervos.org/uploads/default/original/2X/8/82fe325278c96db476f4666617737926a675c093.png" alt="image" data-base62-sha1="iGOGsmYyKdYoK2UXrxnIFqCxOLh" width="333" height="73"></p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/6/6a906c931214aff46aba5ed3cea12d4ca9276a3f.png" data-download-href="https://talk.nervos.org/uploads/default/6a906c931214aff46aba5ed3cea12d4ca9276a3f" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/6/6a906c931214aff46aba5ed3cea12d4ca9276a3f_2_690x473.png" alt="image" data-base62-sha1="fcI2qmntbexokErnO0fHeypL3un" width="690" height="473" srcset="https://talk.nervos.org/uploads/default/optimized/2X/6/6a906c931214aff46aba5ed3cea12d4ca9276a3f_2_690x473.png, https://talk.nervos.org/uploads/default/original/2X/6/6a906c931214aff46aba5ed3cea12d4ca9276a3f.png 1.5x, https://talk.nervos.org/uploads/default/original/2X/6/6a906c931214aff46aba5ed3cea12d4ca9276a3f.png 2x" data-dominant-color="ECEEED"></a></div><p></p>
+<p><em>The admissible transaction space is the intersection of the attached validators’ conditions.</em></p>
+<p>The composition rule is deliberately simple. Given a common transaction context, every attached validator must accept the proposed transition.</p>
+<p>(Of course, the intersection may be empty. Three perfectly respectable protocols, each behaving exactly as intended, could collectively produce an asset that nobody can ever spend. We would have invented a very sophisticated brick.)</p>
+<h1><a name="p-27844-iii-polytype-3" class="anchor" href="https://talk.nervos.org#p-27844-iii-polytype-3" aria-label="Heading link"></a><strong>III. Polytype</strong></h1>
+<h2><a name="p-27844-a-cell-and-its-relationships-4" class="anchor" href="https://talk.nervos.org#p-27844-a-cell-and-its-relationships-4" aria-label="Heading link"></a><strong>A Cell and its relationships</strong></h2>
+<p>Returning to Doitian’s 2019 proposal, we might find some practical advantages in separating Script descriptions from the Cells that reference them.</p>
+<p>A transaction containing many Cells governed by the same protocol has little reason to encode its complete Script description repeatedly. A transaction-level Script Dictionary could provide a compact representation, whilst the persistent ledger retains independently verifiable Script identities.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/4/47d717602756f8407213151a6470485b917cffab.png" data-download-href="https://talk.nervos.org/uploads/default/47d717602756f8407213151a6470485b917cffab" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/4/47d717602756f8407213151a6470485b917cffab_2_690x499.png" alt="image" data-base62-sha1="afwJlxxrtLLBniiUPEYgOyvLRWj" width="690" height="499" srcset="https://talk.nervos.org/uploads/default/optimized/2X/4/47d717602756f8407213151a6470485b917cffab_2_690x499.png, https://talk.nervos.org/uploads/default/original/2X/4/47d717602756f8407213151a6470485b917cffab.png 1.5x, https://talk.nervos.org/uploads/default/original/2X/4/47d717602756f8407213151a6470485b917cffab.png 2x" data-dominant-color="EBECED"></a></div><p></p>
+<p><em>Figure 4. A possible Polytype encoding inspired by the 2019 Script collection. Dictionary indices are local to a transaction; persistent Script identities remain independently verifiable.</em></p>
+<p>The choice between hashes, indices and other forms of reference is largely a matter of representation. We could explore any of these without altering the fundamental validation semantics of Polytype.</p>
+<p>What matters semantically is that the relationship between Cells and Types becomes many-to-many. Each Cell can participate in several protocols, and each protocol can govern arbitrarily many Cells.</p>
+<p>This has a particularly interesting consequence for something CKB developers are already familiar with: Script Groups.</p>
+<h2><a name="p-27844-overlapping-type-groups-5" class="anchor" href="https://talk.nervos.org#p-27844-overlapping-type-groups-5" aria-label="Heading link"></a><strong>Overlapping Type Groups</strong></h2>
+<p>One of the virtues of CKB’s Type Script Groups is that they allow a programme to reason about several related Cells at once.</p>
+<p>An asset validator, for instance, can examine a collection of consumed token Cells and compare their combined balance with that of the newly created Cells. The rules of monetary conservation are expressed over the group as a whole.</p>
+<p>Under Polytype, a Cell may belong to several Type Groups simultaneously.</p>
+<p>Consider two token Cells governed by the same monetary validator, A. One carries an additional vesting constraint, B, whilst the other carries a lending constraint, C.</p>
+<p>Both belong to the conservation group of A. Their respective obligations are examined independently by B and C.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/5/5b6f1cac3309ac7e42b29f1f4d2b70394b0cda70.png" data-download-href="https://talk.nervos.org/uploads/default/5b6f1cac3309ac7e42b29f1f4d2b70394b0cda70" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/5/5b6f1cac3309ac7e42b29f1f4d2b70394b0cda70_2_629x500.png" alt="image" data-base62-sha1="d2RvnKuzDnqNXpveNkKT1bPvjPO" width="629" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/5/5b6f1cac3309ac7e42b29f1f4d2b70394b0cda70_2_629x500.png, https://talk.nervos.org/uploads/default/original/2X/5/5b6f1cac3309ac7e42b29f1f4d2b70394b0cda70.png 1.5x, https://talk.nervos.org/uploads/default/original/2X/5/5b6f1cac3309ac7e42b29f1f4d2b70394b0cda70.png 2x" data-dominant-color="F4F4F4"></a></div><p></p>
+<p><em>Figure 5. One proposed transaction induces three overlapping Type Groups. Monetary conservation is evaluated across all three Cells; the additional validators evaluate their respective groups. Acceptance depends upon the actual rules of B and C.</em></p>
+<p>This is perhaps the most interesting property of the proposed model. An asset could acquire an additional policy without thereby acquiring a different monetary identity or becoming separated from its original conservation domain.</p>
+<p>Validator A sees the Cells relevant to its monetary rules. B sees those participating in the vesting arrangement. C sees those participating in the lending agreement.</p>
+<p>The runtime derives these groups from the complete Script identities and authenticated contents of the consumed and newly created Cells.</p>
+<p>Doitian’s OTX research becomes especially relevant here. A validator’s understanding of which Cells belong to its group is part of its security model. Group membership must be derived independently of the transaction builder’s intentions.</p>
+<p>There is, naturally, a question of data representation. Independently developed validators require compatible ways of interpreting the state they govern. Phroi’s earlier exploration of separate data regions deserves further attention in this regard.</p>
+<p>I would like to establish the grouping semantics first. There is plenty of room to experiment with how the underlying data ought to be organised.</p>
+<h2><a name="p-27844-the-evolution-of-constraints-6" class="anchor" href="https://talk.nervos.org#p-27844-the-evolution-of-constraints-6" aria-label="Heading link"></a><strong>The evolution of constraints</strong></h2>
+<p>An interesting consequence of Polytype is that the relationships between a Cell and its governing protocols can themselves evolve.</p>
+<p>An asset may acquire a collateral constraint when pledged against a loan and discharge it upon repayment. An immutable-content validator might forbid its own removal, whilst a governance validator might permit its replacement under certain conditions.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/7/7d2e9236231227c96417d2536e77ae0f596eafab.png" data-download-href="https://talk.nervos.org/uploads/default/7d2e9236231227c96417d2536e77ae0f596eafab" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/7/7d2e9236231227c96417d2536e77ae0f596eafab_2_685x500.png" alt="image" data-base62-sha1="hRpsDXZWB25HAyFdfD5qnLHQaHF" width="685" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/7/7d2e9236231227c96417d2536e77ae0f596eafab_2_685x500.png, https://talk.nervos.org/uploads/default/optimized/2X/7/7d2e9236231227c96417d2536e77ae0f596eafab_2_1027x750.png 1.5x, https://talk.nervos.org/uploads/default/original/2X/7/7d2e9236231227c96417d2536e77ae0f596eafab.png 2x" data-dominant-color="EDEEEC"></a></div><br>
+<em>Figure 6. The attachment and removal of a constraint are themselves validated state transitions. The asset retains its original logical Type identity throughout.</em><p></p>
+<p>Since validation groups are derived from both consumed and newly created Cells, removing a Type remains subject to that Type’s own rules. The existing distinction between spending authority and validation authority is preserved.</p>
+<p>This opens up a possibility I find particularly compelling: an asset created today could participate in a protocol invented years later, without its original developer having anticipated that particular relationship.</p>
+<p>I think of this as a form of open-world composability.</p>
+<h1><a name="p-27844-iv-metatype-an-experiment-on-ckb-7" class="anchor" href="https://talk.nervos.org#p-27844-iv-metatype-an-experiment-on-ckb-7" aria-label="Heading link"></a><strong>IV. Metatype: an experiment on CKB</strong></h1>
+<p>How much of the proposed semantics could we already express on CKB?</p>
+<p><a class="mention" href="https://talk.nervos.org/u/janx">@janx</a>’s earlier suggestion of a common Meta Type provides a particularly promising starting point. CKB’s RISC-V execution environment gives us considerable freedom to experiment with the interpretation of a Cell without changing the consensus-level structure of the Cell itself.</p>
+<p>I would like to develop it a bit further here as a common composition mechanism occupying the ordinary Type Script slot. A Metatype Cell commits to a collection of logical Types, with the wrapper responsible for enforcing their validation.</p>
+<p>The difficulty lies in preserving the grouping semantics described earlier.</p>
+<p>Suppose two CKB Cells use Metatype, one carrying logical Types A and B, the other carrying A and C. Depending on their physical Script representation, they may belong to different CKB Type Script Groups.</p>
+<p>Yet A must be able to reason about both Cells together.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/b/b107b22c4d6491ebd0256745e797696fac146006.png" data-download-href="https://talk.nervos.org/uploads/default/b107b22c4d6491ebd0256745e797696fac146006" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/b/b107b22c4d6491ebd0256745e797696fac146006_2_526x500.png" alt="image" data-base62-sha1="pg503gi874rSFcYYTx44uhgRS62" width="526" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/b/b107b22c4d6491ebd0256745e797696fac146006_2_526x500.png, https://talk.nervos.org/uploads/default/optimized/2X/b/b107b22c4d6491ebd0256745e797696fac146006_2_789x750.png 1.5x, https://talk.nervos.org/uploads/default/original/2X/b/b107b22c4d6491ebd0256745e797696fac146006.png 2x" data-dominant-color="EDEEEE"></a></div><p></p>
+<p><em>Figure 7. Metatype reconstructs logical Type Groups across differently composed physical CKB Cells. M₁ and M₂ denote distinct physical Script identities in this example.</em></p>
+<p>Simply spawning the constituent validators would leave this problem unresolved. A validator invoked through spawn does not automatically acquire a new understanding of its Script identity or the boundaries of its logical group.</p>
+<p>Metatype must reconstruct the relevant groups across the transaction, deriving their membership from authenticated manifests and verifying that each participating Cell is subject to the appropriate enforcement mechanism. Each validator must then be provided with an execution context consistent with its logical Type identity and group membership.</p>
+<p>The research objective can be expressed rather simply:</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/6/60ef3e4faf46ce3588af16d63440f6e8f03c86cf.png" data-download-href="https://talk.nervos.org/uploads/default/60ef3e4faf46ce3588af16d63440f6e8f03c86cf" title="image"><img src="https://talk.nervos.org/uploads/default/original/2X/6/60ef3e4faf46ce3588af16d63440f6e8f03c86cf.png" alt="image" data-base62-sha1="dPwpEBXkSYpNveoSL2Iwh46QvbF" width="501" height="107"></a></div><p></p>
+<p><strong>(Here, E translates a supported logical transaction into its physical CKB representation.)</strong></p>
+<p>Within the supported domain, the two environments ought to agree on the validity of the same proposed transition. Establishing this equivalence also requires Metatype to reject malformed representations and attempts to conceal or discard existing validation obligations.</p>
+<p>Polytype and Metatype as two implementations of a common logical validation model. Establishing semantic equivalence between the two would itself be a worthwhile research objective.</p>
+<p><em>There is a pleasant research opportunity here for a DSL such as CellScript as well.</em> Contracts compiled against a sufficiently precise logical validation interface could potentially target both environments.</p>
+<p>I am particularly keen to explore Metatype independently on CKB. Even if the native Polytype experiment never leaves the laboratory, there may be useful things we can learn and put into production on L1.</p>
+<h2><a name="p-27844-where-our-existing-work-comes-together-8" class="anchor" href="https://talk.nervos.org#p-27844-where-our-existing-work-comes-together-8" aria-label="Heading link"></a><strong>Where our existing work comes together</strong></h2>
+<p>We can see that Hanssen’s SSRI provides a means for scripts to expose information and executable behaviour. Wilfrid’s IDL provides a vocabulary for describing interfaces. CoBuild and OTX concern the construction and authorisation of transactions involving independent participants. ProtocolBundle coordinates requirements arising from independently compiled contracts.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/b/be69eea59596f70cf87251e5af2e77716799cb0b.png" data-download-href="https://talk.nervos.org/uploads/default/be69eea59596f70cf87251e5af2e77716799cb0b" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/b/be69eea59596f70cf87251e5af2e77716799cb0b_2_559x500.png" alt="image" data-base62-sha1="ratG2DXVJrjE2eEFkhbI4iub7Un" width="559" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/b/be69eea59596f70cf87251e5af2e77716799cb0b_2_559x500.png, https://talk.nervos.org/uploads/default/optimized/2X/b/be69eea59596f70cf87251e5af2e77716799cb0b_2_838x750.png 1.5x, https://talk.nervos.org/uploads/default/original/2X/b/be69eea59596f70cf87251e5af2e77716799cb0b.png 2x" data-dominant-color="ECEEED"></a></div><p></p>
+<p><em>Figure 8. Protocol discovery, interface description, transaction construction, authorisation and validation within a common composition model. The layers indicate complementary responsibilities rather than mandatory dependencies.</em></p>
+<p>Polytype and Metatype give these capabilities a more explicit object upon which to operate.</p>
+<p>A validator might describe the evidence required to discharge an obligation. A wallet could discover this information and obtain suitable construction logic. Several protocols could contribute requirements to a partially constructed transaction, which could then be examined against their combined conditions.</p>
+<p>I also find Phroi’s suggestion of interpreting Cell data through SSRI-like methods particularly intriguing.</p>
+<p>An iCKB receipt, for example, might expose its economic relationship with CKB through a commonly understood asset interface, despite having a physical representation quite different from that of an ordinary UDT.</p>
+<p>Given sufficiently expressive interfaces, an application might learn something meaningful about an unfamiliar asset without having been written specifically for it.</p>
+<p>We would still have a great deal of work to do in establishing shared semantic conventions. Fortunately, many of the people I mentioned at the beginning of this article are already working on precisely these questions.</p>
+<h1><a name="p-27844-v-an-open-world-of-cells-9" class="anchor" href="https://talk.nervos.org#p-27844-v-an-open-world-of-cells-9" aria-label="Heading link"></a><strong>V. An open world of Cells</strong></h1>
+<p>This brings me back to <a class="mention" href="https://talk.nervos.org/u/jm9k">@jm9k</a>’s question about Myelin.</p>
+<p>Myelin was originally conceived around close compatibility with CKB’s existing transaction and execution semantics. With Cell Model v1.5 still very much a <code>todo!()</code>, one possible direction is to explore native Polytype in a fast PoS execution layer, with Metatype providing a corresponding representation on L1. A Myelin session might offer another environment in which to investigate some of the same validation semantics, albeit with different assumptions about state progression and settlement.</p>
+<p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/5/569dd85e4d9172c3e863965f9e0f87eb575395da.png" data-download-href="https://talk.nervos.org/uploads/default/569dd85e4d9172c3e863965f9e0f87eb575395da" title="image"><img src="https://talk.nervos.org/uploads/default/optimized/2X/5/569dd85e4d9172c3e863965f9e0f87eb575395da_2_501x500.png" alt="image" data-base62-sha1="cmff8LzAXbNilvDfdoBujm0tnGW" width="501" height="500" srcset="https://talk.nervos.org/uploads/default/optimized/2X/5/569dd85e4d9172c3e863965f9e0f87eb575395da_2_501x500.png, https://talk.nervos.org/uploads/default/optimized/2X/5/569dd85e4d9172c3e863965f9e0f87eb575395da_2_751x750.png 1.5x, https://talk.nervos.org/uploads/default/original/2X/5/569dd85e4d9172c3e863965f9e0f87eb575395da.png 2x" data-dominant-color="EAEEED"></a></div><p></p>
+<p><em>Figure 9. Native Polytype execution and Metatype enforcement on CKB. State authentication, settlement and exclusive spending authority require their own cross-layer mechanisms.</em></p>
+<p>I find the prospect of an object travelling between these environments rather intriguing. An asset might undergo thousands of transitions elsewhere before returning to CKB. Ideally, the validators governing its behaviour could retain their logical identities throughout this journey, even as their physical representation changes.</p>
+<p>Phroi has previously expressed reservations about general-purpose L2 development within the Nervos ecosystem. I do share his concern about devoting years to infrastructure that ultimately does little to improve what developers can accomplish on L1.</p>
+<p>This is one of the reasons I am keen to give Metatype independent utility. An experimental execution environment could serve as somewhere to investigate more ambitious architectural ideas; the useful ones could find their way back into CKB through mechanisms available to us today.</p>
+<p>I suspect some of our existing abstractions will survive this exercise remarkably well. Others may become simpler. A few may turn out to have been elaborate solutions to problems peculiar to the original arrangement of script slots.</p>
+<p>Finding out which is which should be rather good fun.</p>
+            <p><small>4 posts - 2 participants</small></p>
+            <p><a href="https://talk.nervos.org/t/what-else-could-a-cell-become-1/11370">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/what-else-could-a-cell-become-1/11370</link>
+          <pubDate>Thu, 26 Nov 2026 09:10:10 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11370</guid>
+          <source url="https://talk.nervos.org/t/what-else-could-a-cell-become-1/11370.rss">What Else Could a Cell Become ? [1]</source>
+        </item>
         <item>
           <title>Spark Program | Sigsheet: a unified standard for signing CKB multisig transactions</title>
           <dc:creator><![CDATA[ILE_LABS]]></dc:creator>
@@ -557,7 +1160,7 @@
 <li><strong>Testnet Early Adopters:</strong> Are any teams building on Pudge interested in testing <code>@oracell/sdk</code> in a live dApp (lending, DEX, or hedging) and sharing integration friction points?</li>
 </ol>
 <p>Thanks in advance for taking a look—any critique on the verifier design, witness format, or roadmap priorities is very welcome.</p>
-            <p><small>2 posts - 2 participants</small></p>
+            <p><small>3 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/oracell-contention-free-witness-oracle-for-nervos-ckb-phase-1-mvp-live-on-pudge-feedback-welcome/11368">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/oracell-contention-free-witness-oracle-for-nervos-ckb-phase-1-mvp-live-on-pudge-feedback-welcome/11368</link>
@@ -649,7 +1252,7 @@
 </ul>
 <p>It’s on <strong>testnet</strong>. Look for the gold <strong>Free entry</strong> races: you can join those without paying anything. Or grab some testnet CKB from the faucet and host your own, and share the link with friends: it shows a preview card of the race.</p>
 <p>Thanks for reading! <img src="https://talk.nervos.org/images/emoji/apple/chequered_flag.png?v=15" title=":chequered_flag:" class="emoji" alt=":chequered_flag:" loading="lazy" width="20" height="20"></p>
-            <p><small>3 posts - 2 participants</small></p>
+            <p><small>5 posts - 4 participants</small></p>
             <p><a href="https://talk.nervos.org/t/crowns-a-live-3d-car-race-on-ckb-where-the-chain-is-the-referee/11367">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/crowns-a-live-3d-car-race-on-ckb-where-the-chain-is-the-referee/11367</link>
@@ -4328,1113 +4931,6 @@ Owners may not engage (then published as independent work, disclosed); fixtures 
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-11263</guid>
           <source url="https://talk.nervos.org/t/ckb-mixer-tornado-cash-on-ckb/11263.rss">CKB Mixer(混币器)——Tornado Cash on CKb</source>
-        </item>
-        <item>
-          <title>[DIS] CKB Productathon: Ship on CKB (Kisumu, Kenya)</title>
-          <dc:creator><![CDATA[Fidelcoder]]></dc:creator>
-          <category>CKB Community Fund DAO</category>
-          <description><![CDATA[
-            <h2><a name="p-27574-lead-and-community-links-1" class="anchor" href="https://talk.nervos.org#p-27574-lead-and-community-links-1" aria-label="Heading link"></a><strong>Lead and community links</strong></h2>
-<p><strong>FidelCoder – Blockchain Educator &amp; Developer</strong></p>
-<p>FidelCoder is a distinguished blockchain expert and community leader in Africa, renowned for designing scalable decentralized systems. As an educator, he excels at demystifying complex blockchain concepts, guiding learners through building protocols and decentralized applications (DApps) with clarity and precision. His hands-on approach and deep technical knowledge make him a pivotal force in equipping participants with the skills to innovate on CKB Productathon, amplifying the program’s technical impact.</p>
-<ul>
-<li>
-<p>X: <a href="https://x.com/GriffinOduol" class="inline-onebox" rel="noopener nofollow ugc">gr3ffoduol.eth (@GriffinOduol) / X</a></p>
-</li>
-<li>
-<p>LinkedIn: <a href="https://www.linkedin.com/in/griffins-oduol-a138b11b4/" rel="noopener nofollow ugc">https://www.linkedin.com/in/griffins-oduol-a138b11b4/</a></p>
-</li>
-<li>
-<p>GitHub: <a href="https://github.com/FidelCoder" class="inline-onebox" rel="noopener nofollow ugc">FidelCoder (Fidel) · GitHub</a></p>
-</li>
-</ul>
-<p><strong>Umojaverse</strong></p>
-<ul>
-<li>
-<p>X: <a href="https://x.com/Umojaverse" class="inline-onebox" rel="noopener nofollow ugc">Umojaverse (@Umojaverse) / X</a></p>
-</li>
-<li>
-<p>Website:<a href="https://umojaverse.xyz" rel="noopener nofollow ugc"> umojaverse.xyz</a></p>
-</li>
-<li>
-<p>LinkedIn: <a href="https://www.linkedin.com/company/umojaversepeeps/posts/?viewAsMember=true" rel="noopener nofollow ugc">https://www.linkedin.com/company/umojaversepeeps/posts/?viewAsMember=true</a></p>
-</li>
-<li>
-<p>Instagram: <a href="https://www.instagram.com/umojaversepeeps/" rel="noopener nofollow ugc">https://www.instagram.com/umojaversepeeps/</a></p>
-</li>
-</ul>
-<h2><a name="p-27574-summary-2" class="anchor" href="https://talk.nervos.org#p-27574-summary-2" aria-label="Heading link"></a><strong>Summary</strong></h2>
-<p>Umojaverse is an Africa-focused builder community that brings blockchain, web3 and general tech together from the grassroots and across borders, so people learn and build products of real value. Through campus tours, ideathons, workshops and hackerhouses, it takes people from first curiosity to working prototypes.</p>
-<p>The CKB Productathon is a competitive programme in Kenya that turns builders into teams with live products on CKB mainnet. It runs in two parts. The first is virtual: expert-led training on CKB technology and on building a startup, while teams ship and gather real users. The second is a two-day physical hackerhouse on the shore of Lake Victoria, where teams that have gone live build, demo and pitch for prizes. Teams with a working product and teams with a new idea and a credible execution plan can both apply, and the aim is the same: products that ship, win user validation and keep growing.</p>
-<ul>
-<li>
-<p><strong>Ask:</strong> $10,925 for the full programme, from planning to follow-up.</p>
-</li>
-<li>
-<p><strong>Timeline (tentative):</strong> planning in December 2026, programme from January to early February 2027, follow-up support until mid-March 2027.</p>
-</li>
-<li>
-<p><strong>Teams:</strong> up to 15 teams of three at the hackerhouse.</p>
-</li>
-<li>
-<p><strong>The rule:</strong> only teams live on CKB mainnet can enter the hackerhouse, and to win a prize a team must show on-chain activity from at least 5 beta users.</p>
-</li>
-</ul>
-<h2><a name="p-27574-why-this-is-needed-why-umojaverse-why-now-3" class="anchor" href="https://talk.nervos.org#p-27574-why-this-is-needed-why-umojaverse-why-now-3" aria-label="Heading link"></a><strong>Why this is needed, why Umojaverse, why now</strong></h2>
-<p><strong>Why it is needed.</strong> Kenya has talented builders and no shortage of events, but too few of them ship products that real users depend on. Workshops and ideathons tend to end at the idea or the demo, and the hard part that follows has little support: deploying to mainnet, finding the first users and keeping the product running.</p>
-<p>Three gaps hold builders back. There is no structured path from a first contract to a mainnet product. Mentors who have shipped and found users are scarce and hard to reach outside the big cities. And builders work alone, without a room of peers building beside them to share fixes, pressure and momentum.</p>
-<p>CKB makes this gap worth closing. Its cell model, RISC-V based virtual machine and flexible scripts let builders create their own product logic, not just move tokens, but that flexibility is hard to learn alone. Guided, hands-on training turns it into an advantage, and every product that goes live on mainnet with real users is lasting proof of adoption for the ecosystem. Making live mainnet use the measure of success changes the incentive: builders are rewarded for shipping and getting users, not for attending.</p>
-<p><strong>Why Umojaverse.</strong> Umojaverse is a builder community, not a one-off event organiser, and this programme is the next step of work we already do. We take builders from first curiosity to working prototypes through campus tours, ideathons, workshops and hackerhouses, in person across Kenya and, through the Pulse East Africa HackFest, in five African countries. That gives this programme five things it needs:</p>
-<ul>
-<li>
-<p><strong>Reach.</strong> An established builder community and presence across Kenya and wider Africa, so the open call draws serious applicants.</p>
-</li>
-<li>
-<p><strong>Proven delivery.</strong> Experience running multi-day, in-person hackerhouses and multi-country events, from venues and logistics to mentors, judging and content.</p>
-</li>
-<li>
-<p><strong>Teaching depth.</strong> A lead organiser who is a blockchain educator and developer, backed by a network of seasoned builders to teach, mentor and judge.</p>
-</li>
-<li>
-<p><strong>A CKB footing.</strong> We are already introducing Kenyan builders to CKB, and we know the questions they ask and where they get stuck.</p>
-</li>
-<li>
-<p><strong>Follow-through.</strong> We stay with builders after the event, through follow-up support and public recordings that keep teaching long after the programme ends.</p>
-</li>
-</ul>
-<p>This means we can run the programme end to end: recruit the teams, teach them, bring them together, showcase them and keep supporting them.</p>
-<p><strong>Why now.</strong> Three things line up. First, the tools are ready: builder tooling such as CCC and OffCKB makes it practical to go from a first script to a mainnet deployment inside a short programme. Second, builder attention in Kenya is warm and will cool without a concrete next step. Recent CKB activity needs a destination with a deadline, prizes and a place to build. Third, the calendar works: planning in December and a January start use the weeks after the holidays, and teams that ship to mainnet by early February get months of real use to prove adoption before mid-year. A month of follow-up support then turns a weekend of building into traction.</p>
-<h2><a name="p-27574-previous-work-4" class="anchor" href="https://talk.nervos.org#p-27574-previous-work-4" aria-label="Heading link"></a><strong>Previous work</strong></h2>
-<p>Umojaverse has run builder programmes across Kenya, from first workshops to hackerhouses. Five pieces of work matter most for this proposal.</p>
-<ul>
-<li>
-<p><strong>Campus builder programme.</strong> Visited five Kenyan universities and reached 503 developers. They produced 104 project ideas, and 23 submissions reached the hackerhouse. It showed us that the drop-off after ideas is the real problem, which this programme targets.</p>
-</li>
-<li>
-<p><strong>Pulse East Africa HackFest.</strong> Held in Kenya, Ethiopia, Rwanda, South Africa and Uganda, with at least 90 participants in each country.</p>
-</li>
-<li>
-<p><strong>CKB Builders Workshop, Kisumu (16 October 2026).</strong> 70 RSVPs, 37 attendees and about 11 builders with laptops ready to build.</p>
-</li>
-<li>
-<p><strong>Anything and Everything CKB X Space (14 November 2026).</strong> A public session with CKB builders and community members, where the community’s interest in building on CKB showed.</p>
-</li>
-<li>
-<p><strong>Community.</strong> Ongoing builder community across Kenya and wider Africa through Umojaverse’s X account, events and campus presence.</p>
-</li>
-</ul>
-<p><strong>What these taught us.</strong> Attendance does not predict shipping, so the programme rewards on-chain proof of use. People who build together ship more, so the programme includes a physical hackerhouse. Builders also need practical guidance on getting users, so half of the sessions teach startup building.</p>
-<p><strong>Proof of work.</strong></p>
-<ul>
-<li>
-<p>Photos from these events and the HackFest, Google Drive: <a href="https://drive.google.com/drive/folders/1HVpd353eCFPX03cG4GNJ7vjgIAd_5eds?usp=sharing" class="inline-onebox" rel="noopener nofollow ugc">Past Events – Google Drive</a> and <a href="https://drive.google.com/drive/folders/1p_EuYRvLQ3Tv2KaML4FUilUVn3t1Hm9S" class="inline-onebox" rel="noopener nofollow ugc">MyEventsPhotos – Google Drive</a></p>
-</li>
-<li>
-<p>CKB Builders Workshop: <a href="https://talk.nervos.org/t/ckb-builders-workshop-in-kisumu-37-people-showed-up-ready-to-learn-and-build/11012" class="inline-onebox">CKB Builders Workshop in Kisumu: 37 people showed up ready to learn and build</a></p>
-</li>
-<li>
-<p>Anything &amp; Everything CKB, space announcement: <a href="https://talk.nervos.org/t/anything-everything-ckb-join-our-upcoming-x-space/11091" class="inline-onebox">Anything &amp; Everything CKB: Join Our Upcoming X Space</a></p>
-</li>
-<li>
-<p>Anything &amp; Everything CKB, X Space recording: <a href="https://x.com/Umojaverse/status/2121649307493265551?a=JoiiD3lF_6fF0H2ZhPU&amp;s=20" class="inline-onebox" rel="noopener nofollow ugc">Umojaverse on X: "https://t.co/yVbLhT4w2w" / X</a></p>
-</li>
-<li>
-<p>More X posts and validation material: [links, to be added]</p>
-</li>
-</ul>
-<h2><a name="p-27574-programme-format-and-execution-flow-5" class="anchor" href="https://talk.nervos.org#p-27574-programme-format-and-execution-flow-5" aria-label="Heading link"></a><strong>Programme format and execution flow</strong></h2>
-<p>The programme has two parts: a virtual phase, where teams learn and ship to mainnet, and a two-day physical hackerhouse for the teams that make it. The timeline below is tentative and may shift as planning firms up.</p>
-<ul>
-<li>
-<p><strong>Plan, open call and selection (December 2026).</strong> Curriculum, instructors, venue and partners are confirmed. The open call (14 to 27 December) takes live products and strong plans, and selected teams are announced on Monday 4 January.</p>
-</li>
-<li>
-<p><strong>Virtual phase (9 to 26 January).</strong> Starts five days after acceptance. Eight sessions, two a day over four days across three weeks: Saturday 9, Tuesday 12, Tuesday 19 and Tuesday 26 January. Up to 30 teams ship to mainnet.</p>
-</li>
-<li>
-<p><strong>Mainnet submission (27 to 28 January).</strong> Two extra days to deploy to mainnet and submit. Beta testers are not required yet.</p>
-</li>
-<li>
-<p><strong>Review and acceptance (29 to 31 January).</strong> Two days of review, then hackerhouse teams are announced on Sunday 31 January.</p>
-</li>
-<li>
-<p><strong>Preparation and travel (1 to 5 February).</strong> Four days to gather beta users and prepare, with travel on Friday 5 February.</p>
-</li>
-<li>
-<p><strong>Hackerhouse by Lake Victoria (Saturday 6 to Sunday 7 February).</strong> Up to 15 teams, with pitches and prizes.</p>
-</li>
-<li>
-<p><strong>Follow-up month (8 February to 12 March).</strong> Mentor support, a 30-day live check and a closing showcase.</p>
-</li>
-<li>
-<p><strong>Final report (by Wednesday 24 March).</strong></p>
-</li>
-</ul>
-<p>The programme has three gates:</p>
-<ul>
-<li>
-<p><strong>Selection:</strong> a live product or a strong execution plan.</p>
-</li>
-<li>
-<p><strong>Mainnet gate (28 January):</strong> the product is deployed on CKB mainnet to enter the hackerhouse.</p>
-</li>
-<li>
-<p><strong>Prize gate (7 February):</strong> on-chain activity from at least 5 beta users, shown at the demos. Winners are named, and the 30-day check follows.</p>
-</li>
-</ul>
-<h2><a name="p-27574-applications-selection-and-the-mainnet-gate-6" class="anchor" href="https://talk.nervos.org#p-27574-applications-selection-and-the-mainnet-gate-6" aria-label="Heading link"></a><strong>Applications, selection and the mainnet gate</strong></h2>
-<p><strong>Who can apply.</strong> Teams of up to three builders based in Kenya. The programme does not target existing products only. Live products and new ideas are both accepted, provided a new idea comes with a credible plan to execute. The aim for every team is a product that ships, earns user validation and grows into real adoption.</p>
-<p><strong>How applications are scored.</strong> Up to 30 teams are admitted to the virtual phase. Applications are scored on execution evidence (30), CKB integration (25), user and problem (20), team (15) and reuse and impact (10). A live product with early users scores well on execution evidence, and a new idea needs a clear build plan and a team able to carry it out.</p>
-<p><strong>The mainnet gate and prize rule.</strong> To enter the hackerhouse, a team must have deployed its product to CKB mainnet and submitted it by Thursday 28 January. Beta testers are not required at that point. To win a prize, a team must prove on-chain activity from at least 5 distinct beta users who actually use the product, not team members testing themselves. The organisers verify this with transaction links and tester confirmation. If more than 15 teams qualify, places go by application score and the strength of the live product.</p>
-<h2><a name="p-27574-virtual-sessions-7" class="anchor" href="https://talk.nervos.org#p-27574-virtual-sessions-7" aria-label="Heading link"></a><strong>Virtual sessions</strong></h2>
-<p>Eight sessions run two a day over four days. The four startup sessions, on how to build and grow a startup, run from 12:00 to 14:00 EAT, and the four technical CKB sessions run in the evening from 18:00 EAT. Instructors are seasoned builders who have shipped products.</p>
-<ul>
-<li>
-<p><strong>Saturday 9 January.</strong> Startup session, 12:00 to 14:00: from idea to a validated problem. Technical session, evening: CKB fundamentals, covering cells, scripts and the CKB-VM.</p>
-</li>
-<li>
-<p><strong>Tuesday 12 January.</strong> Startup session, 12:00 to 14:00: finding and recruiting your first beta testers. Technical session, evening: building with CCC and OffCKB.</p>
-</li>
-<li>
-<p><strong>Tuesday 19 January.</strong> Startup session, 12:00 to 14:00: metrics, feedback and iteration. Technical session, evening: deploying to mainnet, wallets and user experience.</p>
-</li>
-<li>
-<p><strong>Tuesday 26 January.</strong> Startup session, 12:00 to 14:00: pitching and demo preparation. Technical session, evening: security and advanced patterns.</p>
-</li>
-</ul>
-<p>Weekly mentor office hours support teams between sessions. Every virtual session is recorded and added to the Umojaverse YouTube channel as a CKB learning resource, and the sessions held during the physical phase are added too.</p>
-<h2><a name="p-27574-hackerhouse-judging-and-prizes-8" class="anchor" href="https://talk.nervos.org#p-27574-hackerhouse-judging-and-prizes-8" aria-label="Heading link"></a><strong>Hackerhouse, judging and prizes</strong></h2>
-<p>Up to 15 teams of three gather at a hackerhouse on the shore of Lake Victoria for two days.</p>
-<ul>
-<li>
-<p><strong>Day 1, Saturday 6 February.</strong> Arrival, kickoff and a full day of building, with mentor rounds and an evening checkpoint.</p>
-</li>
-<li>
-<p><strong>Day 2, Sunday 7 February.</strong> Final polish, demos and pitches, judging, results and prizes.</p>
-</li>
-</ul>
-<p><strong>Judging.</strong> A panel of at least three judges drawn from experienced builders, the CKB ecosystem and startup practitioners. Teams are scored on live product and real use (30), CKB integration (25), user and problem (20), pitch and team (15) and reuse and impact (10).</p>
-<p><strong>Prizes.</strong> Four awards totalling $4,000: first place $1,500, second $1,000, third $800 and fourth $700. Only teams with on-chain activity from at least 5 beta users are eligible. Prizes are paid in full once the hackerhouse results are verified.</p>
-<p><strong>Team videos.</strong> Every team at the hackerhouse gets a neat 3-minute video: 1.5 minutes of short pitch or explainer from the team, then 1.5 minutes showing the product flow, edited into one. The videos are published on X, YouTube and TikTok to win distribution, and show both the founders and the product. We expect about 15 videos.</p>
-<h2><a name="p-27574-follow-up-month-9" class="anchor" href="https://talk.nervos.org#p-27574-follow-up-month-9" aria-label="Heading link"></a><strong>Follow-up month</strong></h2>
-<p>From 8 February to 12 March, hackerhouse builders get continued support to keep shipping:</p>
-<ul>
-<li>
-<p>Weekly clinics for product, technical and user-growth questions.</p>
-</li>
-<li>
-<p>A mentor session with experienced builders.</p>
-</li>
-<li>
-<p>Introductions to funders and ecosystem programmes.</p>
-</li>
-<li>
-<p>A 30-day live check on Tuesday 9 March to confirm products are still live and in use.</p>
-</li>
-<li>
-<p>A closing X Space on Friday 12 March where teams showcase their progress.</p>
-</li>
-</ul>
-<h2><a name="p-27574-budget-and-payment-10" class="anchor" href="https://talk.nervos.org#p-27574-budget-and-payment-10" aria-label="Heading link"></a><strong>Budget and payment</strong></h2>
-<p>The programme costs $10,925: $4,000 for prizes and $6,925 for operations, set out below.</p>
-<ul>
-<li>
-<p>Prizes: $4,000</p>
-</li>
-<li>
-<p>Instructors (8 sessions at $100): $800</p>
-</li>
-<li>
-<p>Hackerhouse mentors and judges: $500</p>
-</li>
-<li>
-<p>Meals and refreshments: $1,200</p>
-</li>
-<li>
-<p>Travel support for hackerhouse teams: $700</p>
-</li>
-<li>
-<p>Accommodation for the two hackerhouse days: $1,500</p>
-</li>
-<li>
-<p>Lake-shore house hire, power, internet and audio-visual equipment: $200</p>
-</li>
-<li>
-<p>Organising and coordination: $700</p>
-</li>
-<li>
-<p>Follow-up support: $400</p>
-</li>
-<li>
-<p>Media and promotion: $525</p>
-<ul>
-<li>
-<p>Photographer and videographer for the two days: $400</p>
-</li>
-<li>
-<p>Distribution and promotion on X, YouTube and TikTok: $125</p>
-</li>
-</ul>
-</li>
-<li>
-<p>Branding and merchandise: $400</p>
-</li>
-<li>
-<p><strong>Total: $10925</strong></p>
-</li>
-</ul>
-<p>Instructor and mentor fees reward the expertise that moves teams to mainnet, and travel support and shared accommodation make sure cost does not keep strong teams away, and the team videos give every founder and product lasting distribution. Progress is posted on Nervos Talk after each milestone: planning and open call, virtual phase complete, hackerhouse results, and the final report.</p>
-<h2><a name="p-27574-success-metrics-11" class="anchor" href="https://talk.nervos.org#p-27574-success-metrics-11" aria-label="Heading link"></a><strong>Success metrics</strong></h2>
-<p>Success is measured by live products, not attendance:</p>
-<ul>
-<li>
-<p>30 or more applications.</p>
-</li>
-<li>
-<p>20 to 30 teams admitted to the virtual phase.</p>
-</li>
-<li>
-<p>10 to 15 teams deployed on mainnet and admitted to the hackerhouse.</p>
-</li>
-<li>
-<p>50 to 75 beta users with verified on-chain activity across teams.</p>
-</li>
-<li>
-<p>10 to 15 teams demoing at the hackerhouse.</p>
-</li>
-<li>
-<p>At least 80% of hackerhouse products still live at the 30-day check.</p>
-</li>
-<li>
-<p>All eight virtual sessions and the hackerhouse sessions published on YouTube.</p>
-</li>
-<li>
-<p>Builder write-ups and a final report.</p>
-</li>
-<li>
-<p>15 team videos published on X, YouTube and TikTok.</p>
-</li>
-</ul>
-<h2><a name="p-27574-team-and-asks-12" class="anchor" href="https://talk.nervos.org#p-27574-team-and-asks-12" aria-label="Heading link"></a><strong>Team and asks</strong></h2>
-<p>Umojaverse is the host (<a href="https://x.com/Umojaverse" rel="noopener nofollow ugc">@Umojaverse</a>), with FidelCoder as lead organiser. The hackerhouse is held at a hackerhouse on the shore of Lake Victoria, and instructors are seasoned builders recruited for the programme.</p>
-<p>We ask the CKB ecosystem for more than funding. Each of these makes the programme stronger:</p>
-<ul>
-<li>
-<p><strong>Funding.</strong> $10,925 to run the full programme, as set out in the budget.</p>
-</li>
-<li>
-<p><strong>Technical instructors.</strong> At least two CKB engineers or developer-relations team members to teach or co-teach the technical sessions.</p>
-</li>
-<li>
-<p><strong>A named technical contact.</strong> One person who answers builders’ questions during the virtual phase and the hackerhouse.</p>
-</li>
-<li>
-<p><strong>Judges.</strong> Two judges from the CKB ecosystem for the hackerhouse panel.</p>
-</li>
-<li>
-<p><strong>Introductions.</strong> Warm introductions for winning teams to ecosystem programmes, funders and partners.</p>
-</li>
-<li>
-<p><strong>Amplification.</strong> Sharing the open call and the session recordings through ecosystem channels, so the learning resources reach more builders.</p>
-</li>
-</ul>
-            <p><small>6 posts - 4 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/dis-ckb-productathon-ship-on-ckb-kisumu-kenya/11262">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/dis-ckb-productathon-ship-on-ckb-kisumu-kenya/11262</link>
-          <pubDate>Thu, 19 Nov 2026 05:01:33 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11262</guid>
-          <source url="https://talk.nervos.org/t/dis-ckb-productathon-ship-on-ckb-kisumu-kenya/11262.rss">[DIS] CKB Productathon: Ship on CKB (Kisumu, Kenya)</source>
-        </item>
-        <item>
-          <title>DAO提案公平性疑问？</title>
-          <dc:creator><![CDATA[hao_zhang]]></dc:creator>
-          <category>CKB Community Fund DAO</category>
-          <description><![CDATA[
-            <p>假设，我有50个账户，其中一些账户买了一些金额的ckb，锁定后具备投票资格，那么是否可以发起一个提案，用其中一些账户点赞，再投票，然后盗取DAO资金？，如果50个账户是我的50个朋友呢？或者其他可能性。，那么是不是DAO可以被以这样的方式随意推动提案成功并盗取资金？</p>
-            <p><small>22 posts - 7 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/dao/11261">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/dao/11261</link>
-          <pubDate>Thu, 19 Nov 2026 03:17:43 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>Yes</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11261</guid>
-          <source url="https://talk.nervos.org/t/dao/11261.rss">DAO提案公平性疑问？</source>
-        </item>
-        <item>
-          <title>RFC draft: Lock Proof, proving control of a CKB lock</title>
-          <dc:creator><![CDATA[LusoCryptoLabs]]></dc:creator>
-          <category>Infrastructure</category>
-          <description><![CDATA[
-            <p>We would like feedback on an RFC draft before opening it in nervosnetwork/rfcs. It came up in the review of ckb-devrel/ccc#641.</p>
-<p><strong>What it does.</strong> A site asks a wallet to prove it controls a lock. The wallet signs a transaction that can never be committed: one input at an out point no transaction can create, one output under the lock holding the site’s message. The site rebuilds that transaction, resolves the input itself and runs the lock in CKB-VM. If the lock accepts, the key controls the lock. It is BIP-322 adapted to CKB.</p>
-<p><strong>Why.</strong> A verifier for one signature scheme cannot check a passkey lock, a multisig, an Omnilock in a foreign chain’s mode or a smart account. Running the lock checks all of them with one verifier, and every wallet can sign it with the code it already has.</p>
-<p><strong>What is tested.</strong> 17 signed proofs, replayed by the reference test suite: secp256k1, JoyID main key and sub key (signed in the JoyID app), multisig, anyone-can-pay, Omnilock (Dogecoin, Ethereum, Bitcoin modes), PW-lock, Nostr, the quantum-resistant lock, a smart-account lock. Four of them on mainnet.</p>
-<p><strong>Questions for you.</strong></p>
-<ol>
-<li>Standards Track or Informational?</li>
-<li>Is there a lock you use that this would not cover? The draft lists what it does not cover (relative time locks, locks that need two inputs, locks that do not sign the transaction hash).</li>
-<li>Wallet authors: would you show a proof as a sign-in request, as the draft suggests?</li>
-</ol>
-<p>Reference implementation: <a href="https://github.com/LusoCryptoLabs/ckb-ward" class="inline-onebox" rel="noopener nofollow ugc">GitHub - LusoCryptoLabs/ckb-ward: Ward: lock proof for CKB. Prove control of any CKB lock with a proof transaction that can never land on chain. · GitHub</a> (npm <code>ckb-ward</code>)</p>
-<hr>
-<h1><a name="p-27569-draft-lock-proof-proving-control-of-a-ckb-lock-1" class="anchor" href="https://talk.nervos.org#p-27569-draft-lock-proof-proving-control-of-a-ckb-lock-1" aria-label="Heading link"></a>Draft: Lock Proof, Proving Control of a CKB Lock</h1>
-<p>Category: Standards Track. Status: Proposal.</p>
-<h2><a name="p-27569-abstract-2" class="anchor" href="https://talk.nervos.org#p-27569-abstract-2" aria-label="Heading link"></a>Abstract</h2>
-<p>This RFC defines a way to prove, off chain, that the holder of a key controls a CKB lock script, for any lock that signs the transaction hash. The prover signs a transaction that can never be committed: its only input points at an out point no transaction can create, and its only output, under the claimed lock, holds a message written by the party that asks. The verifier rebuilds that transaction from the lock and the message, resolves the input itself, and runs the lock in CKB-VM. If the lock accepts, the key controls the lock. Nothing moves on chain.</p>
-<p>It follows BIP-322 (generic signed message format for Bitcoin) and serves the purpose EIP-1271 serves for Ethereum contract accounts.</p>
-<h2><a name="p-27569-motivation-3" class="anchor" href="https://talk.nervos.org#p-27569-motivation-3" aria-label="Heading link"></a>Motivation</h2>
-<p>A service sometimes needs to know that the person behind one of its accounts controls a CKB lock. A governance site, for example, counts the Nervos DAO deposits under a lock as that account’s voting weight.</p>
-<p>On CKB a lock is a program. A verifier that checks one signature scheme (secp256k1 with a known message prefix) cannot check a passkey lock, a multisig, an Omnilock in a foreign chain’s mode or a smart-account lock. Each new lock would need new verifier code and new wallet code, and locks that have no message signing at all could never be counted.</p>
-<p>Every wallet can already sign a transaction that spends a cell under its lock. If the proof is such a transaction, every wallet can produce one with the code it has, and one verifier, which runs the lock as the node would, handles every lock.</p>
-<h2><a name="p-27569-specification-4" class="anchor" href="https://talk.nervos.org#p-27569-specification-4" aria-label="Heading link"></a>Specification</h2>
-<p>The key words “MUST”, “MUST NOT”, “SHOULD”, “SHOULD NOT” and “MAY” are to be interpreted as described in RFC 2119.</p>
-<h3><a name="p-27569-terms-5" class="anchor" href="https://talk.nervos.org#p-27569-terms-5" aria-label="Heading link"></a>Terms</h3>
-<ul>
-<li><strong>ckbhash</strong>: BLAKE2b-256 with personalization <code>ckb-default-hash</code>.</li>
-<li><strong>lock hash</strong>: ckbhash of the molecule-serialized <code>Script</code>.</li>
-<li><strong>prover</strong>: the holder of the key, and their wallet.</li>
-<li><strong>platform</strong>: the service that asks for the proof, issues the message and runs the verifier.</li>
-<li><strong>binding</strong>: a platform’s record that links a lock to one of its accounts.</li>
-</ul>
-<h3><a name="p-27569-message-6" class="anchor" href="https://talk.nervos.org#p-27569-message-6" aria-label="Heading link"></a>Message</h3>
-<p>The platform writes the message. It is UTF-8, lines separated by a single LF (0x0a), no trailing LF, at most 1024 bytes, exactly six lines:</p>
-<pre><code class="lang-plaintext">{domain} wants you to prove control of a CKB lock.
-Account: {account}
-Lock hash: {lock hash}
-Chain: {chain}
-Issued at: {issued at}
-Nonce: {nonce}
-</code></pre>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Format</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>domain</td>
-<td>host name of the platform, optional <code>:port</code>; letters, digits, <code>.</code> and <code>-</code></td>
-</tr>
-<tr>
-<td>account</td>
-<td>1 to 256 printable ASCII characters (0x20 to 0x7e), no space at either end</td>
-</tr>
-<tr>
-<td>lock hash</td>
-<td><code>0x</code> and 64 lowercase hex digits: the lock hash of the claimed lock</td>
-</tr>
-<tr>
-<td>chain</td>
-<td><code>0x</code> and 64 lowercase hex digits: the genesis block hash of the chain</td>
-</tr>
-<tr>
-<td>issued at</td>
-<td>RFC 3339 in UTC with <code>Z</code>, optional fraction of a second</td>
-</tr>
-<tr>
-<td>nonce</td>
-<td>1 to 128 characters from <code>A-Z a-z 0-9 . _ ~ -</code>, at least 64 random bits</td>
-</tr>
-</tbody>
-</table>
-</div><p>Mainnet genesis: <code>0x92b197aa1fba0f63633922c61c92375c9c074a93e85963554f5499fe1450d0e5</code>. Testnet genesis: <code>0x10639e0895502b5688a6be8cf69460d76541bfa4821629d86d62ba0aae3f9606</code>.</p>
-<h3><a name="p-27569-proof-transaction-7" class="anchor" href="https://talk.nervos.org#p-27569-proof-transaction-7" aria-label="Heading link"></a>Proof transaction</h3>
-<pre><code class="lang-plaintext">TAG = "CKB lock proof v1\n"                    (18 bytes, ASCII, ends with LF)
-P   = ckbhash(TAG || lock hash || message)     (lock hash as 32 raw bytes, message as UTF-8)
-n   = byte length of the message
-s   = occupied size of the claimed lock        (32 of code hash, 1 of hash type, its args)
-</code></pre>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>version</td>
-<td>0</td>
-</tr>
-<tr>
-<td>cell_deps</td>
-<td>what the lock needs, chosen by the wallet</td>
-</tr>
-<tr>
-<td>header_deps</td>
-<td>what a header-reading lock needs, chosen by the wallet, usually none</td>
-</tr>
-<tr>
-<td>inputs</td>
-<td>exactly one: <code>previous_output = { tx_hash: P, index: 0xffffffff }</code>, <code>since</code> = 0 or a value the wallet sets to satisfy a matured absolute time lock</td>
-</tr>
-<tr>
-<td>outputs</td>
-<td>exactly one: <code>lock</code> = the claimed lock, <code>capacity</code> = (8 + s + n) * 10^8 shannons, no type</td>
-</tr>
-<tr>
-<td>outputs_data</td>
-<td>exactly one: the message bytes</td>
-</tr>
-<tr>
-<td>witnesses</td>
-<td>exactly one: what the lock needs, as the wallet writes it</td>
-</tr>
-</tbody>
-</table>
-</div><p>The verifier resolves the input to the cell <code>{ capacity: 0xffffffffffffffff, lock: the claimed lock, type: none, data: empty }</code>. The prover never supplies it.</p>
-<p>A wallet signs the proof as it would any transaction spending a cell under the lock. A wallet that receives the transaction without the input cell MUST rebuild it from the transaction: capacity u64::MAX, the lock of the only output, no type, empty data. It MUST NOT look the input up on chain, since it does not exist.</p>
-<h3><a name="p-27569-verification-8" class="anchor" href="https://talk.nervos.org#p-27569-verification-8" aria-label="Heading link"></a>Verification</h3>
-<p>Input: the claimed lock L, the message M, the signed transaction T, and the platform’s expectation E: the exact message it issued for this nonce, its domain, the account, the nonce, the chain’s genesis hash from its own configuration, and an age window. A node error means “could not verify”, not “refused”. Steps 1 to 7 read nothing from the chain.</p>
-<ol>
-<li>Refuse when any field of E is missing.</li>
-<li>Parse M. Refuse when it is not the six lines above.</li>
-<li>Refuse unless M equals E’s message byte for byte.</li>
-<li>Refuse unless the lock hash line equals the lock hash of L. Refuse when L is a lock an administrator can open (see Security considerations).</li>
-<li>Refuse unless the domain, account, nonce and chain lines equal E’s, <code>now - issued at</code> is within E’s window, and <code>issued at</code> is at most 60 seconds ahead of <code>now</code>.</li>
-<li>Refuse unless T has exactly one witness and is within the limits below.</li>
-<li>Build the transaction of the previous section from (L, M), copy T’s cell deps, header deps and the input’s <code>since</code> into it, and refuse unless its transaction hash equals T’s.</li>
-<li>Mark the nonce used. Refuse when it was already used.</li>
-<li>Refuse unless the node’s genesis hash equals E’s chain.</li>
-<li>Read every cell dep of T from the node as a live cell. Count the cells each dep group lists, from its data, and refuse when all groups together list more than 32, before reading any member; then read each member as a live cell. Refuse when any cell is not live. Read each header dep from the node; refuse when one is unknown.</li>
-<li>Run the lock script group of input 0 in CKB-VM with T, the resolved input, deps and headers, under a cycle limit. Refuse unless it exits 0.</li>
-<li>Probe for exclusive control. Run the lock again on (a) T with its witness replaced by an empty one, and (b) the transaction built from M with a fresh random nonce, with T’s cell deps and T’s witness. Refuse when either exits 0.</li>
-<li>Accept. Return the out points read in step 10.</li>
-</ol>
-<p>The VM SHOULD be the node’s own script verifier under the chain’s consensus at the current epoch, so that the VM version, syscalls and <code>hash_type</code> resolution match what the node does for a real spend. Node RPCs such as <code>test_tx_pool_accept</code> cannot do this check: they refuse the transaction before any script runs, because the input does not exist.</p>
-<h3><a name="p-27569-limits-9" class="anchor" href="https://talk.nervos.org#p-27569-limits-9" aria-label="Heading link"></a>Limits</h3>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Limit</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cell deps listed</td>
-<td>16, no out point twice</td>
-</tr>
-<tr>
-<td>cells listed by all dep groups together</td>
-<td>32, counted from the groups’ data before any member is read</td>
-</tr>
-<tr>
-<td>header deps</td>
-<td>8</td>
-</tr>
-<tr>
-<td>transaction size in a block</td>
-<td>597,000 bytes (the consensus block limit)</td>
-</tr>
-<tr>
-<td>witness</td>
-<td>65,536 bytes; a verifier MAY raise it for a lock with larger signatures</td>
-</tr>
-<tr>
-<td>message</td>
-<td>1,024 bytes</td>
-</tr>
-<tr>
-<td>each chain read</td>
-<td>a timeout</td>
-</tr>
-<tr>
-<td>each lock run</td>
-<td>a cycle limit</td>
-</tr>
-</tbody>
-</table>
-</div><h3><a name="p-27569-platform-requirements-10" class="anchor" href="https://talk.nervos.org#p-27569-platform-requirements-10" aria-label="Heading link"></a>Platform requirements</h3>
-<p>A verifier only says that a lock accepted one transaction. A platform that counts anything from a binding MUST also:</p>
-<ol>
-<li>Write the message itself, store the exact text per nonce, and compare byte for byte. It MUST NOT rebuild the message from the proof.</li>
-<li>Issue each nonce for one account and one lock hash, and mark it used with a compare-and-set no later than the first chain read.</li>
-<li>Take the genesis hash from its configuration, never from the message or the node.</li>
-<li>Keep at most one active binding per lock hash. Moving a binding to another account notifies the previous one, and the moved binding counts only after a cooldown.</li>
-<li>When counting weight, read it at one snapshot block for every account, and count a binding only if it was made before that block and every cell dep its proof used was still live at that block. For the Nervos DAO, count deposits only (data of 8 zero bytes), found by the exact lock script.</li>
-</ol>
-<h3><a name="p-27569-wallet-behaviour-11" class="anchor" href="https://talk.nervos.org#p-27569-wallet-behaviour-11" aria-label="Heading link"></a>Wallet behaviour</h3>
-<p>A wallet SHOULD recognise a proof: a transaction equal to the proof transaction for one of its locks and the message in its only output, cell deps, header deps, <code>since</code> and witness aside. It SHOULD then show a sign-in request rather than a transfer: the domain next to the origin of the site that asks, with a warning when they differ, the account and the chain. It SHOULD NOT show the input’s capacity as an amount: nothing leaves the account.</p>
-<h2><a name="p-27569-rationale-12" class="anchor" href="https://talk.nervos.org#p-27569-rationale-12" aria-label="Heading link"></a>Rationale</h2>
-<ul>
-<li><strong>Index 0xffffffff.</strong> No transaction can have 2^32 - 1 outputs within the block size limit, so the out point cannot exist and the signed proof can never be committed.</li>
-<li><strong>P commits to the tag, the lock and the message.</strong> Another lock or another message gives another transaction, so a signature cannot be moved between them. The tag keeps P apart from any real transaction hash, and names the bytes being signed: a change to those bytes gets a new tag.</li>
-<li><strong>Input capacity u64::MAX.</strong> Some locks let a key move only a limited amount per transaction. At u64::MAX such a key sees the whole account leave and cannot prove the lock; a key with no limit can. The transaction hash covers out points, not the cells they resolve to, so this value is not part of the signed bytes for locks that sign the transaction hash.</li>
-<li><strong>Output under the claimed lock.</strong> Output locks never run. The output names the lock, so a wallet with several locks reads from the transaction which one is asked to sign, and a signer that gets the transaction without the input cell can rebuild it. The lock is part of the signed bytes, so a transaction whose output lock differs from the lock P commits to is a proof for no lock.</li>
-<li><strong>Output capacity (8 + s + n) CKB.</strong> The occupied capacity of that output. CCC 1.19 and later raises an output to its occupied capacity while building, so fixing this value makes every implementation build the same bytes.</li>
-<li><strong>The verifier builds the transaction.</strong> If it accepted any transaction with input 0 under L, a prover could add inputs or outputs that open L without the key: an owner-lock style lock accepts when another input carries a given lock hash, and anyone-can-pay accepts without a signature when an output under the same lock receives more than the input. With one input at u64::MAX and one output holding less, anyone-can-pay still asks for the signature.</li>
-<li><strong>Message shape.</strong> The first line follows EIP-4361 (Sign-In with Ethereum), so it reads the same way to users who have seen that. The account is ASCII only, so it cannot carry line breaks, direction overrides or look-alike letters into the text a wallet shows.</li>
-</ul>
-<h3><a name="p-27569-rejected-a-real-input-that-cannot-be-spent-yet-13" class="anchor" href="https://talk.nervos.org#p-27569-rejected-a-real-input-that-cannot-be-spent-yet-13" aria-label="Heading link"></a>Rejected: a real input that cannot be spent yet</h3>
-<p>An earlier draft let wallets that only sign real inputs use a live cell of the lock with <code>since</code> set to a block far in the future. It was dropped: such a since satisfies time locks that have not matured, the outflow is only a fee so a key with a per-transaction limit can prove the whole account, the real input may carry a type script that opens the lock another way, and the message is only visible as a hash.</p>
-<h2><a name="p-27569-security-considerations-14" class="anchor" href="https://talk.nervos.org#p-27569-security-considerations-14" aria-label="Heading link"></a>Security considerations</h2>
-<ol>
-<li><strong>Cell deps come from the chain as live cells, never from the prover.</strong> A lock’s code and settings can live in deps. A forged settings cell that lists the attacker’s key would make some locks accept.</li>
-<li><strong>The input is a constant of the verifier</strong>, never a cell the prover names.</li>
-<li><strong>No exclusive control, no proof.</strong> A lock that accepts an empty witness opens for anyone. A lock that accepts the same witness on another message (a password or hash-preimage lock) lets anyone who has seen one proof make another. The two probes of step 12 refuse both kinds. A lock written to tell a probe from a real proof could still pass them.</li>
-<li><strong>No lock an administrator can open.</strong> An Omnilock with the administrator flag (args byte 21, bit 0) is also opened by any identity on an admin list the administrator controls. The verifier refuses such locks, for the owner’s proofs too.</li>
-<li><strong>Read the VM’s result, not text the script printed.</strong> A debugger that prints script logs on the same stream as its result can be fooled by a script that prints a result line.</li>
-</ol>
-<p>Replay:</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>Replay</th>
-<th>Stopped by</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>the same proof, same platform</td>
-<td>nonce used once</td>
-</tr>
-<tr>
-<td>a proof made for another platform</td>
-<td>domain</td>
-</tr>
-<tr>
-<td>another account on the same platform</td>
-<td>account, and the stored message</td>
-</tr>
-<tr>
-<td>another lock</td>
-<td>the stored message, and P</td>
-</tr>
-<tr>
-<td>testnet on mainnet, or the reverse</td>
-<td>chain line, against the platform’s configuration and the node</td>
-</tr>
-<tr>
-<td>an old proof</td>
-<td>issued at window</td>
-</tr>
-<tr>
-<td>the proof sent to the chain</td>
-<td>its input does not exist</td>
-</tr>
-</tbody>
-</table>
-</div><p>A proof shows control at verification time. A key can be shared later, and for locks whose code is upgradable or whose settings live in cells, the keys that control a lock can change. Requirement 5 ties a binding to the cells its proof used.</p>
-<p>Not covered:</p>
-<ul>
-<li>relative time locks, and time-dependent conditions in general: the input is fabricated, and the lock sees the <code>since</code> the wallet sets, not the chain’s time;</li>
-<li>locks whose signature does not cover the transaction hash;</li>
-<li>locks that need more than one input or one witness;</li>
-<li>locks that read the input’s capacity and could overflow on u64::MAX;</li>
-<li>type scripts, which are never run.</li>
-</ul>
-<h2><a name="p-27569-backwards-compatibility-15" class="anchor" href="https://talk.nervos.org#p-27569-backwards-compatibility-15" aria-label="Heading link"></a>Backwards compatibility</h2>
-<p>An earlier form of this proof put the output under the lock <code>{ code_hash: 0x00 * 32, hash_type: "data", args: 0x }</code> with capacity (41 + n) CKB and the tag <code>CKB lock proof v0\n</code>. It is a different transaction, a signature for one form does not open the other, and verifiers following this RFC refuse it at step 7.</p>
-<h2><a name="p-27569-reference-implementation-and-test-vectors-16" class="anchor" href="https://talk.nervos.org#p-27569-reference-implementation-and-test-vectors-16" aria-label="Heading link"></a>Reference implementation and test vectors</h2>
-<p><code>ckb-ward</code> (<a href="https://github.com/LusoCryptoLabs/ckb-ward" class="inline-onebox" rel="noopener nofollow ugc">GitHub - LusoCryptoLabs/ckb-ward: Ward: lock proof for CKB. Prove control of any CKB lock with a proof transaction that can never land on chain. · GitHub</a>, npm <code>ckb-ward</code>) implements the message, the transaction, the verifier, and three runners: one built from the node’s own script crates, one on ckb-debugger, and one on ckb-vm-js in a browser. It carries 17 signed proofs, each replayed by its tests with the expected exit codes for the proof and for controls: secp256k1 (testnet and mainnet), JoyID main key (testnet and mainnet, signed in the JoyID app), JoyID sub key, a 2-of-3 multisig, anyone-can-pay, Omnilock in Dogecoin, Ethereum and Bitcoin modes, PW-lock (testnet and mainnet), the Nostr lock, the quantum-resistant lock with an SLH-DSA key (testnet and mainnet), and a smart-account lock in two configurations. The full byte-exact vectors are in its <code>docs/SPEC.md</code>.</p>
-<p>CCC’s signer JSON-RPC rebuilds the input cell as described above, so a wallet connected through it can sign a proof for any of its locks. The change (ckb-devrel/ccc#641) is merged into CCC’s development branch and not yet in a release.</p>
-            <p><small>8 posts - 2 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/rfc-draft-lock-proof-proving-control-of-a-ckb-lock/11260">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/rfc-draft-lock-proof-proving-control-of-a-ckb-lock/11260</link>
-          <pubDate>Thu, 19 Nov 2026 01:55:11 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11260</guid>
-          <source url="https://talk.nervos.org/t/rfc-draft-lock-proof-proving-control-of-a-ckb-lock/11260.rss">RFC draft: Lock Proof, proving control of a CKB lock</source>
-        </item>
-        <item>
-          <title>Spark Program | CKB ClearSign: verify before you sign</title>
-          <dc:creator><![CDATA[Raceey]]></dc:creator>
-          <category>Spark Program</category>
-          <description><![CDATA[
-            <h2><a name="p-27564-h-1-project-1" class="anchor" href="https://talk.nervos.org#p-27564-h-1-project-1" aria-label="Heading link"></a>1. Project</h2>
-<p>CKB ClearSign: a TypeScript library + CCC signer wrapper that independently verifies a transaction’s inputs and explains it in plain language before the user signs.</p>
-<p>Repo: <code>github.com/RaceeyXo/ckb-clearsign</code> (MIT)</p>
-<h2><a name="p-27564-h-2-applicant-2" class="anchor" href="https://talk.nervos.org#p-27564-h-2-applicant-2" aria-label="Heading link"></a>2. Applicant</h2>
-<p>RaceeyXo: software engineer (full-stack Web3, AI engineering). GitHub: <code>RaceeyXo</code>.</p>
-<h2><a name="p-27564-h-3-problem-3" class="anchor" href="https://talk.nervos.org#p-27564-h-3-problem-3" aria-label="Heading link"></a>3. Problem</h2>
-<p>A CKB transaction only references its inputs by out point (txHash:index). The capacity, lock, type and data of those cells come from an indexer/RPC, and CCC trusts that answer. A lying, compromised or MITM’d RPC can make a wallet show “fee 0.0001 CKB” while the user actually signs something very different. As discussed in the October DevRel AMA, CCC deliberately trusts its indexer, and this check belongs in the wallet.</p>
-<p>Related work: CellGuard (CKBuilder projects <span class="hashtag-raw">#48</span>) inspects transactions against policies but resolves inputs via RPC. Pocket Node decodes transactions in-wallet. CKB Contract Flow only decodes committed transactions. ClearSign is complementary: it <em>proves</em> input cell data by re-hashing origin transactions and ships as a CCC signer wrapper that tools like these can sit on.</p>
-<h2><a name="p-27564-h-4-solution-v01-already-built-and-working-4" class="anchor" href="https://talk.nervos.org#p-27564-h-4-solution-v01-already-built-and-working-4" aria-label="Heading link"></a>4. Solution (v0.1 already built and working)</h2>
-<ul>
-<li><strong>verifyInputs:</strong> fetches each input’s origin tx, re-hashes it locally (blake2b) and rejects any mismatch. RPC-supplied cell data is never trusted.</li>
-<li><strong>explainTransaction:</strong> per-address CKB sent/received, xUDT movements, mint/burn, fee, and a list of type scripts it can’t explain (flagged, not guessed).</li>
-<li><strong>ClearSignSigner:</strong> wraps any ccc.Signer (verify → explain → user confirm → sign) and checks the signed tx hash equals the confirmed one.</li>
-<li><strong>Honest guarantees:</strong> two separate flags. inputDataVerified = true; chainStateVerified = false in v0.1. It explains asset movements, not contract outcomes.</li>
-</ul>
-<h2><a name="p-27564-h-5-proof-it-works-5" class="anchor" href="https://talk.nervos.org#p-27564-h-5-proof-it-works-5" aria-label="Heading link"></a>5. Proof it works</h2>
-<p>Tested on Windows and Linux: 39 offline tests on 5 recorded testnet transactions (2 xUDT), plus a live public-testnet check.</p>
-<p>Lying-RPC demo:</p>
-<ol>
-<li>Plain CCC + lying RPC accepts a forged input (288 CKB reported as 10,288 CKB).</li>
-<li>ClearSign + honest RPC: verified and explained.</li>
-<li>ClearSign + lying RPC: blocked with <code>ORIGIN_TX_HASH_MISMATCH</code> before the user is asked anything.</li>
-<li>dApp pre-fills forged cell data: blocked with <code>PREFILLED_CELL_OUTPUT_MISMATCH</code>.</li>
-</ol>
-<p>Reproduce:<br>
-<code>git clone github.com/RaceeyXo/ckb-clearsign</code><br>
-<code>npm install</code><br>
-<code>npm test</code><br>
-<code>npm run demo -- --offline</code></p>
-<p>(Screenshots of the demo and test runs will be added once my forum account can post images.)</p>
-<h2><a name="p-27564-h-6-why-a-signer-wrapper-6" class="anchor" href="https://talk.nervos.org#p-27564-h-6-why-a-signer-wrapper-6" aria-label="Heading link"></a>6. Why a signer wrapper</h2>
-<p>A library used only by the dApp protects users from honest dApps. A malicious dApp just skips it. Real protection is in the signer/wallet, so ClearSign ships as a drop-in CCC signer wrapper, and this grant funds a pilot in a real wallet.</p>
-<h2><a name="p-27564-h-7-scope-to-do-6-weeks-7" class="anchor" href="https://talk.nervos.org#p-27564-h-7-scope-to-do-6-weeks-7" aria-label="Heading link"></a>7. Scope &amp; to-do (6 weeks)</h2>
-<ul>
-<li>Wk 1: Harden v0.1 (edge cases, cross-platform scripts, browser build), publish to npm.</li>
-<li>Wk 2: Docs + integration guide for wallet developers.</li>
-<li>Wk 3–4: Pilot integration in one CKB wallet (PR or fork + write-up).</li>
-<li>Wk 5: “Trusted node” mode (verifyClient) + prototype chain-state check, documented with its limits.</li>
-<li>Wk 6: Completion report on Nervos Talk: results, wallet feedback, next steps.</li>
-</ul>
-<p>Out of scope: Spore/iCKB/DAO decoding, contract simulation.</p>
-<h2><a name="p-27564-h-8-budget-1000-8" class="anchor" href="https://talk.nervos.org#p-27564-h-8-budget-1000-8" aria-label="Heading link"></a>8. Budget: $1,000</h2>
-<ul>
-<li>Development &amp; testing (wks 1, 3–5): $750</li>
-<li>Docs &amp; integration guide (wk 2): $150</li>
-<li>Completion report &amp; community support (wk 6): $100</li>
-</ul>
-<h2><a name="p-27564-h-9-milestones-9" class="anchor" href="https://talk.nervos.org#p-27564-h-9-milestones-9" aria-label="Heading link"></a>9. Milestones</h2>
-<ul>
-<li>M1 (wk 2): npm package v0.2 + docs</li>
-<li>M2 (wk 4): working wallet pilot</li>
-<li>M3 (wk 6): chain-state prototype + final report</li>
-</ul>
-            <p><small>1 post - 1 participant</small></p>
-            <p><a href="https://talk.nervos.org/t/spark-program-ckb-clearsign-verify-before-you-sign/11259">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/spark-program-ckb-clearsign-verify-before-you-sign/11259</link>
-          <pubDate>Wed, 18 Nov 2026 20:19:08 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11259</guid>
-          <source url="https://talk.nervos.org/t/spark-program-ckb-clearsign-verify-before-you-sign/11259.rss">Spark Program | CKB ClearSign: verify before you sign</source>
-        </item>
-        <item>
-          <title>[DIS] KeyMe — CKB&#39;s PSBT: Open Air-Gapped Signing and the First DIY Hardware</title>
-          <dc:creator><![CDATA[WuodOdhis]]></dc:creator>
-          <category>CKB Community Fund DAO</category>
-          <description><![CDATA[
-            <h1><a name="p-27563-dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware-1" class="anchor" href="https://talk.nervos.org#p-27563-dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware-1" aria-label="Heading link"></a><strong>[DIS] KeyMe — CKB’s PSBT: Open Air-Gapped Signing and the First DIY Hardware</strong></h1>
-<p>If you have used a Bitcoin hardware wallet, the flow is familiar.</p>
-<p>A watch-only app builds a transaction. It hands it to a small device as a QR code or a file. The device shows the amount and the destination. You approve. The signed transaction goes back to the app, which broadcasts it. The machine that holds the key never talks to the internet.</p>
-<p>Bitcoin calls that container a <strong>PSBT</strong> (Partially Signed Bitcoin Transaction). The devices have names you may know: Coldcard, SeedSigner, Specter DIY. They do not share one design. They share one rule: the key lives on a device that cannot reach the network, and the device shows you what you are signing.</p>
-<p>CKB has a software offline workflow in Neuron, but no open, radio-less hardware equivalent. CKB transactions are not Bitcoin transactions. They carry cells, lock and type scripts, DAO state, xUDT amounts and multisig. A Bitcoin device cannot read them. In 2020, a grant added a Ledger app for CKB; it is a closed device. There is still no open, radio-less CKB signer that a community can inspect, build and improve.</p>
-<p>KeyMe is the CKB version. PSCT is the container, CKB’s equivalent of PSBT. KeyMe is the signer, a small, radio-less device that reads the PSCT, checks every byte, shows the transaction, and signs only after you approve. The first hardware is built on a Pico 2: a small board with a screen, a QR scanner, no radio, and no operating system. It is not a clone of a Bitcoin device; it is the shape that fits CKB.</p>
-<h2><a name="p-27563-the-one-minute-version-2" class="anchor" href="https://talk.nervos.org#p-27563-the-one-minute-version-2" aria-label="Heading link"></a><strong>The one-minute version</strong></h2>
-<p>PSCT — a Partially Signed CKB Transaction — is a file with three parts: the transaction, a proof for every coin it spends, and the block headers the scripts need. The device checks that each proof hashes to the coin it claims, decodes the previous output, checks the script against its registry, and shows the amount, destination, fee and change. It signs only after you confirm. It never trusts the coordinator’s summary, an address label, or a script it does not know.</p>
-<h2><a name="p-27563-the-idea-is-not-new-3" class="anchor" href="https://talk.nervos.org#p-27563-the-idea-is-not-new-3" aria-label="Heading link"></a><strong>The idea is not new</strong></h2>
-<p>In 2020, a CKB grant added a Ledger app for CKB (<a href="https://talk.nervos.org/t/4349">Nervos Talk</a>). It proved the demand; it is a closed device.</p>
-<p>In May 2021, Xuejie Xiao (<a class="mention" href="https://talk.nervos.org/u/xxuejie">@xxuejie</a>), a CKB core developer, posted “RFC Draft: CKB Offline Transaction Signing Scheme” (<a href="https://talk.nervos.org/t/rfc-draft-ckb-offline-transaction-signing-scheme/5794">Nervos Talk</a>). It separated transaction assembly from signing, defined the data the signer needs, described the review step, and ended with this:</p>
-<blockquote>
-<p>As a side project, I do plan to build a Raspberry Pi Pico powered, air gapped offline transaction signing app. With a Cortex-M0+ chip and 264 KB RAM, the Pico should be more than enough to power such an offline signing design.</p>
-</blockquote>
-<p>It stayed a draft. The Pico build never shipped.</p>
-<p>In September 2022, <a class="mention" href="https://talk.nervos.org/u/doitian">@doitian</a> opened “CKB Open Transaction” to describe a partial CKB transaction that multiple parties can build over time (<a href="https://github.com/nervosnetwork/ckb/discussions/3607" rel="noopener nofollow ugc">GitHub discussion</a>). The hardware wallet is the final signer in its example:</p>
-<blockquote>
-<p>One party works on an open transaction, changes it, and hands it to the next participant. For example, the indexer collects input cells for a user; the dApp creates the unsigned transaction based on the inputs; and the hardware wallet finally signs the transaction.</p>
-</blockquote>
-<p>The discussion cites Bitcoin’s PSBT as prior work. The project produced an alpha demo and an RFC; the RFC was closed without merging, and the project closed in 2024. No open hardware signer shipped.</p>
-<p>The 2021 draft planned the offline signer. The 2022 project planned the partial transaction format. Both named the hardware wallet. Neither shipped an open device. Neuron already supports an offline signing workflow, including offline multisig, but it keeps the key on an offline general-purpose computer. KeyMe is the hardware half: PSCT v0 is the signed container, and the Pico 2, the current Pico, is the device. v1 stays focused on the hardware and the PSCT container; v2 will explore potential pathways with Neuron.</p>
-<p>KeyMe keeps the 2021 goal and changes what building it taught us: canonical CBOR instead of a molecule envelope; hash-bound proofs instead of full input transactions; per-script-group signatures; a registry that refuses unknown scripts; finalize-or-throw. We did not carry the draft’s Lua signing path. A signer that executes arbitrary scripts is not a signer we can verify. The 2021 draft is the ancestor; PSCT v0 is the working version.</p>
-<p><strong>Grant requested:</strong> $9,500, in five payments of $1,900. <strong>ETA:</strong> 3.5 months from approval. <strong>What you get:</strong> three assembled units (two for independent testers), open firmware, open hardware, and documentation.</p>
-<h2><a name="p-27563-what-is-already-built-4" class="anchor" href="https://talk.nervos.org#p-27563-what-is-already-built-4" aria-label="Heading link"></a><strong>What is already built</strong></h2>
-<p>KeyMe’s software is not a paper design. It is the oracle the hardware will be tested against.</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th><strong>Layer</strong></th>
-<th><strong>Status</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PSCT v0</td>
-<td>Frozen. Canonical CBOR, molecule, hash-bound input proofs, witness templates.</td>
-</tr>
-<tr>
-<td>Verifier</td>
-<td>42 hostile tests. Refuses unknown locks and types; never guesses.</td>
-</tr>
-<tr>
-<td>Coordinator + signer</td>
-<td>CLI. Builds, binds, displays, refuses, signs, finalizes.</td>
-</tr>
-<tr>
-<td>Second implementation</td>
-<td>Rust. Byte-identical <code>tx_hash</code> and <code>full_tx_hash</code>; 3/3 conformance vectors.</td>
-</tr>
-<tr>
-<td>Testnet</td>
-<td>Transfer at block 23,084,406. 2-of-3 payout at block 23,086,201.</td>
-</tr>
-<tr>
-<td>Devnet</td>
-<td>DAO deposit → prepare → withdraw; xUDT mint → transfer. Reproducible with the demo scripts.</td>
-</tr>
-<tr>
-<td>Hardware</td>
-<td>Board selected: Pico 2 (RP2350). Build starts with this grant.</td>
-</tr>
-</tbody>
-</table>
-</div><p>The testnet transfer is <a href="https://explorer.nervos.org/transaction/0xbb10d0b6fb9ad72f6618f29020a1f065e73b4435f5ce24515afcbcb5c50a1a85" rel="noopener nofollow ugc">0xbb10d0b6…1a85</a>; the 2-of-3 spend is <a href="https://explorer.nervos.org/transaction/0x0ea1b3755a6a9610d266a791f2adb0b8c484e6fa1fe203ccfccffedfddbd535f" rel="noopener nofollow ugc">0x0ea1b375…535f</a>. The DAO and xUDT runs are devnet, not public chain; the scripts are in the repository. In total: 68 tests, plus the Rust conformance run. The repository is <code>https://github.com/WuodOdhis/keyme</code>; the spec is <code>spec/psct-v0.md</code>.</p>
-<h2><a name="p-27563-what-this-grant-delivers-5" class="anchor" href="https://talk.nervos.org#p-27563-what-this-grant-delivers-5" aria-label="Heading link"></a><strong>What this grant delivers</strong></h2>
-<ul>
-<li><strong>Three assembled units.</strong> Two go to independent testers; one stays with the project for demos. A fourth parts set is the spare.</li>
-<li><strong>Firmware v0.1.0</strong> for the RP2350: PSCT parsing, proof binding, script registry, DAO/xUDT display, secp256k1 signing, QR in/out, PIN and encrypted seed, signed boot.</li>
-<li><strong>A host QR page.</strong> A static page that turns a PSCT into animated QR and scans the signed frames with a phone camera. No server, no keys.</li>
-<li><strong>Open hardware.</strong> Carrier board, schematic, BOM, 3D-printable case.</li>
-<li><strong>Documentation.</strong> Build guide, flashing, test report, demo video, threat model.</li>
-<li><strong>Licences.</strong> MIT/Apache-2.0 for code, CERN-OHL-S-2.0 for hardware, CC-BY-4.0 for docs.</li>
-</ul>
-<h2><a name="p-27563-how-it-works-6" class="anchor" href="https://talk.nervos.org#p-27563-how-it-works-6" aria-label="Heading link"></a><strong>How it works</strong></h2>
-<p>The coordinator proposes; the device verifies.</p>
-<p><a href="https://raw.githubusercontent.com/WuodOdhis/keyme/main/docs/assets/psct-flow.png?v=3" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/6/64a1328b16b970d3cefe0d01ee367b6d4149451d.png" alt="PSCT signing flow" data-base62-sha1="emd6SvYncn2876sSuC8LUmqXyoZ" width="524" height="500"></a></p>
-<p>The device trusts only three things: the canonical PSCT bytes, proofs that hash to the inputs they claim, and its own account and script registry. If a lock or type is unknown, it refuses. If the CBOR is non-canonical, it refuses. If the proof, network or header is wrong, it refuses. There is no “proceed anyway” button.</p>
-<p>The device has no operating system, no shell and no network stack. The firmware is the only code. The RP2350 boots from signed flash; the seed is BIP39, encrypted at rest with a PIN and the ATECC608B key, and decrypted only while signing. USB is power-only while signing; QR is the data path. v0.1 has no third-party audit and no lab-grade physical security; that is a v0.2 conversation.</p>
-<h2><a name="p-27563-demo-7" class="anchor" href="https://talk.nervos.org#p-27563-demo-7" aria-label="Heading link"></a><strong>Demo</strong></h2>
-<p>A short concept animation shows the flow: the coordinator builds the PSCT, the frames cross the air gap, the device audits the input proofs and change lock, and a malware-swapped change output is refused. It is a simulation, not the protocol; the QR grid is illustrative, and the real verifier is the test suite. The automatic refusal is the change-output check; the destination remains a human check.</p>
-<p><a href="https://wuododhis.github.io/keyme/demo/ckb-airgap-demo.html" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/4/4903492c5d7fb52f4b1eefae217883b56b18a199.png" alt="Open the interactive demo" data-base62-sha1="apTTvb7GiiGgRlRVMpFcFPWhOfT" width="690" height="436"></a></p>
-<p><em>Click the still to open the interactive demo.</em></p>
-<p><strong>Normal flow</strong></p>
-<p><a href="https://camo.githubusercontent.com/3b3507450c0a55ecb3067ccd883e99baa1f46310784bc5ab0cb765f9d9bebebe/68747470733a2f2f77756f646f646869732e6769746875622e696f2f6b65796d652f64656d6f2f636b622d6169726761702d64656d6f2e676966" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/2/2b7fe14347a4630920d60989081a9cf7b3dbd2c6.gif" alt="PSCT air-gap flow" data-base62-sha1="6cOvMTYDtFAlrjQSvMIXrgliwhE" width="690" height="437"></a></p>
-<p><strong>Tamper: a swapped change output is refused</strong></p>
-<p><a href="https://camo.githubusercontent.com/222d0bf52c6b1974e38e70be7bf569e451a3169248ebbb79724f249c529a4678/68747470733a2f2f77756f646f646869732e6769746875622e696f2f6b65796d652f64656d6f2f636b622d6169726761702d64656d6f2d74616d7065722e676966" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/3/3372a52972f76d98a5bfe91b60ca0f9e08b1d7ac.gif" alt="Tamper refusal" data-base62-sha1="7l7YA3QNBLCDmphdQCXuuOzmm2o" width="690" height="437"></a></p>
-<h2><a name="p-27563-hardware-8" class="anchor" href="https://talk.nervos.org#p-27563-hardware-8" aria-label="Heading link"></a><strong>Hardware</strong></h2>
-<p>The units are off-the-shelf modules on a carrier board. No custom injection mold, no custom silicon.</p>
-<p><a href="https://raw.githubusercontent.com/WuodOdhis/keyme/main/docs/assets/keyme-hardware.png?v=3" rel="noopener nofollow ugc"><img src="https://talk.nervos.org/uploads/default/original/2X/c/c2775a0efff7405163b7de57899720e32432cd79.png" alt="KeyMe hardware block" data-base62-sha1="rKkl2gT07GjxxBQyNxiBph4i9sZ" width="690" height="246"></a></p>
-<p>Why these parts:</p>
-<ul>
-<li><strong>Pico 2 (RP2350):</strong> no radio, 520KB RAM, 150MHz, Rust, secure boot, $6. No OS, instant boot, and it is in stock.</li>
-<li><strong>GM65:</strong> decodes QR inside the module over UART. No camera pipeline, no DSP, no large framebuffer.</li>
-<li><strong>2.8-inch TFT:</strong> review screen and animated QR.</li>
-<li><strong>ATECC608B:</strong> stores the key that encrypts the seed at rest. It does not sign secp256k1; the RP2350 does. I am not claiming a secure enclave in v0.1.</li>
-<li><strong>microSD:</strong> signed firmware updates and a backup. It is not the running OS.</li>
-<li><strong>LiPo + charger:</strong> signing does not need a cable.</li>
-</ul>
-<p>No ESP32: radio. No phone: radio and a large attack surface. No Pi SBC (Zero, 3, 4, 5): a full OS and radio. The Pico 2 is a microcontroller: no OS, no radio, instant boot.</p>
-<p>BOM for four units (three plus a spare):</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th><strong>Part</strong></th>
-<th><strong>Qty</strong></th>
-<th><strong>Cost</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RP2350 Pico 2</td>
-<td>4</td>
-<td>$24</td>
-</tr>
-<tr>
-<td>2.8-inch TFT</td>
-<td>4</td>
-<td>$72</td>
-</tr>
-<tr>
-<td>GM65 QR scanner</td>
-<td>4</td>
-<td>$120</td>
-</tr>
-<tr>
-<td>ATECC608B</td>
-<td>4</td>
-<td>$20</td>
-</tr>
-<tr>
-<td>microSD</td>
-<td>4</td>
-<td>$16</td>
-</tr>
-<tr>
-<td>LiPo + charger</td>
-<td>4</td>
-<td>$40</td>
-</tr>
-<tr>
-<td>Buttons, headers, wire</td>
-<td>4</td>
-<td>$40</td>
-</tr>
-<tr>
-<td>Carrier PCB (5 pcs)</td>
-<td>1</td>
-<td>$40</td>
-</tr>
-<tr>
-<td>3D-printed case</td>
-<td>4</td>
-<td>$40</td>
-</tr>
-<tr>
-<td>Tools/consumables</td>
-<td>1</td>
-<td>$100</td>
-</tr>
-<tr>
-<td>Shipping to testers</td>
-<td>1</td>
-<td>$50</td>
-</tr>
-<tr>
-<td><strong>Total</strong></td>
-<td></td>
-<td><strong>$562</strong></td>
-</tr>
-</tbody>
-</table>
-</div><p>One unit is about $100 in parts (v2 should be significantly cheaper once we have the hardware supply chain right). The build guide is the point: anyone can make one.</p>
-<h2><a name="p-27563-milestones-9" class="anchor" href="https://talk.nervos.org#p-27563-milestones-9" aria-label="Heading link"></a><strong>Milestones</strong></h2>
-<p>3.5 months, five payments of $1,900: the first at approval, then one after each milestone. Each milestone payment follows a public report and the committee’s check.</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th><strong>#</strong></th>
-<th><strong>Week</strong></th>
-<th><strong>Work</strong></th>
-<th><strong>Acceptance</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Kickoff (M0)</td>
-<td>1</td>
-<td>Order hardware; publish repo and licences; firmware skeleton; PSCT parser, sighash, secp256k1; signed boot</td>
-<td>The device signs the three conformance vectors; host verifier accepts; BOM and block diagram published</td>
-</tr>
-<tr>
-<td>M1</td>
-<td>3</td>
-<td>Scanner input; review UI; PIN and encrypted seed; host QR page</td>
-<td>Scan unsigned PSCT, review, sign, return signed PSCT, finalize a testnet transfer; video</td>
-</tr>
-<tr>
-<td>M2</td>
-<td>6</td>
-<td>Three units on carrier board; case; battery; testers</td>
-<td>Each unit signs a testnet transfer; two units shipped; build guide draft</td>
-</tr>
-<tr>
-<td>M3</td>
-<td>10</td>
-<td>Hostile tests; DAO and xUDT paths; firmware v0.1.0</td>
-<td>20+ adversarial tests pass on device; signed image verified; test report</td>
-</tr>
-<tr>
-<td>M4</td>
-<td>14</td>
-<td>Docs, BOM, schematics, STL, flashing, video; independent build</td>
-<td>A third party builds a unit and signs a testnet transaction; final report</td>
-</tr>
-</tbody>
-</table>
-</div><p>The first payment is released at approval and funds the hardware order. The kickoff report at week 1 is reviewed before the M1 payment.</p>
-<p>The minimum viable outcome is one working unit plus open firmware and docs. If something has to give, the cut order is spare unit → custom carrier board → ATECC. The firmware and docs are never cut.</p>
-<h2><a name="p-27563-budget-10" class="anchor" href="https://talk.nervos.org#p-27563-budget-10" aria-label="Heading link"></a><strong>Budget</strong></h2>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th><strong>Category</strong></th>
-<th><strong>Amount</strong></th>
-<th><strong>What it covers</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Development</td>
-<td>$7,638</td>
-<td>Firmware, host QR page, carrier board design, tests. About 400 hours over 14 weeks, shared across the two of us at a community rate.</td>
-</tr>
-<tr>
-<td>Hardware</td>
-<td>$562</td>
-<td>Four units, PCB, case, tools, shipping. The BOM above, at cost.</td>
-</tr>
-<tr>
-<td>Documentation</td>
-<td>$600</td>
-<td>Build guide, photos, demo video, test report, Chinese translation.</td>
-</tr>
-<tr>
-<td>Independent review</td>
-<td>$700</td>
-<td>Firmware review by an embedded developer.</td>
-</tr>
-<tr>
-<td><strong>Total</strong></td>
-<td><strong>$9,500</strong></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div><p>If hardware costs more (tax, a part price change), I absorb it or drop the spare unit. The software is donated; the hardware is at cost. Payments are in CKB at the payment-date rate, as recent grants are.</p>
-<h2><a name="p-27563-path-to-sustainability-11" class="anchor" href="https://talk.nervos.org#p-27563-path-to-sustainability-11" aria-label="Heading link"></a><strong>Path to sustainability</strong></h2>
-<p>The grant pays for the open design and the first three units; it does not fund inventory. After v0.1, the same design can be sold as an assembled, tested unit to people who do not want to source parts, print a case, or flash firmware.</p>
-<ul>
-<li><strong>DIY:</strong> the BOM and build guide stay open; anyone can build at parts cost.</li>
-<li><strong>Assembled:</strong> a tested reference unit with signed firmware, case, battery and a starter QR workflow, priced at the BOM plus assembly, testing and support, with a small margin.</li>
-<li><strong>Support:</strong> flashing, replacement parts and setup help, priced separately.</li>
-</ul>
-<p>The margin from assembled units funds the next batch and the v0.2 revision: a custom PCB, a secure element and an independent audit. The design stays open; the paid product is assembly and support, not a closed lock-in. The exact price is set after the v0.1 BOM is final.</p>
-<p>This grant is not a promise of a company or a retail product. It proves the design and the first units; the assembled path is how the work can continue without a new grant for every unit.</p>
-<h2><a name="p-27563-what-this-is-not-12" class="anchor" href="https://talk.nervos.org#p-27563-what-this-is-not-12" aria-label="Heading link"></a><strong>What this is not</strong></h2>
-<ul>
-<li>Not a production wallet, not certified, not an audited vault.</li>
-<li>No custody of mainnet funds, no mobile app, no custom injection mold, no retail packaging.</li>
-<li>No third-party audit in this grant. That is v0.2: a custom PCB, a secure element, an audit, and a small batch.</li>
-</ul>
-<h2><a name="p-27563-risks-13" class="anchor" href="https://talk.nervos.org#p-27563-risks-13" aria-label="Heading link"></a><strong>Risks</strong></h2>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th><strong>Risk</strong></th>
-<th><strong>Mitigation</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>The bare-metal firmware is more work than a Linux app</td>
-<td>Reuse the existing Rust PSCT code and vectors; v0.1 supports secp, multisig, DAO and xUDT; explicit cut order.</td>
-</tr>
-<tr>
-<td>The 3.5-month schedule is tight</td>
-<td>The Rust PSCT code and conformance vectors already exist; xmoshte owns the hardware in parallel; hardware is ordered at kickoff; the cut order protects the core; progress notes at each milestone.</td>
-</tr>
-<tr>
-<td>520KB is tight with the display and QR</td>
-<td>1-bit or partial display refresh; stream QR frames; prove the budget in M0.</td>
-</tr>
-<tr>
-<td>The scanner cannot read animated QR reliably</td>
-<td>Test in M1; slow frames, high error correction; SD-card fallback.</td>
-</tr>
-<tr>
-<td>Seed storage is weaker than a production wallet</td>
-<td>ATECC608B plus PIN; documented limits; v0.2 secure element.</td>
-</tr>
-<tr>
-<td>Signed boot is misconfigured</td>
-<td>Test the signed image in M0; document provisioning; bricking is recoverable over USB.</td>
-</tr>
-<tr>
-<td>Parts are delayed</td>
-<td>Pico 2 is current and in stock; order four at kickoff; Pico 1 is a fallback with less RAM.</td>
-</tr>
-<tr>
-<td>Physical attacks</td>
-<td>v0.1 is a reference; testnet first; v0.2 audit.</td>
-</tr>
-</tbody>
-</table>
-</div><h2><a name="p-27563-why-me-14" class="anchor" href="https://talk.nervos.org#p-27563-why-me-14" aria-label="Heading link"></a><strong>Why me</strong></h2>
-<p>I am WuodOdhis. I lead the software side: the PSCT spec, verifier, coordinator, signer and the firmware application. I hold a BSc in Electrical Engineering, which gives me the vocabulary to work across the hardware/software boundary.</p>
-<h3><a name="p-27563-hardware-lead-15" class="anchor" href="https://talk.nervos.org#p-27563-hardware-lead-15" aria-label="Heading link"></a><strong>Hardware lead</strong></h3>
-<p>I am not doing the hardware half alone. moshte (<a href="https://github.com/xmoshte" rel="noopener nofollow ugc">@xmoshte</a>) is the hardware lead and a long-time friend and collaborator. His public hardware portfolio includes:</p>
-<ul>
-<li><a href="https://github.com/xmoshte/revolv-47_hw" rel="noopener nofollow ugc">Revolv-47</a> — Altium design files for a BLDC electronic speed controller with USB-C PD and power electronics.</li>
-<li><a href="https://github.com/xmoshte/chavi-21_hw" rel="noopener nofollow ugc">Chavi-21</a> — USB-C PD 1S–4S battery charging and power source module.</li>
-<li><a href="https://github.com/xmoshte/nielo" rel="noopener nofollow ugc">Nielo</a> — Raspberry Pi Compute Module 5 carrier board.</li>
-<li><a href="https://github.com/xmoshte/CBC_hw" rel="noopener nofollow ugc">CBC</a> — KiCad design files for the Chord Board Controller, with <a href="https://github.com/xmoshte/cbc_fw" rel="noopener nofollow ugc">ZMK firmware</a>.</li>
-<li><a href="https://github.com/xmoshte/semgdaq_fw" rel="noopener nofollow ugc">Semgdaq</a> — PCB manufacturing files, firmware and applications for a biosignals board.</li>
-</ul>
-<p>He owns the carrier board, power path, enclosure, assembly and bring-up; I own the PSCT verifier, firmware application, host tool and tests. The $7,638 development budget is shared between us; the hardware BOM is separate.</p>
-<p>The public CKB work below is the base this proposal builds on.</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th><strong>Work</strong></th>
-<th><strong>What it is</strong></th>
-<th><strong>Evidence</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>KeyMe</td>
-<td>PSCT v0, verifier, coordinator, offline signer, Rust conformance; 68 tests; testnet and devnet runs</td>
-<td><a href="https://github.com/WuodOdhis/keyme" rel="noopener nofollow ugc">repo</a></td>
-</tr>
-<tr>
-<td>CKBuilders</td>
-<td>CKB Dev Log from the CKBuilders program: cell model, xUDT, JoyID, Spore, Rust scripts, weekly reports, capstone</td>
-<td><a href="https://github.com/WuodOdhis/ckbuilders" rel="noopener nofollow ugc">repo</a></td>
-</tr>
-<tr>
-<td>Reflections of a CKBuilder</td>
-<td>Three merged Nervos Education Hub articles on the cell model, builder semantics and RGB++/Bitcoin interoperability</td>
-<td><a href="https://github.com/NervosEducationHub/EducationHubArticles/pull/265" rel="noopener nofollow ugc">Part 1</a>, <a href="https://github.com/NervosEducationHub/EducationHubArticles/pull/275" rel="noopener nofollow ugc">Parts 2–3</a></td>
-</tr>
-<tr>
-<td>CellScript swap builder</td>
-<td>Deterministic CKB transaction builder for CellScript <code>amm_pool</code> contracts (local devnet)</td>
-<td><a href="https://github.com/WuodOdhis/cellscript-swap-builder" rel="noopener nofollow ugc">repo</a></td>
-</tr>
-<tr>
-<td>Fiber LSP</td>
-<td>Prototype receive-first liquidity service on the Fiber Network</td>
-<td><a href="https://github.com/WuodOdhis/fiber_pi" rel="noopener nofollow ugc">repo</a></td>
-</tr>
-<tr>
-<td>CKB Agent Lock</td>
-<td>Web2-to-Web3 claim flow with a custom RISC-V lock on CKB-VM</td>
-<td><a href="https://github.com/WuodOdhis/agentckblock" rel="noopener nofollow ugc">repo</a></td>
-</tr>
-<tr>
-<td>ForecastCKB</td>
-<td>CKB pilot for auditable AI benchmark records; commit-reveal and independent verification</td>
-<td><a href="https://github.com/WuodOdhis/forecastckb" rel="noopener nofollow ugc">repo</a></td>
-</tr>
-</tbody>
-</table>
-</div><p>I wrote the PSCT spec, the verifier, the coordinator, the signer and the tests. The device firmware will be a port of the same rules against the same vectors. The 2021 draft stopped at the design; this is the implementation.</p>
-<p>Full public record: <a href="https://github.com/WuodOdhis/keyme/blob/main/docs/08-prior-work.md" rel="noopener nofollow ugc">docs/08-prior-work.md</a>.<br>
-Team and hardware portfolio: <a href="https://github.com/WuodOdhis/keyme/blob/main/docs/09-team.md" rel="noopener nofollow ugc">docs/09-team.md</a>.</p>
-<h2><a name="p-27563-links-16" class="anchor" href="https://talk.nervos.org#p-27563-links-16" aria-label="Heading link"></a><strong>Links</strong></h2>
-<ul>
-<li>Pico 2: <a href="https://www.raspberrypi.com/products/raspberry-pi-pico-2/" rel="noopener nofollow ugc">https://www.raspberrypi.com/products/raspberry-pi-pico-2/</a></li>
-<li>2022 Open Transaction: <a href="https://github.com/nervosnetwork/ckb/discussions/3607" rel="noopener nofollow ugc">nervosnetwork/ckb#3607</a></li>
-<li>Open Transaction RFC (closed unmerged): <a href="https://github.com/nervosnetwork/rfcs/pull/406" rel="noopener nofollow ugc">nervosnetwork/rfcs#406</a></li>
-<li>Open Transaction project issue (closed 2024): <a href="https://github.com/nervosnetwork/ckb/issues/3608" rel="noopener nofollow ugc">nervosnetwork/ckb#3608</a></li>
-<li>2021 draft: <a href="https://talk.nervos.org/t/rfc-draft-ckb-offline-transaction-signing-scheme/5794" class="inline-onebox">RFC Draft: CKB Offline Transaction Signing Scheme</a></li>
-<li>2020 Ledger grant: <a href="https://talk.nervos.org/t/4349" class="inline-onebox">Obsidian Systems - Ledger Nano S/X Application for Nervos</a></li>
-<li>Neuron: <a href="https://github.com/nervosnetwork/neuron" class="inline-onebox" rel="noopener nofollow ugc">GitHub - nervosnetwork/neuron: Neuron: Nervos CKB Wallet · GitHub</a></li>
-<li>Repository: <code>https://github.com/WuodOdhis/keyme</code></li>
-<li>Prior work: <a href="https://github.com/WuodOdhis/keyme/blob/main/docs/08-prior-work.md" class="inline-onebox" rel="noopener nofollow ugc">keyme/docs/08-prior-work.md at main · WuodOdhis/keyme · GitHub</a></li>
-<li>PSCT spec: <code>https://github.com/WuodOdhis/keyme/blob/main/spec/psct-v0.md</code></li>
-<li>Stage 2 record: <code>https://github.com/WuodOdhis/keyme/blob/main/docs/04-stage2.md</code></li>
-<li>Threat model: <code>https://github.com/WuodOdhis/keyme/blob/main/docs/05-threat-model.md</code></li>
-<li>Testnet transfer: <a href="https://explorer.nervos.org/transaction/0xbb10d0b6fb9ad72f6618f29020a1f065e73b4435f5ce24515afcbcb5c50a1a85" rel="noopener nofollow ugc">https://explorer.nervos.org/transaction/0xbb10d0b6fb9ad72f6618f29020a1f065e73b4435f5ce24515afcbcb5c50a1a85</a></li>
-<li>Testnet 2-of-3: <a href="https://explorer.nervos.org/transaction/0x0ea1b3755a6a9610d266a791f2adb0b8c484e6fa1fe203ccfccffedfddbd535f" rel="noopener nofollow ugc">https://explorer.nervos.org/transaction/0x0ea1b3755a6a9610d266a791f2adb0b8c484e6fa1fe203ccfccffedfddbd535f</a></li>
-</ul>
-            <p><small>11 posts - 6 participants</small></p>
-            <p><a href="https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258</link>
-          <pubDate>Wed, 18 Nov 2026 19:03:55 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11258</guid>
-          <source url="https://talk.nervos.org/t/dis-keyme-ckbs-psbt-open-air-gapped-signing-and-the-first-diy-hardware/11258.rss">[DIS] KeyMe — CKB&#39;s PSBT: Open Air-Gapped Signing and the First DIY Hardware</source>
         </item>
   </channel>
 </rss>
