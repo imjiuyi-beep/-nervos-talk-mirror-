@@ -1,27 +1,28 @@
 name: build-ckb-htlc
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'ckb-htlc/**'
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.74.0
-        with:
-          targets: riscv64imac-unknown-none-elf
-      - name: install riscv gcc
+      - name: Install Rust 1.85 + riscv64 target
         run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc-riscv64-unknown-elf
-      - name: build
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup target add riscv64imac-unknown-none-elf --toolchain 1.85.0
+      - name: Build contract
         working-directory: ckb-htlc
-        run: cargo build --release --target riscv64imac-unknown-none-elf -p ckb-htlc
-      - name: inspect
         run: |
-          BIN=ckb-htlc/target/riscv64imac-unknown-none-elf/release/ckb-htlc
-          ls -l "$BIN"; file "$BIN"
-          base64 -w0 "$BIN" > /tmp/b.b64; echo "B64LEN=$(wc -c </tmp/b.b64)"
+          cargo +1.85.0 build --release
+          cp target/riscv64imac-unknown-none-elf/release/ckb-htlc ckb-htlc.so
+          echo "--- file ---"; file ckb-htlc.so
+          echo "--- segments ---"; readelf -lW ckb-htlc.so | grep LOAD
+          echo "--- sha256 ---"; sha256sum ckb-htlc.so
       - uses: actions/upload-artifact@v4
         with:
-          name: ckb-htlc-bin
-          path: ckb-htlc/target/riscv64imac-unknown-none-elf/release/ckb-htlc
+          name: ckb-htlc-so
+          path: ckb-htlc/ckb-htlc.so
