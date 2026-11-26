@@ -1,0 +1,25 @@
+name: build-ckb-htlc
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.74.0
+        with:
+          targets: riscv64imac-unknown-none-elf
+      - name: install cross
+        run: cargo install cross --locked
+      - name: build
+        working-directory: ckb-htlc
+        run: cross build --release --target riscv64imac-unknown-none-elf -p ckb-htlc
+      - name: inspect
+        run: |
+          BIN=ckb-htlc/target/riscv64imac-unknown-none-elf/release/ckb-htlc
+          ls -l "$BIN"; file "$BIN"
+          base64 -w0 "$BIN" > /tmp/b.b64; echo "B64LEN=$(wc -c </tmp/b.b64)"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ckb-htlc-bin
+          path: ckb-htlc/target/riscv64imac-unknown-none-elf/release/ckb-htlc
