@@ -1,0 +1,29 @@
+name: faucet
+on:
+  workflow_dispatch:
+    inputs:
+      address:
+        description: address
+        required: true
+jobs:
+  claim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: claim
+        run: |
+          ADDR="${{ github.event.inputs.address }}"
+          OUT="data/faucet_result.txt"
+          echo "addr=$ADDR" > "$OUT"
+          for ep in https://faucet.nervos.org/api/claim_ckb https://faucet.nervos.org/claim https://faucet.nervos.org/api/claim; do
+            echo "=== $ep ===" >> "$OUT"
+            curl -s -m 25 -X POST "$ep" -H 'Content-Type: application/json' -d "{\"address\":\"$ADDR\"}" >> "$OUT" 2>&1 || echo "curl-fail" >> "$OUT"
+            echo "" >> "$OUT"
+          done
+      - name: commit
+        run: |
+          git config user.email bot@bot.com
+          git config user.name bot
+          git add data/faucet_result.txt
+          git commit -m "faucet" || true
+          git push || true
