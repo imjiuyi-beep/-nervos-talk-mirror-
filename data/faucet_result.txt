@@ -1,0 +1,22 @@
+addr=ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsqvdllkvanypq95ky6ecng7ez5um779jnxvserp5a2
+=== https://faucet.nervos.org/api/claim_ckb ===
+The page could not be found
+
+NOT_FOUND
+
+cle1::mfxjg-1795704826022-e664f85f6f5a
+
+=== https://faucet.nervos.org/claim ===
+The page could not be found
+
+NOT_FOUND
+
+cle1::vqmp4-1795704826137-92d1fa15baeb
+
+=== https://faucet.nervos.org/api/claim ===
+The page could not be found
+
+NOT_FOUND
+
+cle1::vqmp4-1795704826297-ba4a0078d04c
+
