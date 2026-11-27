@@ -1,0 +1,22 @@
+name: claim-signet
+on:
+  workflow_dispatch:
+    inputs:
+      address:
+        description: 'signet address'
+        required: true
+jobs:
+  claim:
+    runs-on: ubuntu-latest
+    steps:
+      - name: try faucets
+        env:
+          ADDR: ${{ inputs.address }}
+        run: |
+          echo "=== 1 sprovoost ==="
+          curl -s -m 30 -X POST "https://faucet.signet.bitcoin.sprovoost.nl/api/claim" -H "Content-Type: application/json" -d "{\"address\":\"$ADDR\"}" -w "\nHTTP:%{http_code}\n" | head -c 400
+          echo "=== 2 bublina ==="
+          curl -s -m 30 -L -X POST "https://signet257.bublina.eu.org/" -d "address=$ADDR" -w "\nHTTP:%{http_code}\n" | tail -c 400
+          echo "=== 3 alt ==="
+          curl -s -m 30 -L -X POST "https://alt.signetfaucet.com/" -d "address=$ADDR" -w "\nHTTP:%{http_code}\n" | tail -c 400
+          echo "=== done ==="
