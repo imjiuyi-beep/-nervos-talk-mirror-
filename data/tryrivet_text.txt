@@ -1,0 +1,95 @@
+Skip to content
+Rivet
+Explore
+Verify
+Docs
+About
+Sign In
+Powered by Nervos CKB & CoTA
+Your Code. Your History.
+Your Backup Plan.
+
+Back up your public GitHub repositories, keep proof of their history on CKB testnet, and prepare for recovery. Get started without a wallet.
+
+Sign in with GitHub
+How it works
+Your backup, step by step
+~ ❯
+Choose a public repository → Back up now
+1. Mirror the repository’s Git history
+2. Save a backup bundle through IPFS
+3. Record its commit-set proof on CKB testnet
+4. Keep the backup references for recovery
+
+
+No wallet needed. Rivet covers the backup anchor fee.
+~ ❯
+█
+THE PLATFORM
+Censorship-Resistant Code
+
+Rivet gives you the convenience of centralized platforms with the security and sovereignty of Web3.
+
+IPFS Mirrors
+
+Rivet mirrors your repository and stores a Git bundle through IPFS, including its commits, branches, and tags.
+
+CKB Anchors
+
+A commitment to your backup’s commit set is recorded on CKB testnet, giving you a blockchain checkpoint for that snapshot.
+
+Recovery Tools
+
+Recover saved Git history through repository restore controls or the source CLI. Exact local restore is available; attribution remapping is in development.
+
+Sovereign Passport
+
+Optionally mint a Spore developer passport owned by your JoyID wallet. It records your verified identity snapshot on CKB testnet.
+
+Familiar Web UI
+
+Browse your backed-up code, files, and commits through our beautiful web interface, just like you would on GitHub.
+
+Public Verification
+
+Look up public backup anchors and inspect developer identity proofs. Check what a proof establishes before relying on it.
+
+How it works
+
+A backup workflow you can understand.
+
+1
+Sign In with GitHub
+
+Log in instantly with your GitHub account. No crypto wallet or seed phrases required to get started. We handle the Web3 complexity in the background.
+
+2
+Backup to Decentralized Storage
+
+Start a backup of a public repository. Rivet mirrors its Git history and saves a bundle through IPFS.
+
+Git bundle / IPFS
+3
+Anchor Proof on Blockchain
+
+Rivet records a commitment to the backup’s commit set on CKB testnet. A separate wallet-owned CoTA identity is optional.
+
+Nervos CKB
+4
+Prepare for Recovery
+
+Inspect your saved backup and export a private recovery file with the source CLI. Test a restore before you need it.
+
+Restore / recovery guide
+Ready to secure your code?
+
+Join the developers who own their history. Sign in with GitHub to get started.
+
+Get Started
+© 2026 Rivet. All rights reserved.
+Documentation
+GitHub
+Community
+About Rivet
+Powered by
+Nervos CKB
