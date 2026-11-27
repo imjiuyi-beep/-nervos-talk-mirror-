@@ -332,7 +332,7 @@ While I’…
 <strong>Prize pool:</strong> $20,000<br>
 <strong>Participation:</strong> Individuals and teams may enter; teams are strongly encouraged<br>
 <strong>AI tooling:</strong> Successful submissions may claim up to $20 as an AI tooling allowance<br>
-<strong>Registration:</strong> **<a href="https://ckboost.netlify.app/campaign/0x279c0e333974713deec12ddb210bb787ae07ae54b884cbc141d26fe9f03ca450" rel="noopener nofollow ugc">Now live on CKBoost!</a> **</p>
+<strong>Registration:</strong> <a href="https://ckboost.netlify.app/campaign/0x279c0e333974713deec12ddb210bb787ae07ae54b884cbc141d26fe9f03ca450" rel="noopener nofollow ugc"><strong>Now live on CKBoost!</strong></a></p>
 </blockquote>
 <h2><a name="p-27845-introduction-3" class="anchor" href="https://talk.nervos.org#p-27845-introduction-3" aria-label="Heading link"></a><strong>Introduction</strong></h2>
 <p><strong><a href="https://www.nervos.org/" rel="noopener nofollow ugc">Nervos CKB</a></strong> is a proof-of-work Layer 1 blockchain built for flexibility, decentralisation and long-term extensibility. Its Cell model supports smart contracts, custom assets, ownership and verification logic, while its RISC-V-based virtual machine gives developers flexibility in choosing the cryptography and protocols they use.</p>
@@ -1160,7 +1160,7 @@ While I’…
 <li><strong>Testnet Early Adopters:</strong> Are any teams building on Pudge interested in testing <code>@oracell/sdk</code> in a live dApp (lending, DEX, or hedging) and sharing integration friction points?</li>
 </ol>
 <p>Thanks in advance for taking a look—any critique on the verifier design, witness format, or roadmap priorities is very welcome.</p>
-            <p><small>3 posts - 2 participants</small></p>
+            <p><small>4 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/oracell-contention-free-witness-oracle-for-nervos-ckb-phase-1-mvp-live-on-pudge-feedback-welcome/11368">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/oracell-contention-free-witness-oracle-for-nervos-ckb-phase-1-mvp-live-on-pudge-feedback-welcome/11368</link>
