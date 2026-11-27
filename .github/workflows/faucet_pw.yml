@@ -1,0 +1,71 @@
+name: claim-signet-pw
+on:
+  workflow_dispatch:
+    inputs:
+      address:
+        description: 'signet address'
+        required: true
+jobs:
+  claim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: install playwright
+        run: |
+          pip install playwright
+          playwright install chromium --with-deps
+      - name: probe and claim
+        env:
+          ADDR: ${{ inputs.address }}
+        run: |
+          python3 - <<'PY'
+          import os, time
+          from playwright.sync_api import sync_playwright
+          addr = os.environ["ADDR"]
+          with sync_playwright() as p:
+              b = p.chromium.launch(args=["--no-sandbox","--disable-blink-features=AutomationControlled"])
+              pg = b.new_page(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+              pg.goto("https://signet257.bublina.eu.org/", wait_until="domcontentloaded", timeout=90000)
+              for i in range(18):
+                  pg.wait_for_timeout(5000)
+                  html = pg.content()
+                  if "Just a moment" not in html and "cf_chl" not in html:
+                      print("PASSED challenge at iter", i)
+                      break
+              print("TITLE:", pg.title())
+              inputs = pg.query_selector_all("input")
+              print("INPUT_COUNT:", len(inputs))
+              for idx, el in enumerate(inputs):
+                  print("IN", idx, el.get_attribute("name"), el.get_attribute("type"), el.get_attribute("placeholder"))
+              btns = pg.query_selector_all("button, input[type=submit]")
+              for idx, el in enumerate(btns):
+                  print("BTN", idx, el.get_attribute("type"), (el.inner_text() or "")[:30], el.get_attribute("value"))
+              # try fill
+              filled = False
+              for el in inputs:
+                  t = (el.get_attribute("type") or "text").lower()
+                  if t in ("text","search","") :
+                      try:
+                          el.fill(addr); filled = True; print("FILLED input", el.get_attribute("name")); break
+                      except Exception as e:
+                          print("fill fail", e)
+              if filled:
+                  for el in btns:
+                      try:
+                          el.click(); print("CLICKED", el.get_attribute("type")); break
+                      except Exception as e:
+                          print("click fail", e)
+                  pg.wait_for_timeout(8000)
+              print("FINAL_URL:", pg.url)
+              body = pg.inner_text("body")
+              print("BODY:", body[:1200].replace("\n"," | "))
+              pg.screenshot(path="faucet.png", full_page=True)
+              b.close()
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: faucet-shot
+          path: faucet.png
