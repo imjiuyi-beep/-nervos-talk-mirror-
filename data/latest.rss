@@ -599,7 +599,7 @@ While I’…
 <p>This is one of the reasons I am keen to give Metatype independent utility. An experimental execution environment could serve as somewhere to investigate more ambitious architectural ideas; the useful ones could find their way back into CKB through mechanisms available to us today.</p>
 <p>I suspect some of our existing abstractions will survive this exercise remarkably well. Others may become simpler. A few may turn out to have been elaborate solutions to problems peculiar to the original arrangement of script slots.</p>
 <p>Finding out which is which should be rather good fun.</p>
-            <p><small>7 posts - 3 participants</small></p>
+            <p><small>6 posts - 3 participants</small></p>
             <p><a href="https://talk.nervos.org/t/what-else-could-a-cell-become-1/11370">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/what-else-could-a-cell-become-1/11370</link>
@@ -2687,7 +2687,7 @@ that CKB/Fiber builders and reviewers can keep reusing after this grant.</li>
 </ul>
 </li>
 </ul>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/spark-program-ckb-whitehat/11346">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/spark-program-ckb-whitehat/11346</link>
@@ -2869,7 +2869,7 @@ Total| | $680</p>
 <p>Background: Hobbyist full-stack developer, founder of <a href="http://ckb123.com" rel="noopener nofollow ugc">ckb123.com</a> (now offline), and one of the early participants in the CKB Mainnet launch.</p>
 <p>GitHub: Most of my projects involve work-related or personal information, so their repositories are not publicly accessible.</p>
 <p>Contact: Please reach out to me directly via Nervos Talk.</p>
-            <p><small>4 posts - 4 participants</small></p>
+            <p><small>5 posts - 5 participants</small></p>
             <p><a href="https://talk.nervos.org/t/spark-program-cellcat-ckb/11308">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/spark-program-cellcat-ckb/11308</link>
@@ -2983,7 +2983,7 @@ Quota daemon (every 10s, backed by SQLite)
 </ol>
 <h3><a name="p-27694-maintenance-10" class="anchor" href="https://talk.nervos.org#p-27694-maintenance-10" aria-label="Heading link"></a>Maintenance</h3>
 <p>For 6 months after completion, I will keep <code>fibervpn</code> updated against <code>fnn</code> JSON-RPC changes and answer setup issues on GitHub within 48 hours.</p>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/spark-program-fibervpn-pay-per-hour-wireguard-tunnels-over-fiber/11300">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/spark-program-fibervpn-pay-per-hour-wireguard-tunnels-over-fiber/11300</link>
@@ -3348,7 +3348,7 @@ Quota daemon (every 10s, backed by SQLite)
 <p>The final outcome will be an open-source Unlinked for CKB browser extension prototype demonstrating two complementary privacy features: experimental Tor-routed access to supported CKB RPC endpoints and local inspection of wallet-related information transmitted by dApps.</p>
 <p>The project prioritizes functional software, reproducible demonstrations and practical developer deliverables.</p>
 <p>The six-week grant will fund the development and testing needed to turn these ideas into a working prototype and establish a foundation for future improvements to extension browser privacy in the Nervos ecosystem.</p>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/unlinked-for-ckb-tor-routed-rpc-and-browser-privacy-extension/11297">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/unlinked-for-ckb-tor-routed-rpc-and-browser-privacy-extension/11297</link>
@@ -3683,7 +3683,7 @@ Quota daemon (every 10s, backed by SQLite)
 <h2><a name="p-27637-h-14-closing-18" class="anchor" href="https://talk.nervos.org#p-27637-h-14-closing-18" aria-label="Heading link"></a>14. Closing</h2>
 <p>The committee asked for a standalone testing suite or validation tool. This proposal makes that the core deliverable and uses MoniMkt as the first real fixture and field test.</p>
 <p>The output is a reusable CKB lending validation toolkit, a documented scenario pack, a public product validation report, and a clear next-step roadmap. It does not fund market operations, security hardening, oracle maintenance, mainnet work, or an indefinite beta.</p>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/spark-program-monimkt-ckb-lending-validation-toolkit-and-product-field-test/11277">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/spark-program-monimkt-ckb-lending-validation-toolkit-and-product-field-test/11277</link>
@@ -4045,7 +4045,7 @@ make test
 <li>Ensuring ongoing compatibility with updates to CCC, <code>ckb-std</code> and CKB node releases.</li>
 <li>Providing technical guidance to any ecosystem dApp or AI agent team seeking to integrate CapKey sub-keys.</li>
 </ul>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/spark-program-capkey-spend-capped-sub-key-covenants-for-browser-dapps-and-ai-agents/11271">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/spark-program-capkey-spend-capped-sub-key-covenants-for-browser-dapps-and-ai-agents/11271</link>
@@ -4509,7 +4509,7 @@ make test
 <li><a href="https://talk.nervos.org/t/spark-program-q2-2026-what-the-ecosystem-is-building/10396">Spark Program Q2 2026: What the Ecosystem Is Building</a></li>
 <li><a href="https://github.com/Abdulazeem-code/ckb-script-bench" rel="noopener nofollow ugc">ckb-script-bench repo</a>: <a href="https://github.com/Abdulazeem-code/ckb-script-bench/blob/main/runs/pilot-01/README.md" rel="noopener nofollow ugc">pilot run 01</a>, <a href="https://github.com/Abdulazeem-code/ckb-script-bench/blob/main/runs/run-02-agents/README.md" rel="noopener nofollow ugc">run 02</a></li>
 </ul>
-            <p><small>1 post - 1 participant</small></p>
+            <p><small>2 posts - 2 participants</small></p>
             <p><a href="https://talk.nervos.org/t/spark-program-ckb-script-bench-how-well-do-ai-models-write-ckb-scripts/11269">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/spark-program-ckb-script-bench-how-well-do-ai-models-write-ckb-scripts/11269</link>
