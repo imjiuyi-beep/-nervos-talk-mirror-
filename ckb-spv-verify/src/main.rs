@@ -46,7 +46,7 @@ fn run() -> Result<(), i8> {
     let idx = QueryIter::new(load_cell_type_hash, Source::CellDep)
         .enumerate()
         .find_map(|(index, type_hash)| {
-            if type_hash.is_some_and(|th| th == &BTC_LC_TYPE_HASH) {
+            if type_hash == Some(BTC_LC_TYPE_HASH) {
                 Some(index)
             } else {
                 None
