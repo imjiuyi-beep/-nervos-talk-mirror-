@@ -8,7 +8,7 @@ name = "ckb-spv-verify"
 path = "src/main.rs"
 
 [dependencies]
-ckb-std = { version = "0.15", default-features = false, features = ["allocator", "calc-hash", "ckb-types", "dummy-atomic"] }
+ckb-std = { version = "0.15", default-features = false, features = ["allocator", "calc-hash", "ckb-types"] }
 ckb-bitcoin-spv-verifier = { path = "../ckb-bitcoin-spv/verifier", default-features = false, features = ["no-std"] }
 secp256k1 = { version = "0.29", default-features = false }
 
