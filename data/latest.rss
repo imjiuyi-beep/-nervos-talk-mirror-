@@ -5,8 +5,64 @@
     <link>https://talk.nervos.org/latest</link>
     <description>Latest topics</description>
     <language>en</language>
-      <lastBuildDate>Thu, 26 Nov 2026 13:22:06 +0000</lastBuildDate>
+      <lastBuildDate>Sat, 28 Nov 2026 08:18:48 +0000</lastBuildDate>
       <atom:link href="https://talk.nervos.org/latest.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>Spark Program | CKB 资助追踪器：给 Spark 和社区基金 DAO 建一本公开账 (CKB Funding Tracker)</title>
+          <dc:creator><![CDATA[The_Notes_Publisher]]></dc:creator>
+          <category>Spark Program</category>
+          <description><![CDATA[
+            <p>Spark Program 和 Community Fund DAO 加起来已经有三年的资助历史，但今天想把它读明白，只能一个帖子一个帖子地翻。提案、公示、结项报告、终止公告——全都在 <a href="http://talk.nervos.org">talk.nervos.org</a> 上，散落在 260 多个帖子里。想知道 Spark 在 2025 年到底资助了什么，或者三月提的 DAO 提案现在什么状态，你得开二十个标签页，耗掉一个下午。</p>
+<p>所以我做了这个索引。</p>
+<p>已经上线： <a href="https://thenotespublisher.github.io/ckb-funding-tracker/" class="inline-onebox" rel="noopener nofollow ugc">CKB Funding Tracker</a></p>
+<p>两个资助板块的全部帖子，从 Discourse API 拉取、脚本自动分类（提案 / 公示 / 结项报告 / 终止 / 治理），可搜索、可筛选。一条命令就能从论坛实况重建整本账——没有任何人工维护，分类规则就是三十行正则，任何人都能读、都能来挑毛病。</p>
+<p>目前索引里的数字：Spark 提案 88 条、公示 12 条、结项报告 7 份、终止 1 条；DAO 提案 83 条，最早到 2023 年 1 月。其中 2026 年就占了 153 条——资助不但没停，反而在加速，只是从来没有人把它汇编成一本账。</p>
+<p>这次提案想做的，是把它维护下去，做成两个基金都配得上的账本：</p>
+<p>- 按社区意见修正分类错漏</p>
+<p>- 给每个有仓库的受资助项目补上 GitHub 链接</p>
+<p>- 每日 CI 刷新 + "本周变化"视图，评审和社区一眼看到动向</p>
+<p>- 开一个所有人可消费的 JSON 接口</p>
+<p>关于前人工作，先说清楚，因为功课我做足了：Build-Union 在 2025 年 8 月拿到 Spark 资助做了 Grant-Tracking-Platform（t/8952，结项报告 t/9725）。那个仓库从 2025 年 12 月起就停更了，vercel 部署也停在旧状态。我不打算装作它不存在——我更愿意公开把这条线捡起来，做成一个静态、零后端、可复跑的账本，哪天我不干了，社区自己就能接手维护。</p>
+<p>为什么是我：独立开发者，全程用 AI coding agent 交付——这个追踪器（抓取脚本、分类、站点）就是这么做出来的，这恰好是 agent 最擅长的那类流水线。此前在 Neo N3 生态维护工具链（neo-mamba，NEO3 的 Python SDK；neofs-python-sdk，NeoFS 存储 SDK——都是活仓库）。第一次申请 CKB 资助，我更愿意带着能跑的东西来，而不是一张承诺。</p>
+<p>为什么是现在：透明度的问题一再被提起（DAO 投票数据 t/11246、公平性讨论、Spark 自己的 Q1/Q2 复盘）。在下一波提案到来之前，一个常设索引是两个基金的基本盘。</p>
+<p>预算：$700，一个月：</p>
+<p>- 第 1 周 — 修正分类 + 补受资助项目的 GitHub 链接</p>
+<p>- 第 2 周 — 每日 CI 刷新 + 周度变化视图</p>
+<p>- 第 3 周 — JSON 接口 + 文档</p>
+<p>- 第 4 周 — 结项报告，把账本移交 给愿意接手的社区成员</p>
+<p>仓库：<a href="https://github.com/thenotespublisher/ckb-funding-tracker%EF%BC%88MIT%EF%BC%8C%E7%AC%AC%E4%B8%80%E5%A4%A9%E8%B5%B7%E5%B0%B1%E5%85%AC%E5%BC%80%EF%BC%89" rel="noopener nofollow ugc">https://github.com/thenotespublisher/ckb-funding-tracker（MIT，第一天起就公开）</a></p>
+<p>联系：站内 DM 即可，中文/英文都行。</p>
+<p>================================================================<br>
+The Spark Program and the Community Fund DAO have three years of funding history between them, and the only way to read it today is one forum thread at a time. Proposals, funding announcements, completion reports, terminations — all of it on <a href="http://talk.nervos.org">talk.nervos.org</a>, scattered across 260+ topics.</p>
+<p>So I built the index. Live now: <a href="https://thenotespublisher.github.io/ckb-funding-tracker/" class="inline-onebox" rel="noopener nofollow ugc">CKB Funding Tracker</a></p>
+<p>Every topic from both funding categories, pulled from the Discourse API, classified by script (proposal / funded / report / terminated / governance), searchable, filterable. One command rebuilds the whole ledger — nothing hand-maintained, classification is thirty lines of regex anyone can argue with.</p>
+<p>Numbers so far: 88 Spark proposals, 12 funded announcements, 7 completion reports, 1 termination; 83 DAO proposals back to January 2023. 153 of those topics are from 2026 alone — funding isn’t slowing down; it’s accelerating, and nobody had put it in one ledger.</p>
+<p>This proposal is to keep it alive:</p>
+<p>- Fix classification where the community says the tags are wrong</p>
+<p>- Add GitHub links for every funded project that has a repo</p>
+<p>- Daily CI refresh + a “changed this week” view</p>
+<p>- A JSON endpoint anyone can consume</p>
+<p>Prior work, stated plainly: Build-Union received Spark funding in Aug 2025 for a Grant-Tracking-Platform (t/8952, completion report t/9725). The repo has been dormant since Dec 2025. I’d rather pick that thread back up in public — as a static, zero-backend, re-runnable ledger the community can maintain if I get hit by a bus.</p>
+<p>Why me: independent builder, shipping with AI coding agents end-to-end — this tracker was built that way. I maintain tooling in the Neo N3 ecosystem (neo-mamba, a Python SDK for NEO3; neofs-python-sdk). First CKB grant; I’d rather show up with a working product than a promise.</p>
+<p>Why now: the transparency question keeps coming up (DAO voting in numbers t/11246, the fairness threads, Spark’s own retrospectives). A standing index is table stakes before the next wave of proposals.</p>
+<p>Budget: $700, one month:</p>
+<p>- week 1: classification fixes + GitHub links</p>
+<p>- week 2: daily CI refresh + weekly diff view</p>
+<p>- week 3: JSON endpoint + docs</p>
+<p>- week 4: closing report, handover to the community</p>
+<p>Repo: <a href="https://github.com/thenotespublisher/ckb-funding-tracker" class="inline-onebox" rel="noopener nofollow ugc">GitHub - thenotespublisher/ckb-funding-tracker · GitHub</a> (MIT, public from day one)</p>
+<p>Contact: DM here on Nervos Talk.</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://talk.nervos.org/t/spark-program-ckb-spark-dao-ckb-funding-tracker/11381">Read full topic</a></p>
+          ]]></description>
+          <link>https://talk.nervos.org/t/spark-program-ckb-spark-dao-ckb-funding-tracker/11381</link>
+          <pubDate>Sat, 28 Nov 2026 08:18:48 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">talk.nervos.org-topic-11381</guid>
+          <source url="https://talk.nervos.org/t/spark-program-ckb-spark-dao-ckb-funding-tracker/11381.rss">Spark Program | CKB 资助追踪器：给 Spark 和社区基金 DAO 建一本公开账 (CKB Funding Tracker)</source>
+        </item>
         <item>
           <title>Discussion: Improving the Fairness and Resilience of CKB Community Fund DAO Governance |关于 CKB Community Fund DAO 治理机制的一些思考与改进建议</title>
           <dc:creator><![CDATA[yixiu.ckbfans.bit]]></dc:creator>
@@ -2226,7 +2282,7 @@ The cell model and ZK proofs fit together more naturally than I expected. Puttin
 <p>You can download Kaze at <a href="https://usekaze.app" rel="noopener nofollow ugc">usekaze.app</a>.</p>
 <p></p><div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/3/32c765a3a51ee92f84aef5b43517cab64e59e9df.jpeg" data-download-href="https://talk.nervos.org/uploads/default/32c765a3a51ee92f84aef5b43517cab64e59e9df" title="1795461224520"><img src="https://talk.nervos.org/uploads/default/optimized/2X/3/32c765a3a51ee92f84aef5b43517cab64e59e9df_2_690x460.jpeg" alt="1795461224520" data-base62-sha1="7fd4WjeqIyOgLWHQnacoY3sl903" width="690" height="460" srcset="https://talk.nervos.org/uploads/default/optimized/2X/3/32c765a3a51ee92f84aef5b43517cab64e59e9df_2_690x460.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/3/32c765a3a51ee92f84aef5b43517cab64e59e9df_2_1035x690.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/3/32c765a3a51ee92f84aef5b43517cab64e59e9df_2_1380x920.jpeg 2x" data-dominant-color="B9B1A6"></a></div><br>
 <div class="lightbox-wrapper"><a class="lightbox" href="https://talk.nervos.org/uploads/default/original/2X/e/ef1bea241951e252cc94d545e36d4992059a2e28.jpeg" data-download-href="https://talk.nervos.org/uploads/default/ef1bea241951e252cc94d545e36d4992059a2e28" title="1795461224538"><img src="https://talk.nervos.org/uploads/default/optimized/2X/e/ef1bea241951e252cc94d545e36d4992059a2e28_2_690x460.jpeg" alt="1795461224538" data-base62-sha1="y7fVb0YGalpg1dS3liL64YnJWIg" width="690" height="460" srcset="https://talk.nervos.org/uploads/default/optimized/2X/e/ef1bea241951e252cc94d545e36d4992059a2e28_2_690x460.jpeg, https://talk.nervos.org/uploads/default/optimized/2X/e/ef1bea241951e252cc94d545e36d4992059a2e28_2_1035x690.jpeg 1.5x, https://talk.nervos.org/uploads/default/optimized/2X/e/ef1bea241951e252cc94d545e36d4992059a2e28_2_1380x920.jpeg 2x" data-dominant-color="8E8277"></a></div><p></p>
-            <p><small>2 posts - 2 participants</small></p>
+            <p><small>4 posts - 3 participants</small></p>
             <p><a href="https://talk.nervos.org/t/ckb-x-kaze-unitour-phase-2-kicks-off-at-machakos-university-180-students-95-new-wallets/11355">Read full topic</a></p>
           ]]></description>
           <link>https://talk.nervos.org/t/ckb-x-kaze-unitour-phase-2-kicks-off-at-machakos-university-180-students-95-new-wallets/11355</link>
@@ -4667,270 +4723,6 @@ Owners may not engage (then published as independent work, disclosed); fixtures 
           <discourse:topicArchived>No</discourse:topicArchived>
           <guid isPermaLink="false">talk.nervos.org-topic-11264</guid>
           <source url="https://talk.nervos.org/t/spark-program-ckb-script-regression-fixtures-reproducible-tests-for-review-findings/11264.rss">Spark Program | CKB script regression fixtures: reproducible tests for review findings</source>
-        </item>
-        <item>
-          <title>CKB Mixer(混币器)——Tornado Cash on CKb</title>
-          <dc:creator><![CDATA[tianlitao]]></dc:creator>
-          <category>Applications &amp; Ecosystem</category>
-          <description><![CDATA[
-            <p>过去一段时间用AI做了一个小项目，现在整条链路已经在 CKB 公共测试网上跑通了，发出来给有兴趣的人看。</p>
-<p>一句话：<strong>用 Groth16 + Poseidon Merkle 树在 CKB 上实现了「存款 → 零知识证明 → 匿名取款」，所有验证逻辑写在真实的 CKB-VM 脚本里，能上链、能取钱；另外做了一个存款意向 + 聚合者的 v2，以及一个浏览器里就能用的网页 demo。</strong></p>
-<ul>
-<li>代码：<a href="https://github.com/tianlitao/ckb-mixer" rel="noopener nofollow ugc">https://github.com/tianlitao/ckb-mixer</a></li>
-<li>线上 demo（仅测试网）：<a href="https://ckb-mixer.nervosscan.com/" rel="noopener nofollow ugc">https://ckb-mixer.nervosscan.com/</a></li>
-</ul>
-<hr>
-<h2><a name="p-27578-ckb-1" class="anchor" href="https://talk.nervos.org#p-27578-ckb-1" aria-label="Heading link"></a>为什么这件事在 CKB 上值得单独做一遍</h2>
-<p>Tornado Cash 在 EVM 上靠合约存储「这张 commitment 已经用过了」，CKB 的 cell 模型没有便宜的链上 map。但反过来，CKB 给了两个在 EVM 上不可能的结构性好处：</p>
-<ol>
-<li><strong>链上不需要存 Merkle 树。</strong> 池子 cell 里只有 1,640 字节状态：30 个历史根、20 层 frontier、nullifier 集合的根。树由脚本按 frontier 增量维护，存款时约 20 次 Poseidon。</li>
-<li><strong>取款交易不需要任何签名。</strong> 收款地址和手续费被电路绑进证明，交易只有 1 个输入（池子 cell）、2 个输出。没有中继者也能上链，也没人能把收款人换成自己——这一点在 EVM 上必须靠 relayer 合约配合才成立。</li>
-</ol>
-<p>代价也很 CKB：<strong>所有池子共用一个 cell，任何存款/取款都得花它</strong>。Tornado 的每笔交易独立、可并行；这里是个单点。这正是 v2 要解决的问题（通过聚合器和意图cell）。</p>
-<h2><a name="p-27578-h-2" class="anchor" href="https://talk.nervos.org#p-27578-h-2" aria-label="Heading link"></a>一、它怎么工作</h2>
-<p>一个池子就是一个 cell：</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>部分</th>
-<th>内容</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>type</code></td>
-<td>池子脚本，args = 面额 ‖ 验证密钥 cell 的 data hash ‖ 池子 lock 的 code hash / hash type</td>
-</tr>
-<tr>
-<td><code>lock</code></td>
-<td>池子 lock，逻辑是「这个 cell 必须带池子 type script」——<strong>没有私钥</strong>，谁也没法把池子锁死</td>
-</tr>
-<tr>
-<td><code>data</code></td>
-<td>1,640 字节池子状态：<code>next_index</code> ‖ <code>root_pos</code> ‖ 30 个历史根 ‖ 20 层 frontier ‖ nullifier 集合根</td>
-</tr>
-</tbody>
-</table>
-</div><ul>
-<li><strong>存款</strong>：commitment 写在 witness 里，脚本用 frontier 把它追加进 depth-20 的 Poseidon 树，并要求输出 cell 的 data 逐字节等于新状态、capacity 恰好 <code>输入 + 面额</code>。一笔交易只记录一个新根，所以证明在之后 30 笔存款交易内都有效。</li>
-<li><strong>取款</strong>：脚本依次检查根在历史里 → 收款 cell 必须是池子之后的那个输出、无 type 无 data、capacity 恰好 <code>面额 − fee</code> → 把 <code>nullifierHash</code> 插进 256 层稀疏 Merkle 树（要求「插入前」的根等于当前集合根）→ 用链上的验证密钥 cell 验证 Groth16。</li>
-<li><strong>电路</strong>（5,322 约束，4 个公开输入）：<code>commitment = Poseidon(nullifier, secret)</code>，<code>nullifierHash = Poseidon(nullifier, index)</code>。<strong>nullifier 绑定了叶子下标</strong>，所以同一个 commitment 存两次会有两个不同的 nullifierHash、两笔都能取——链上没有「commitment 已用」表也能防重复花。</li>
-<li><strong>nullifier 集合</strong>用自研的 256 层 SMT：每层一次 blake2b，证明是 32 字节 bitmap + 非空兄弟。取款时约 1.96M cycles。</li>
-</ul>
-<h2><a name="p-27578-cycles-3" class="anchor" href="https://talk.nervos.org#p-27578-cycles-3" aria-label="Heading link"></a>二、一次取款要多少 cycles</h2>
-<p>默认构建（opt-level 3），本地 <code>ckb-testtool</code>，多次运行波动 &lt; 0.2%：</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>阶段</th>
-<th style="text-align:right">cycles</th>
-<th style="text-align:right">占比</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Groth16 验证</strong></td>
-<td style="text-align:right"><strong>约 67.4M</strong></td>
-<td style="text-align:right"><strong>97%</strong></td>
-</tr>
-<tr>
-<td>nullifier 集合（256 层 blake2b）</td>
-<td style="text-align:right">约 1.96M</td>
-<td style="text-align:right">2.8%</td>
-</tr>
-<tr>
-<td>VM 启动 + 加载 276 KB 脚本</td>
-<td style="text-align:right">70,722</td>
-<td style="text-align:right">0.1%</td>
-</tr>
-<tr>
-<td>读状态 / 收款检查 / 输出比对</td>
-<td style="text-align:right">约 86k</td>
-<td style="text-align:right">0.1%</td>
-</tr>
-<tr>
-<td><strong>合计</strong></td>
-<td style="text-align:right"><strong>约 69.4M–69.5M</strong></td>
-<td style="text-align:right">单块上限的 <strong>2%</strong></td>
-</tr>
-</tbody>
-</table>
-</div><p>存款约 8.4M（0.24%），其中 8.25M 是 20 次 Poseidon。批量存款每多一笔约 +0.4M。</p>
-<p><strong>编译档位的取舍</strong>很值得一说。<code>opt-level = z</code> 把二进制缩小 2.3 倍，但 cycles 反而多 47%：</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>变体</th>
-<th style="text-align:right">pool-type 体积</th>
-<th style="text-align:right">部署锁仓</th>
-<th style="text-align:right">存款 ×1</th>
-<th style="text-align:right">取款</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>default（opt 3）</td>
-<td style="text-align:right">276,640 B</td>
-<td style="text-align:right">27.7 万 CKB</td>
-<td style="text-align:right">8.40M</td>
-<td style="text-align:right"><strong>69.4M</strong></td>
-</tr>
-<tr>
-<td>size（opt z）</td>
-<td style="text-align:right">121,400 B</td>
-<td style="text-align:right">12.1 万 CKB</td>
-<td style="text-align:right">11.26M</td>
-<td style="text-align:right">102.3M</td>
-</tr>
-<tr>
-<td>bext（opt 3 + 位扩展指令）</td>
-<td style="text-align:right">269,936 B</td>
-<td style="text-align:right">27.0 万 CKB</td>
-<td style="text-align:right">8.31M</td>
-<td style="text-align:right">68.6M</td>
-</tr>
-</tbody>
-</table>
-</div><p>1 字节占 1 CKB，部署一次所有池子共用；但 size 档每笔取款要多花约 3300 万 cycles，并且越过节点默认的 <code>max_tx_verify_cycles = 70M</code>（默认档的 69.4M 也只比它低不到 1%，电路一改就可能越界）。</p>
-<h2><a name="p-27578-h-4" class="anchor" href="https://talk.nervos.org#p-27578-h-4" aria-label="Heading link"></a>三、测试网上实测</h2>
-<p>2026-11-17 与 11-18 在 <code>ckb_testnet</code>（公共节点 <code>testnet.ckb.dev</code>）上跑了两轮。上链的是 <strong>size 构建</strong>（水龙头每个地址只给 30 万 CKB，default 构建光部署就要 29.7 万）：</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>部署（验证密钥 + 两个脚本）</td>
-<td>141,614 字节，14.1 万 CKB 永久锁定</td>
-</tr>
-<tr>
-<td>建池</td>
-<td>面额 100 CKB，池子 cell 永久占 1,819 CKB</td>
-</tr>
-<tr>
-<td>v1 跑完</td>
-<td>5 笔存款 / 5 笔取款，取款约 <strong>1.025 亿 cycles</strong>，12–23 秒出块</td>
-</tr>
-<tr>
-<td>超过 70M 能不能上链</td>
-<td><strong>能。</strong> 五笔 1.025 亿的取款交给公共节点后都正常打包</td>
-</tr>
-<tr>
-<td>链上 vs 本地 cycles</td>
-<td>相差 0.2%–0.5%</td>
-</tr>
-<tr>
-<td>同块连发</td>
-<td>一笔存款 + 两笔取款首尾相接（每笔花前一笔尚未上链的输出），<strong>三笔进了同一个块</strong></td>
-</tr>
-<tr>
-<td>对抗性 dry-run</td>
-<td>重放、改收款人、抬 fee、少付、直接花池子、付一份钱存两个 commitment……6 种全部被拒，退出码符合预期</td>
-</tr>
-</tbody>
-</table>
-</div><p>链上历史还能完整重放：工具每次运行都从建池交易沿池子 cell 的血缘读回全部交易，用同一个 <code>mixer-core</code> 重新执行，得到的 1,640 字节状态和 capacity 与链上 cell <strong>逐字节一致</strong>，否则不往下做。</p>
-<h2><a name="p-27578-v2-cell-5" class="anchor" href="https://talk.nervos.org#p-27578-v2-cell-5" aria-label="Heading link"></a>四、v2：把存款人的签名和池子 cell 解耦</h2>
-<p>v1 最大的现实问题是：存款人的 sighash 签名覆盖了「花的是哪一个池子 cell」，前面插进一笔交易，这笔存款就得重签。v2 做了三处改动：</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>改动</th>
-<th>解决什么</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>存款意向 cell</strong>：用户把「面额 + 小费」锁进一个带 commitment 的 cell，不碰池子</td>
-<td>存款不再和任何人抢 cell，签一次名就结束</td>
-</tr>
-<tr>
-<td><strong>批量 action</strong>：一笔池子交易处理任意多个意向 + 任意多笔取款</td>
-<td>一次花池子 cell 办完很多人的事</td>
-</tr>
-<tr>
-<td><strong>池子 Type ID</strong></td>
-<td>意向 cell 必须能唯一指名「哪个池子」</td>
-</tr>
-</tbody>
-</table>
-</div><p>取款本来就没有签名，证明只绑定 root、收款人、fee——所以一笔取款天然就是一条链下消息，谁拿到都能装进自己构造的交易里。于是多了一个<strong>不需要许可、不需要押金</strong>的角色：聚合者。它收集链上意向和链下取款消息，拼成批次，赚小费和 fee；偷不了钱、改不了收款人，最坏只是不干活。</p>
-<pre data-code-wrap="mermaid"><code class="lang-mermaid">flowchart LR
-  A[用户 A 签名] --&gt; IA[意向 cell A]
-  B[用户 B 签名] --&gt; IB[意向 cell B]
-  C[用户 C：链下取款消息] --&gt; AG
-  D[用户 D：链下取款消息] --&gt; AG
-  IA --&gt; AG[聚合者拼批次]
-  IB --&gt; AG
-  AG --&gt; P[池子 cell 新状态]
-  AG --&gt; RC[收款 cell C]
-  AG --&gt; RD[收款 cell D]
-</code></pre>
-<p>v2 同样在测试网上跑过（2026-11-18，55 笔存款、55 笔取款，size 构建）：</p>
-<div class="md-table">
-<table>
-<thead>
-<tr>
-<th>批次</th>
-<th style="text-align:right">链上 cycles</th>
-<th style="text-align:right">占块上限</th>
-<th style="text-align:right">出块</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>8 笔取款</td>
-<td style="text-align:right">8.23 亿</td>
-<td style="text-align:right">23.5%</td>
-<td style="text-align:right">15 s</td>
-</tr>
-<tr>
-<td>16 笔取款</td>
-<td style="text-align:right">16.42 亿</td>
-<td style="text-align:right">46.9%</td>
-<td style="text-align:right">24 s</td>
-</tr>
-<tr>
-<td>20 笔取款</td>
-<td style="text-align:right"><strong>20.54 亿</strong></td>
-<td style="text-align:right"><strong>58.7%</strong></td>
-<td style="text-align:right">14 s</td>
-</tr>
-</tbody>
-</table>
-</div><ul>
-<li>大交易和小交易一样在十几到二十几秒内出块；本地测得上限是 50 笔（默认构建）/ 34 笔（size），受限于资金，链上只试到 20 笔。</li>
-<li>手续费按<strong>权重</strong>收，不按字节：<code>max(字节数, cycles × 597,000 / 3.5G)</code>。20 笔取款的交易只有 13.6 KB，权重约 350 KB，按 5,000 shannons/KB 付 0.0175 CKB——聚合者从 20 笔里收 0.2 CKB，依然划算。</li>
-<li><strong>撤回受共识保护</strong>：意向建好立刻撤回，节点回 <code>Immature</code>；过了 6 个块同一笔交易上链。</li>
-<li><strong>两个聚合者抢同一批意向</strong>（真的发出去）：先到的批次手续费 13,315 shannons，对手出 13,315、15,978 都被拒（<code>expect it to &gt;= 17309</code>），出 18,641 后被接受并上链，先到的被标 <code>RBFRejected</code>。规则与节点源码一致。</li>
-</ul>
-<h2><a name="p-27578-demo-6" class="anchor" href="https://talk.nervos.org#p-27578-demo-6" aria-label="Heading link"></a>五、网页 demo</h2>
-<p>在 v2 之上做了一个纯静态页面 + 一个 Cloudflare Worker 聚合者：</p>
-<ul>
-<li>页面：<a href="https://ckb-mixer.nervosscan.com/" rel="noopener nofollow ugc">https://ckb-mixer.nervosscan.com/</a>（中 / 英双语）</li>
-<li>用 CCC 官方的 <code>&lt;ccc-connector&gt;</code> 连钱包；存款签一次名就留下「回执」；<strong>取款证明在浏览器里生成（约 1 秒）</strong>，消息交给聚合者，或者点「自己发送（保底）」（不需要签名、不需要事先有 CKB）。</li>
-<li>页面和聚合者都从建池交易起重放池子全部交易，与链上 cell 逐字节比对；票据的两张随机数只存在浏览器 localStorage 里。</li>
-<li>聚合者每分钟一次 cron，把等着的意向和收到的取款拼成批次；<code>GET /info</code> 能看到它的地址和参数。</li>
-</ul>
-<p>截至 2026-11-19：池子 <strong>2,250 CKB，61 笔存款、59 笔取款、2 笔未取</strong>，重放结果与链上 cell 一致。线上 cron 已经真的打包过带取款的批次。</p>
-            <p><small>1 post - 1 participant</small></p>
-            <p><a href="https://talk.nervos.org/t/ckb-mixer-tornado-cash-on-ckb/11263">Read full topic</a></p>
-          ]]></description>
-          <link>https://talk.nervos.org/t/ckb-mixer-tornado-cash-on-ckb/11263</link>
-          <pubDate>Thu, 19 Nov 2026 09:14:04 +0000</pubDate>
-          <discourse:topicPinned>No</discourse:topicPinned>
-          <discourse:topicClosed>No</discourse:topicClosed>
-          <discourse:topicArchived>No</discourse:topicArchived>
-          <guid isPermaLink="false">talk.nervos.org-topic-11263</guid>
-          <source url="https://talk.nervos.org/t/ckb-mixer-tornado-cash-on-ckb/11263.rss">CKB Mixer(混币器)——Tornado Cash on CKb</source>
         </item>
   </channel>
 </rss>
