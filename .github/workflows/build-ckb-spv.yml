@@ -1,0 +1,40 @@
+name: build-ckb-spv
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'ckb-spv-verify/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.85 + riscv64 target
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup target add riscv64imac-unknown-none-elf --toolchain 1.85.0
+      - name: Install riscv gcc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-riscv64-unknown-elf || sudo apt-get install -y gcc-riscv64-linux-gnu
+          echo "--- which ---"; which riscv64-unknown-elf-gcc || which riscv64-linux-gnu-gcc || echo NONE
+      - name: Fetch deps (ckb-bitcoin-spv + core2)
+        run: |
+          git clone --depth 1 https://github.com/ckb-cell/ckb-bitcoin-spv
+          curl -sL https://static.crates.io/crates/core2/core2-0.3.3.crate -o core2.crate
+          tar xzf core2.crate && mv core2-0.3.3 core2
+          ls -d ckb-bitcoin-spv core2
+      - name: Build contract
+        working-directory: ckb-spv-verify
+        env:
+          CC_riscv64imac_unknown_none_elf: riscv64-unknown-elf-gcc
+          CC_riscv64_unknown_none_elf: riscv64-unknown-elf-gcc
+        run: |
+          cargo +1.85.0 build --release 2>&1 | tail -40
+          SO=$(find target -type f -name 'ckb-spv-verify' | head -1)
+          echo "SO=$SO"; cp "$SO" ckb-spv-verify.so
+          file ckb-spv-verify.so; sha256sum ckb-spv-verify.so
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ckb-spv-verify-so
+          path: ckb-spv-verify/ckb-spv-verify.so
